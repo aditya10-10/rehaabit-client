@@ -4,7 +4,7 @@ exports.welcomeEmail = () => {
     
     <head>
         <meta charset="UTF-8">
-        <title>Welcome to StudyNotion</title>
+        <title>Welcome to Rahaabit!</title>
         <style>
             body {
                 background-color: #ffffff;
@@ -67,17 +67,18 @@ exports.welcomeEmail = () => {
     
     <body>
         <div class="container">
-            <a href="https://studynotion-edtech-project.vercel.app"><img class="logo" src="https://i.ibb.co/7Xyj3PC/logo.png"
+            <a href="https://rahaabit.com/"><img class="logo" src="https://i.ibb.co/MGf9Ghg/Untitled-design.png"
                     alt="StudyNotion Logo"></a>
-            <div class="message">Welcome to StudyNotion!</div>
+            <div class="message">Welcome to Rahaabit!</div>
             <div class="body">
-                <p>Dear ,</p>
-                <p>Welcome to StudyNotion! We're thrilled to have you as part of our learning community.</p>
-                <p>Explore our courses, join discussions, and enhance your learning experience.</p>
-                <a class="cta" href="https://studynotion-edtech-project.vercel.app">Start Exploring</a>
+                <p>Dear Sir/Madam,</p>
+                <p>We're thrilled to announce that something incredible is on the horizon! Our team at Rehaabit has been working tirelessly behind the scenes to bring you something truly special, and we can't wait to share it with you.</p>
+                <p>As we put the finishing touches on our project, we want to ensure you're among the first to know when we officially launch. Be the first to experience the excitement by signing up below to receive exclusive updates and notifications.</p>
+                <p>Stay tuned for more details and sneak peeks as we get closer to the big day. We're beyond excited to unveil what we've been working on and to have you join us on this journey.</p>
+                <p>Thank you for your continued support!</p>
             </div>
-            <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-                    href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
+            <div class="support">Explore, connect, and make the most out of your experience. If you need any help, just give us a shout.<a
+                    href="mailto:admin@rehaabit.com"> admin@rehaabit.com</a>. We are here to help!</div>
         </div>
     </body>
     

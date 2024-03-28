@@ -30,7 +30,7 @@ app.use("/api/v1", userRoutes);
 app.get("/", (req, res) => {
   return res.json({
     success: true,
-    message: "Welcome to the E-Learning API.",
+    message: "Welcome to Rehaabit!",
   });
 });
 

@@ -76,11 +76,30 @@ export const Thankyou = () => {
         <div className="relative z-10 max-w-screen-xl mx-auto px-4 py-28 md:px-8">
           <div className="space-y-5 max-w-4xl mx-auto text-center">
             <h3 className="text-4xl text-white font-extrabold mx-auto md:text-5xl">
-              Thanks for Registering for the Webinar!{" "}
+              Thank you for your interest in our upcoming launch!{" "}
             </h3>
             <p className="max-w-2xl mx-auto text-gray-400">
-              You're all set. You'll receive an email with details on attending
-              the webinar. We look forward to seeing you there!
+              {" "}
+            </p>
+            <br />
+            <p className="max-w-2xl mx-auto text-gray-400">
+              We're thrilled to hear that you're eager to stay updated on our
+              progress. Our team is indeed working tirelessly to put the
+              finishing touches on something truly remarkable. We can't wait to
+              share it with you!
+            </p>
+            <p className="max-w-2xl mx-auto text-gray-400">
+              Your support means the world to us, and we're excited to embark on
+              this journey together. Stay tuned for more updates!
+            </p>
+            <p className="max-w-2xl mx-auto text-gray-400">
+              {" "}
+            </p>
+            <p className="max-w-2xl mx-auto text-gray-400">
+              {" "}
+            </p>
+            <p className="max-w-2xl mx-auto text-gray-400">
+              {" "}
             </p>
           </div>
         </div>

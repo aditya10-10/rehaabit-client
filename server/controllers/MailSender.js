@@ -32,7 +32,7 @@ exports.sendEmail = async (req, res) => {
     try {
       const emailResponse = await mailSender(
         email,
-        "Password for your account has been updated",
+        "Welcome to Rahaabit!",
         welcomeEmail()
       );
       console.log("Email sent successfully:", emailResponse.response);
