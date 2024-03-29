@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://rehaabit-client-csfrho9oh-aditya10-10s-projects.vercel.app",
     credentials: true,
   })
 );
