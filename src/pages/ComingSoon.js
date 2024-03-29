@@ -12,7 +12,7 @@ export const ComingSoon = () => {
   const [email, setEmail] = useState("");
 
   const handleInputChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setEmail(event.target.value);
   };
 
