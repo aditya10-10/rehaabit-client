@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast"
 import { setLoading, setToken } from "../../slices/authSlice"
 import { apiConnector } from "../apiConnector"
 import { endpoints } from "../apis"
-import { setUser } from "../../slices/authSlice"
+import { setUserData } from "../../slices/authSlice"
 
 const {
   SENDOTP_API,
@@ -93,11 +93,13 @@ export function login(contactNumber, otp, navigate) {
       const userImage = response.data?.user?.image
         ? response.data.user.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-      dispatch(setUser({ ...response.data.user, image: userImage }))
-    //   dispatch(setUser(response.data.user))
+      dispatch(setUserData({ ...response.data.user, image: userImage }))
+      dispatch(setUserData(response.data.user))
+      localStorage.setItem("token", JSON.stringify(response.data.token))
+      localStorage.setItem("user", JSON.stringify({...response.data.user, image:userImage}))
       
       localStorage.setItem("token", JSON.stringify(response.data.token))
-      navigate("/dashboard/my-profile")
+      navigate("/")
     } catch (error) {
       console.log("LOGIN API ERROR............", error)
       toast.error("Could Not Veify OTP")
@@ -112,7 +114,7 @@ export function login(contactNumber, otp, navigate) {
 export function logout(navigate) {
   return (dispatch) => {
     dispatch(setToken(null))
-    dispatch(setUser(null))
+    dispatch(setUserData(null))
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     toast.success("Logged Out")
