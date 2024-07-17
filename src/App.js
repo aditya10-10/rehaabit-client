@@ -1,7 +1,8 @@
 import "./App.css";
 import { Dashboard, MainPage, MyProfile } from "./pages";
 import { Route, Routes } from "react-router-dom";
-import { AddCategory } from "./components/Dashboard";
+import { SubCategory } from "./components/Dashboard";
+import Category from "./components/Dashboard/Category";
 
 export default function App() {
   return (
@@ -9,9 +10,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/dashboard/*" element={<Dashboard />}>
-          <Route path="add-category" element={<AddCategory />} />
+          <Route path="category" element={<Category />} />
+          <Route path="sub-category" element={<SubCategory />} />
+          <Route path="my-profile" element={<MyProfile />} />
         </Route>
-        <Route path="/dashboard/my-profile" element={<MyProfile />} />
       </Routes>
     </div>
   );

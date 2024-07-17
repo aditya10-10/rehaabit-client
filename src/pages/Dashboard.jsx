@@ -1,32 +1,38 @@
-import { useSelector } from "react-redux"
-import { Outlet } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 
 import { Sidebar, Navbar } from "../components/Dashboard";
+import { useEffect } from "react";
+import { showAllCategories } from "../slices/categorySlice";
 
 function Dashboard() {
-  const { loading: authLoading } = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
+  const { loading: authLoading } = useSelector((state) => state.auth);
+  const {isMyProfileOpen} = useSelector((state) => state.myProfile);
+
+  useEffect(() => {
+      dispatch(showAllCategories());
+  }, [dispatch])
 
   if (authLoading) {
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
         <div className="spinner"></div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="relative flex flex-col min-h-[calc(100vh-3.5rem)] bg-[#EBEBEB]">
+    <div className="relative flex flex-col min-h-[calc(100vh-3.5rem)]">
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <div className="flex items-center h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
-          <div className="mx-auto w-11/12 max-w-[1000px]">
-            <Outlet />
-          </div>
+        <div className="flex w-full">
+          <Outlet />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
