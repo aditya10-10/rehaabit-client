@@ -16,8 +16,6 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   };
 
   const handleSave = () => {
-    console.log(categoryName)
-    console.log(image)
     dispatch(createCategory({name: categoryName, icon: image}));
   };
 
