@@ -15,6 +15,7 @@ const initialState = {
   categories: [],
   error: null,
   isLoading: false,
+  isCategoryPage: true,
 };
 
 export const showAllCategories = createAsyncThunk(
@@ -56,8 +57,8 @@ export const deleteCategory = createAsyncThunk(
       const response = await apiConnector("DELETE", DELETE_CATEGORY_API, {
         categoryId,
       });
-      console.log(response.data.data);
-      return response.data.data;
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -108,7 +109,11 @@ const categorySlice = createSlice({
   name: "categories",
   initialState,
 
-  reducers: {},
+  reducers: {
+    setIsCategoryPage: (state, action) => {
+      state.isCategoryPage = !state.isCategoryPage;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -144,9 +149,9 @@ const categorySlice = createSlice({
         // toast.loading("Loading...");
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
-        console.log(action.meta.arg);
+        // console.log(action);
         state.categories = state.categories.filter(
-          (category) => category._id !== action.meta.arg
+          (category) => category._id !== action.payload.categoryId
         );
         state.isLoading = false;
         toast.error("Category Deleted");
