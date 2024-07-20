@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "react-phone-input-2/lib/style.css";
-import { useDispatch } from "react-redux";
-import { createCategory } from "../../slices/categorySlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addSubCategory } from "../../../slices/subCategorySlice";
 
-const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
+const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
-  const [categoryName, setCategoryName] = useState("");
+  const [subCategoryName, setSubCategoryName] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("");
+
+  const { categories } = useSelector((state) => state.categories);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -16,34 +19,63 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   };
 
   const handleSave = () => {
-    dispatch(createCategory({name: categoryName, icon: image}));
+    dispatch(addSubCategory({ categoryId, subCategoryName, icon: image }));
+    setIsOpen(!isOpen);
   };
 
   const handleCancel = () => {
-    setCategoryName("");
+    setSubCategoryName("");
     setImage(null);
     setImageName("");
     setIsOpen(!isOpen);
   };
+
+  console.log(categoryId);
+  console.log(subCategoryName);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <main className="flex flex-col justify-center items-center px-4 py-8 bg-white rounded-xl w-[25%] shadow-sm transform transition-transform duration-300 scale-100">
         <div className="w-full flex items-center justify-center">
           <div className="w-full p-8">
+            
             {/* CATEGORY NAME */}
             <div className="flex items-center justify-between mb-10">
               <label htmlFor="categoryName" className="text-[20px] font-[400]">
                 Category
               </label>
 
+              <select
+                id="categoryName"
+                onChange={(e) => setCategoryId(e.target.value)}
+                className="shadow-[0_2px_5px_0px_rgba(2,96,73,0.2)_inset] border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option value="">Select a category</option>
+                {categories.map((category) => {
+                  const { _id, name } = category;
+
+                  return (
+                    <option key={_id} value={_id}>
+                      {name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            {/* SUB CATEGORY NAME */}
+            <div className="flex items-center justify-between mb-10">
+              <label htmlFor="categoryName" className="text-[20px] font-[400]">
+                Sub Category
+              </label>
+
               <input
                 type="text"
                 id="subCategoryName"
-                value={categoryName}
-                onChange={(e) => setCategoryName(e.target.value)}
+                value={subCategoryName}
+                onChange={(e) => setSubCategoryName(e.target.value)}
                 className="shadow-[0_2px_5px_0px_rgba(2,96,73,0.2)_inset] appearance-none border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Enter Category Name"
+                placeholder="Enter Sub-Category Name"
               />
             </div>
 
@@ -94,4 +126,4 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   );
 };
 
-export default CreateCategoryModal;
+export default AddSubCategoryModal;

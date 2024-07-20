@@ -2,8 +2,13 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { FaCircleCheck } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { deleteCategory, updateCategoryIcon, updateCategoryName } from "../../slices/categorySlice";
+import {
+  deleteCategory,
+  updateCategoryIcon,
+  updateCategoryName,
+} from "../../../slices/categorySlice";
 import { useState } from "react";
+// import { showAllSubCategories } from "../../slices/subCategorySlice";
 
 const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
   // console.log(categories)
@@ -13,7 +18,7 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
 
   const [editedCategoryId, setEditedCategoryId] = useState(null);
   const [newName, setNewName] = useState("");
-  const [newImage, setNewImage] = useState(null)
+  const [newImage, setNewImage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -35,8 +40,8 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
   const handleEditIcon = (categoryId, file) => {
     setNewImage(file);
 
-    dispatch(updateCategoryIcon({categoryId, icon: file}))
-  }
+    dispatch(updateCategoryIcon({ categoryId, icon: file }));
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -48,17 +53,24 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
             key={_id}
             className="flex items-center flex-col bg-white shadow-custom-shadow rounded-lg p-4"
           >
-
             {/* EDIT IMAGE/ICON BUTTON */}
             <div className="relative inline-block mb-6">
               <img src={icon} alt={name} className="h-20 w-20 rounded-full" />
-              <input type="file" id={`newImage-${_id}`} className="hidden" onChange={(e) => handleEditIcon(_id, e.target.files[0])} />
-              <label htmlFor={`newImage-${_id}`} className="absolute bottom-0 right-[10px] transform translate-x-1/2 bg-blue-500 rounded-full p-1 text-white text-sm cursor-pointer">
+              <input
+                type="file"
+                id={`newImage-${_id}`}
+                className="hidden"
+                onChange={(e) => handleEditIcon(_id, e.target.files[0])}
+              />
+              <label
+                htmlFor={`newImage-${_id}`}
+                className="absolute bottom-0 right-[10px] transform translate-x-1/2 bg-blue-500 rounded-full p-1 text-white text-sm cursor-pointer"
+              >
                 <FaRegEdit />
               </label>
             </div>
 
-          {/* EDIT NAME BUTTON */}
+            {/* EDIT NAME BUTTON */}
             <div className="flex items-center justify-between mb-4">
               {editedCategoryId === _id ? (
                 <>
@@ -94,7 +106,7 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
               )}
             </div>
 
-              {/* DELETE BUTTON */}
+            {/* DELETE BUTTON */}
             <button
               className="bg-red-600 text-white rounded-[5px] py-2 px-4 text-sm"
               onClick={() => dispatch(deleteCategory(_id))}

@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Sidebar, Navbar } from "../components/Dashboard";
 import { useEffect } from "react";
 import { showAllCategories } from "../slices/categorySlice";
+import { showAllSubCategories } from "../slices/subCategorySlice";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ function Dashboard() {
 
   useEffect(() => {
       dispatch(showAllCategories());
+      dispatch(showAllSubCategories());
   }, [dispatch])
 
   if (authLoading) {
