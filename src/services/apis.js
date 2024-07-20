@@ -17,3 +17,15 @@ export const endpoints = {
   GET_SUB_CATEGORIES_BY_CATEGORY_API: BASE_URL + "/getSubCategoriesByCategory",
   DELETE_SUB_CATEGORY_API: BASE_URL + "/deleteSubCategory",
 };
+
+// PROFILE ENDPOINTS
+export const profileEndpoints = {
+  GET_USER_DETAILS_API: BASE_URL + "/getUserDetails",
+}
+
+// SETTINGS PAGE API
+export const settingsEndpoints = {
+  UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/updateDisplayPicture",
+  UPDATE_PROFILE_API: BASE_URL + "/updateProfile",
+  DELETE_PROFILE_API: BASE_URL + "/deleteProfile",
+}

@@ -39,6 +39,7 @@ const OtpModal = ({ isOpen, onClose }) => {
     try {
       await dispatch(login(phone, verificationCode, navigate))
       setError('');
+      onClose();
       // Proceed with the next step after OTP verification
     } catch (err) {
       setError('Failed to verify OTP');
