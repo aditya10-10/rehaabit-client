@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
+import { createService } from "../../../slices/serviceSlice";
 
 const CreateService = () => {
   const dispatch = useDispatch();
 
   const { categories } = useSelector((state) => state.categories);
-  const { subcategories } = useSelector((state) => state.subcategories);
+
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
-
-  // console.log(categories)
-  // console.log(subcategories)
-  console.log(subCategoriesByCategory);
 
   const [formData, setFormData] = useState({
     serviceName: "",
@@ -23,10 +20,7 @@ const CreateService = () => {
     categoryId: "",
     subCategoryId: "",
     thumbnail: null,
-    inclusions: "",
-    exclusions: "",
     warrantyDetails: "",
-    howDoesItWorks: "",
   });
 
   console.log(formData.categoryId);
@@ -51,6 +45,8 @@ const CreateService = () => {
     e.preventDefault();
 
     console.log(formData);
+
+    dispatch(createService({formData}))
   };
 
   return (
@@ -215,47 +211,11 @@ const CreateService = () => {
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="inclusions"
-        >
-          Inclusions
-        </label>
-        <textarea
-          id="inclusions"
-          name="inclusions"
-          type="text"
-          value={formData.inclusions}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder=""
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="exclusions"
-        >
-          Exclusions
-        </label>
-        <textarea
-          id="exclusions"
-          name="exclusions"
-          type="text"
-          value={formData.exclusions}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder=""
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
           htmlFor="warrantyDetails"
         >
           Warranty Details*
         </label>
-        <textarea
+        <input
           id="warrantyDetails"
           name="warrantyDetails"
           type="text"
@@ -264,24 +224,6 @@ const CreateService = () => {
           className="w-full px-3 py-2 border rounded-md shadow-sm"
           placeholder=""
           required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="howDoesItWorks"
-        >
-          How Does It Works?
-        </label>
-        <textarea
-          id="howDoesItWorks"
-          name="howDoesItWorks"
-          type="text"
-          value={formData.howDoesItWorks}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder=""
         />
       </div>
 

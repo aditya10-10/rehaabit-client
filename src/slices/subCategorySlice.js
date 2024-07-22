@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { endpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
-import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const {
   SHOW_ALL_SUB_CATEGORIES_API,
@@ -150,24 +150,27 @@ const subCategorySlice = createSlice({
       })
       .addCase(addSubCategory.pending, (state) => {
         state.isLoading = true;
-        // toast.loading("Loading...");
+        Swal.showLoading();
       })
       .addCase(addSubCategory.fulfilled, (state, action) => {
-        // console.log(action)
         state.subcategories.push(action.payload.newSubCategory);
         state.isLoading = false;
-        toast.success("Sub Category Added");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Sub Category Added",
+          icon: "success",
+        });
       })
       .addCase(addSubCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-        toast.error("Error in Adding Sub Category");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Error in Adding Sub Category",
+          icon: "error",
+        });
       })
       .addCase(deleteSubCategory.pending, (state) => {
         state.isLoading = true;
-        // toast.loading("Loading...");
+        Swal.showLoading();
       })
       .addCase(deleteSubCategory.fulfilled, (state, action) => {
         console.log(action);
@@ -175,18 +178,22 @@ const subCategorySlice = createSlice({
           (category) => category._id !== action.payload.deletedSubCategory._id
         );
         state.isLoading = false;
-        toast.error("Category Deleted");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Category Deleted",
+          icon: "success",
+        });
       })
       .addCase(deleteSubCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-        toast.error("Error in Deleting Category");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Error in Deleting Category",
+          icon: "error",
+        });
       })
       .addCase(updateSubCategoryName.pending, (state) => {
         state.isLoading = true;
-        // toast.loading("Loading...");
+        Swal.showLoading();
       })
       .addCase(updateSubCategoryName.fulfilled, (state, action) => {
         state.subcategories = state.subcategories.map((category) =>
@@ -196,18 +203,22 @@ const subCategorySlice = createSlice({
         );
 
         state.isLoading = false;
-        toast.success("Category Name Updated");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Category Name Updated",
+          icon: "success",
+        });
       })
       .addCase(updateSubCategoryName.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-        toast.error("Error in Updating Sub Category Name");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Error in Updating Sub Category Name",
+          icon: "error",
+        });
       })
       .addCase(updateSubCategoryIcon.pending, (state) => {
         state.isLoading = true;
-        // toast.loading("Loading...");
+        Swal.showLoading();
       })
       .addCase(updateSubCategoryIcon.fulfilled, (state, action) => {
         state.subcategories = state.subcategories.map((category) =>
@@ -217,17 +228,22 @@ const subCategorySlice = createSlice({
         );
 
         state.isLoading = false;
-        toast.success("Category Icon Updated");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Category Icon Updated",
+          icon: "success",
+        });
       })
       .addCase(updateSubCategoryIcon.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-        toast.error("Error in Updating Category Icon");
-        // toast.dismiss();
-      }).addCase(getSubCategoriesByCategory.pending, (state) => {
+        Swal.fire({
+          title: "Error in Updating Category Icon",
+          icon: "error",
+        });
+      })
+      .addCase(getSubCategoriesByCategory.pending, (state) => {
         state.isLoading = true;
-        // toast.loading("Loading...");
+        Swal.showLoading();
       })
       .addCase(getSubCategoriesByCategory.fulfilled, (state, action) => {
         console.log(action);
@@ -235,14 +251,14 @@ const subCategorySlice = createSlice({
         state.subCategoriesByCategory = action.payload
 
         state.isLoading = false;
-        // toast.success("Category Icon Updated");
-        // toast.dismiss();
       })
       .addCase(getSubCategoriesByCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-        // toast.error("Error in Updating Category Icon");
-        // toast.dismiss();
+        Swal.fire({
+          title: "Error in Fetching Sub Categories",
+          icon: "error",
+        });
       });
   },
 });
