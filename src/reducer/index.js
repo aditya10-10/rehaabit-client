@@ -5,6 +5,7 @@ import myProfileReducer from "../slices/myProfileSlice";
 import categoryReducer from "../slices/categorySlice";
 import subCategoryReducer from '../slices/subCategorySlice'
 import profileReducer from '../slices/profileSlice'
+import serviceReducer from '../slices/serviceSlice'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   categories: categoryReducer,
   subcategories: subCategoryReducer,
   profile: profileReducer,
+  service: serviceReducer,
 });
 
 

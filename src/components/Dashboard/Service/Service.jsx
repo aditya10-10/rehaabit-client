@@ -1,9 +1,11 @@
 import React from "react";
 import Navbar from "./Navbar";
 import { Route, Routes } from "react-router-dom";
-import CourseBuilder from "./CourseBuilder";
-import CoursePublish from "./CoursePublish";
 import CreateService from "./CreateService";
+import Include from "./Include";
+import Exclude from "./Exclude";
+import FAQ from "./FAQ";
+import HowDoesItWorks from "./HowDoesItWorks";
 
 const Service = () => {
   return (
@@ -12,8 +14,10 @@ const Service = () => {
 
       <Routes>
         <Route path="/" element={<CreateService />} />
-        <Route path="course-builder" element={<CourseBuilder />} />
-        <Route path="course-publish" element={<CoursePublish />} />
+        <Route path="include" element={<Include />} />
+        <Route path="exclude" element={<Exclude />} />
+        <Route path="faq" element={<FAQ />} />
+        <Route path="HowDoesItWorks" element={<HowDoesItWorks />} />
       </Routes>
     </div>
   );

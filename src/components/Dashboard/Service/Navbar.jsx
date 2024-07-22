@@ -2,7 +2,6 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-
   const navLinks = [
     {
       id: 1,
@@ -11,13 +10,23 @@ const Navbar = () => {
     },
     {
       id: 2,
-      to: "course-builder",
-      text: "Course Builder",
+      to: "include",
+      text: "Include",
     },
     {
       id: 3,
-      to: "course-publish",
-      text: "Course Publish",
+      to: "exclude",
+      text: "Exclude",
+    },
+    {
+      id: 4,
+      to: "faq",
+      text: "FAQ",
+    },
+    {
+      id: 5,
+      to: "HowDoesItWorks",
+      text: "How Does It Works?",
     },
   ];
 
