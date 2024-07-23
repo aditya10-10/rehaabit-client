@@ -1,39 +1,41 @@
 import Pagination from "../Pagination";
 import CategoriesCards from "../Category/CategoriesCards";
 import CreateCategoryModal from "../Category/CreateCategoryModal";
-import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SubCategoriesCards from "./SubCategoriesCards";
 import AddSubCategoryModal from "./AddSubCategoryModal";
+import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
 
 const SubCategory = () => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 6;
 
+  const { categories } = useSelector((state) => state.categories);
   const { subcategories } = useSelector((state) => state.subcategories);
+  const { subCategoriesByCategory } = useSelector(
+    (state) => state.subcategories
+  );
   const { isCategoryPage } = useSelector((state) => state.categories);
 
   console.log(subcategories);
-  const categories = subcategories;
 
   const handleFilterChange = (e) => {
-    setFilterText(e.target.value);
+    setFilterId(e.target.value);
   };
 
-  const [filterText, setFilterText] = useState("");
+  const [filterId, setFilterId] = useState("");
 
-  const uniqueCategoryNames = useMemo(() => {
-    const names = categories.map((category) => category.subCategoryName);
-    return ["All", ...new Set(names)];
-  }, [categories]);
+  useEffect(() => {
+    dispatch(getSubCategoriesByCategory({categoryId : filterId}));
+  }, [dispatch, filterId])
 
-  const filteredCategories =
-    filterText === "All" || filterText === ""
-      ? categories
-      : categories.filter(
-          (category) => category.subCategoryName === filterText
-        );
+  const filteredSubCategories =
+    filterId === "All" || filterId === ""
+      ? subcategories
+      : subCategoriesByCategory;
 
   return (
     <div className="p-10 w-full">
@@ -42,21 +44,25 @@ const SubCategory = () => {
       <div className="flex justify-between w-full items-center mt-4">
         <div className="flex items-center">
           <Pagination
-            pageCount={Math.ceil(filteredCategories.length / cardsPerPage)}
+            pageCount={Math.ceil(filteredSubCategories.length / cardsPerPage)}
             currentPage={currentPage}
             onPageChange={(page) => setCurrentPage(page)}
           />
 
           <select
-            value={filterText}
+            value={filterId}
             onChange={handleFilterChange}
             className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6"
           >
-            {uniqueCategoryNames.map((name, index) => (
-              <option key={index} value={name}>
-                {name}
-              </option>
-            ))}
+            <option value="All">All</option>
+            {categories.map((category) => {
+              const { _id, name } = category;
+              return (
+                <option key={_id} value={_id}>
+                  {name}
+                </option>
+              );
+            })}
           </select>
         </div>
 
@@ -64,14 +70,14 @@ const SubCategory = () => {
           className="bg-[#FFCC00] rounded-full py-2 px-6 font-[500] text-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
-          Add
+          Create
         </button>
       </div>
 
       {isOpen && <AddSubCategoryModal isOpen={isOpen} setIsOpen={setIsOpen} />}
 
       <SubCategoriesCards
-        subcategories={filteredCategories}
+        subcategories={filteredSubCategories}
         currentPage={currentPage}
         cardsPerPage={cardsPerPage}
       />

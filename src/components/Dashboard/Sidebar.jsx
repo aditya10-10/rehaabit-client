@@ -7,6 +7,7 @@ import { IoMdSettings } from "react-icons/io";
 import LogoutSVG from "../../assets/icons/Logout.svg";
 import { NavLink } from "react-router-dom";
 import { BiSolidCategory } from "react-icons/bi";
+import { MdMedicalServices } from "react-icons/md";
 
 const sidebarLinks = [
   {
@@ -31,23 +32,29 @@ const sidebarLinks = [
   {
     id: 4,
     icon: <MdHomeRepairService />,
-    text: "Service",
-    to: "service/create-service",
+    text: "My Service",
+    to: "my-service",
   },
   {
     id: 5,
+    icon: <MdMedicalServices />,
+    text: "Add Service",
+    to: "service/create-service",
+  },
+  {
+    id: 6,
     icon: <BsFillHandbagFill />,
     text: "Orders",
     to: "orders",
   },
   {
-    id: 6,
+    id: 7,
     icon: <FaUsers />,
     text: "Users",
     to: "users",
   },
   {
-    id: 7,
+    id: 8,
     icon: <IoMdSettings />,
     text: "Settings",
     to: "settings",

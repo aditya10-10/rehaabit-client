@@ -5,16 +5,16 @@ import { createExclude } from '../../../slices/serviceSlice';
 const Exclude = () => {
   const dispatch = useDispatch();
 
-  const {service} = useSelector((state) => state.service)
+  const {serviceId} = useSelector((state) => state.service)
 
-  console.log(service?.service?._id)
+  console.log(serviceId)
 
   const [formData, setFormData] = useState({
     serviceId: "",
     content: "",
   });
 
-  formData.serviceId = "669cf0b7ddc8a269cec61d43" || service?.service?._id
+  formData.serviceId =  serviceId
 
   const handleChange = (e) => {
     const { name, value } = e.target;

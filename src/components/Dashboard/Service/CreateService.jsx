@@ -206,7 +206,10 @@ const CreateService = () => {
           className="w-full px-3 py-2 border rounded-md shadow-sm"
           required
         />
+
       </div>
+      
+      {formData.thumbnail && <img src={formData.thumbnail} alt="thumbnail"/>}
 
       <div className="mb-4">
         <label
