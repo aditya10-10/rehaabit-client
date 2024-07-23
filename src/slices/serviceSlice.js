@@ -29,6 +29,7 @@ const initialState = {
   serviceId: null,
   isLoading: false,
   error: null,
+  currentStep: 0,
 };
 
 // SERVICE
@@ -137,23 +138,34 @@ export const createHowDoesItWorks = createAsyncThunk(
 const serviceSlice = createSlice({
   name: "service",
   initialState,
-  reducers: {},
+  reducers: {
+    nextStep: (state) => {
+      state.currentStep += 1;
+    },
+    previousStep: (state) => {
+      state.currentStep -= 1;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
       .addCase(createService.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(createService.fulfilled, (state, action) => {
         state.service = action.payload;
         state.isLoading = false;
 
+        console.log(action.payload)
+
         Swal.fire({
           title: "Service Created!",
           icon: "success",
         });
+        // state.currentStep += 1;
+        state.serviceId = action.payload.service._id
       })
       .addCase(createService.rejected, (state, action) => {
         state.isLoading = false;
@@ -190,7 +202,7 @@ const serviceSlice = createSlice({
       .addCase(createInclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(createInclude.fulfilled, (state, action) => {
         state.service = action.payload;
@@ -200,6 +212,7 @@ const serviceSlice = createSlice({
           title: "Include Created!",
           icon: "success",
         });
+        // state.currentStep += 1;
       })
       .addCase(createInclude.rejected, (state, action) => {
         state.isLoading = false;
@@ -213,7 +226,7 @@ const serviceSlice = createSlice({
       .addCase(createExclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(createExclude.fulfilled, (state, action) => {
         state.service = action.payload;
@@ -223,6 +236,7 @@ const serviceSlice = createSlice({
           title: "Exclude Created!",
           icon: "success",
         });
+        // state.currentStep += 1;
       })
       .addCase(createExclude.rejected, (state, action) => {
         state.isLoading = false;
@@ -236,7 +250,7 @@ const serviceSlice = createSlice({
       .addCase(createFAQ.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(createFAQ.fulfilled, (state, action) => {
         state.service = action.payload;
@@ -246,6 +260,7 @@ const serviceSlice = createSlice({
           title: "FAQ Created!",
           icon: "success",
         });
+        // state.currentStep += 1;
       })
       .addCase(createFAQ.rejected, (state, action) => {
         state.isLoading = false;
@@ -259,7 +274,7 @@ const serviceSlice = createSlice({
       .addCase(createHowDoesItWorks.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(createHowDoesItWorks.fulfilled, (state, action) => {
         state.service = action.payload;
@@ -269,6 +284,7 @@ const serviceSlice = createSlice({
           title: "How Does It Works Created!",
           icon: "success",
         });
+        // state.currentStep += 1;
       })
       .addCase(createHowDoesItWorks.rejected, (state, action) => {
         state.isLoading = false;
@@ -282,6 +298,6 @@ const serviceSlice = createSlice({
   },
 });
 
-export const {} = serviceSlice.actions;
+export const {nextStep, previousStep} = serviceSlice.actions;
 
 export default serviceSlice.reducer;

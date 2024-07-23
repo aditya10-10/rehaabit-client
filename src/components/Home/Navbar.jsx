@@ -74,7 +74,7 @@ const Navbar = ({ onLoginClick }) => {
                     onClick={() => {
                       // Navigate to the dashboard
                       setIsDropdownOpen(false);
-                      navigate("/dashboard/my-profile");
+                      navigate("/dashboard");
                     }}
                   >
                     <RiDashboardLine

@@ -11,7 +11,7 @@ import { Dashboard, MainPage, MyProfile, EditProfile } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
-import { Service } from "./components/Dashboard/Service";
+import { MyService, Service } from "./components/Dashboard/Service";
 
 
 export default function App() {
@@ -40,6 +40,7 @@ export default function App() {
           <Route path="sub-category" element={<SubCategory />} />
           <Route path="my-profile" element={<MyProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
+          <Route path="my-service" element={<MyService />} />
           <Route path="service/create-service/*" element={<Service />} />
         </Route>
 

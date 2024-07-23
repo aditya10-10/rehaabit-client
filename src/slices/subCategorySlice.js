@@ -119,7 +119,7 @@ export const getSubCategoriesByCategory = createAsyncThunk(
         GET_SUB_CATEGORIES_BY_CATEGORY_API,
         {
           categoryId,
-        },
+        }
       );
       return response.data.data;
     } catch (error) {
@@ -243,22 +243,23 @@ const subCategorySlice = createSlice({
       })
       .addCase(getSubCategoriesByCategory.pending, (state) => {
         state.isLoading = true;
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(getSubCategoriesByCategory.fulfilled, (state, action) => {
         console.log(action);
 
-        state.subCategoriesByCategory = action.payload
+        state.subCategoriesByCategory = action.payload;
 
         state.isLoading = false;
+        // if(Swal.isLoading()) Swal.hideLoading();
       })
       .addCase(getSubCategoriesByCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-        Swal.fire({
-          title: "Error in Fetching Sub Categories",
-          icon: "error",
-        });
+        // Swal.fire({
+        //   title: "Error in Fetching Sub Categories",
+        //   icon: "error",
+        // });
       });
   },
 });
