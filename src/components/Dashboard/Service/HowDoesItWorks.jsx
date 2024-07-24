@@ -6,6 +6,7 @@ const HowDoesItWorks = () => {
   const dispatch = useDispatch();
 
   const {serviceId} = useSelector((state) => state.service)
+  const {howDoesItWorks} = useSelector((state) => state.service.service)
 
   console.log(serviceId)
 
@@ -52,6 +53,12 @@ const HowDoesItWorks = () => {
           placeholder=""
         />
       </div>
+
+      {howDoesItWorks && howDoesItWorks.map((include) => {
+        const {_id, point} = include;
+
+        return <span key={_id} className='flex'>{point}</span>
+      })}
 
       <div className="flex mt-6">
         <button

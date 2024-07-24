@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { createInclude } from '../../../slices/serviceSlice';
 
@@ -6,9 +6,10 @@ const Include = () => {
   const dispatch = useDispatch();
 
   const {serviceId} = useSelector((state) => state.service)
+  const {includes} = useSelector((state) => state.service.service)
 
   console.log(serviceId)
-
+  console.log(includes)
   
   const [formData, setFormData] = useState({
     serviceId: "",
@@ -54,6 +55,12 @@ const Include = () => {
           placeholder=""
         />
       </div>
+
+      {includes && includes.map((include) => {
+        const {_id, content} = include;
+
+        return <span key={_id} className='flex'>{content}</span>
+      })}
 
       <div className="flex mt-6">
         <button

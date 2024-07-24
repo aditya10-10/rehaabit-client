@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
 
 const Navbar = () => {
 
@@ -12,6 +13,7 @@ const Navbar = () => {
     { id: 3, to: "exclude", text: "Exclude" },
     { id: 4, to: "faq", text: "FAQ" },
     { id: 5, to: "HowDoesItWorks", text: "How Does It Work?" },
+    { id: 6, to: "publish", text: "Publish" },
   ];
 
   return (
@@ -36,7 +38,7 @@ const Navbar = () => {
                 }`}
                 onClick={(e) => isDisabled && e.preventDefault()}
               >
-                {showTick ? "✔" : id}
+                {showTick ? <FaCheck size={20} /> : id}
               </NavLink>
               <span className="mt-2 text-gray-500 text-sm font-[400]">
                 {text}

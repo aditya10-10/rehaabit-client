@@ -155,10 +155,8 @@ const serviceSlice = createSlice({
         Swal.showLoading();
       })
       .addCase(createService.fulfilled, (state, action) => {
-        state.service = action.payload;
+        state.service = action.payload.service;
         state.isLoading = false;
-
-        console.log(action.payload)
 
         Swal.fire({
           title: "Service Created!",
@@ -205,7 +203,7 @@ const serviceSlice = createSlice({
         Swal.showLoading();
       })
       .addCase(createInclude.fulfilled, (state, action) => {
-        state.service = action.payload;
+        state.service.includes = action.payload.service.includes;
         state.isLoading = false;
 
         Swal.fire({
@@ -229,7 +227,7 @@ const serviceSlice = createSlice({
         Swal.showLoading();
       })
       .addCase(createExclude.fulfilled, (state, action) => {
-        state.service = action.payload;
+        state.service.excludes = action.payload.service.excludes;
         state.isLoading = false;
 
         Swal.fire({
@@ -253,7 +251,7 @@ const serviceSlice = createSlice({
         Swal.showLoading();
       })
       .addCase(createFAQ.fulfilled, (state, action) => {
-        state.service = action.payload;
+        state.service.faqs = action.payload.service.faqs;
         state.isLoading = false;
 
         Swal.fire({
@@ -277,7 +275,7 @@ const serviceSlice = createSlice({
         Swal.showLoading();
       })
       .addCase(createHowDoesItWorks.fulfilled, (state, action) => {
-        state.service = action.payload;
+        state.service.howDoesItWorks = action.payload.service.howDoesItWorks;
         state.isLoading = false;
 
         Swal.fire({

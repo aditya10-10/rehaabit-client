@@ -2,7 +2,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../assets/LOGO.svg";
 import Profile from "../../assets/images/profile.svg";
 import { useDispatch } from "react-redux";
-import { setMyProfileOpen } from "../../slices/myProfileSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -25,7 +24,6 @@ const Navbar = () => {
             src={Profile}
             alt="Profile"
             className="h-14 w-14 rounded-full"
-            onClick={() => dispatch(setMyProfileOpen())}
           />
         </div>
       </NavLink>

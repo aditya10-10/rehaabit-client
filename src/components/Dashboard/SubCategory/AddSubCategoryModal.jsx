@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-phone-input-2/lib/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addSubCategory } from "../../../slices/subCategorySlice";
+import ProgressBar from "../../ProgressBar";
 
 const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
@@ -9,8 +10,10 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
   const [categoryId, setCategoryId] = useState("");
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const { categories } = useSelector((state) => state.categories);
+  const { isLoading } = useSelector((state) => state.subcategories);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -18,9 +21,14 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
     file ? setImageName(file.name) : setImageName("");
   };
 
+  useEffect(() => {
+    if (!isLoading && progress === 100) setIsOpen(!isOpen);
+  }, [isLoading, progress]);
+
   const handleSave = () => {
-    dispatch(addSubCategory({ categoryId, subCategoryName, icon: image }));
-    setIsOpen(!isOpen);
+    dispatch(
+      addSubCategory({ categoryId, subCategoryName, icon: image, setProgress })
+    );
   };
 
   const handleCancel = () => {
@@ -30,15 +38,11 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
     setIsOpen(!isOpen);
   };
 
-  console.log(categoryId);
-  console.log(subCategoryName);
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <main className="flex flex-col justify-center items-center px-4 py-8 bg-white rounded-xl w-[25%] shadow-sm transform transition-transform duration-300 scale-100">
         <div className="w-full flex items-center justify-center">
           <div className="w-full p-8">
-            
             {/* CATEGORY NAME */}
             <div className="flex items-center justify-between mb-10">
               <label htmlFor="categoryName" className="text-[20px] font-[400]">
@@ -48,7 +52,7 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
               <select
                 id="categoryName"
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="shadow-[0_2px_5px_0px_rgba(2,96,73,0.2)_inset] border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option value="">Select a category</option>
                 {categories.map((category) => {
@@ -74,7 +78,7 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
                 id="subCategoryName"
                 value={subCategoryName}
                 onChange={(e) => setSubCategoryName(e.target.value)}
-                className="shadow-[0_2px_5px_0px_rgba(2,96,73,0.2)_inset] appearance-none border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter Sub-Category Name"
               />
             </div>
@@ -85,7 +89,7 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
                 Upload Image
               </label>
 
-              <div className="shadow-[0_2px_5px_0px_rgba(2,96,73,0.2)_inset] flex flex-col items-center w-[60%] rounded-[5px] p-10">
+              <div className="border flex flex-col items-center w-[60%] rounded-[5px] p-10">
                 <input
                   type="file"
                   id="image"
@@ -103,6 +107,9 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
                 </span>
               </div>
             </div>
+
+            {/* PROGRESS BAR */}
+            {isLoading && <ProgressBar progress={progress} />}
 
             {/* BUTTONS */}
             <div className="flex justify-center space-x-6">

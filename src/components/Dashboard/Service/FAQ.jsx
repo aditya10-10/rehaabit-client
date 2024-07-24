@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { createFAQ } from '../../../slices/serviceSlice';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createFAQ } from "../../../slices/serviceSlice";
 
 const FAQ = () => {
   const dispatch = useDispatch();
 
-  const {serviceId} = useSelector((state) => state.service)
+  const { serviceId } = useSelector((state) => state.service);
+  const {faqs} = useSelector((state) => state.service.service)
 
-  console.log(serviceId)
+  console.log(serviceId);
 
   const [formData, setFormData] = useState({
     serviceId: "",
@@ -15,10 +16,10 @@ const FAQ = () => {
     answer: "",
   });
 
-  formData.serviceId = serviceId
+  formData.serviceId = serviceId;
 
   const handleChange = (e) => {
-    const { name, value} = e.target;
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
@@ -27,7 +28,7 @@ const FAQ = () => {
 
     console.log(formData);
 
-    dispatch(createFAQ({formData}))
+    dispatch(createFAQ({ formData }));
   };
 
   return (
@@ -73,6 +74,18 @@ const FAQ = () => {
         />
       </div>
 
+      {faqs &&
+        faqs.map((include) => {
+          const {_id, question, answer } = include;
+
+          return (
+            <div key={_id}>
+              <span className="flex">Question: {question}</span>
+              <span className="flex">Answer: {answer}</span>
+            </div>
+          );
+        })}
+
       <div className="flex mt-6">
         <button
           type="submit"
@@ -82,7 +95,7 @@ const FAQ = () => {
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default FAQ
+export default FAQ;

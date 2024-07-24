@@ -14,7 +14,7 @@ const MyService = () => {
         </NavLink>
       </nav>
 
-      {/* SERVICELISTS */}
+      {/* SERVICESLIST */}
       <div className="mt-6 w-full border rounded-lg">
         <ServicesList />
       </div>
