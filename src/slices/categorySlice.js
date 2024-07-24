@@ -33,15 +33,22 @@ export const showAllCategories = createAsyncThunk(
 
 export const createCategory = createAsyncThunk(
   "categories/createCategory",
-  async ({ name, icon }, thunkAPI) => {
+  async ({ name, icon, setProgress }, thunkAPI) => {
     try {
       const response = await apiConnector(
         "POST",
         CREATE_CATEGORY_API,
         { name, icon },
-        { "Content-Type": "multipart/form-data" }
+        { "Content-Type": "multipart/form-data" },
+        null,
+        (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setProgress(percentCompleted);
+        }
       );
-      console.log(response.data.data);
+
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -139,7 +146,7 @@ const categorySlice = createSlice({
       .addCase(createCategory.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading()
+        // Swal.showLoading()
       })
       .addCase(createCategory.fulfilled, (state, action) => {
         state.categories.push(action.payload);
@@ -170,7 +177,7 @@ const categorySlice = createSlice({
       .addCase(deleteCategory.pending, (state) => {
         state.isLoading = true;
         // toast.loading("Loading...");
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
         // console.log(action);
@@ -198,7 +205,7 @@ const categorySlice = createSlice({
       .addCase(updateCategoryName.pending, (state) => {
         state.isLoading = true;
         // toast.loading("Loading...");
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(updateCategoryName.fulfilled, (state, action) => {
         state.categories = state.categories.map((category) =>
@@ -226,7 +233,7 @@ const categorySlice = createSlice({
       .addCase(updateCategoryIcon.pending, (state) => {
         state.isLoading = true;
         // toast.loading("Loading...");
-        Swal.showLoading()
+        Swal.showLoading();
       })
       .addCase(updateCategoryIcon.fulfilled, (state, action) => {
         state.categories = state.categories.map((category) =>

@@ -34,13 +34,20 @@ export const showAllSubCategories = createAsyncThunk(
 
 export const addSubCategory = createAsyncThunk(
   "subcategories/addSubCategory",
-  async ({ categoryId, subCategoryName, icon }, thunkAPI) => {
+  async ({ categoryId, subCategoryName, icon, setProgress }, thunkAPI) => {
     try {
       const response = await apiConnector(
         "POST",
         ADD_SUB_CATEGORY_API,
         { categoryId, subCategoryName, icon },
-        { "Content-Type": "multipart/form-data" }
+        { "Content-Type": "multipart/form-data" },
+        null,
+        (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setProgress(percentCompleted);
+        }
       );
       console.log(response.data);
       return response.data;
@@ -150,7 +157,6 @@ const subCategorySlice = createSlice({
       })
       .addCase(addSubCategory.pending, (state) => {
         state.isLoading = true;
-        Swal.showLoading();
       })
       .addCase(addSubCategory.fulfilled, (state, action) => {
         state.subcategories.push(action.payload.newSubCategory);

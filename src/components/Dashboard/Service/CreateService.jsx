@@ -7,23 +7,26 @@ const CreateService = () => {
   const dispatch = useDispatch();
 
   const { categories } = useSelector((state) => state.categories);
+  const { service } = useSelector((state) => state.service);
 
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
 
-  const [formData, setFormData] = useState({
-    serviceName: "",
-    serviceDescription: "",
-    timeToComplete: "",
-    price: "",
-    categoryId: "",
-    subCategoryId: "",
-    thumbnail: null,
-    warrantyDetails: "",
-  });
+  console.log(service);
 
-  console.log(formData.categoryId);
+  const [preview, setPreview] = useState(null || service.thumbnail);
+
+  const [formData, setFormData] = useState({
+    serviceName: "" || service.serviceName,
+    serviceDescription: "" || service.serviceDescription,
+    timeToComplete: "" || service.timeToComplete,
+    price: "" || service.price,
+    categoryId: "" || service.categoryId,
+    subCategoryId: "" || service.subCategoryId,
+    thumbnail: null || service.thumbnail,
+    warranty: "" || service.warranty,
+  });
 
   useEffect(() => {
     if (formData.categoryId) {
@@ -36,6 +39,17 @@ const CreateService = () => {
 
     if (name === "thumbnail") {
       setFormData({ ...formData, [name]: files[0] });
+
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        setPreview(null);
+      }
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -46,7 +60,7 @@ const CreateService = () => {
 
     console.log(formData);
 
-    dispatch(createService({formData}))
+    dispatch(createService({ formData }));
   };
 
   return (
@@ -207,22 +221,21 @@ const CreateService = () => {
           required
         />
 
+        {preview && <img src={preview} alt="thumbnail" />}
       </div>
-      
-      {formData.thumbnail && <img src={formData.thumbnail} alt="thumbnail"/>}
 
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="warrantyDetails"
+          htmlFor="warranty"
         >
           Warranty Details*
         </label>
         <input
-          id="warrantyDetails"
-          name="warrantyDetails"
+          id="warranty"
+          name="warranty"
           type="text"
-          value={formData.warrantyDetails}
+          value={formData.warranty}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded-md shadow-sm"
           placeholder=""

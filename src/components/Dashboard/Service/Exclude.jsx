@@ -6,6 +6,7 @@ const Exclude = () => {
   const dispatch = useDispatch();
 
   const {serviceId} = useSelector((state) => state.service)
+  const {excludes} = useSelector((state) => state.service.service)
 
   console.log(serviceId)
 
@@ -53,6 +54,12 @@ const Exclude = () => {
           placeholder=""
         />
       </div>
+
+      {excludes && excludes.map((include) => {
+        const {_id, content} = include;
+
+        return <span key={_id} className='flex'>{content}</span>
+      })}
 
       <div className="flex mt-6">
         <button

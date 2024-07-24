@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-phone-input-2/lib/style.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createCategory } from "../../../slices/categorySlice";
+import ProgressBar from "../../ProgressBar";
 
 const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
@@ -9,15 +10,22 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("");
 
+  const { isLoading } = useSelector((state) => state.categories);
+  const [progress, setProgress] = useState(0);
+  // console.log(isLoading)
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
     file ? setImageName(file.name) : setImageName("");
   };
 
+  useEffect(() => {
+    if (!isLoading && progress === 100) setIsOpen(!isOpen);
+  }, [isLoading, progress]);
+
   const handleSave = () => {
-    dispatch(createCategory({ name: categoryName, icon: image }));
-    setIsOpen(!isOpen);
+    dispatch(createCategory({ name: categoryName, icon: image, setProgress }));
   };
 
   const handleCancel = () => {
@@ -43,7 +51,7 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
                 id="subCategoryName"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
-                className="shadow-[0_2px_5px_0px_rgba(2,96,73,0.2)_inset] appearance-none border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter Category Name"
               />
             </div>
@@ -54,7 +62,7 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
                 Upload Image
               </label>
 
-              <div className="shadow-[0_2px_5px_0px_rgba(2,96,73,0.2)_inset] flex flex-col items-center w-[60%] rounded-[5px] p-10">
+              <div className="border flex flex-col items-center w-[60%] rounded-[5px] p-10">
                 <input
                   type="file"
                   id="image"
@@ -72,6 +80,9 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
                 </span>
               </div>
             </div>
+
+            {/* PROGRESS BAR */}
+            {isLoading && <ProgressBar progress={progress} />}
 
             {/* BUTTONS */}
             <div className="flex justify-center space-x-6">

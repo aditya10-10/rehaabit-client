@@ -10,10 +10,6 @@ const Category = () => {
   const cardsPerPage = 6;
 
   const { categories } = useSelector((state) => state.categories);
-  const { isCategoryPage } = useSelector((state) => state.categories);
-
-
-  console.log(categories);
 
   return (
     <div className="p-10 w-full">

@@ -9,7 +9,6 @@ import { showAllSubCategories } from "../slices/subCategorySlice";
 function Dashboard() {
   const dispatch = useDispatch();
   const { loading: authLoading } = useSelector((state) => state.auth);
-  const {isMyProfileOpen} = useSelector((state) => state.myProfile);
 
   useEffect(() => {
       dispatch(showAllCategories());

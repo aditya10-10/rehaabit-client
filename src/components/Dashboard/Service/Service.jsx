@@ -12,6 +12,9 @@ import {
   nextStep,
   previousStep,
 } from "../../../slices/serviceSlice";
+import Publish from "./Publish";
+
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 const Service = () => {
   const currentStep = useSelector((state) => state.service.currentStep);
@@ -19,18 +22,7 @@ const Service = () => {
   const navigate = useNavigate();
   const { serviceId } = useSelector((state) => state.service);
 
-  // const serviceId = 'wesrf43'
-
-  const [formData, setFormData] = useState({
-    serviceName: "",
-    serviceDescription: "",
-    timeToComplete: "",
-    price: "",
-    categoryId: "",
-    subCategoryId: "",
-    thumbnail: null,
-    warrantyDetails: "",
-  });
+  // const serviceId = "sdsgf";
 
   const steps = [
     { path: "/", component: <CreateService /> },
@@ -38,28 +30,8 @@ const Service = () => {
     { path: "exclude", component: <Exclude /> },
     { path: "faq", component: <FAQ /> },
     { path: "HowDoesItWorks", component: <HowDoesItWorks /> },
+    { path: "publish", component: <Publish /> },
   ];
-
-  // const handleNext = () => {
-  //   if (currentStep === 0) {
-  //     dispatch(createService({ formData })).then((response) => {
-  //       if (response.payload) {
-  //         dispatch(nextStep());
-  //         navigate(steps[currentStep + 1].path);
-  //       }
-  //     });
-  //   } else {
-  //     dispatch(nextStep());
-  //     navigate(steps[currentStep + 1].path);
-  //   }
-  // };
-
-  // const handleBack = () => {
-  //   if (currentStep > 0) {
-  //     dispatch(previousStep());
-  //     navigate(steps[currentStep - 1].path);
-  //   }
-  // };
 
   const handleNext = () => {
     dispatch(nextStep());
@@ -78,7 +50,7 @@ const Service = () => {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <Navbar/>
+      <Navbar />
 
       <Routes>
         {steps.map((step, index) => (
@@ -90,22 +62,36 @@ const Service = () => {
         {currentStep > 0 && (
           <button
             onClick={handleBack}
-            className="bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
+            className="flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
           >
-            Back
+            <FaAngleLeft size={20} /> Back
           </button>
         )}
+
+        {currentStep === steps.length - 1 && (
+          <button
+            onClick={() => navigate('/dashboard/my-service')}
+            className={
+              serviceId
+                ? `flex items-center bg-blue-500 text-white font-bold py-2 px-4 rounded-md ml-4`
+                : `flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded-md ml-4`
+            }
+          >
+            Go to My Services
+          </button>
+        )}
+
         {currentStep < steps.length - 1 && (
           <button
             onClick={handleNext}
             className={
               serviceId
-                ? `bg-blue-500 text-white font-bold py-2 px-4 rounded-md ml-4`
-                : `bg-gray-500 text-white font-bold py-2 px-4 rounded-md ml-4`
+                ? `flex items-center bg-blue-500 text-white font-bold py-2 px-4 rounded-md ml-4`
+                : `flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded-md ml-4`
             }
             disabled={!serviceId}
           >
-            Next
+            Next <FaAngleRight size={20} />
           </button>
         )}
       </div>
