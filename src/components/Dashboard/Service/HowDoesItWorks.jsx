@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createHowDoesItWorks } from "../../../slices/serviceSlice";
+import { createHowDoesItWorks, deleteHowDoesItWorks, updateHowDoesItWorks } from "../../../slices/serviceSlice";
+import { FiEdit2 } from "react-icons/fi";
+import { IoIosClose } from "react-icons/io";
 
 const HowDoesItWorks = () => {
   const dispatch = useDispatch();
@@ -8,14 +10,12 @@ const HowDoesItWorks = () => {
   const {serviceId} = useSelector((state) => state.service)
   const {howDoesItWorks} = useSelector((state) => state.service.service)
 
-  console.log(serviceId)
+  const [editId, setEditId] = useState(null);
 
   const [formData, setFormData] = useState({
-    serviceId: "",
+    serviceId: serviceId,
     point: "",
   });
-
-  formData.serviceId = serviceId
 
   const handleChange = (e) => {
     const { name, value} = e.target;
@@ -25,10 +25,30 @@ const HowDoesItWorks = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    if (editId) {
+      dispatch(updateHowDoesItWorks({ ...formData, id: editId }));
+    } else {
+      dispatch(createHowDoesItWorks({ formData }));
+    }
 
-    dispatch(createHowDoesItWorks({formData}))
+    setFormData({ serviceId, point: "" });
+    setEditId(null);
   };
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    dispatch(deleteHowDoesItWorks({id, serviceId}));
+  }
+
+  const handleEdit = (e, id) => {
+    e.preventDefault();
+    
+    const howDoesItWorksToEdit = howDoesItWorks.find((howDoesItWork) => howDoesItWork._id === id);
+    if (howDoesItWorksToEdit) {
+      setFormData({ ...formData, point: howDoesItWorksToEdit.point });
+      setEditId(id);
+    }
+  }
 
   return (
     <form
@@ -54,18 +74,27 @@ const HowDoesItWorks = () => {
         />
       </div>
 
-      {howDoesItWorks && howDoesItWorks.map((include) => {
-        const {_id, point} = include;
+      {howDoesItWorks &&
+        howDoesItWorks.map((howDoesItWork) => {
+          const { _id, point } = howDoesItWork;
 
-        return <span key={_id} className='flex'>{point}</span>
-      })}
+          return (
+            <div key={_id} className="flex items-center w-fit bg-[#E9F5FE] mb-1 rounded-full px-2 text-sm text-[#0C7FDA]">
+              <span className="flex mr-2">
+                {point}
+              </span>
+              <button onClick={(e) => handleEdit(e, _id)}><FiEdit2 /></button>
+              <button className="text-red-600" onClick={(e) => handleDelete(e, _id)} ><IoIosClose size={25} /></button>
+            </div>
+          );
+        })}
 
       <div className="flex mt-6">
         <button
           type="submit"
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md"
         >
-          Add
+          {editId ? "Update" : "Add"}
         </button>
       </div>
     </form>

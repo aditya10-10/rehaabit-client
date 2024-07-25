@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { createExclude } from '../../../slices/serviceSlice';
+import { createExclude, deleteExclude, updateExclude } from '../../../slices/serviceSlice';
+import { FiEdit2 } from "react-icons/fi";
+import { IoIosClose } from "react-icons/io";
 
 const Exclude = () => {
   const dispatch = useDispatch();
@@ -8,14 +10,12 @@ const Exclude = () => {
   const {serviceId} = useSelector((state) => state.service)
   const {excludes} = useSelector((state) => state.service.service)
 
-  console.log(serviceId)
+  const [editId, setEditId] = useState(null);
 
   const [formData, setFormData] = useState({
-    serviceId: "",
+    serviceId: serviceId,
     content: "",
   });
-
-  formData.serviceId =  serviceId
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,10 +25,30 @@ const Exclude = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    if (editId) {
+      dispatch(updateExclude({ ...formData, id: editId }));
+    } else {
+      dispatch(createExclude({ formData }));
+    }
 
-    dispatch(createExclude({formData}));
+    setFormData({ serviceId, content: "" });
+    setEditId(null);
   };
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    dispatch(deleteExclude({id, serviceId}));
+  }
+
+  const handleEdit = (e, id) => {
+    e.preventDefault();
+    
+    const excludeToEdit = excludes.find((exclude) => exclude._id === id);
+    if (excludeToEdit) {
+      setFormData({ ...formData, content: excludeToEdit.content });
+      setEditId(id);
+    }
+  }
 
   return (
     <form
@@ -55,18 +75,27 @@ const Exclude = () => {
         />
       </div>
 
-      {excludes && excludes.map((include) => {
-        const {_id, content} = include;
+      {excludes &&
+        excludes.map((exclude) => {
+          const { _id, content } = exclude;
 
-        return <span key={_id} className='flex'>{content}</span>
-      })}
+          return (
+            <div key={_id} className="flex items-center w-fit bg-[#E9F5FE] mb-1 rounded-full px-2 text-sm text-[#0C7FDA]">
+              <span className="flex mr-2">
+                {content}
+              </span>
+              <button onClick={(e) => handleEdit(e, _id)}><FiEdit2 /></button>
+              <button className="text-red-600" onClick={(e) => handleDelete(e, _id)} ><IoIosClose size={25} /></button>
+            </div>
+          );
+        })}
 
       <div className="flex mt-6">
         <button
           type="submit"
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md"
         >
-          Add
+          {editId ? "Update" : "Add"}
         </button>
       </div>
     </form>

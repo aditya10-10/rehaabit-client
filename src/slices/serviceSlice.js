@@ -71,6 +71,37 @@ export const getFullServiceDetails = createAsyncThunk(
   }
 );
 
+export const editService = createAsyncThunk(
+  "service/editService",
+  async ({ formData }, thunkAPI) => {
+    try {
+      const response = await apiConnector("PUT", EDIT_SERVICE_API, formData, {
+        "Content-Type": "multipart/form-data",
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const deleteService = createAsyncThunk(
+  "service/deleteService",
+  async ({ categoryId, subCategoryId }, thunkAPI) => {
+    try {
+      const response = await apiConnector("DELETE", DELETE_SERVICE_API, {
+        categoryId,
+        subCategoryId,
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
 // INCLUDE
 export const createInclude = createAsyncThunk(
   "service/createInclude",
@@ -79,6 +110,39 @@ export const createInclude = createAsyncThunk(
       const response = await apiConnector("POST", CREATE_INCLUDE_API, formData);
       console.log(response.data);
       return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const updateInclude = createAsyncThunk(
+  "service/updateInclude",
+  async ({ id, serviceId, content }, thunkAPI) => {
+    try {
+      const response = await apiConnector("PUT", UPDATE_INCLUDE_API, {
+        id,
+        serviceId,
+        content,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const deleteInclude = createAsyncThunk(
+  "service/deleteInclude",
+  async ({ id, serviceId }, thunkAPI) => {
+    try {
+      const response = await apiConnector("DELETE", DELETE_INCLUDE_API, {
+        id,
+        serviceId,
+      });
+      return response.data.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -101,6 +165,39 @@ export const createExclude = createAsyncThunk(
   }
 );
 
+export const updateExclude = createAsyncThunk(
+  "service/updateExclude",
+  async ({ id, serviceId, content }, thunkAPI) => {
+    try {
+      const response = await apiConnector("PUT", UPDATE_EXCLUDE_API, {
+        id,
+        serviceId,
+        content,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const deleteExclude = createAsyncThunk(
+  "service/deleteExclude",
+  async ({ id, serviceId }, thunkAPI) => {
+    try {
+      const response = await apiConnector("DELETE", DELETE_EXCLUDE_API, {
+        id,
+        serviceId,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
 // FAQ
 export const createFAQ = createAsyncThunk(
   "service/createFAQ",
@@ -108,6 +205,53 @@ export const createFAQ = createAsyncThunk(
     try {
       const response = await apiConnector("POST", CREATE_FAQ_API, formData);
       console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const updateFAQ = createAsyncThunk(
+  "service/updateFAQ",
+  async ({ id, serviceId, question, answer }, thunkAPI) => {
+    try {
+      const response = await apiConnector("PUT", UPDATE_FAQ_API, {
+        id,
+        serviceId,
+        question,
+        answer,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const deleteFAQ = createAsyncThunk(
+  "service/deleteFAQ",
+  async ({ id, serviceId }, thunkAPI) => {
+    try {
+      const response = await apiConnector("DELETE", DELETE_FAQ_API, {
+        id,
+        serviceId,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const getAllFAQs = createAsyncThunk(
+  "service/getAllFAQs",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", GET_FAQ_API);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -126,8 +270,41 @@ export const createHowDoesItWorks = createAsyncThunk(
         CREATE_HOW_DOES_IT_WORKS_API,
         formData
       );
-      console.log(response.data);
       return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const updateHowDoesItWorks = createAsyncThunk(
+  "service/updateHowDoesItWorks",
+  async ({ id, serviceId, point }, thunkAPI) => {
+    try {
+      const response = await apiConnector("PUT", UPDATE_HOW_DOES_IT_WORKS_API, {
+        id,
+        serviceId,
+        point,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const deleteHowDoesItWorks = createAsyncThunk(
+  "service/deleteHowDoesItWorks",
+  async ({ id, serviceId }, thunkAPI) => {
+    try {
+      const response = await apiConnector(
+        "DELETE",
+        DELETE_HOW_DOES_IT_WORKS_API,
+        { id, serviceId }
+      );
+      return response.data.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -149,6 +326,8 @@ const serviceSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
+
+      // CREATE SERVICE
       .addCase(createService.pending, (state) => {
         state.isLoading = true;
 
@@ -163,7 +342,7 @@ const serviceSlice = createSlice({
           icon: "success",
         });
         // state.currentStep += 1;
-        state.serviceId = action.payload.service._id
+        state.serviceId = action.payload.service._id;
       })
       .addCase(createService.rejected, (state, action) => {
         state.isLoading = false;
@@ -174,6 +353,8 @@ const serviceSlice = createSlice({
           icon: "error",
         });
       })
+
+      // GET FULL SERVICE DETAILS
       .addCase(getFullServiceDetails.pending, (state) => {
         state.isLoading = true;
 
@@ -197,6 +378,54 @@ const serviceSlice = createSlice({
         //   icon: "error",
         // });
       })
+
+      // Edit Service
+      .addCase(editService.pending, (state) => {
+        state.isLoading = true;
+        Swal.showLoading();
+      })
+      .addCase(editService.fulfilled, (state, action) => {
+        state.service = action.payload.service;
+        state.isLoading = false;
+        Swal.fire({
+          title: "Service Updated!",
+          icon: "success",
+        });
+      })
+      .addCase(editService.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+        Swal.fire({
+          title: "Error in Updating Service!",
+          icon: "error",
+        });
+      })
+
+      // Delete Service
+      .addCase(deleteService.pending, (state) => {
+        state.isLoading = true;
+        Swal.showLoading();
+      })
+      .addCase(deleteService.fulfilled, (state, action) => {
+        state.service = state.service.filter(
+          (service) => service._id !== action.meta.arg.id
+        );
+        state.isLoading = false;
+        Swal.fire({
+          title: "Service Deleted!",
+          icon: "success",
+        });
+      })
+      .addCase(deleteService.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+        Swal.fire({
+          title: "Error in Deleting Service!",
+          icon: "error",
+        });
+      })
+
+      // CREATE INCLUDE
       .addCase(createInclude.pending, (state) => {
         state.isLoading = true;
 
@@ -221,6 +450,60 @@ const serviceSlice = createSlice({
           icon: "error",
         });
       })
+
+      // UPDATE INCLUDE
+      .addCase(updateInclude.pending, (state) => {
+        state.isLoading = true;
+
+        Swal.showLoading();
+      })
+      .addCase(updateInclude.fulfilled, (state, action) => {
+        state.service.includes = action.payload.includes;
+        state.isLoading = false;
+
+        Swal.fire({
+          title: "Include Updated!",
+          icon: "success",
+        });
+        // state.currentStep += 1;
+      })
+      .addCase(updateInclude.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        Swal.fire({
+          title: "Error in Updating Include!",
+          icon: "error",
+        });
+      })
+
+      // DELETE INCLUDE
+      .addCase(deleteInclude.pending, (state) => {
+        state.isLoading = true;
+
+        Swal.showLoading();
+      })
+      .addCase(deleteInclude.fulfilled, (state, action) => {
+        state.service.includes = action.payload.includes;
+        state.isLoading = false;
+
+        Swal.fire({
+          title: "Include Deleted!",
+          icon: "success",
+        });
+        // state.currentStep += 1;
+      })
+      .addCase(deleteInclude.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        Swal.fire({
+          title: "Error in Deleting Include!",
+          icon: "error",
+        });
+      })
+
+      //CREATE EXCLUDE
       .addCase(createExclude.pending, (state) => {
         state.isLoading = true;
 
@@ -245,6 +528,60 @@ const serviceSlice = createSlice({
           icon: "error",
         });
       })
+
+      // UPDATE EXCLUDE
+      .addCase(updateExclude.pending, (state) => {
+        state.isLoading = true;
+
+        Swal.showLoading();
+      })
+      .addCase(updateExclude.fulfilled, (state, action) => {
+        state.service.excludes = action.payload.excludes;
+        state.isLoading = false;
+
+        Swal.fire({
+          title: "Exclude Updated!",
+          icon: "success",
+        });
+        // state.currentStep += 1;
+      })
+      .addCase(updateExclude.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        Swal.fire({
+          title: "Error in Updating Exclude!",
+          icon: "error",
+        });
+      })
+
+      // DELETE EXCLUDE
+      .addCase(deleteExclude.pending, (state) => {
+        state.isLoading = true;
+
+        Swal.showLoading();
+      })
+      .addCase(deleteExclude.fulfilled, (state, action) => {
+        state.service.excludes = action.payload.excludes;
+        state.isLoading = false;
+
+        Swal.fire({
+          title: "Exclude Deleted!",
+          icon: "success",
+        });
+        // state.currentStep += 1;
+      })
+      .addCase(deleteExclude.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        Swal.fire({
+          title: "Error in Deleting Exclude!",
+          icon: "error",
+        });
+      })
+
+      // CREATE FAQ
       .addCase(createFAQ.pending, (state) => {
         state.isLoading = true;
 
@@ -269,6 +606,65 @@ const serviceSlice = createSlice({
           icon: "error",
         });
       })
+
+      // UPDATE FAQ
+      .addCase(updateFAQ.pending, (state) => {
+        state.isLoading = true;
+        Swal.showLoading();
+      })
+      .addCase(updateFAQ.fulfilled, (state, action) => {
+        state.service.faqs = action.payload.faqs;
+        state.isLoading = false;
+        Swal.fire({
+          title: "FAQ Updated!",
+          icon: "success",
+        });
+      })
+      .addCase(updateFAQ.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+        Swal.fire({
+          title: "Error in Updating FAQ!",
+          icon: "error",
+        });
+      })
+
+      // Delete FAQ
+      .addCase(deleteFAQ.pending, (state) => {
+        state.isLoading = true;
+        Swal.showLoading();
+      })
+      .addCase(deleteFAQ.fulfilled, (state, action) => {
+        state.service.faqs = action.payload.faqs;
+        state.isLoading = false;
+        Swal.fire({
+          title: "FAQ Deleted!",
+          icon: "success",
+        });
+      })
+      .addCase(deleteFAQ.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+        Swal.fire({
+          title: "Error in Deleting FAQ!",
+          icon: "error",
+        });
+      })
+
+      // Get FAQ
+      .addCase(getAllFAQs.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllFAQs.fulfilled, (state, action) => {
+        state.service.faqs = action.payload.faqs;
+        state.isLoading = false;
+      })
+      .addCase(getAllFAQs.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+      })
+
+      // CREATE HOW DOES IT WORKS
       .addCase(createHowDoesItWorks.pending, (state) => {
         state.isLoading = true;
 
@@ -292,10 +688,54 @@ const serviceSlice = createSlice({
           title: "Error in Creating How Does It Works!",
           icon: "error",
         });
+      })
+
+      // Update How Does It Works
+      .addCase(updateHowDoesItWorks.pending, (state) => {
+        state.isLoading = true;
+        Swal.showLoading();
+      })
+      .addCase(updateHowDoesItWorks.fulfilled, (state, action) => {
+        state.service.howDoesItWorks = action.payload.howDoesItWorks;
+        state.isLoading = false;
+        Swal.fire({
+          title: "How Does It Works Updated!",
+          icon: "success",
+        });
+      })
+      .addCase(updateHowDoesItWorks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+        Swal.fire({
+          title: "Error in Updating How Does It Works!",
+          icon: "error",
+        });
+      })
+
+      // Delete How Does It Works
+      .addCase(deleteHowDoesItWorks.pending, (state) => {
+        state.isLoading = true;
+        Swal.showLoading();
+      })
+      .addCase(deleteHowDoesItWorks.fulfilled, (state, action) => {
+        state.service.howDoesItWorks = action.payload.howDoesItWorks;
+        state.isLoading = false;
+        Swal.fire({
+          title: "How Does It Works Deleted!",
+          icon: "success",
+        });
+      })
+      .addCase(deleteHowDoesItWorks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+        Swal.fire({
+          title: "Error in Deleting How Does It Works!",
+          icon: "error",
+        });
       });
   },
 });
 
-export const {nextStep, previousStep} = serviceSlice.actions;
+export const { nextStep, previousStep } = serviceSlice.actions;
 
 export default serviceSlice.reducer;
