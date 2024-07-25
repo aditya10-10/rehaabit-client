@@ -8,6 +8,11 @@ import { Provider } from "react-redux";
 import rootReducer from "./reducer/index.js";
 import { configureStore } from "@reduxjs/toolkit";
 import { Toaster } from "react-hot-toast";
+import { createTheme, MantineProvider } from "@mantine/core";
+
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
 
 const store = configureStore({
   reducer: rootReducer,
@@ -16,11 +21,13 @@ const store = configureStore({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App /> 
-        <Toaster />
-      </BrowserRouter>
-    </Provider>
+    <MantineProvider theme={theme}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+          <Toaster />
+        </BrowserRouter>
+      </Provider>
+    </MantineProvider>
   </React.StrictMode>
 );
