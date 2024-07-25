@@ -1,104 +1,84 @@
 import React, { useEffect, useState } from "react";
-import "react-phone-input-2/lib/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createCategory } from "../../../slices/categorySlice";
 import ProgressBar from "../../ProgressBar";
+import { IoIosClose } from "react-icons/io";
+import ImageDropzone from "../../ImageDropzone"; 
 
 const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   const [categoryName, setCategoryName] = useState("");
   const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState("");
-
   const { isLoading } = useSelector((state) => state.categories);
   const [progress, setProgress] = useState(0);
-  // console.log(isLoading)
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-    file ? setImageName(file.name) : setImageName("");
-  };
 
   useEffect(() => {
-    if (!isLoading && progress === 100) setIsOpen(!isOpen);
+    if (!isLoading && progress === 100) setIsOpen(false);
   }, [isLoading, progress]);
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
     dispatch(createCategory({ name: categoryName, icon: image, setProgress }));
   };
 
   const handleCancel = () => {
     setCategoryName("");
     setImage(null);
-    setImageName("");
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <main className="flex flex-col justify-center items-center px-4 py-8 bg-white rounded-xl w-[25%] shadow-sm transform transition-transform duration-300 scale-100">
-        <div className="w-full flex items-center justify-center">
-          <div className="w-full p-8">
-            {/* CATEGORY NAME */}
-            <div className="flex items-center justify-between mb-10">
-              <label htmlFor="categoryName" className="text-[20px] font-[400]">
-                Category
-              </label>
+      <main className="relative flex flex-col justify-center items-center p-4 bg-white rounded-xl w-1/4 shadow-sm transform transition-transform duration-300 scale-100">
+        <IoIosClose
+          className="absolute top-4 right-4 text-2xl cursor-pointer bg-red-600 text-white rounded-full"
+          onClick={handleCancel}
+        />
+        <h1 className="text-4xl font-semibold mb-4">Category</h1>
 
-              <input
-                type="text"
-                id="subCategoryName"
-                value={categoryName}
-                onChange={(e) => setCategoryName(e.target.value)}
-                className="appearance-none border rounded-[5px] w-[60%] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Enter Category Name"
-              />
-            </div>
-
-            {/* UPLOAD IMAGE */}
-            <div className="flex items-center justify-between mb-10">
-              <label htmlFor="image" className="text-[20px] font-[400]">
-                Upload Image
-              </label>
-
-              <div className="border flex flex-col items-center w-[60%] rounded-[5px] p-10">
-                <input
-                  type="file"
-                  id="image"
-                  className="hidden"
-                  onChange={handleImageChange}
-                />
+        <div className="w-full flex">
+          <div className="w-full p-4">
+            <form onSubmit={handleSave}>
+              <div className="mb-4">
                 <label
-                  htmlFor="image"
-                  className="shadow border rounded-[5px] w-full py-2 px-2 block text-[20px] text-white font-[400] bg-[#E8C64C] hover:bg-[#e7bc1f] cursor-pointer text-center"
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="categoryName"
                 >
-                  Upload Image
+                  Category Name*
                 </label>
-                <span className="text-gray-700 text-sm mt-2 block">
-                  {imageName ? `Selected file: ${imageName}` : ""}
-                </span>
+                <input
+                  id="categoryName"
+                  name="categoryName"
+                  type="text"
+                  value={categoryName}
+                  onChange={(e) => setCategoryName(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter Category Name"
+                  required
+                />
               </div>
-            </div>
 
-            {/* PROGRESS BAR */}
-            {isLoading && <ProgressBar progress={progress} />}
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="image"
+                >
+                  Category Icon*
+                </label>
+                <ImageDropzone onDrop={setImage} image={image} />
+              </div>
 
-            {/* BUTTONS */}
-            <div className="flex justify-center space-x-6">
-              <button
-                className="bg-[#006049] hover:bg-green-700 text-white text-[20px] font-[400] px-2 rounded-[5px] focus:outline-none focus:shadow-outline"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-              <button
-                className="border-solid border-2 border-[#E86558] hover:bg-gray-100 text-[#E86558] text-[20px] font-[400] px-2 rounded-[5px] focus:outline-none focus:shadow-outline"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-            </div>
+              {isLoading && <ProgressBar progress={progress} />}
+
+              <div className="flex justify-center space-x-6 mt-8">
+                <button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-medium px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </main>
