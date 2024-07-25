@@ -20,33 +20,33 @@ export const endpoints = {
 
 //  SERVICE ENDPOINTS
 export const serviceEndpoints = {
-  CREATE_SERVICE_API : BASE_URL + '/createService',
-  GET_FULL_SERVICE_DETAILS_API : BASE_URL + '/getFullServiceDetails',
-  EDIT_SERVICE_API: BASE_URL + '/editService',
-  DELETE_SERVICE_API: BASE_URL + '/deleteService',
-  CREATE_INCLUDE_API: BASE_URL + '/createInclude',
-  DELETE_INCLUDE_API : BASE_URL + '/deleteInclude',
-  UPDATE_INCLUDE_API: '/updateInclude',
-  CREATE_EXCLUDE_API: BASE_URL + '/createExclude',
-  DELETE_EXCLUDE_API : BASE_URL + '/deleteExclude',
-  UPDATE_EXCLUDE_API: '/updateExclude',
-  CREATE_FAQ_API:BASE_URL + '/createFAQ',
-  UPDATE_FAQ_API:BASE_URL + '/updateFAQ',
-  GET_FAQ_API:BASE_URL + '/getAllFAQ',
-  DELETE_FAQ_API:BASE_URL + '/deleteFAQ',
-  CREATE_HOW_DOES_IT_WORKS_API: BASE_URL + '/createHowDoesItWorks',
-  DELETE_HOW_DOES_IT_WORKS_API: BASE_URL + '/deleteHowDoesItWorks',
-  UPDATE_HOW_DOES_IT_WORKS_API: BASE_URL + '/updateHowDoesItWorks',
-}
+  CREATE_SERVICE_API: BASE_URL + "/createService",
+  GET_FULL_SERVICE_DETAILS_API: BASE_URL + "/getFullServiceDetails",
+  EDIT_SERVICE_API: BASE_URL + "/editService",
+  DELETE_SERVICE_API: BASE_URL + "/deleteService",
+  CREATE_INCLUDE_API: BASE_URL + "/createInclude",
+  DELETE_INCLUDE_API: BASE_URL + "/deleteInclude",
+  UPDATE_INCLUDE_API: BASE_URL + "/updateInclude",
+  CREATE_EXCLUDE_API: BASE_URL + "/createExclude",
+  DELETE_EXCLUDE_API: BASE_URL + "/deleteExclude",
+  UPDATE_EXCLUDE_API: BASE_URL + "/updateExclude",
+  CREATE_FAQ_API: BASE_URL + "/createFAQ",
+  UPDATE_FAQ_API: BASE_URL + "/updateFAQ",
+  GET_FAQ_API: BASE_URL + "/getAllFAQ",
+  DELETE_FAQ_API: BASE_URL + "/deleteFAQ",
+  CREATE_HOW_DOES_IT_WORKS_API: BASE_URL + "/createHowDoesItWorks",
+  DELETE_HOW_DOES_IT_WORKS_API: BASE_URL + "/deleteHowDoesItWorks",
+  UPDATE_HOW_DOES_IT_WORKS_API: BASE_URL + "/updateHowDoesItWorks",
+};
 
 // PROFILE ENDPOINTS
 export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/getUserDetails",
-}
+};
 
 // SETTINGS PAGE API
 export const settingsEndpoints = {
   UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/updateDisplayPicture",
   UPDATE_PROFILE_API: BASE_URL + "/updateProfile",
   DELETE_PROFILE_API: BASE_URL + "/deleteProfile",
-}
+};
