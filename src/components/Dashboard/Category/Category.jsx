@@ -1,15 +1,21 @@
+import { showAllCategories } from "../../../slices/categorySlice";
 import Pagination from "../Pagination";
 import CategoriesCards from "./CategoriesCards";
 import CreateCategoryModal from "./CreateCategoryModal";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Category = () => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 6;
 
   const { categories } = useSelector((state) => state.categories);
+
+  useEffect(() => {
+    dispatch(showAllCategories());
+}, [dispatch])
 
   return (
     <div className="p-10 w-full">

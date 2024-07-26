@@ -8,7 +8,8 @@ import {
   updateCategoryName,
 } from "../../../slices/categorySlice";
 import { useState } from "react";
-// import { showAllSubCategories } from "../../slices/subCategorySlice";
+import Swal from "sweetalert2";
+import ShowSubCategoriesModal from "./ShowSubCategoriesModal";
 
 const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
   // console.log(categories)
@@ -19,6 +20,8 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
   const [editedCategoryId, setEditedCategoryId] = useState(null);
   const [newName, setNewName] = useState("");
   const [newImage, setNewImage] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalCategoryId, setModalCategoryId] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -43,8 +46,55 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
     dispatch(updateCategoryIcon({ categoryId, icon: file }));
   };
 
+  const handleDelete = (categoryId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#06952c",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteCategory(categoryId));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your service has been deleted.",
+          icon: "success",
+        });
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire({
+          title: "Cancelled",
+          text: "Your service is safe :)",
+          icon: "error",
+        });
+      }
+    });
+  };
+
+  const handleModal = (categoryId) => {
+    setIsOpen(!isOpen);
+    setModalCategoryId(categoryId);
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      {isOpen && (
+        <ShowSubCategoriesModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          modalCategoryId={modalCategoryId}
+        />
+      )}
+
       {currentCategories.map((category) => {
         const { _id, name, icon, subCategory } = category;
 
@@ -106,13 +156,24 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
               )}
             </div>
 
-            {/* DELETE BUTTON */}
-            <button
-              className="bg-red-600 text-white rounded-[5px] py-2 px-4 text-sm"
-              onClick={() => dispatch(deleteCategory(_id))}
-            >
-              Delete
-            </button>
+            {/* BUTTONS */}
+            <div className="flex gap-2">
+              {/* DELETE BUTTON */}
+              <button
+                className="bg-red-600 text-white rounded-[5px] py-2 px-4 text-sm"
+                onClick={() => handleDelete(_id)}
+              >
+                Delete
+              </button>
+
+              {/* SHOW SUBCATEGORIES BUTTON */}
+              {subCategory.length > 0 && <button
+                className="bg-[#0C7FDA] text-white rounded-[5px] py-2 px-4 text-sm"
+                onClick={() => handleModal(_id)}
+              >
+                Sub-Categories
+              </button>}
+            </div>
           </div>
         );
       })}

@@ -10,10 +10,6 @@ function Dashboard() {
   const dispatch = useDispatch();
   const { loading: authLoading } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-      dispatch(showAllCategories());
-      dispatch(showAllSubCategories());
-  }, [dispatch])
 
   if (authLoading) {
     return (
@@ -24,10 +20,12 @@ function Dashboard() {
   }
 
   return (
-    <div className="relative flex flex-col min-h-[calc(100vh-3.5rem)]">
+    <div className="flex flex-col min-h-[calc(100vh-3.5rem)]">
       <Navbar />
       <div className="flex">
-        <Sidebar />
+      <div className="sticky top-0 z-40">
+          <Sidebar />
+        </div>
         <div className="flex w-full">
           <Outlet />
         </div>

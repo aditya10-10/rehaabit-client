@@ -49,7 +49,7 @@ export const addSubCategory = createAsyncThunk(
           setProgress(percentCompleted);
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -66,7 +66,7 @@ export const deleteSubCategory = createAsyncThunk(
         categoryId,
         subCategoryId,
       });
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -107,7 +107,7 @@ export const updateSubCategoryIcon = createAsyncThunk(
         },
         { "Content-Type": "multipart/form-data" }
       );
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -179,15 +179,15 @@ const subCategorySlice = createSlice({
         Swal.showLoading();
       })
       .addCase(deleteSubCategory.fulfilled, (state, action) => {
-        console.log(action);
+        // console.log(action);
         state.subcategories = state.subcategories.filter(
           (category) => category._id !== action.payload.deletedSubCategory._id
         );
         state.isLoading = false;
-        Swal.fire({
-          title: "Category Deleted",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Category Deleted",
+        //   icon: "success",
+        // });
       })
       .addCase(deleteSubCategory.rejected, (state, action) => {
         state.isLoading = false;
@@ -252,7 +252,7 @@ const subCategorySlice = createSlice({
         // Swal.showLoading();
       })
       .addCase(getSubCategoriesByCategory.fulfilled, (state, action) => {
-        console.log(action);
+        // console.log(action);
 
         state.subCategoriesByCategory = action.payload;
 

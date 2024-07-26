@@ -63,7 +63,7 @@ const sidebarLinks = [
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col items-center shadow-custom-shadow p-4  min-w-[300px] min-h-[100vh] bg-white">
+    <div className="sticky top-[100px] flex flex-col items-center shadow-custom-shadow p-4  min-w-[300px] h-[90vh] bg-white">
       <div className="p-4 w-full">
         {sidebarLinks.map((link) => {
           const { id, icon, text, to, index } = link;

@@ -8,6 +8,7 @@ import {
   updateSubCategoryName,
 } from "../../../slices/subCategorySlice";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const SubCategoriesCards = ({ subcategories, currentPage, cardsPerPage }) => {
   const indexOfLastCard = currentPage * cardsPerPage;
@@ -45,6 +46,39 @@ const SubCategoriesCards = ({ subcategories, currentPage, cardsPerPage }) => {
 
   const handleEditIcon = (subCategoryId, categoryId, file) => {
     dispatch(updateSubCategoryIcon({ subCategoryId, categoryId, icon: file }));
+  };
+
+  const handleDelete = (categoryId, subCategoryId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#06952c",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteSubCategory({ categoryId, subCategoryId }));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your service has been deleted.",
+          icon: "success",
+        });
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire({
+          title: "Cancelled",
+          text: "Your service is safe :)",
+          icon: "error",
+        });
+      }
+    });
   };
 
   return (
@@ -121,9 +155,7 @@ const SubCategoriesCards = ({ subcategories, currentPage, cardsPerPage }) => {
             {/* DELETE BUTTON */}
             <button
               className="bg-red-600 text-white rounded-[5px] py-2 px-4 text-sm"
-              onClick={() =>
-                dispatch(deleteSubCategory({ categoryId, subCategoryId: _id }))
-              }
+              onClick={() => handleDelete(categoryId, _id)}
             >
               Delete
             </button>
