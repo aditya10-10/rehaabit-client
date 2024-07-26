@@ -70,14 +70,14 @@ const Service = () => {
 
         {currentStep === steps.length - 1 && (
           <button
-            onClick={() => navigate('/dashboard/my-service')}
+            onClick={() => navigate("/dashboard/my-services")}
             className={
               serviceId
                 ? `flex items-center bg-blue-500 text-white font-bold py-2 px-4 rounded-md ml-4`
                 : `flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded-md ml-4`
             }
           >
-            Go to My Services
+            Go to My Servicess
           </button>
         )}
 

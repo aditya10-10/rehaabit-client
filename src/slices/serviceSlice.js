@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 const {
   CREATE_SERVICE_API,
+  GET_ALL_SERVICES_API,
   GET_FULL_SERVICE_DETAILS_API,
   EDIT_SERVICE_API,
   DELETE_SERVICE_API,
@@ -26,6 +27,7 @@ const {
 const initialState = {
   service: [],
   serviceDetails: [],
+  allServices: [],
   serviceId: null,
   isLoading: false,
   error: null,
@@ -45,6 +47,19 @@ export const createService = createAsyncThunk(
       );
       console.log(response.data);
       return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const getAllServices = createAsyncThunk(
+  "service/getAllServices",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", GET_ALL_SERVICES_API);
+      return response.data.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -78,7 +93,7 @@ export const editService = createAsyncThunk(
       const response = await apiConnector("PUT", EDIT_SERVICE_API, formData, {
         "Content-Type": "multipart/form-data",
       });
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -88,13 +103,13 @@ export const editService = createAsyncThunk(
 
 export const deleteService = createAsyncThunk(
   "service/deleteService",
-  async ({ categoryId, subCategoryId }, thunkAPI) => {
+  async ({ serviceId, subCategoryId }, thunkAPI) => {
     try {
       const response = await apiConnector("DELETE", DELETE_SERVICE_API, {
-        categoryId,
+        serviceId,
         subCategoryId,
       });
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -354,6 +369,31 @@ const serviceSlice = createSlice({
         });
       })
 
+      // GET ALL SERVICES
+      .addCase(getAllServices.pending, (state) => {
+        state.isLoading = true;
+
+        // Swal.showLoading()
+      })
+      .addCase(getAllServices.fulfilled, (state, action) => {
+        state.allServices = action.payload;
+        state.isLoading = false;
+
+        // Swal.fire({
+        //   title: "Service Created!",
+        //   icon: "success",
+        // });
+      })
+      .addCase(getAllServices.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        // Swal.fire({
+        //   title: "Error in Creating Service!",
+        //   icon: "error",
+        // });
+      })
+
       // GET FULL SERVICE DETAILS
       .addCase(getFullServiceDetails.pending, (state) => {
         state.isLoading = true;
@@ -385,7 +425,10 @@ const serviceSlice = createSlice({
         Swal.showLoading();
       })
       .addCase(editService.fulfilled, (state, action) => {
-        state.service = action.payload.service;
+        state.allServices = state.allServices.map((service) =>
+          service._id === action.payload._id ? action.payload : service
+        );
+
         state.isLoading = false;
         Swal.fire({
           title: "Service Updated!",
@@ -407,18 +450,21 @@ const serviceSlice = createSlice({
         Swal.showLoading();
       })
       .addCase(deleteService.fulfilled, (state, action) => {
-        state.service = state.service.filter(
-          (service) => service._id !== action.meta.arg.id
+        // console.log(action.payload)
+        state.allServices = state.allServices.filter(
+          (service) => service._id !== action.payload._id
         );
         state.isLoading = false;
-        Swal.fire({
-          title: "Service Deleted!",
-          icon: "success",
-        });
+
+        // Swal.fire({
+        //   title: "Service Deleted!",
+        //   icon: "success",
+        // });
       })
       .addCase(deleteService.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
+
         Swal.fire({
           title: "Error in Deleting Service!",
           icon: "error",

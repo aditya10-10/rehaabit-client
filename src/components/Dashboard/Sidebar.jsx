@@ -32,8 +32,8 @@ const sidebarLinks = [
   {
     id: 4,
     icon: <MdHomeRepairService />,
-    text: "My Service",
-    to: "my-service",
+    text: "My Services",
+    to: "my-services",
   },
   {
     id: 5,
@@ -62,7 +62,6 @@ const sidebarLinks = [
 ];
 
 const Sidebar = () => {
-
   return (
     <div className="flex flex-col items-center shadow-custom-shadow p-4  min-w-[300px] min-h-[100vh] bg-white">
       <div className="p-4 w-full">
