@@ -187,10 +187,10 @@ const categorySlice = createSlice({
         state.isLoading = false;
         // toast.error("Category Deleted");
         // toast.dismiss();
-        Swal.fire({
-          title: "Category Deleted!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Category Deleted!",
+        //   icon: "success",
+        // });
       })
       .addCase(deleteCategory.rejected, (state, action) => {
         state.isLoading = false;

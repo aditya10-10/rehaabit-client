@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SubCategoriesCards from "./SubCategoriesCards";
 import AddSubCategoryModal from "./AddSubCategoryModal";
-import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
+import { getSubCategoriesByCategory, showAllSubCategories } from "../../../slices/subCategorySlice";
 
 const SubCategory = () => {
   const dispatch = useDispatch();
@@ -31,6 +31,10 @@ const SubCategory = () => {
   useEffect(() => {
     dispatch(getSubCategoriesByCategory({categoryId : filterId}));
   }, [dispatch, filterId])
+
+  useEffect(() => {
+    dispatch(showAllSubCategories());
+}, [dispatch])
 
   const filteredSubCategories =
     filterId === "All" || filterId === ""
