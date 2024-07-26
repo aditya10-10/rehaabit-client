@@ -3,88 +3,82 @@ import { FiEdit2 } from "react-icons/fi";
 import { HiClock } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { formattedDate } from "../../../utils/dateFormatter";
-
-const services = [
-  {
-    _id: "669b2868bb6a0a90598d65f5",
-
-    serviceName: "Premium Home Cleaning",
-    serviceDescription:
-      "A comprehensive home cleaning service that covers all rooms, floors, and surfaces.",
-    timeToComplete: "3 hours",
-    price: 150,
-    thumbnail:
-      "https://res.cloudinary.com/deku3jiec/image/upload/v1721444456/rehaabit/uf4scuec21otm5zawi0o.jpg",
-    warranty: "7 days satisfaction guarantee",
-    howDoesItWorks: [],
-    includes: [],
-    excludes: [],
-    faqs: [],
-    ratingAndReviews: [],
-    status: "Draft",
-    createdAt: "2024-07-20T03:00:56.987Z",
-
-    __v: 0,
-  },
-  {
-    _id: "669cec91ddc8a269cec61c3e",
-    serviceName: "dfgh",
-    serviceDescription: "fdzg",
-    timeToComplete: "fzdg",
-    price: 3000,
-    thumbnail:
-      "https://res.cloudinary.com/deku3jiec/image/upload/v1721560207/rehaabit/zg6gjutfykddzapwbh1p.jpg",
-    howDoesItWorks: [],
-    includes: [],
-    excludes: [],
-    faqs: [],
-    ratingAndReviews: [],
-    status: "Published",
-    createdAt: "2024-07-21T11:10:09.691Z",
-
-    __v: 0,
-  },
-  {
-    _id: "669ceff3ddc8a269cec61d03",
-    serviceName: "cvnb",
-    serviceDescription: "xcvnb",
-    timeToComplete: "7",
-    price: 6575,
-    thumbnail:
-      "https://res.cloudinary.com/deku3jiec/image/upload/v1721561073/rehaabit/sgrh8kjkoknpwuuc46un.jpg",
-    howDoesItWorks: [],
-    includes: [],
-    excludes: [],
-    faqs: [],
-    ratingAndReviews: [],
-    status: "Draft",
-    createdAt: "2024-07-21T11:24:35.687Z",
-
-    __v: 0,
-  },
-  {
-    _id: "669cf0b7ddc8a269cec61d43",
-    serviceName: "ijhvgkl",
-    serviceDescription: "asdfg ",
-    timeToComplete: "5",
-    price: 3423423,
-    thumbnail:
-      "https://res.cloudinary.com/deku3jiec/image/upload/v1721561269/rehaabit/a0fikdy0l3zy9jt0kg5s.jpg",
-    howDoesItWorks: ["669de42f792f7c3bbcf20399"],
-    includes: ["669ddbafddc8a269cec61edb", "669ddd7f22d3cc64882b64f6"],
-    excludes: ["669ddf790cf78412995c473c"],
-    faqs: ["669de359792f7c3bbcf20393"],
-    ratingAndReviews: [],
-    status: "Draft",
-    createdAt: "2024-07-21T11:27:51.780Z",
-
-    __v: 0,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { deleteService } from "../../../slices/serviceSlice";
+import Swal from "sweetalert2";
+import { useState } from "react";
+import EditServiceModal from "./EditServiceModal";
 
 const ServicesList = () => {
+  const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { allServices } = useSelector((state) => state.service);
+
+  const [formData, setFormData] = useState({
+    serviceId: "",
+    serviceName: "",
+    serviceDescription: "",
+    timeToComplete: "",
+    price: "",
+    categoryId: "",
+    subCategoryId: "",
+    thumbnail: null,
+    warranty: "",
+  });
+
+  const handleDeleteService = (e, serviceId, subCategoryId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#06952c",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteService({ serviceId, subCategoryId }));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your service has been deleted.",
+          icon: "success",
+        });
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire({
+          title: "Cancelled",
+          text: "Your service is safe :)",
+          icon: "error",
+        });
+      }
+    });
+  };
+
+  const handleModal = (serviceId, serviceName, serviceDescription, price) => {
+    setIsOpen(!isOpen);
+    formData.serviceId = serviceId;
+    formData.serviceName = serviceName;
+    formData.serviceDescription = serviceDescription;
+    formData.price = price;
+  };
+
   return (
     <>
+      {isOpen && (
+        <EditServiceModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      )}
+
       <table className="w-full">
         <thead>
           <tr className="flex gap-x-10 rounded-t-md border-b px-6 py-2">
@@ -100,7 +94,7 @@ const ServicesList = () => {
 
         <div className="max-h-[85vh] overflow-y-auto w-full">
           <tbody className="flex flex-col w-full">
-            {services.map((service) => {
+            {allServices.map((service) => {
               const {
                 _id,
                 serviceName,
@@ -109,7 +103,9 @@ const ServicesList = () => {
                 timeToComplete,
                 createdAt,
                 status,
-                price
+                price,
+                categoryId,
+                subCategoryId,
               } = service;
 
               return (
@@ -144,14 +140,18 @@ const ServicesList = () => {
                   <td className="text-sm font-medium">₹ {price}</td>
                   <td className="text-sm font-medium ">
                     <button
-                      title="Edit"
                       className="px-2 transition-all duration-200 hover:scale-110"
+                      onClick={() =>
+                        handleModal(_id, serviceName, serviceDescription, price)
+                      }
                     >
                       <FiEdit2 size={20} />
                     </button>
                     <button
-                      title="Delete"
                       className="px-1 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]"
+                      onClick={(e) =>
+                        handleDeleteService(e, _id, subCategoryId)
+                      }
                     >
                       <RiDeleteBin6Line size={20} />
                     </button>

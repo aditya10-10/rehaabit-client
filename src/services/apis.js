@@ -22,6 +22,7 @@ export const endpoints = {
 export const serviceEndpoints = {
   CREATE_SERVICE_API: BASE_URL + "/createService",
   GET_FULL_SERVICE_DETAILS_API: BASE_URL + "/getFullServiceDetails",
+  GET_ALL_SERVICES_API: BASE_URL + "/getAllServices",
   EDIT_SERVICE_API: BASE_URL + "/editService",
   DELETE_SERVICE_API: BASE_URL + "/deleteService",
   CREATE_INCLUDE_API: BASE_URL + "/createInclude",

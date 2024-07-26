@@ -13,18 +13,17 @@ import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
 import { MyService, Service } from "./components/Dashboard/Service";
 
-
 export default function App() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const { user } = useSelector((state) => state.profile)
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      const token = JSON.parse(localStorage.getItem("token"))
-      dispatch(getUserDetails(token, navigate))
+      const token = JSON.parse(localStorage.getItem("token"));
+      dispatch(getUserDetails(token, navigate));
     }
-  }, [])
+  }, []);
 
   return (
     <div className="w-screen min-h-screen">
@@ -32,7 +31,7 @@ export default function App() {
         <Route path="/" element={<MainPage />} />
 
         <Route path="/thank-you" element={<Thankyou />} />
-         {/* <Route path="/dashboard/my-profile" element={<MyProfile />} />
+        {/* <Route path="/dashboard/my-profile" element={<MyProfile />} />
          <Route path="/dashboard/edit-profile" element={<EditProfile />} /> */}
 
         <Route path="/dashboard/*" element={<Dashboard />}>
@@ -40,10 +39,9 @@ export default function App() {
           <Route path="sub-category" element={<SubCategory />} />
           <Route path="my-profile" element={<MyProfile />} />
           <Route path="edit-profile" element={<EditProfile />} />
-          <Route path="my-service" element={<MyService />} />
+          <Route path="my-services" element={<MyService />} />
           <Route path="service/create-service/*" element={<Service />} />
         </Route>
-
       </Routes>
     </div>
   );

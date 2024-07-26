@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
 import { createService } from "../../../slices/serviceSlice";
+import ImageDropzone from "../../ImageDropzone";
 
 const CreateService = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const CreateService = () => {
 
   const [preview, setPreview] = useState(null || service.thumbnail);
 
+  const [thumbnail, setThumbnail] = useState(null);
+
   const [formData, setFormData] = useState({
     serviceName: "" || service.serviceName,
     serviceDescription: "" || service.serviceDescription,
@@ -28,31 +31,28 @@ const CreateService = () => {
     warranty: "" || service.warranty,
   });
 
+  formData.thumbnail = thumbnail;
+
   useEffect(() => {
     if (formData.categoryId) {
       dispatch(getSubCategoriesByCategory({ categoryId: formData.categoryId }));
     }
-  }, [dispatch, formData.categoryId]);
+
+    if (thumbnail) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(thumbnail);
+    } else {
+      setPreview(null);
+    }
+  }, [dispatch, formData.categoryId, thumbnail]);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
-    if (name === "thumbnail") {
-      setFormData({ ...formData, [name]: files[0] });
-
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        setPreview(null);
-      }
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
@@ -195,7 +195,7 @@ const CreateService = () => {
           <input
             id="price"
             name="price"
-            // type="number"
+            type="number"
             value={formData.price}
             onChange={handleChange}
             className="w-full pl-8 pr-3 py-2 border rounded-md shadow-sm"
@@ -212,14 +212,7 @@ const CreateService = () => {
         >
           Upload Image*
         </label>
-        <input
-          id="thumbnail"
-          name="thumbnail"
-          type="file"
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          required
-        />
+        <ImageDropzone onDrop={setThumbnail} image={thumbnail} />
 
         {preview && <img src={preview} alt="thumbnail" />}
       </div>
