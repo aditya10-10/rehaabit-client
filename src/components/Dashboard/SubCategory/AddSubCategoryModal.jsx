@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addSubCategory } from "../../../slices/subCategorySlice";
+import { addSubCategory, showAllSubCategories } from "../../../slices/subCategorySlice";
 import ProgressBar from "../../ProgressBar";
 import { IoIosClose } from "react-icons/io";
 import ImageDropzone from "../../ImageDropzone";
@@ -18,7 +18,9 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
     if (!isLoading && progress === 100) setIsOpen(false);
   }, [isLoading, progress]);
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
+    
     dispatch(
       addSubCategory({ categoryId, subCategoryName, icon: image, setProgress })
     );
