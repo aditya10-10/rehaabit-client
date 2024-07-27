@@ -1,13 +1,19 @@
 import { GoHomeFill } from "react-icons/go";
-import { MdCategory } from "react-icons/md";
-import { MdHomeRepairService } from "react-icons/md";
+import {
+  MdCategory,
+  MdHomeRepairService,
+  MdMedicalServices,
+} from "react-icons/md";
 import { BsFillHandbagFill } from "react-icons/bs";
+import { BiSolidCategory } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import LogoutSVG from "../../assets/icons/Logout.svg";
-import { NavLink } from "react-router-dom";
-import { BiSolidCategory } from "react-icons/bi";
-import { MdMedicalServices } from "react-icons/md";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { clearServiceForm } from "../../slices/serviceSlice";
+import Swal from "sweetalert2";
 
 const sidebarLinks = [
   {
@@ -62,8 +68,48 @@ const sidebarLinks = [
 ];
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { service, serviceId } = useSelector((state) => state.service);
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (
+      location.pathname.startsWith("/dashboard/service") &&
+      service &&
+      serviceId
+    ) {
+      setIsEditing(true);
+    } else {
+      setIsEditing(false);
+    }
+  }, [location, service, serviceId]);
+
+  const handleNavigation = (path) => {
+    if (isEditing) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You have unsaved changes. Do you really want to leave?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#06952c",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, leave",
+        cancelButtonText: "No, stay",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(path);
+          dispatch(clearServiceForm());
+        }
+      });
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
-    <div className="sticky top-[100px] flex flex-col items-center shadow-custom-shadow p-4  min-w-[300px] h-[90vh] bg-white">
+    <div className="sticky top-[100px] flex flex-col items-center shadow-custom-shadow p-4 min-w-[300px] h-[90vh] bg-white">
       <div className="p-4 w-full">
         {sidebarLinks.map((link) => {
           const { id, icon, text, to, index } = link;
@@ -73,6 +119,10 @@ const Sidebar = () => {
               key={id}
               to={to}
               end={index}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation(to);
+              }}
               className={({ isActive }) =>
                 isActive
                   ? "flex items-center mb-4 bg-[#E9F5FE] w-full rounded-[5px] text-[#0C7FDA] font-[600]"

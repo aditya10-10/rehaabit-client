@@ -12,14 +12,12 @@ import {
   setServiceEditing,
 } from "../../../slices/serviceSlice";
 import Swal from "sweetalert2";
-import { useState } from "react";
-import EditServiceModal from "./EditServiceModal";
 
-const ServicesList = () => {
+const ServicesList = ({allServices}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allServices } = useSelector((state) => state.service);
+  
 
   const handleDeleteService = (e, serviceId, subCategoryId) => {
     Swal.fire({
@@ -57,8 +55,32 @@ const ServicesList = () => {
   const handleEditService = (serviceId) => {
     // dispatch(clearServiceForm());
     // dispatch(setServiceEditing());
-    dispatch(getFullServiceDetails({ serviceId }));
-    navigate("/dashboard/service/create-service");
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want Edit the service.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#06952c",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, edit it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        dispatch(getFullServiceDetails({ serviceId }));
+        navigate("/dashboard/service/create-service");
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire({
+          title: "Cancelled",
+          icon: "error",
+        });
+      }
+    });
   };
 
   return (
