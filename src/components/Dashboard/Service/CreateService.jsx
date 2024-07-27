@@ -224,6 +224,7 @@ const CreateService = () => {
             id="price"
             name="price"
             type="number"
+            min="0"
             value={formData.price}
             onChange={handleChange}
             className="w-full pl-8 pr-3 py-2 border rounded-md shadow-sm"
