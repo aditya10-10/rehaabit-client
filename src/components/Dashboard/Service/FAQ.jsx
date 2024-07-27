@@ -99,35 +99,37 @@ const FAQ = () => {
       </div>
 
       {faqs &&
-        faqs.map((faq) => {
-          const { _id, question, answer } = faq;
+        faqs
+          .filter((faq) => faq._id !== editId)
+          .map((faq) => {
+            const { _id, question, answer } = faq;
 
-          return (
-            <div
-              key={_id}
-              className="flex items-center w-fit bg-[#E9F5FE] mb-1 rounded-full px-2 text-sm text-[#0C7FDA]"
-            >
-              <div className="flex flex-col">
-                <span className="flex mr-2">
-                  <span className="mr-1 text-gray-700">Question:</span>{" "}
-                  {question}
-                </span>
-                <span className="flex mr-2">
-                  <span className="mr-1 text-gray-700">Answer:</span> {answer}
-                </span>
-              </div>
-              <button onClick={(e) => handleEdit(e, _id)}>
-                <FiEdit2 />
-              </button>
-              <button
-                className="text-red-600"
-                onClick={(e) => handleDelete(e, _id)}
+            return (
+              <div
+                key={_id}
+                className="flex items-center w-fit bg-[#E9F5FE] mb-1 rounded-full px-2 text-sm text-[#0C7FDA]"
               >
-                <IoIosClose size={25} />
-              </button>
-            </div>
-          );
-        })}
+                <div className="flex flex-col">
+                  <span className="flex mr-2">
+                    <span className="mr-1 text-gray-700">Question:</span>{" "}
+                    {question}
+                  </span>
+                  <span className="flex mr-2">
+                    <span className="mr-1 text-gray-700">Answer:</span> {answer}
+                  </span>
+                </div>
+                <button onClick={(e) => handleEdit(e, _id)}>
+                  <FiEdit2 />
+                </button>
+                <button
+                  className="text-red-600"
+                  onClick={(e) => handleDelete(e, _id)}
+                >
+                  <IoIosClose size={25} />
+                </button>
+              </div>
+            );
+          })}
 
       <div className="flex mt-6">
         <button

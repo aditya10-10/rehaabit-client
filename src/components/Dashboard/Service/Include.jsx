@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createInclude, deleteInclude, updateInclude } from "../../../slices/serviceSlice";
+import {
+  createInclude,
+  deleteInclude,
+  updateInclude,
+} from "../../../slices/serviceSlice";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosClose } from "react-icons/io";
 
@@ -37,18 +41,18 @@ const Include = () => {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    dispatch(deleteInclude({id, serviceId}));
-  }
+    dispatch(deleteInclude({ id, serviceId }));
+  };
 
   const handleEdit = (e, id) => {
     e.preventDefault();
-    
+
     const includeToEdit = includes.find((include) => include._id === id);
     if (includeToEdit) {
       setFormData({ ...formData, content: includeToEdit.content });
       setEditId(id);
     }
-  }
+  };
 
   return (
     <form
@@ -75,19 +79,29 @@ const Include = () => {
       </div>
 
       {includes &&
-        includes.map((include) => {
-          const { _id, content } = include;
+        includes
+          .filter((include) => include._id !== editId)
+          .map((include) => {
+            const { _id, content } = include;
 
-          return (
-            <div key={_id} className="flex items-center w-fit bg-[#E9F5FE] mb-1 rounded-full px-2 text-sm text-[#0C7FDA]">
-              <span className="flex mr-2">
-                {content}
-              </span>
-              <button onClick={(e) => handleEdit(e, _id)}><FiEdit2 /></button>
-              <button className="text-red-600" onClick={(e) => handleDelete(e, _id)} ><IoIosClose size={25} /></button>
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={_id}
+                className="flex items-center w-fit bg-[#E9F5FE] mb-1 rounded-full px-2 text-sm text-[#0C7FDA]"
+              >
+                <span className="flex mr-2">{content}</span>
+                <button onClick={(e) => handleEdit(e, _id)}>
+                  <FiEdit2 />
+                </button>
+                <button
+                  className="text-red-600"
+                  onClick={(e) => handleDelete(e, _id)}
+                >
+                  <IoIosClose size={25} />
+                </button>
+              </div>
+            );
+          })}
 
       <div className="flex mt-6">
         <button

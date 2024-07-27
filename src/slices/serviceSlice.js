@@ -32,6 +32,7 @@ const initialState = {
   isLoading: false,
   error: null,
   currentStep: 0,
+  isMyServiceEditing: false,
 };
 
 // SERVICE
@@ -45,7 +46,6 @@ export const createService = createAsyncThunk(
         formData,
         { "Content-Type": "multipart/form-data" }
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -69,16 +69,14 @@ export const getAllServices = createAsyncThunk(
 
 export const getFullServiceDetails = createAsyncThunk(
   "service/getFullServiceDetails",
-  async ({ formData }, thunkAPI) => {
+  async ({ serviceId }, thunkAPI) => {
     try {
       const response = await apiConnector(
-        "GET",
+        "POST",
         GET_FULL_SERVICE_DETAILS_API,
-        formData,
-        { "Content-Type": "multipart/form-data" }
+        {serviceId},
       );
-      console.log(response.data);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -337,6 +335,14 @@ const serviceSlice = createSlice({
     previousStep: (state) => {
       state.currentStep -= 1;
     },
+    clearServiceForm: (state) => {
+      state.service = [];
+      state.serviceId = null;
+      state.currentStep = 0;
+    },
+    setServiceEditing: (state) => {
+      state.isMyServiceEditing = true;
+    },
   },
 
   extraReducers: (builder) => {
@@ -402,6 +408,7 @@ const serviceSlice = createSlice({
       })
       .addCase(getFullServiceDetails.fulfilled, (state, action) => {
         state.service = action.payload;
+        state.serviceId = action.payload._id;
         state.isLoading = false;
 
         // Swal.fire({
@@ -475,16 +482,16 @@ const serviceSlice = createSlice({
       .addCase(createInclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(createInclude.fulfilled, (state, action) => {
         state.service.includes = action.payload.service.includes;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "Include Created!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Include Created!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(createInclude.rejected, (state, action) => {
@@ -501,16 +508,16 @@ const serviceSlice = createSlice({
       .addCase(updateInclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(updateInclude.fulfilled, (state, action) => {
         state.service.includes = action.payload.includes;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "Include Updated!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Include Updated!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(updateInclude.rejected, (state, action) => {
@@ -527,16 +534,16 @@ const serviceSlice = createSlice({
       .addCase(deleteInclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(deleteInclude.fulfilled, (state, action) => {
         state.service.includes = action.payload.includes;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "Include Deleted!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Include Deleted!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(deleteInclude.rejected, (state, action) => {
@@ -553,16 +560,16 @@ const serviceSlice = createSlice({
       .addCase(createExclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(createExclude.fulfilled, (state, action) => {
         state.service.excludes = action.payload.service.excludes;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "Exclude Created!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Exclude Created!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(createExclude.rejected, (state, action) => {
@@ -579,16 +586,16 @@ const serviceSlice = createSlice({
       .addCase(updateExclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(updateExclude.fulfilled, (state, action) => {
         state.service.excludes = action.payload.excludes;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "Exclude Updated!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Exclude Updated!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(updateExclude.rejected, (state, action) => {
@@ -605,16 +612,16 @@ const serviceSlice = createSlice({
       .addCase(deleteExclude.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(deleteExclude.fulfilled, (state, action) => {
         state.service.excludes = action.payload.excludes;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "Exclude Deleted!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Exclude Deleted!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(deleteExclude.rejected, (state, action) => {
@@ -631,16 +638,16 @@ const serviceSlice = createSlice({
       .addCase(createFAQ.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(createFAQ.fulfilled, (state, action) => {
         state.service.faqs = action.payload.service.faqs;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "FAQ Created!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "FAQ Created!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(createFAQ.rejected, (state, action) => {
@@ -656,15 +663,15 @@ const serviceSlice = createSlice({
       // UPDATE FAQ
       .addCase(updateFAQ.pending, (state) => {
         state.isLoading = true;
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(updateFAQ.fulfilled, (state, action) => {
         state.service.faqs = action.payload.faqs;
         state.isLoading = false;
-        Swal.fire({
-          title: "FAQ Updated!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "FAQ Updated!",
+        //   icon: "success",
+        // });
       })
       .addCase(updateFAQ.rejected, (state, action) => {
         state.isLoading = false;
@@ -678,15 +685,15 @@ const serviceSlice = createSlice({
       // Delete FAQ
       .addCase(deleteFAQ.pending, (state) => {
         state.isLoading = true;
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(deleteFAQ.fulfilled, (state, action) => {
         state.service.faqs = action.payload.faqs;
         state.isLoading = false;
-        Swal.fire({
-          title: "FAQ Deleted!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "FAQ Deleted!",
+        //   icon: "success",
+        // });
       })
       .addCase(deleteFAQ.rejected, (state, action) => {
         state.isLoading = false;
@@ -714,16 +721,16 @@ const serviceSlice = createSlice({
       .addCase(createHowDoesItWorks.pending, (state) => {
         state.isLoading = true;
 
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(createHowDoesItWorks.fulfilled, (state, action) => {
         state.service.howDoesItWorks = action.payload.service.howDoesItWorks;
         state.isLoading = false;
 
-        Swal.fire({
-          title: "How Does It Works Created!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "How Does It Works Created!",
+        //   icon: "success",
+        // });
         // state.currentStep += 1;
       })
       .addCase(createHowDoesItWorks.rejected, (state, action) => {
@@ -739,15 +746,15 @@ const serviceSlice = createSlice({
       // Update How Does It Works
       .addCase(updateHowDoesItWorks.pending, (state) => {
         state.isLoading = true;
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(updateHowDoesItWorks.fulfilled, (state, action) => {
         state.service.howDoesItWorks = action.payload.howDoesItWorks;
         state.isLoading = false;
-        Swal.fire({
-          title: "How Does It Works Updated!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "How Does It Works Updated!",
+        //   icon: "success",
+        // });
       })
       .addCase(updateHowDoesItWorks.rejected, (state, action) => {
         state.isLoading = false;
@@ -761,15 +768,15 @@ const serviceSlice = createSlice({
       // Delete How Does It Works
       .addCase(deleteHowDoesItWorks.pending, (state) => {
         state.isLoading = true;
-        Swal.showLoading();
+        // Swal.showLoading();
       })
       .addCase(deleteHowDoesItWorks.fulfilled, (state, action) => {
         state.service.howDoesItWorks = action.payload.howDoesItWorks;
         state.isLoading = false;
-        Swal.fire({
-          title: "How Does It Works Deleted!",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "How Does It Works Deleted!",
+        //   icon: "success",
+        // });
       })
       .addCase(deleteHowDoesItWorks.rejected, (state, action) => {
         state.isLoading = false;
@@ -782,6 +789,7 @@ const serviceSlice = createSlice({
   },
 });
 
-export const { nextStep, previousStep } = serviceSlice.actions;
+export const { nextStep, previousStep, clearServiceForm, setServiceEditing } =
+  serviceSlice.actions;
 
 export default serviceSlice.reducer;

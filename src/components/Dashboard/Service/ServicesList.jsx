@@ -4,28 +4,22 @@ import { HiClock } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { formattedDate } from "../../../utils/dateFormatter";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteService } from "../../../slices/serviceSlice";
+import { useNavigate } from "react-router-dom";
+import {
+  clearServiceForm,
+  deleteService,
+  getFullServiceDetails,
+  setServiceEditing,
+} from "../../../slices/serviceSlice";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import EditServiceModal from "./EditServiceModal";
 
 const ServicesList = () => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { allServices } = useSelector((state) => state.service);
-
-  const [formData, setFormData] = useState({
-    serviceId: "",
-    serviceName: "",
-    serviceDescription: "",
-    timeToComplete: "",
-    price: "",
-    categoryId: "",
-    subCategoryId: "",
-    thumbnail: null,
-    warranty: "",
-  });
 
   const handleDeleteService = (e, serviceId, subCategoryId) => {
     Swal.fire({
@@ -60,25 +54,15 @@ const ServicesList = () => {
     });
   };
 
-  const handleModal = (serviceId, serviceName, serviceDescription, price) => {
-    setIsOpen(!isOpen);
-    formData.serviceId = serviceId;
-    formData.serviceName = serviceName;
-    formData.serviceDescription = serviceDescription;
-    formData.price = price;
+  const handleEditService = (serviceId) => {
+    // dispatch(clearServiceForm());
+    // dispatch(setServiceEditing());
+    dispatch(getFullServiceDetails({ serviceId }));
+    navigate("/dashboard/service/create-service");
   };
 
   return (
     <>
-      {isOpen && (
-        <EditServiceModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          formData={formData}
-          setFormData={setFormData}
-        />
-      )}
-
       <table className="w-full">
         <thead>
           <tr className="flex gap-x-10 rounded-t-md border-b px-6 py-2">
@@ -141,9 +125,7 @@ const ServicesList = () => {
                   <td className="text-sm font-medium ">
                     <button
                       className="px-2 transition-all duration-200 hover:scale-110"
-                      onClick={() =>
-                        handleModal(_id, serviceName, serviceDescription, price)
-                      }
+                      onClick={() => handleEditService(_id)}
                     >
                       <FiEdit2 size={20} />
                     </button>
