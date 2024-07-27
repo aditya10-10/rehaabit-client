@@ -1,37 +1,51 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
-import { createService } from "../../../slices/serviceSlice";
+import { createService, editService } from "../../../slices/serviceSlice";
 import ImageDropzone from "../../ImageDropzone";
 
 const CreateService = () => {
   const dispatch = useDispatch();
 
   const { categories } = useSelector((state) => state.categories);
-  const { service } = useSelector((state) => state.service);
-
+  const { service, serviceId } = useSelector((state) => state.service);
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
 
-  console.log(service);
-
-  const [preview, setPreview] = useState(null || service.thumbnail);
-
+  const [preview, setPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
 
   const [formData, setFormData] = useState({
-    serviceName: "" || service.serviceName,
-    serviceDescription: "" || service.serviceDescription,
-    timeToComplete: "" || service.timeToComplete,
-    price: "" || service.price,
-    categoryId: "" || service.categoryId,
-    subCategoryId: "" || service.subCategoryId,
-    thumbnail: null || service.thumbnail,
-    warranty: "" || service.warranty,
+    serviceId: null,
+    serviceName: "",
+    serviceDescription: "",
+    timeToComplete: "",
+    price: "",
+    categoryId: "",
+    subCategoryId: "",
+    thumbnail: null,
+    warranty: "",
   });
 
   formData.thumbnail = thumbnail;
+
+  useEffect(() => {
+    if (service && serviceId) {
+      setFormData({
+        serviceId: serviceId,
+        serviceName: service.serviceName || "",
+        serviceDescription: service.serviceDescription || "",
+        timeToComplete: service.timeToComplete || "",
+        price: service.price || "",
+        categoryId: service.categoryId || "",
+        subCategoryId: service.subCategoryId || "",
+        thumbnail: service.thumbnail || null,
+        warranty: service.warranty || "",
+      });
+      setPreview(service.thumbnail || null);
+    }
+  }, [service, serviceId]);
 
   useEffect(() => {
     if (formData.categoryId) {
@@ -50,17 +64,23 @@ const CreateService = () => {
   }, [dispatch, formData.categoryId, thumbnail]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
 
-    setFormData({ ...formData, [name]: value });
+    if (name === "thumbnail") {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
-
-    dispatch(createService({ formData }));
+    if (serviceId) {
+      dispatch(editService({ formData }));
+    } else {
+      dispatch(createService({ formData }));
+    }
   };
 
   return (
@@ -241,7 +261,7 @@ const CreateService = () => {
           type="submit"
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md"
         >
-          Add
+          {serviceId ? "Update" : "Add"}
         </button>
       </div>
     </form>

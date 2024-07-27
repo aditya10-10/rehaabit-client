@@ -8,9 +8,11 @@ import Exclude from "./Exclude";
 import FAQ from "./FAQ";
 import HowDoesItWorks from "./HowDoesItWorks";
 import {
+  clearServiceForm,
   createService,
   nextStep,
   previousStep,
+  setServiceEditing,
 } from "../../../slices/serviceSlice";
 import Publish from "./Publish";
 
@@ -21,8 +23,6 @@ const Service = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { serviceId } = useSelector((state) => state.service);
-
-  // const serviceId = "sdsgf";
 
   const steps = [
     { path: "/", component: <CreateService /> },
@@ -48,6 +48,11 @@ const Service = () => {
     }
   };
 
+  const handleGoToMyServices = () => {
+    dispatch(clearServiceForm());
+    navigate("/dashboard/my-services");
+  };
+
   return (
     <div className="flex flex-col items-center w-full">
       <Navbar />
@@ -59,6 +64,15 @@ const Service = () => {
       </Routes>
 
       <div className="flex mt-6 mb-6 justify-end w-[50%]">
+        {serviceId && currentStep === 0 && (
+          <button
+            onClick={() => dispatch(clearServiceForm())}
+            className={`flex items-center bg-red-500 text-white font-bold py-2 px-4 rounded-md ml-4`}
+          >
+            Reset
+          </button>
+        )}
+
         {currentStep > 0 && (
           <button
             onClick={handleBack}
@@ -70,14 +84,14 @@ const Service = () => {
 
         {currentStep === steps.length - 1 && (
           <button
-            onClick={() => navigate("/dashboard/my-services")}
+            onClick={handleGoToMyServices}
             className={
               serviceId
                 ? `flex items-center bg-blue-500 text-white font-bold py-2 px-4 rounded-md ml-4`
                 : `flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded-md ml-4`
             }
           >
-            Go to My Servicess
+            Go to My Services
           </button>
         )}
 

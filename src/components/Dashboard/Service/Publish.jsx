@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { editService } from "../../../slices/serviceSlice";
 
 const Publish = () => {
   const dispatch = useDispatch();
@@ -12,30 +13,29 @@ const Publish = () => {
 
   const [formData, setFormData] = useState({
     serviceId: "",
-    status: "" || status,
+    status: status || "Draft",
   });
 
-  console.log(formData.status);
+  useEffect(() => {
+    setFormData((prevFormData) => ({ ...prevFormData, serviceId }));
+  }, [serviceId]);
 
-  formData.serviceId = serviceId;
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = () => {
     const updatedStatus = formData.status === "Draft" ? "Published" : "Draft";
-    setFormData({ ...formData, [name]: updatedStatus });
+    setFormData((prevFormData) => ({ ...prevFormData, status: updatedStatus }));
+
+    dispatch(editService({ formData: { ...formData, status: updatedStatus } }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // console.log(formData);
+    dispatch(editService({ formData }));
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-[50%] mx-auto mt-4 bg-white p-6 shadow-custom-shadow rounded-lg"
-    >
+    <form className="w-[50%] mx-auto mt-4 bg-white p-6 shadow-custom-shadow rounded-lg">
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -53,7 +53,11 @@ const Publish = () => {
           checked={formData.status === "Published"}
         />
 
-        <span className="text-gray-500">Make this Service Public</span>
+        {formData.status === "Published" ? (
+          <span className="text-gray-500">This Service is Published</span>
+        ) : (
+          <span className="text-gray-500">Make this Service Public</span>
+        )}
       </div>
     </form>
   );
