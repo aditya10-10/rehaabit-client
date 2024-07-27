@@ -12,13 +12,14 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const { isLoading } = useSelector((state) => state.categories);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    if (!isLoading && progress === 100) setIsOpen(false);
-  }, [isLoading, progress]);
+  // useEffect(() => {
+  //   if (!isLoading && progress === 100) setIsOpen(false);
+  // }, [isLoading, progress]);
 
   const handleSave = (e) => {
     e.preventDefault();
     dispatch(createCategory({ name: categoryName, icon: image, setProgress }));
+    setIsOpen(!isOpen)
   };
 
   const handleCancel = () => {
@@ -68,12 +69,13 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
                 <ImageDropzone onDrop={setImage} image={image} />
               </div>
 
-              {isLoading && <ProgressBar progress={progress} />}
+              {/* {isLoading && <ProgressBar progress={progress} />} */}
 
               <div className="flex justify-center space-x-6 mt-8">
                 <button
                   type="submit"
                   className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-medium px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                  disabled={isLoading}
                 >
                   Save
                 </button>

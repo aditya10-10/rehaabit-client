@@ -14,9 +14,9 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
   const { isLoading } = useSelector((state) => state.subcategories);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    if (!isLoading && progress === 100) setIsOpen(false);
-  }, [isLoading, progress]);
+  // useEffect(() => {
+  //   if (!isLoading && progress === 100) setIsOpen(false);
+  // }, [isLoading, progress]);
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -24,6 +24,8 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
     dispatch(
       addSubCategory({ categoryId, subCategoryName, icon: image, setProgress })
     );
+
+    setIsOpen(!isOpen)
   };
 
   const handleCancel = () => {
@@ -98,7 +100,7 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
             </div>
 
             {/* Progress Bar */}
-            {isLoading && <ProgressBar progress={progress} />}
+            {/* {isLoading && <ProgressBar progress={progress} />} */}
 
             {/* Buttons */}
             <div className="flex justify-center space-x-6 mt-8">

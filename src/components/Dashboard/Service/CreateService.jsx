@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
 import { createService, editService } from "../../../slices/serviceSlice";
 import ImageDropzone from "../../ImageDropzone";
+import { IoIosClose } from "react-icons/io";
 
 const CreateService = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,9 @@ const CreateService = () => {
     if (formData.categoryId) {
       dispatch(getSubCategoriesByCategory({ categoryId: formData.categoryId }));
     }
+  }, [dispatch, formData.categoryId]);
 
+  useEffect(() => {
     if (thumbnail) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -59,9 +62,9 @@ const CreateService = () => {
       };
       reader.readAsDataURL(thumbnail);
     } else {
-      setPreview(null);
+      setPreview(formData.thumbnail);
     }
-  }, [dispatch, formData.categoryId, thumbnail]);
+  }, [thumbnail, formData.thumbnail]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -81,6 +84,11 @@ const CreateService = () => {
     } else {
       dispatch(createService({ formData }));
     }
+  };
+
+  const handleClose = () => {
+    setPreview(null);
+    setThumbnail(null);
   };
 
   return (
@@ -216,6 +224,7 @@ const CreateService = () => {
             id="price"
             name="price"
             type="number"
+            min="0"
             value={formData.price}
             onChange={handleChange}
             className="w-full pl-8 pr-3 py-2 border rounded-md shadow-sm"
@@ -225,17 +234,33 @@ const CreateService = () => {
         </div>
       </div>
 
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="thumbnail"
-        >
-          Upload Image*
-        </label>
-        <ImageDropzone onDrop={setThumbnail} image={thumbnail} />
-
-        {preview && <img src={preview} alt="thumbnail" />}
-      </div>
+      {preview ? (
+        <div className="relative inline-block mb-4">
+          <IoIosClose
+            className="absolute top-2 right-2 text-2xl cursor-pointer text-red-600"
+            onClick={handleClose}
+          />
+          <img
+            src={
+              typeof preview === "string"
+                ? preview
+                : URL.createObjectURL(preview)
+            }
+            alt="thumbnail"
+            className="block max-w-full h-auto rounded-md"
+          />
+        </div>
+      ) : (
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="thumbnail"
+          >
+            Upload Image*
+          </label>
+          <ImageDropzone onDrop={setThumbnail} image={thumbnail} />
+        </div>
+      )}
 
       <div className="mb-4">
         <label

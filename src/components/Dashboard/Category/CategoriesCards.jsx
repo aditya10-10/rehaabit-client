@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import Swal from "sweetalert2";
 import ShowSubCategoriesModal from "./ShowSubCategoriesModal";
+import { MdCategory } from "react-icons/md";
 
 const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
   // console.log(categories)
@@ -171,7 +172,7 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
                 className="bg-[#0C7FDA] text-white rounded-[5px] py-2 px-4 text-sm"
                 onClick={() => handleModal(_id)}
               >
-                Sub-Categories
+                <MdCategory />
               </button>}
             </div>
           </div>
