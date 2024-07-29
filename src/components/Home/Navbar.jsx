@@ -5,6 +5,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import { logout } from '../../services/operations/authAPI';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../assets/LOGO.svg'
 
 
 const Navbar = ({ onLoginClick }) => {
@@ -30,9 +31,9 @@ const Navbar = ({ onLoginClick }) => {
       <div className="flex gap-5 justify-between items-center w-full max-w-[1221px] max-md:flex-wrap max-md:max-w-full">
         <img
           loading="lazy"
-          src="https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041451/Demo/LOGO_1_fibezy.png"
+          src={Logo}
           alt="Company logo"
-          className="shrink-0 self-stretch aspect-[0.69] w-[47px]"
+          className="h-28"
         />
         <nav className="flex gap-5 justify-center self-stretch my-auto text-sm text-black max-md:flex-wrap">
           <a href="#">Dummy text</a>

@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast"
 
-import { setLoading, setToken } from "../../slices/authSlice"
+import { setError, setLoading, setToken } from "../../slices/authSlice"
 import { apiConnector } from "../apiConnector"
 import { endpoints } from "../apis"
 import { setUserData } from "../../slices/authSlice"
@@ -31,6 +31,7 @@ export function sendOtp(contactNumber) {
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
       toast.error("Could Not Send OTP")
+      dispatch(setError(error.response.data))
       throw error;
     } finally {
         dispatch(setLoading(false))
@@ -51,6 +52,7 @@ export function signUp(
       const response = await apiConnector("POST", SIGNUP_API, {
         contactNumber,
         otp,
+        accountType: "Admin",
       })
 
       console.log("SIGNUP API RESPONSE............", response)
@@ -63,6 +65,7 @@ export function signUp(
     } catch (error) {
       console.log("SIGNUP API ERROR............", error)
       toast.error("Could Not Verify OTP")
+      dispatch(setError(error.response.data))
       navigate("/")
     } finally {
         dispatch(setLoading(false))
@@ -103,6 +106,7 @@ export function login(contactNumber, otp, navigate) {
     } catch (error) {
       console.log("LOGIN API ERROR............", error)
       toast.error("Could Not Veify OTP")
+      dispatch(setError(error.response.data))
       throw error;
     } finally {
         dispatch(setLoading(false))
