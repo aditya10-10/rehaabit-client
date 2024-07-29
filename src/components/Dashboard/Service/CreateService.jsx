@@ -234,6 +234,13 @@ const CreateService = () => {
         </div>
       </div>
 
+      <label
+        className="block text-gray-700 text-sm font-bold mb-2"
+        htmlFor="thumbnail"
+      >
+        Upload Image*
+      </label>
+
       {preview ? (
         <div className="relative inline-block mb-4">
           <IoIosClose
@@ -252,12 +259,6 @@ const CreateService = () => {
         </div>
       ) : (
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="thumbnail"
-          >
-            Upload Image*
-          </label>
           <ImageDropzone onDrop={setThumbnail} image={thumbnail} />
         </div>
       )}
