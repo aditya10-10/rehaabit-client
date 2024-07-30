@@ -82,7 +82,7 @@ const TestimonialSection = () => {
   }, [currentIndex]);
 
   return (
-    <section className="flex flex-col px-5 mt-12 w-full max-md:pl-5 max-md:mt-10 max-md:max-w-full">
+    <section className="flex flex-col px-5 mt-40 w-full max-md:pl-5 max-md:mt-10 max-md:max-w-full">
       <h2 className=" text-6xl text-center text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
         Client Testimonials
       </h2>

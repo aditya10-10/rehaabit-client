@@ -1,39 +1,45 @@
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
 
-const FeatureItem = ({ icon, title, description }) => (
+const FeatureItem = ({ icon, name, description }) => (
   <div className="flex flex-col justify-center">
-    <div className="flex justify-center items-center px-7 bg-white shadow-sm h-[100px] rounded-[100px] w-[100px] max-md:px-5">
-      <img loading="lazy" src={icon} alt="" className="w-10 aspect-square fill-purple-950" />
-    </div>
+    <img
+      loading="lazy"
+      src={icon}
+      alt="Category Icon"
+      className="h-[100px] w-[100px] rounded-full"
+    />
+
     <div className="mt-1 text-base leading-5 text-center text-purple-950">
-      {title} <br /> {description}
+      {name} <br /> {description}
     </div>
   </div>
 );
 
 const Features = () => {
-  const features = [
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041452/Demo/Vector1_ykl8mo.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041452/Demo/Vector2_bgtrii.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721042186/Demo/Vector3_zechqc.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041454/Demo/Vector10_c5k2p0.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041453/Demo/Vector4_kkpsrd.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041454/Demo/Vector5_msf6xo.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041454/Demo/Vector6_bqpjxa.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041454/Demo/Vector7_fgp30t.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041454/Demo/Vector8_d9oqtz.png", title: "Long Dummy", description: "Text" },
-    { icon: "https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041454/Demo/Vector9_ntcjvq.png", title: "Long Dummy", description: "Text" },
-  ];
+  const { categories } = useSelector((state) => state.categories);
 
   return (
-    <section className="flex flex-col justify-center items-center self-center px-20 py-16 mt-40 max-w-full bg-amber-100 rounded-3xl shadow-lg w-[938px] max-md:px-5 max-md:mt-10">
-      <h2 className="text-4xl font-bold text-center text-purple-950">Loreum Ispum</h2>
-      <div className="flex flex-wrap gap-5 justify-center content-center mt-6 max-w-full w-[676px]">
-        {features.map((feature, index) => (
-          <FeatureItem key={index} {...feature} />
-        ))}
-      </div>
-    </section>
+    <div className="relative flex items-center justify-center">
+      <div className="absolute w-48 h-48 text-white font-bold text-xl rounded-[30px] bg-[#009F78] -translate-y-[180px] rotate-12"></div>
+
+      <div className="absolute w-24 h-24 text-white font-bold text-xl rounded-[16px] bg-[#FFDA54] translate-y-[80px] -translate-x-[500px] -rotate-[30deg]"></div>
+
+      <div className="absolute w-72 h-72 text-white font-bold text-xl rounded-[16px] bg-[#6200EE] translate-y-[120px] translate-x-[400px] -rotate-[30deg]"></div>
+
+      <div className="absolute w-24 h-48 text-white font-bold text-xl rounded-[30px] bg-[#E86558] translate-y-[380px] -rotate-[70deg]"></div>
+
+      <section className="flex flex-col justify-center items-center self-center px-20 py-16 mt-40 max-w-full bg-amber-100 rounded-3xl shadow-lg w-[938px] max-md:px-5 max-md:mt-10 z-50">
+        <h2 className="text-4xl font-bold text-center text-purple-950">
+          Categories
+        </h2>
+        <div className="flex flex-wrap gap-5 justify-center content-center mt-6 max-w-full w-[676px]">
+          {categories.map((feature) => (
+            <FeatureItem key={feature._id} {...feature} />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 };
 
