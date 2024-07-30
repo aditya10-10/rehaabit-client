@@ -46,7 +46,7 @@ const Services = () => {
             <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
               Services{" "}
             </h2>
-            {allServices.map((service) => (
+            {allServices.slice(0, 5).map((service) => (
               <ServiceCard key={service._id} {...service} />
             ))}
           </div>
