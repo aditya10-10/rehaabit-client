@@ -30,7 +30,7 @@ const HowDoesItWorks = () => {
       <section className="self-center p-12 mt-72 w-full bg-amber-100 shadow-sm max-w-[1118px] rounded-[30px] max-md:px-5 max-md:mt-10 max-md:max-w-full z-50">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col grow justify-center py-2.5 text-center max-w-[480px] rounded-[30px] max-md:mt-10 max-md:max-w-full">
+            <div className="flex flex-col grow justify-center py-2.5 text-center max-w-[480px] rounded-[30px] max-md:max-w-full">
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/8a076d3b863a18df35e42f72c3af0d96f1aea7f7923578c2f50c360ed3239eda?apiKey=4aa4f4b9f3a34924a64c875e602547ca&"
@@ -45,8 +45,8 @@ const HowDoesItWorks = () => {
               </p>
             </div>
           </div>
-          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex-wrap grow content-center p-10 rounded-[30px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
+          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full max-md:items-center max-md:text-center">
+            <div className="flex-wrap grow content-center rounded-[30px] max-md:px-5 max-md:max-w-full">
               <div className="flex gap-5 max-md:flex-col max-md:gap-0">
                 <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
                   <StepItem {...steps[0]} />
