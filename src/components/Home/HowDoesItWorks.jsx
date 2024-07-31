@@ -18,7 +18,7 @@ const HowDoesItWorks = () => {
   ];
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative flex items-center justify-center px-20 max-md:px-10 max-sm:px-4">
       <div className="absolute w-48 h-72 text-white font-bold text-xl rounded-[30px] bg-[#009F78] -translate-x-[480px] translate-y-8 rotate-[105deg]"></div>
 
       <div className="absolute w-52 h-52 text-white font-bold text-xl rounded-[30px] bg-[#FFDA54] translate-y-[260px] -translate-x-[100px] rotate-[105deg]"></div>

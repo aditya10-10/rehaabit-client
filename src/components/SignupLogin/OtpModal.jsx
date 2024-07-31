@@ -147,7 +147,7 @@ const OtpModal = ({ isOpen, onClose }) => {
           <p className="self-stretch mt-5 text-base text-center text-neutral-500">
             {!isSignup ? "Don't have an account?" : "Already have an account"}
           </p>
-          <button className="mt-5 ml-1" onClick={() => setIsSignup(!isSignup)}>
+          <button className="mt-5 ml-1 text-[#0C7FDA]" onClick={() => setIsSignup(!isSignup)}>
             {!isSignup ? "Sign Up" : "Log In"}
           </button>
         </div>

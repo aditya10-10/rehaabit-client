@@ -1,13 +1,15 @@
-import React from 'react';
-import logo from '../../assets/images/LOGO_1.png';
+import React from "react";
+import logo from "../../assets/images/LOGO_1.png";
+import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const FooterColumn = ({ title, items }) => {
   return (
-    <div className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
+    <div className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full max-md:text-center">
       <nav className="flex relative flex-col grow text-sm leading-6 text-emerald-800 whitespace-nowrap max-md:mt-10">
         <h3>{title}</h3>
         {items.map((item, index) => (
-          <a href="#" key={index} className="mt-4">
+          <a href="/" key={index} className="mt-4">
             {item}
           </a>
         ))}
@@ -19,23 +21,46 @@ const FooterColumn = ({ title, items }) => {
 const Footer = () => {
   const footerData = [
     {
-      title: 'Company',
-      items: ['About', 'Careers', 'Newsroom']
+      title: "Company",
+      items: ["About", "Careers", "Newsroom"],
     },
     {
-      title: 'Features',
-      items: ['Quick', 'Services', 'Updates']
+      title: "Features",
+      items: ["Quick", "Services", "Updates"],
     },
     {
-      title: 'Social',
-      items: ['Twitter', 'Instagram', 'Threads']
+      title: "Social",
+      items: ["Twitter", "Instagram", "Threads"],
     },
     {
-      title: 'Legal',
-      items: ['Terms', 'Privacy']
-    }
+      title: "Legal",
+      items: ["Terms", "Privacy"],
+    },
   ];
-  
+
+  const socialMediaLinks = [
+    {
+      id: 1,
+      icon: <FaFacebook />,
+      to: "",
+    },
+    {
+      id: 2,
+      icon: <FaGoogle />,
+      to: "",
+    },
+    {
+      id: 3,
+      icon: <FaTwitter />,
+      to: "",
+    },
+    {
+      id: 4,
+      icon: <FaYoutube />,
+      to: "",
+    },
+  ];
+
   return (
     <footer className="flex flex-col justify-center bg-white mt-10">
       <section className="flex overflow-hidden relative flex-col justify-center items-center px-16 py-14 w-full min-h-[250px] stroke-[74px] stroke-violet-500 max-md:px-5 max-md:max-w-full">
@@ -47,15 +72,19 @@ const Footer = () => {
         />
         <div className="relative flex-wrap gap-y-14 justify-between content-start w-full max-w-[1200px] max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-            <div className="flex flex-col w-4/12 max-md:ml-0 max-md:w-full">
+            <div className="flex flex-col w-4/12 max-md:ml-0 max-md:w-full max-md:justify-center">
               <div className="flex relative flex-col grow pb-5 text-emerald-800 max-md:max-w-full">
-                <div className='flex gap-2 items-center'>
-                  <img src="https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041451/Demo/LOGO_1_fibezy.png" alt='Rehaabit' className='aspect-auto object-cover'/>
+                <div className="flex gap-2 items-center max-md:justify-center">
+                  <img
+                    src="https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041451/Demo/LOGO_1_fibezy.png"
+                    alt="Rehaabit"
+                    className="aspect-auto object-cover"
+                  />
                   <h1 className="justify-center items-start max-w-full text-4xl whitespace-nowrap leading-[64px] w-[201px] max-md:pl-5">
                     Rehaabit
                   </h1>
                 </div>
-                <p className="mt-6 text-lg leading-7 max-md:max-w-full">
+                <p className="flex mt-6 text-lg leading-7 max-md:max-w-full max-md:justify-center">
                   Home Solutions Simplified
                 </p>
               </div>
@@ -63,9 +92,13 @@ const Footer = () => {
 
             <div className="flex flex-col ml-5 p-2 w-8/12 max-md:ml-0 max-md:w-full">
               <div className="flex flex-wrap grow w-full justify-evenly max-md:max-w-full">
-                <div className="flex gap-5 w-full pl-16 ml-11 max-md:flex-col max-md:gap-0">
+                <div className="flex gap-5 w-full pl-16 ml-11 max-md:pl-0 max-md:ml-0 max-md:flex-row">
                   {footerData.map((column, index) => (
-                    <FooterColumn key={index} title={column.title} items={column.items} />
+                    <FooterColumn
+                      key={index}
+                      title={column.title}
+                      items={column.items}
+                    />
                   ))}
                 </div>
               </div>
@@ -73,6 +106,26 @@ const Footer = () => {
           </div>
         </div>
       </section>
+
+      <div className="flex items-center flex-col mt-10 px-4">
+        <span className="block text-center text-gray-600 dark:text-gray-400">
+          © 2023-<span id="currentYear">2024</span>{" "}
+          <span className="text-emerald-800">Rehaabit</span> is a registered
+          trademark. All Rights Reserved.
+        </span>
+
+        <div className="flex gap-2 mt-1">
+          {socialMediaLinks.map((link) => {
+            const { id, icon, to } = link;
+
+            return (
+              <Link key={id} to={to} target="_blank">
+                <span className="hover:text-[#0C7FDA]">{icon}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </footer>
   );
 };
