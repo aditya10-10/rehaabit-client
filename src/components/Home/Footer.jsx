@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../../assets/images/LOGO_1.png";
 import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Logo from '../../assets/LOGO.svg'
 
 const FooterColumn = ({ title, items }) => {
   return (
@@ -76,13 +77,10 @@ const Footer = () => {
               <div className="flex relative flex-col grow pb-5 text-emerald-800 max-md:max-w-full">
                 <div className="flex gap-2 items-center max-md:justify-center">
                   <img
-                    src="https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041451/Demo/LOGO_1_fibezy.png"
+                    src={Logo}
                     alt="Rehaabit"
-                    className="aspect-auto object-cover"
+                    className="aspect-auto object-cover h-44"
                   />
-                  <h1 className="justify-center items-start max-w-full text-4xl whitespace-nowrap leading-[64px] w-[201px] max-md:pl-5">
-                    Rehaabit
-                  </h1>
                 </div>
                 <p className="flex mt-6 text-lg leading-7 max-md:max-w-full max-md:justify-center">
                   Home Solutions Simplified

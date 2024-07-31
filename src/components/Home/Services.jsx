@@ -31,7 +31,7 @@ const Services = () => {
   return (
     <section className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+        <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full max-md:hidden">
           <img
             loading="lazy"
             src="https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041453/Demo/Services_d3vxax.png"

@@ -48,14 +48,14 @@ const TestimonialSection = () => {
   useEffect(() => {
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
-        left: currentIndex * sliderRef.current.offsetWidth,
+        left: currentIndex * sliderRef.current.offsetWidth - 80,
         behavior: 'smooth'
       });
     }
   }, [currentIndex]);
 
   return (
-    <section className="flex flex-col px-20 mt-40 w-full max-md:px-10 max-md:mt-10 max-md:max-w-full max-sm:px-4">
+    <section className="flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
       <h2 className=" text-6xl text-center text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
         Client Testimonials
       </h2>
