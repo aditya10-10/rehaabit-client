@@ -1,46 +1,97 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { logout } from "../../services/operations/authAPI";
+import Logo from "../../assets/LOGO.svg";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiDashboardLine } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
-import { logout } from '../../services/operations/authAPI';
-import { useNavigate } from 'react-router-dom';
-import Logo from '../../assets/LOGO.svg'
-
 
 const Navbar = ({ onLoginClick }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { categories } = useSelector((state) => state.categories);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
 
   const handleProfileClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleLogout = () => {
-    // Add your logout logic here
-    dispatch(logout(navigate))
+    dispatch(logout(navigate));
     setIsDropdownOpen(false);
   };
 
   return (
     <header className="flex justify-center items-center px-16 py-2.5 w-full max-md:px-5 max-md:max-w-full">
       <div className="flex gap-5 justify-between items-center w-full max-w-[1221px] max-md:flex-wrap max-md:max-w-full">
-        <img
-          loading="lazy"
-          src={Logo}
-          alt="Company logo"
-          className="h-28"
-        />
+        <img loading="lazy" src={Logo} alt="Company logo" className="h-28" />
+
         <nav className="flex gap-5 justify-center self-stretch my-auto text-sm text-black max-md:flex-wrap">
-          <a href="#">Dummy text</a>
-          <a href="#">Dummy text</a>
-          <a href="#">Dummy text</a>
-          <a href="#">Dummy text</a>
+          <NavLink to="/">Home</NavLink>
+
+          <div
+            onMouseEnter={() => setIsFeaturesOpen(true)}
+            onMouseLeave={() => setIsFeaturesOpen(false)}
+            className="relative"
+          >
+            <button
+              id="dropdownHoverButton"
+              className="text-black bg-transparent font-medium rounded-lg text-sm inline-flex items-center"
+            >
+              Features{" "}
+              <svg
+                className="w-2.5 h-2.5 ml-2.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+
+            {isFeaturesOpen && (
+              <div
+                id="dropdownHover"
+                className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-custom-shadow w-[500px] -translate-x-1/3"
+              >
+                <ul className="p-4 text-sm text-gray-700 grid grid-cols-3">
+                  {categories.map((service) => {
+                    const { _id, name, icon } = service;
+
+                    return (
+                      <li key={_id} className="p-2">
+                        <NavLink
+                          to="/service1"
+                          className="flex items-center px-4 py-2 hover:bg-gray-100 border rounded-lg"
+                        >
+                          <img src={icon} alt="Icon" className="h-10 w-10 rounded-full mr-2" />
+                          <span>{name}</span>
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/about">About Us</NavLink>
         </nav>
+
         <div className="flex gap-5 justify-center self-stretch my-auto">
           {!token ? (
             <button
@@ -73,23 +124,18 @@ const Navbar = ({ onLoginClick }) => {
                   <button
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
                     onClick={() => {
-                      // Navigate to the dashboard
                       setIsDropdownOpen(false);
                       navigate("/dashboard");
                     }}
                   >
-                    <RiDashboardLine
-                      className="w-5 h-5 mr-2"
-                    />
+                    <RiDashboardLine className="w-5 h-5 mr-2" />
                     Dashboard
                   </button>
                   <button
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
                     onClick={handleLogout}
                   >
-                    <IoLogOutOutline
-                      className="w-5 h-5 mr-2"
-                    />
+                    <IoLogOutOutline className="w-5 h-5 mr-2" />
                     Logout
                   </button>
                 </div>

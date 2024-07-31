@@ -1,6 +1,6 @@
 import React from "react";
 
-const FeatureItem = ({ icon, title, description }) => (
+const FeatureItem = ({ icon, name, description }) => (
   <div className="flex flex-col justify-center">
     <div className="flex justify-center items-center px-7 bg-white shadow-sm h-[100px] rounded-[100px] w-[100px] max-md:px-5">
       <img
@@ -11,7 +11,7 @@ const FeatureItem = ({ icon, title, description }) => (
       />
     </div>
     <div className="mt-1 text-base leading-5 text-center text-purple-950">
-      {title} <br /> {description}
+      {name} <br /> {description}
     </div>
   </div>
 );
