@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Home/Navbar";
 import Hero from "../components/Home/Hero";
 import Features from "../components/Home/Features";
@@ -7,10 +7,19 @@ import HowDoesItWorks from "../components/Home/HowDoesItWorks";
 import Testimonials from "../components/Home/Testimonials";
 import Footer from "../components/Home/Footer";
 import OtpModal from "../components/SignupLogin/OtpModal";
+import { useDispatch } from "react-redux";
+import { showAllCategories } from "../slices/categorySlice";
+import { getAllServices } from "../slices/serviceSlice";
 
 const MainPage = () => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
+
+  useEffect(() => {
+    dispatch(showAllCategories());
+    dispatch(getAllServices());
+  }, [dispatch]);
 
   const handleLoginClick = () => {
     setAnimationClass("modal-open");
