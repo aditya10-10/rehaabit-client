@@ -34,7 +34,7 @@ const MainPage = () => {
   };
 
   return (
-    <div className="flex w-screen min-h-screen flex-col pb-20 bg-white overflow-x-hidden relative">
+    <div className="flex w-screen min-h-screen flex-col mb-10 bg-white overflow-x-hidden">
       <Navbar onLoginClick={handleLoginClick} />
       <Hero />
       <Features />

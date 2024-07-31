@@ -31,43 +31,16 @@ const TestimonialSection = () => {
       name: "David Lee",
       imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f3096cc0e65c499f92866c157674c95caa62f07ef5f037db9eb05ea7d269f923?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
     },
-    {
-      quote: "Their attention to detail and customer service are unmatched.",
-      name: "John Smith",
-      imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f3096cc0e65c499f92866c157674c95caa62f07ef5f037db9eb05ea7d269f923?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-    },
-    {
-      quote: "Exceptional service that exceeded our expectations.",
-      name: "Jane Doe",
-      imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f3096cc0e65c499f92866c157674c95caa62f07ef5f037db9eb05ea7d269f923?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-    },
-    {
-      quote: "Innovative solutions that transformed our business.",
-      name: "Mike Johnson",
-      imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f3096cc0e65c499f92866c157674c95caa62f07ef5f037db9eb05ea7d269f923?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-    },
-    {
-      quote: "Reliable and professional team that delivers results.",
-      name: "Emily Brown",
-      imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f3096cc0e65c499f92866c157674c95caa62f07ef5f037db9eb05ea7d269f923?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-    },
-    {
-      quote: "Outstanding support and cutting-edge technology.",
-      name: "David Lee",
-      imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f3096cc0e65c499f92866c157674c95caa62f07ef5f037db9eb05ea7d269f923?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-    },
   ];
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      // prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
       prevIndex === 0 ? 0 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      // prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
       prevIndex === testimonials.length - 1 ? testimonials.length - 1 : prevIndex + 1
     );
   };
@@ -82,7 +55,7 @@ const TestimonialSection = () => {
   }, [currentIndex]);
 
   return (
-    <section className="flex flex-col px-5 mt-40 w-full max-md:pl-5 max-md:mt-10 max-md:max-w-full">
+    <section className="flex flex-col px-20 mt-40 w-full max-md:px-10 max-md:mt-10 max-md:max-w-full max-sm:px-4">
       <h2 className=" text-6xl text-center text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
         Client Testimonials
       </h2>

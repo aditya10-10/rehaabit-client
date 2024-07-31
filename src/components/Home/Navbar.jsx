@@ -29,8 +29,13 @@ const Navbar = ({ onLoginClick }) => {
 
   return (
     <header className="flex justify-center items-center px-16 py-2.5 w-full max-md:px-5 max-md:max-w-full">
-      <div className="flex gap-5 justify-between items-center w-full max-w-[1221px] max-md:flex-wrap max-md:max-w-full">
-        <img loading="lazy" src={Logo} alt="Company logo" className="h-28" />
+      <div className="flex justify-between items-center w-full max-w-[1221px] max-md:flex-wrap max-md:max-w-full">
+        <img
+          loading="lazy"
+          src={Logo}
+          alt="Company logo"
+          className="h-28 max-md:h-16"
+        />
 
         <nav className="flex gap-5 justify-center self-stretch my-auto text-sm text-black max-md:flex-wrap">
           <NavLink to="/">Home</NavLink>
@@ -77,7 +82,11 @@ const Navbar = ({ onLoginClick }) => {
                           to="/service1"
                           className="flex items-center px-4 py-2 hover:bg-gray-100 border rounded-lg"
                         >
-                          <img src={icon} alt="Icon" className="h-10 w-10 rounded-full mr-2" />
+                          <img
+                            src={icon}
+                            alt="Icon"
+                            className="h-10 w-10 rounded-full mr-2"
+                          />
                           <span>{name}</span>
                         </NavLink>
                       </li>
@@ -92,31 +101,33 @@ const Navbar = ({ onLoginClick }) => {
           <NavLink to="/about">About Us</NavLink>
         </nav>
 
-        <div className="flex gap-5 justify-center self-stretch my-auto">
+        <div className="flex gap-5 justify-center self-stretch my-auto max-md:gap-2">
           {!token ? (
             <button
+              type="button"
               onClick={onLoginClick}
-              className="flex gap-5 justify-center items-center py-1.5 pr-3 pl-3 my-auto text-base text-white whitespace-nowrap bg-red-400 rounded-[30px]"
+              className="flex gap-5 justify-center items-center py-1.5 pr-3 pl-3 my-auto text-base text-white whitespace-nowrap bg-red-400 rounded-[30px] max-md:gap-1"
             >
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/547777ca01f505c41e073cc20252f7a0100f7367d9fdd6b781cf18d04e24f65d?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-                alt=""
+                alt="cart icon"
                 className="shrink-0 w-5 aspect-square"
               />
               <span>Login</span>
             </button>
           ) : (
-            <div className="relative">
+            <div className="relative flex items-center">
               <button
-                className="flex justify-center items-center h-[50px] rounded-[100px] w-[50px]"
+                type="button"
+                className="flex justify-center items-center h-[50px] rounded-full w-[50px] max-md:h-[40px] max-md:w-[40px]"
                 onClick={handleProfileClick}
               >
                 <img
                   loading="lazy"
                   src={user?.image}
                   alt=""
-                  className="shrink-0 aspect-square w-[78px] rounded-full"
+                  className="shrink-0 aspect-square w-[78px] rounded-full max-md:w-[48px]"
                 />
               </button>
               {isDropdownOpen && (
@@ -142,7 +153,7 @@ const Navbar = ({ onLoginClick }) => {
               )}
             </div>
           )}
-          <button className="flex justify-center items-center p-1 bg-emerald-500 h-[50px] rounded-[100px] w-[50px]">
+          <button className="flex justify-center items-center p-1 bg-emerald-500 h-[50px] rounded-[100px] w-[50px] max-md:h-[40px] max-md:w-[40px]">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/af9ee481dcd948d3726304bd37dc9045a176a58743d1fb7a35197718a1a55193?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
