@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
+import { IoIosClose } from "react-icons/io";
 import { login, sendOtp, signUp } from "../../services/operations/authAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/LOGO.svg";
 import toast from "react-hot-toast";
+import PhoneInput from "react-phone-input-2";
 
 const OtpModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -15,58 +16,76 @@ const OtpModal = ({ isOpen, onClose }) => {
   const [verificationCode, setVerificationCode] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [timer, setTimer] = useState(0);
 
   const { error } = useSelector((state) => state.auth);
 
+  useEffect(() => {
+    if (isOtpSent) {
+      setTimer(60); // Set timer to 60 seconds
+      const interval = setInterval(() => {
+        setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isOtpSent]);
+
   const handleVerifyPhone = async () => {
     if (!phone) {
-      // setError("Phone number is required");
+      toast.error("Phone number is required");
       return;
     }
 
     try {
       await dispatch(sendOtp(phone));
       setIsOtpSent(true);
-      // setError("");
     } catch (err) {
       setIsOtpSent(false);
-      // setError("Failed to send OTP");
+      toast.error("Failed to send OTP");
     }
   };
 
   const handleVerifyOtp = async () => {
     if (!verificationCode) {
-      // setError("OTP is required");
       toast.error("OTP is required");
       return;
     }
 
     try {
       if (isSignup) {
-        await dispatch(signUp(phone, verificationCode, navigate));
+        await dispatch(
+          signUp(firstName, lastName, phone, verificationCode, navigate)
+        );
       } else {
         await dispatch(login(phone, verificationCode, navigate));
       }
-      // setError("");
       onClose();
-      // Proceed with the next step after OTP verification
     } catch (err) {
-      // setError("Failed to verify OTP");
+      toast.error("Failed to verify OTP");
     }
   };
 
   const handleReturnBack = () => {
     setIsOtpSent(false);
-    // setError("");
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <main className="flex flex-col justify-center items-center px-4 py-4 bg-white rounded-xl shadow-sm max-w-[369px] transform transition-transform duration-300 scale-100">
-        <img loading="lazy" src={Logo} className="h-28" alt="Company logo" />
-        <h1 className="mt-5 text-2xl text-emerald-900">Sign-Up with Phone</h1>
+      <main className="relative flex flex-col justify-center items-center px-4 py-4 bg-white rounded-xl shadow-sm max-w-[369px] transform transition-transform duration-300 scale-100">
+        <img loading="lazy" src={Logo} className="h-24" alt="Company logo" />
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 bg-red-500 text-white rounded-full"
+        >
+          <IoIosClose size={24} />
+        </button>
+        <h1 className="text-2xl text-emerald-900">
+          {isSignup ? "Sign Up" : "Log In"} with Phone
+        </h1>
         <p className="mt-5 text-base text-emerald-700">
           {!isOtpSent
             ? "To Continue to Phone Email"
@@ -75,7 +94,30 @@ const OtpModal = ({ isOpen, onClose }) => {
 
         {!isOtpSent ? (
           <>
-            <div className="flex flex-col items-center gap-5 p-2.5 mt-5 bg-white rounded-md shadow-sm w-full">
+            {isSignup && (
+              <>
+                <div className="mt-5 w-full rounded-lg border-2">
+                  <input
+                    type="text"
+                    className="w-full p-2.5 text-xl bg-white rounded-md shadow-sm"
+                    placeholder="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+                <div className="mt-5 w-full border-2 rounded-lg">
+                  <input
+                    type="text"
+                    className="w-full p-2.5 text-xl bg-white rounded-md shadow-sm"
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+              </>
+            )}
+
+            {/* <div className="flex flex-col items-center gap-5 p-2.5 mt-5 bg-white rounded-md shadow-sm w-full">
               <PhoneInput
                 country={"in"}
                 value={phone}
@@ -102,13 +144,33 @@ const OtpModal = ({ isOpen, onClose }) => {
                   border: "1px solid #d1d5db",
                 }}
               />
+            </div> */}
+
+            <div className="flex items-center border-2 rounded-lg p-1 w-full mt-5">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
+                alt="India Flag"
+                className="h-6 w-6 mr-2 rounded-md"
+              />
+              <span className="text-xl">+91</span>
+              <input
+                type="tel"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                minLength="10"
+                maxLength="10"
+                className="flex-1 p-2 text-xl bg-white border-none rounded-md shadow-sm"
+                placeholder="Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
+
             {error && <p className="mt-2 text-red-500">{error.message}</p>}
             <button
               className="justify-center items-center self-stretch p-2.5 mt-5 text-xl text-white whitespace-nowrap bg-emerald-600 rounded-md shadow-sm"
               onClick={handleVerifyPhone}
             >
-              Verify
+              Send OTP
             </button>
           </>
         ) : (
@@ -132,8 +194,17 @@ const OtpModal = ({ isOpen, onClose }) => {
               className="justify-center items-center p-2.5 mt-5 text-xl text-white whitespace-nowrap bg-emerald-600 rounded-md shadow-sm self-stretch"
               onClick={handleVerifyOtp}
             >
-              Verify
+              {isSignup ? "Sign Up" : "Log In"}
             </button>
+            {timer > 0 ? (
+              <p className="mt-2 text-gray-500">
+                Resend OTP in {timer} seconds
+              </p>
+            ) : (
+              <button className="mt-5 underline" onClick={handleVerifyPhone}>
+                Resend OTP
+              </button>
+            )}
             <button
               className="self-center mt-5 underline"
               onClick={handleReturnBack}
@@ -145,19 +216,18 @@ const OtpModal = ({ isOpen, onClose }) => {
 
         <div className="flex items-center">
           <p className="self-stretch mt-5 text-base text-center text-neutral-500">
-            {!isSignup ? "Don't have an account?" : "Already have an account"}
+            {!isSignup ? "Don't have an account?" : "Already have an account?"}
           </p>
-          <button className="mt-5 ml-1 text-[#0C7FDA]" onClick={() => setIsSignup(!isSignup)}>
+          <button
+            className="mt-5 ml-1 text-[#0C7FDA] underline"
+            onClick={() => {
+              setIsSignup(!isSignup);
+              setIsOtpSent(false);
+            }}
+          >
             {!isSignup ? "Sign Up" : "Log In"}
           </button>
         </div>
-
-        <button
-          onClick={onClose}
-          className="mt-5 text-base text-center text-red-500"
-        >
-          Close
-        </button>
       </main>
     </div>
   );
