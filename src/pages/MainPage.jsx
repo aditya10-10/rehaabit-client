@@ -10,6 +10,7 @@ import OtpModal from "../components/SignupLogin/OtpModal";
 import { useDispatch } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
+import { Outlet } from "react-router-dom";
 
 const MainPage = () => {
   const dispatch = useDispatch();

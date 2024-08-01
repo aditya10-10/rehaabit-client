@@ -7,7 +7,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getUserDetails } from "./services/operations/profileAPI";
 
-import { Dashboard, MainPage, MyProfile, EditProfile } from "./pages";
+import { Dashboard, MainPage, MyProfile, EditProfile, Categories } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
@@ -31,8 +31,7 @@ export default function App() {
         <Route path="/" element={<MainPage />} />
 
         <Route path="/thank-you" element={<Thankyou />} />
-        {/* <Route path="/dashboard/my-profile" element={<MyProfile />} />
-         <Route path="/dashboard/edit-profile" element={<EditProfile />} /> */}
+        <Route path="/categories" element={<Categories />}/>
 
         <Route path="/dashboard/*" element={<Dashboard />}>
           <Route path="category" element={<Category />} />
