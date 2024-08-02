@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { ComingSoon } from "./pages/ComingSoon";
 
 import { Thankyou } from "./pages/Thankyou";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getUserDetails } from "./services/operations/profileAPI";
 
-import { Dashboard, MainPage, MyProfile, EditProfile, Categories } from "./pages";
+import { Dashboard, MainPage, MyProfile, EditProfile, Categories, ServiceDetailsPage } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
@@ -31,7 +30,8 @@ export default function App() {
         <Route path="/" element={<MainPage />} />
 
         <Route path="/thank-you" element={<Thankyou />} />
-        <Route path="/categories" element={<Categories />}/>
+        <Route path="/:category/:id" element={<Categories />}/>
+        <Route path="/service-details/:id" element={<ServiceDetailsPage />}/>
 
         <Route path="/dashboard/*" element={<Dashboard />}>
           <Route path="category" element={<Category />} />

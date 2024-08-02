@@ -81,7 +81,7 @@ const Navbar = ({ onLoginClick }) => {
                   return (
                     <li key={_id} className="p-2">
                       <NavLink
-                        to="/service1"
+                        to={`/${name}/${_id}`}
                         className="flex items-center px-4 py-2 hover:bg-gray-100 border rounded-lg"
                       >
                         <img
@@ -209,7 +209,7 @@ const Navbar = ({ onLoginClick }) => {
                       return (
                         <li key={_id} className="p-2">
                           <NavLink
-                            to="/service1"
+                            to={`/${name}/${_id}`}
                             className="flex items-center px-4 py-2 hover:bg-gray-100 border rounded-lg"
                           >
                             <img
