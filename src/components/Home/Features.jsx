@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const FeatureItem = ({ icon, name, description }) => (
   <div className="flex flex-col justify-center items-center text-center">
@@ -31,7 +32,9 @@ const Features = () => {
         </h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 mt-6 max-w-full w-[676px]">
           {categories.map((feature) => (
-            <FeatureItem key={feature._id} {...feature} />
+            <Link key={feature._id} to={`${feature.name}/${feature._id}`}>
+              <FeatureItem {...feature} />
+            </Link>
           ))}
         </div>
       </section>

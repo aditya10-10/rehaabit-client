@@ -2,12 +2,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const ServiceCard = ({ serviceName, serviceDescription, price, thumbnail }) => (
-  <div className="flex flex-col justify-center items-start px-6 py-4 mt-8 bg-amber-50 rounded-xl shadow-sm max-md:px-5 max-md:max-w-full">
+  <div className="flex flex-col justify-center items-start px-4 py-2 mt-4 bg-amber-50 rounded-xl shadow-sm max-md:px-5 max-md:max-w-full">
     <div className="flex gap-5">
       <img src={thumbnail} alt="Thumbnail" className="w-20 h-20 rounded-xl" />
       <div className="flex flex-col">
         <span className="text-lg font-medium text-black">{serviceName}</span>
-        <span className="text-sm text-zinc-700">{serviceDescription}</span>
+        <span className="text-sm text-zinc-700">
+          {serviceDescription.length > 30
+            ? `${serviceDescription.slice(0, 30)}...`
+            : serviceDescription}
+        </span>
         <span className="text-sm text-zinc-700">₹ {price}</span>
         <div className="flex gap-1 pr-20 max-md:pr-5">
           {[...Array(5)].map((_, i) => (
@@ -31,12 +35,12 @@ const Services = () => {
   return (
     <section className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full max-md:hidden">
+        <div className="flex flex-col w-6/12 max-md:hidden">
           <img
             loading="lazy"
             src="https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041453/Demo/Services_d3vxax.png"
             alt="Service illustration"
-            className="mt-3 w-full aspect-[0.70] max-md:mt-10 max-md:max-w-full"
+            className="mt-3 w-full aspect-[0.65]"
           />
         </div>
         <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
