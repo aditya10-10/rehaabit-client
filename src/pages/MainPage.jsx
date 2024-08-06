@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
 import { Outlet } from "react-router-dom";
+import { getAllCartServices } from "../slices/cartSlice";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(showAllCategories());
     dispatch(getAllServices());
+    dispatch(getAllCartServices())
   }, [dispatch]);
 
   const handleLoginClick = () => {

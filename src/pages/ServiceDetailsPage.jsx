@@ -7,6 +7,7 @@ import Navbar from "../components/Home/Navbar";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import FAQ from "../assets/faq.svg";
+import { addToCart, removeFromCart, updateCart } from "../slices/cartSlice";
 
 const ServiceDetailsPage = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,12 @@ const ServiceDetailsPage = () => {
 
   const { service } = useSelector((state) => state.service);
   const { categories } = useSelector((state) => state.categories);
+  const { cartServices, isLoading } = useSelector((state) => state.cart);
+
+  const cartService = cartServices.find(
+    (service) => service.serviceId === serviceId
+  );
+  const serviceQty = cartService ? cartService.qty : 0;
 
   const testimonials = [
     {
@@ -71,6 +78,24 @@ const ServiceDetailsPage = () => {
     );
   };
 
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({ serviceData: { ...service, qty: 1, serviceId: service._id } })
+    );
+  };
+
+  const handleIncrease = () => {
+    dispatch(updateCart({ serviceId: service._id, action: "increment" }));
+  };
+
+  const handleDecrease = () => {
+    dispatch(updateCart({ serviceId: service._id, action: "decrement" }));
+  };
+
+  const handleRemove = () => {
+    dispatch(removeFromCart({ serviceId: service._id }));
+  };
+
   useEffect(() => {
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
@@ -92,9 +117,46 @@ const ServiceDetailsPage = () => {
           <button className="bg-red-400 px-4 py-2 rounded-md text-sm text-white">
             Buy Now
           </button>
-          <button className="bg-yellow-400 px-4 py-2 rounded-md text-sm">
-            Add to Cart
-          </button>
+
+          <div className="flex items-center">
+            {serviceQty > 0 ? (
+              <>
+                <button
+                  className="border px-2 border-gray-400 rounded-full"
+                  disabled={isLoading}
+                  onClick={handleDecrease}
+                >
+                  -
+                </button>
+
+                <span className="mx-2 text-gray-500">{serviceQty}</span>
+
+                <button
+                  className="border px-2 border-gray-400 rounded-full"
+                  disabled={isLoading}
+                  onClick={handleIncrease}
+                >
+                  +
+                </button>
+
+                <button
+                  className="px-2 text-gray-600 hover:text-red-500"
+                  disabled={isLoading}
+                  onClick={handleRemove}
+                >
+                  REMOVE
+                </button>
+              </>
+            ) : (
+              <button
+                className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
+                disabled={isLoading}
+                onClick={() => handleAddToCart(service)}
+              >
+                Add to Cart
+              </button>
+            )}
+          </div>
         </div>
 
         {/* SERVICE DETAILS & INCLUSIONS */}
@@ -195,7 +257,11 @@ const ServiceDetailsPage = () => {
 
         {/* FAQ */}
         <div className="flex justify-center gap-40 w-full mt-20 max-xl:gap-20 max-lg:gap-5 max-md:flex-col max-md:mt-10">
-          <img src={FAQ} alt="FAQ" className="h-96 w-[40rem] max-xl:w-[30rem] max-lg:w-[20rem] max-md:w-full" />
+          <img
+            src={FAQ}
+            alt="FAQ"
+            className="h-96 w-[40rem] max-xl:w-[30rem] max-lg:w-[20rem] max-md:w-full"
+          />
 
           <div className="flex flex-col gap-5 w-[40%] max-xl:w-[50%] max-lg:w-full shadow-custom-shadow rounded-lg p-6">
             {service?._id &&
@@ -222,7 +288,7 @@ const ServiceDetailsPage = () => {
                       </div>
 
                       {showInfo && activeId === _id && (
-                        <span className="text-start mt-4 text-gray-600">
+                        <span className="text-start mt-4 text-gray-600 w-full">
                           {answer}
                         </span>
                       )}

@@ -6,7 +6,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getUserDetails } from "./services/operations/profileAPI";
 
-import { Dashboard, MainPage, MyProfile, EditProfile, Categories, ServiceDetailsPage } from "./pages";
+import { Dashboard, MainPage, MyProfile, EditProfile, Categories, ServiceDetailsPage, Cart } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
@@ -32,6 +32,7 @@ export default function App() {
         <Route path="/thank-you" element={<Thankyou />} />
         <Route path="/:category/:id" element={<Categories />}/>
         <Route path="/service-details/:id" element={<ServiceDetailsPage />}/>
+        <Route path="/cart" element={<Cart />}/>
 
         <Route path="/dashboard/*" element={<Dashboard />}>
           <Route path="category" element={<Category />} />

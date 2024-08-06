@@ -8,6 +8,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { IoLogOutOutline, IoMenu } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import { FaAngleLeft } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
 
 const Navbar = ({ onLoginClick }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Navbar = ({ onLoginClick }) => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
+  const { totalQty } = useSelector((state) => state.cart);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
@@ -36,7 +38,8 @@ const Navbar = ({ onLoginClick }) => {
         loading="lazy"
         src={Logo}
         alt="Company logo"
-        className="h-28 max-md:h-16"
+        className="h-28 max-md:h-16 cursor-pointer"
+        onClick={() => navigate("/")}
       />
 
       {/* Desktop Navigation */}
@@ -113,7 +116,7 @@ const Navbar = ({ onLoginClick }) => {
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/547777ca01f505c41e073cc20252f7a0100f7367d9fdd6b781cf18d04e24f65d?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-              alt="cart icon"
+              alt="icon"
               className="shrink-0 w-5 aspect-square"
             />
             <span>Login</span>
@@ -125,12 +128,16 @@ const Navbar = ({ onLoginClick }) => {
               className="flex justify-center items-center h-[50px] rounded-full w-[50px] max-md:h-[40px] max-md:w-[40px]"
               onClick={handleProfileClick}
             >
-              <img
-                loading="lazy"
-                src={user?.image}
-                alt=""
-                className="shrink-0 aspect-square w-[78px] rounded-full max-md:w-[48px]"
-              />
+              {user?.image ? (
+                <img
+                  loading="lazy"
+                  src={user.image}
+                  alt="UserImage"
+                  className="shrink-0 aspect-square w-[78px] rounded-full max-md:w-[48px] bg-purple-600"
+                />
+              ) : (
+                <CgProfile size={50} className="text-purple-600" />
+              )}
             </button>
 
             {isDropdownOpen && (
@@ -158,14 +165,23 @@ const Navbar = ({ onLoginClick }) => {
         )}
 
         {/* cart */}
-        <button className="flex justify-center items-center p-1 bg-emerald-500 h-[50px] rounded-[100px] w-[50px] max-md:h-[40px] max-md:w-[40px]">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/af9ee481dcd948d3726304bd37dc9045a176a58743d1fb7a35197718a1a55193?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-            alt=""
-            className="aspect-[1.05] fill-white w-[21px]"
-          />
-        </button>
+        <div className="relative">
+          <button
+            className="flex justify-center items-center p-1 bg-emerald-500 h-[50px] rounded-[100px] w-[50px] max-md:h-[40px] max-md:w-[40px]"
+            onClick={() => navigate("/cart")}
+          >
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/af9ee481dcd948d3726304bd37dc9045a176a58743d1fb7a35197718a1a55193?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
+              alt=""
+              className="aspect-[1.05] fill-white w-[21px]"
+            />
+          </button>
+
+          <span className="absolute top-0 right-0 z-50 bg-red-500 rounded-full text-white px-2">
+            {totalQty}
+          </span>
+        </div>
 
         {/* Menu Toggle */}
         <button

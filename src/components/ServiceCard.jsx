@@ -8,11 +8,12 @@ const ServiceCard = ({
   price,
   timeToComplete,
 }) => {
+
   return (
     <div className="flex max-sm:flex-col max-sm:justify-center max-sm:w-full w-full">
       <img
         src={thumbnail}
-        alt="Icon"
+        alt="Thumbnail"
         className="h-40 w-44 rounded-lg mr-4 mt-8 border-r-4 border-red-500 max-sm:w-full max-sm:h-44 max-sm:mt-2 max-sm:mr-0 max-sm:border-0"
       />
 

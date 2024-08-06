@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Home/Navbar";
 import { showAllCategories } from "../slices/categorySlice";
@@ -6,6 +6,13 @@ import { getAllServices } from "../slices/serviceSlice";
 import { Link, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
 import { ServiceCard } from "../components";
+import {
+  addToCart,
+  getAllCartServices,
+  removeFromCart,
+  updateCart,
+} from "../slices/cartSlice";
+import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -17,31 +24,52 @@ const Categories = () => {
     (state) => state.subcategories
   );
   const { allServices } = useSelector((state) => state.service);
+  const { cartServices, isLoading } = useSelector((state) => state.cart);
   const categoryRefs = useRef({});
 
   useEffect(() => {
     dispatch(showAllCategories());
     dispatch(getAllServices());
     dispatch(getSubCategoriesByCategory({ categoryId }));
+    dispatch(getAllCartServices());
   }, [dispatch, categoryId]);
 
   const handleCategoryClick = (subCategoryId) => {
     categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleAddToCart = (service) => {
+    dispatch(
+      addToCart({ serviceData: { ...service, qty: 1, serviceId: service._id } })
+    );
+  };
+
+  const handleIncrease = (service) => {
+    dispatch(updateCart({ serviceId: service._id, action: "increment" }));
+  };
+
+  const handleDecrease = (service) => {
+    dispatch(updateCart({ serviceId: service._id, action: "decrement" }));
+    console.log(service);
+  };
+
+  const handleRemove = (serviceId) => {
+    dispatch(removeFromCart({ serviceId }));
+  };
+
   return (
     <>
       <Navbar />
-      <div className="flex justify-between px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
-        
-        <div>
+      <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
+        <div className="w-[40%] max-md:w-full">
           <h1 className="text-5xl mb-10 max-sm:text-4xl">{categoryName}</h1>
-          <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit">
+
+          <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
             <h1 className="text-4xl text-center max-lg:text-2xl">
               Select Sub-Category
             </h1>
 
-            <div className="grid grid-cols-3 p-2 gap-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1">
+            <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-24 max-2xl:gap-x-14">
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
@@ -54,7 +82,7 @@ const Categories = () => {
                     <img
                       src={icon}
                       alt="Icon"
-                      className="h-10 w-10 rounded-full"
+                      className="h-12 w-12 rounded-full"
                     />
                     <span>{subCategoryName}</span>
                   </div>
@@ -85,6 +113,11 @@ const Categories = () => {
                     const { _id, serviceName, thumbnail, serviceDescription } =
                       service;
 
+                    const cartService = cartServices.find(
+                      (service) => service.serviceId === _id
+                    );
+                    const serviceQty = cartService ? cartService.qty : 0;
+
                     return (
                       <div
                         key={_id}
@@ -98,9 +131,48 @@ const Categories = () => {
                           <button className="bg-red-400 px-4 py-2 rounded-md text-sm text-white">
                             Buy Now
                           </button>
-                          <button className="bg-yellow-400 px-4 py-2 rounded-md text-sm">
-                            Add to Cart
-                          </button>
+
+                          <div className="flex items-center">
+                            {serviceQty > 0 ? (
+                              <>
+                                <button
+                                  className="border px-2 border-gray-400 rounded-full"
+                                  disabled={isLoading}
+                                  onClick={() => handleDecrease(service)}
+                                >
+                                  -
+                                </button>
+
+                                <span className="mx-2 text-gray-500">
+                                  {serviceQty}
+                                </span>
+
+                                <button
+                                  className="border px-2 border-gray-400 rounded-full"
+                                  disabled={isLoading}
+                                  onClick={() => handleIncrease(service)}
+                                >
+                                  +
+                                </button>
+
+                                <button
+                                  className="px-2 text-gray-600 hover:text-red-500"
+                                  disabled={isLoading}
+                                  onClick={() => handleRemove(_id)}
+                                >
+                                  REMOVE
+                                </button>
+                              </>
+                            ) : (
+                              <button
+                                className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
+                                disabled={isLoading}
+                                onClick={() => handleAddToCart(service)}
+                              >
+                                Add to Cart
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     );
