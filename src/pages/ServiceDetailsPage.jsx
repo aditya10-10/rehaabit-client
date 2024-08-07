@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getFullServiceDetails } from "../slices/serviceSlice";
 import { ReviewCards, ServiceCard } from "../components";
-import Navbar from "../components/Home/Navbar";
+import Navbar from "../components/Navbar";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import FAQ from "../assets/faq.svg";
@@ -85,15 +85,19 @@ const ServiceDetailsPage = () => {
   };
 
   const handleIncrease = () => {
-    dispatch(updateCart({ serviceId: service._id, action: "increment" }));
+    dispatch(
+      updateCart({ cartServiceId: cartService._id, action: "increment" })
+    );
   };
 
   const handleDecrease = () => {
-    dispatch(updateCart({ serviceId: service._id, action: "decrement" }));
+    dispatch(
+      updateCart({ cartServiceId: cartService._id, action: "decrement" })
+    );
   };
 
   const handleRemove = () => {
-    dispatch(removeFromCart({ serviceId: service._id }));
+    dispatch(removeFromCart({ cartServiceId: cartService._id }));
   };
 
   useEffect(() => {
@@ -107,7 +111,6 @@ const ServiceDetailsPage = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center justify-center w-full px-20 max-lg:px-10">
         {/* SERVICE OVERVIEW */}
         <ServiceCard {...service} />

@@ -2,20 +2,34 @@ import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 
 import { Thankyou } from "./pages/Thankyou";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { getUserDetails } from "./services/operations/profileAPI";
 
-import { Dashboard, MainPage, MyProfile, EditProfile, Categories, ServiceDetailsPage, Cart } from "./pages";
+import {
+  Dashboard,
+  MainPage,
+  MyProfile,
+  EditProfile,
+  Categories,
+  ServiceDetailsPage,
+  Cart,
+} from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
 import { MyService, Service } from "./components/Dashboard/Service";
+import Navbar from "./components/Navbar";
+import OtpModal from "./components/SignupLogin/OtpModal";
 
 export default function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   // const { user } = useSelector((state) => state.profile)
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [animationClass, setAnimationClass] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -24,15 +38,39 @@ export default function App() {
     }
   }, []);
 
+  const handleLoginClick = () => {
+    setAnimationClass("modal-open");
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setAnimationClass("modal-close");
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 300);
+  };
+
   return (
     <div className="w-screen min-h-screen">
+      {location.pathname.includes("/dashboard") ? null : (
+        <Navbar onLoginClick={handleLoginClick} />
+      )}
+
+      {isModalOpen && (
+        <div
+          className={`fixed inset-0 flex items-center justify-center z-50 top-0 bg-black bg-opacity-50 ${animationClass} max-h-screen`}
+        >
+          <OtpModal isOpen={isModalOpen} onClose={handleCloseModal} />
+        </div>
+      )}
+
       <Routes>
         <Route path="/" element={<MainPage />} />
 
         <Route path="/thank-you" element={<Thankyou />} />
-        <Route path="/:category/:id" element={<Categories />}/>
-        <Route path="/service-details/:id" element={<ServiceDetailsPage />}/>
-        <Route path="/cart" element={<Cart />}/>
+        <Route path="/:category/:id" element={<Categories />} />
+        <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
+        <Route path="/cart" element={<Cart />} />
 
         <Route path="/dashboard/*" element={<Dashboard />}>
           <Route path="category" element={<Category />} />

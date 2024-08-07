@@ -74,7 +74,7 @@ const OtpModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <main className="relative flex flex-col justify-center items-center px-4 py-4 bg-white rounded-xl shadow-sm max-w-[369px] transform transition-transform duration-300 scale-100">
         <img loading="lazy" src={Logo} className="h-24" alt="Company logo" />
         <button

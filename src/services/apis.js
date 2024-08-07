@@ -59,3 +59,11 @@ export const cartEndpoints = {
   REMOVE_FROM_CART_API: BASE_URL + "/removeFromCart",
   ADD_TO_CART_API: BASE_URL + "/addToCart",
 };
+
+// ADDRESS ENDPOINTS
+export const addressEndpoints = {
+  GET_USER_ADDRESSES_API: BASE_URL + "/getUserAddresses",
+  UPDATE_ADDRESS_API: BASE_URL + "/updateAddress",
+  DELETE_ADDRESS_API: BASE_URL + "/deleteAddress",
+  ADD_ADDRESS_API: BASE_URL + "/addAddress",
+};
