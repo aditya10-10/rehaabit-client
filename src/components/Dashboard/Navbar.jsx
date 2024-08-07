@@ -1,11 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../assets/LOGO.svg";
 import Profile from "../../assets/images/profile.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.profile);
 
   return (
     <nav className="sticky top-0 z-50 flex justify-between items-center w-full p-4 h-[100px] shadow-custom-shadow bg-white">
@@ -20,7 +23,15 @@ const Navbar = () => {
 
       <NavLink to="my-profile">
         <div className="flex items-center">
-          <img src={Profile} alt="Profile" className="h-14 w-14 rounded-full" />
+          {user?.image ? (
+            <img
+              src={user?.image}
+              alt="Profile"
+              className="h-14 w-14 rounded-full bg-purple-600"
+            />
+          ) : (
+            <CgProfile size={50} className="text-purple-600" />
+          )}
         </div>
       </NavLink>
     </nav>

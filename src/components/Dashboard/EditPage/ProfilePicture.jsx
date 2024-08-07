@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiUpload } from "react-icons/fi";
 import { updateDisplayPicture } from '../../../services/operations/SettingsAPI';
+import { CgProfile } from "react-icons/cg";
 
 const IconBtn = ({
   text,
@@ -89,11 +90,11 @@ const ProfilePicture = () => {
 
   return (
     <div className="flex gap-5 p-6 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm max-md:flex-wrap max-md:px-5">
-      <img
+      {previewSource || user?.imaage ?<img
         src={previewSource || user?.image}
         alt={`profile-${user?.firstName}`}
         className="shrink-0 aspect-square w-[78px] object-cover rounded-full"
-      />
+      /> : <CgProfile size={50} className="text-purple-600" />}
       <div className="flex flex-col flex-1 my-auto max-md:max-w-full">
         <div className="text-violet-900 max-md:max-w-full">
           Change Profile Picture

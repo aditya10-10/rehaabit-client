@@ -51,3 +51,11 @@ export const settingsEndpoints = {
   UPDATE_PROFILE_API: BASE_URL + "/updateProfile",
   DELETE_PROFILE_API: BASE_URL + "/deleteProfile",
 };
+
+// CART ENDPOINTS
+export const cartEndpoints = {
+  GET_ALL_CART_SERVICES_API: BASE_URL + "/getAllCartServices",
+  UPDATE_CART_API: BASE_URL + "/updateCart",
+  REMOVE_FROM_CART_API: BASE_URL + "/removeFromCart",
+  ADD_TO_CART_API: BASE_URL + "/addToCart",
+};

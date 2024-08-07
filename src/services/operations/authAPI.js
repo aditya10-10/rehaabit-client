@@ -87,9 +87,7 @@ export function login(contactNumber, otp, navigate) {
       toast.success("Login Successful");
       dispatch(setToken(response.data.token));
 
-      const userImage = response.data?.user?.image
-        ? response.data.user.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`;
+      const userImage = response.data?.user?.image;
       dispatch(setUserData({ ...response.data.user, image: userImage }));
       dispatch(setUserData(response.data.user));
       localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -102,7 +100,7 @@ export function login(contactNumber, otp, navigate) {
       navigate("/");
     } catch (error) {
       console.log("LOGIN API ERROR............", error);
-      toast.error("Could Not Veify OTP");
+      toast.error("Could Not Verify OTP");
       dispatch(setError(error.response.data));
       throw error;
     } finally {

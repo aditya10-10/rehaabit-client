@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ serviceName, serviceDescription, price, thumbnail }) => (
   <div className="flex flex-col justify-center items-start px-4 py-2 mt-4 bg-amber-50 rounded-xl shadow-sm max-md:px-5 max-md:max-w-full">
@@ -49,7 +50,9 @@ const Services = () => {
               Services{" "}
             </h2>
             {allServices.slice(0, 5).map((service) => (
-              <ServiceCard key={service._id} {...service} />
+              <Link key={service._id} to={`/service-details/${service._id}`}>
+                <ServiceCard {...service} />
+              </Link>
             ))}
           </div>
         </div>
