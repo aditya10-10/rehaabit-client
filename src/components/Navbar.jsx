@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../services/operations/authAPI";
-import Logo from "../../assets/LOGO.svg";
+import { logout } from "../services/operations/authAPI";
+import Logo from "../assets/LOGO.svg";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiDashboardLine } from "react-icons/ri";
 import { IoLogOutOutline, IoMenu } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import { FaAngleLeft } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
+import { getAllCartServices } from "../slices/cartSlice";
+import { getAllServices } from "../slices/serviceSlice";
+import { showAllCategories } from "../slices/categorySlice";
+import { showAllSubCategories } from "../slices/subCategorySlice";
 
 const Navbar = ({ onLoginClick }) => {
   const dispatch = useDispatch();
@@ -31,6 +35,13 @@ const Navbar = ({ onLoginClick }) => {
     dispatch(logout(navigate));
     setIsDropdownOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(getAllCartServices());
+    dispatch(getAllServices());
+    dispatch(showAllCategories());
+    dispatch(showAllSubCategories());
+  }, [dispatch])
 
   return (
     <header className="flex justify-between items-center px-16 py-2.5 w-full max-md:px-5 max-md:flex-wrap max-md:max-w-full">

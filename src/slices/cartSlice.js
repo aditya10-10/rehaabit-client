@@ -52,9 +52,9 @@ export const getAllCartServices = createAsyncThunk(
 // UPDATE CART
 export const updateCart = createAsyncThunk(
   "cart/updateCart",
-  async ({serviceId, action}, thunkAPI) => {
+  async ({cartServiceId, action}, thunkAPI) => {
     try {
-      const response = await apiConnector("PUT", UPDATE_CART_API, {serviceId, action});
+      const response = await apiConnector("PUT", UPDATE_CART_API, {cartServiceId, action});
 
       return response.data.data;
     } catch (error) {
@@ -67,9 +67,9 @@ export const updateCart = createAsyncThunk(
 // REMOVE FROM CART
 export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
-  async ({serviceId}, thunkAPI) => {
+  async ({cartServiceId}, thunkAPI) => {
     try {
-      const response = await apiConnector("DELETE", REMOVE_FROM_CART_API, {serviceId});
+      const response = await apiConnector("DELETE", REMOVE_FROM_CART_API, {cartServiceId});
 
       return response.data.data;
     } catch (error) {
@@ -96,10 +96,14 @@ const cartSlice = createSlice({
         state.cartServices = action.payload.services;
         state.totalQty = action.payload.totalQty;
         state.totalCost = action.payload.totalCost;
+
+        toast.success("Service Added to Cart Successfully!")
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
+
+        toast.error("Error in Adding Service to Cart")
       })
 
       // GET ALL CART SERVICES
@@ -126,10 +130,14 @@ const cartSlice = createSlice({
         state.cartServices = action.payload.services;
         state.totalQty = action.payload.totalQty;
         state.totalCost = action.payload.totalCost;
+
+        toast.success("Cart Service Updated Successfully!")
       })
       .addCase(updateCart.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
+
+        toast.error("Error in Updating Cart Service to Cart")
       })
 
       // REMOVE FROM CART
@@ -141,10 +149,14 @@ const cartSlice = createSlice({
         state.cartServices = action.payload.services;
         state.totalQty = action.payload.totalQty;
         state.totalCost = action.payload.totalCost;
+
+        toast.success("Service Deleted from Cart Successfully!")
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
+
+        toast.error("Error in Deleting Service from Cart")
       });
   },
 });

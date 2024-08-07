@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Navbar from "../components/Home/Navbar";
+import Navbar from "../components/Navbar";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
 import { Link, useParams } from "react-router-dom";
@@ -44,22 +44,22 @@ const Categories = () => {
     );
   };
 
-  const handleIncrease = (service) => {
-    dispatch(updateCart({ serviceId: service._id, action: "increment" }));
+  const handleIncrease = (cartServiceId) => {
+    dispatch(updateCart({ cartServiceId, action: "increment" }));
+    console.log(cartServiceId);
   };
 
-  const handleDecrease = (service) => {
-    dispatch(updateCart({ serviceId: service._id, action: "decrement" }));
-    console.log(service);
+  const handleDecrease = (cartServiceId) => {
+    dispatch(updateCart({ cartServiceId, action: "decrement" }));
+    console.log(cartServiceId);
   };
 
-  const handleRemove = (serviceId) => {
-    dispatch(removeFromCart({ serviceId }));
+  const handleRemove = (cartServiceId) => {
+    dispatch(removeFromCart({ cartServiceId }));
   };
 
   return (
     <>
-      <Navbar />
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <div className="w-[40%] max-md:w-full">
           <h1 className="text-5xl mb-10 max-sm:text-4xl">{categoryName}</h1>
@@ -138,7 +138,9 @@ const Categories = () => {
                                 <button
                                   className="border px-2 border-gray-400 rounded-full"
                                   disabled={isLoading}
-                                  onClick={() => handleDecrease(service)}
+                                  onClick={() =>
+                                    handleDecrease(cartService._id)
+                                  }
                                 >
                                   -
                                 </button>
@@ -150,7 +152,9 @@ const Categories = () => {
                                 <button
                                   className="border px-2 border-gray-400 rounded-full"
                                   disabled={isLoading}
-                                  onClick={() => handleIncrease(service)}
+                                  onClick={() =>
+                                    handleIncrease(cartService._id)
+                                  }
                                 >
                                   +
                                 </button>
@@ -158,7 +162,7 @@ const Categories = () => {
                                 <button
                                   className="px-2 text-gray-600 hover:text-red-500"
                                   disabled={isLoading}
-                                  onClick={() => handleRemove(_id)}
+                                  onClick={() => handleRemove(cartService._id)}
                                 >
                                   REMOVE
                                 </button>
