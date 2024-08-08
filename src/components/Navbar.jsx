@@ -13,6 +13,7 @@ import { getAllCartServices } from "../slices/cartSlice";
 import { getAllServices } from "../slices/serviceSlice";
 import { showAllCategories } from "../slices/categorySlice";
 import { showAllSubCategories } from "../slices/subCategorySlice";
+import { getUserAddresses } from "../slices/addressSlice";
 
 const Navbar = ({ onLoginClick }) => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const Navbar = ({ onLoginClick }) => {
     dispatch(getAllServices());
     dispatch(showAllCategories());
     dispatch(showAllSubCategories());
+    dispatch(getUserAddresses());
   }, [dispatch])
 
   return (

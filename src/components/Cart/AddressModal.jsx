@@ -2,11 +2,10 @@ import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
+import AddressList from "./AddressList";
 
 const AddressModal = ({ onClose, handleSelectedAddress }) => {
   const [isNewAddress, setIsNewAddress] = useState(false);
-
-  const { addresses } = useSelector((state) => state.address);
 
   const handleAddAddressClick = () => {
     setIsNewAddress(!isNewAddress);
@@ -34,41 +33,7 @@ const AddressModal = ({ onClose, handleSelectedAddress }) => {
             />
           ) : (
             <>
-              <div className="max-h-96 overflow-y-auto">
-                {addresses.map((address) => {
-                  const {
-                    _id,
-                    address: addr,
-                    addressType,
-                    city,
-                    landmark,
-                    locality,
-                    name,
-                    pincode,
-                    state,
-                    alternativePhone,
-                    phoneNo,
-                  } = address;
-
-                  return (
-                    <div className="flex">
-                      {/* <input type="radio" /> */}
-                      <div
-                        key={_id}
-                        className="flex flex-col w-full border-b mt-2 hover:shadow-custom-shadow p-4 rounded-md"
-                        onClick={() => handleSelectedAddress(address)}
-                      >
-                        <span>{name}</span>
-                        <span>{locality}</span>
-                        <span>{pincode}</span>
-                        <span>{city}</span>
-                        <span>{state}</span>
-                        <span>{phoneNo}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              <AddressList handleSelectedAddress={handleSelectedAddress} />
 
               <div className="flex w-full mt-10 justify-end">
                 <button

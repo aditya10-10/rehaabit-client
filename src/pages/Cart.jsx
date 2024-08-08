@@ -8,9 +8,11 @@ import {
 import { useEffect, useState } from "react";
 import { AddressModal, PriceDetailsCard } from "../components/Cart";
 import { getUserAddresses } from "../slices/addressSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
@@ -136,7 +138,10 @@ const Cart = () => {
               </div>
 
               <div className="flex w-full p-4 justify-end shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
-                <button className="bg-orange-500 p-2 text-white rounded-md mt-2">
+                <button
+                  className="bg-orange-500 p-2 text-white rounded-md mt-2"
+                  onClick={() => navigate("/checkout")}
+                >
                   PLACE ORDER
                 </button>
               </div>

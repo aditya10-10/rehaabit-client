@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addAddress } from "../../slices/addressSlice";
 
-const AddressForm = ({ isNewAddress, handleAddAddressClick }) => {
+const AddressForm = ({ handleAddAddressClick }) => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -27,21 +27,14 @@ const AddressForm = ({ isNewAddress, handleAddAddressClick }) => {
     e.preventDefault();
 
     dispatch(addAddress({ addressData: formData }));
-    handleAddAddressClick();
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full mt-4 max-h-96 overflow-y-auto"
+      className="w-full mt-4 max-h-96 overflow-y-auto p-6"
     >
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="name"
-        >
-          Name*
-        </label>
+      <div className="mb-4 flex gap-4">
         <input
           id="name"
           name="name"
@@ -52,15 +45,44 @@ const AddressForm = ({ isNewAddress, handleAddAddressClick }) => {
           placeholder="Enter your name"
           required
         />
+
+        <input
+          id="phoneNo"
+          name="phoneNo"
+          type="tel"
+          maxLength={10}
+          value={formData.phoneNo}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter phone number"
+          required
+        />
+      </div>
+
+      <div className="mb-4 flex gap-4">
+        <input
+          id="pincode"
+          name="pincode"
+          type="text"
+          value={formData.pincode}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter pincode"
+          required
+        />
+
+        <input
+          id="locality"
+          name="locality"
+          type="text"
+          value={formData.locality}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter locality"
+        />
       </div>
 
       <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="address"
-        >
-          Address*
-        </label>
         <textarea
           id="address"
           name="address"
@@ -72,13 +94,54 @@ const AddressForm = ({ isNewAddress, handleAddAddressClick }) => {
         />
       </div>
 
+      <div className="mb-4 flex gap-4">
+        <input
+          id="city"
+          name="city"
+          type="text"
+          value={formData.city}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter city"
+          required
+        />
+
+        <input
+          id="state"
+          name="state"
+          type="text"
+          value={formData.state}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter state"
+          required
+        />
+      </div>
+
+      <div className="mb-4 flex gap-4">
+        <input
+          id="landmark"
+          name="landmark"
+          type="text"
+          value={formData.landmark}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter landmark"
+        />
+
+        <input
+          id="alternativePhone"
+          name="alternativePhone"
+          type="tel"
+          maxLength={10}
+          value={formData.alternativePhone}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter alternative phone number"
+        />
+      </div>
+
       <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="addressType"
-        >
-          Address Type*
-        </label>
         <select
           id="addressType"
           name="addressType"
@@ -93,154 +156,21 @@ const AddressForm = ({ isNewAddress, handleAddAddressClick }) => {
         </select>
       </div>
 
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="city"
-        >
-          City*
-        </label>
-        <input
-          id="city"
-          name="city"
-          type="text"
-          value={formData.city}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder="Enter city"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="landmark"
-        >
-          Landmark
-        </label>
-        <input
-          id="landmark"
-          name="landmark"
-          type="text"
-          value={formData.landmark}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder="Enter landmark"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="locality"
-        >
-          Locality
-        </label>
-        <input
-          id="locality"
-          name="locality"
-          type="text"
-          value={formData.locality}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder="Enter locality"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="pincode"
-        >
-          Pincode*
-        </label>
-        <input
-          id="pincode"
-          name="pincode"
-          type="text"
-          value={formData.pincode}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder="Enter pincode"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="state"
-        >
-          State*
-        </label>
-        <input
-          id="state"
-          name="state"
-          type="text"
-          value={formData.state}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder="Enter state"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="phoneNo"
-        >
-          Phone Number*
-        </label>
-        <input
-          id="phoneNo"
-          name="phoneNo"
-          type="tel"
-          maxLength={10}
-          value={formData.phoneNo}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder="Enter phone number"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="alternativePhone"
-        >
-          Alternative Phone Number
-        </label>
-        <input
-          id="alternativePhone"
-          name="alternativePhone"
-          type="tel"
-          maxLength={10}
-          value={formData.alternativePhone}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md shadow-sm"
-          placeholder="Enter alternative phone number"
-        />
-      </div>
-
-      <div className="flex mt-6 justify-end">
+      <div className="flex mt-6">
         <button
           type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md"
+          className="bg-orange-500 uppercase text-white font-bold py-2 px-6 rounded-md"
         >
-          Add
+          save
         </button>
 
-        {isNewAddress && (
-          <button
-            onClick={handleAddAddressClick}
-            className="py-2 px-4 hover:text-red-500"
-          >
-            Cancel
-          </button>
-        )}
+        <button
+          onClick={() => handleAddAddressClick(false)}
+          className="py-2 px-4 hover:text-red-500"
+        >
+          Cancel
+        </button>
+
       </div>
     </form>
   );
