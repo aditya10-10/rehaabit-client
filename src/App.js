@@ -14,6 +14,7 @@ import {
   Categories,
   ServiceDetailsPage,
   Cart,
+  Checkout,
 } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
@@ -71,6 +72,7 @@ export default function App() {
         <Route path="/:category/:id" element={<Categories />} />
         <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/dashboard/*" element={<Dashboard />}>
           <Route path="category" element={<Category />} />
