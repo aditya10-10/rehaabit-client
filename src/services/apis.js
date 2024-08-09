@@ -67,3 +67,9 @@ export const addressEndpoints = {
   DELETE_ADDRESS_API: BASE_URL + "/deleteAddress",
   ADD_ADDRESS_API: BASE_URL + "/addAddress",
 };
+
+// ORDER ENDPOINTS
+export const orderEndpoints = {
+  PLACE_ORDER_API: BASE_URL + "/placeOrder",
+  PURCHASE_SERVICE_API: BASE_URL + "/purchaseOrder",
+};

@@ -7,23 +7,33 @@ import {
 } from "../components/Cart";
 import { ServiceCard } from "../components";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart, updateCart } from "../slices/cartSlice";
+import { getAllCartServices, removeFromCart, updateCart } from "../slices/cartSlice";
 import { FaCheck } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import toast from "react-hot-toast";
 import { setToken, setUserData } from "../slices/authSlice";
 import { setUser } from "../slices/profileSlice";
+import { getUserDetails } from "../services/operations/profileAPI";
+import { logout } from "../services/operations/authAPI";
+import { placeOrder } from "../slices/orderSlice";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+
   const [isNewAddress, setIsNewAddress] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   const { cartServices, isLoading, totalQty } = useSelector(
     (state) => state.cart
   );
   const { user } = useSelector((state) => state.profile);
+  const { isOrderLoading } = useSelector((state) => state.order);
+  const { addresses, filteredDefaultAddress } = useSelector(
+    (state) => state.address
+  );
 
   const handleIncrease = (cartServiceId) => {
     dispatch(updateCart({ cartServiceId, action: "increment" }));
@@ -51,18 +61,31 @@ const Checkout = () => {
 
   const handleAddAddressClick = () => {
     setIsNewAddress(!isNewAddress);
+    setSelectedAddress(null);
+  };
+
+  const handleEditAddressClick = (address) => {
+    setIsNewAddress(true);
+    setSelectedAddress(address);
   };
 
   useEffect(() => {
-    // dispatch(setUser());
+    if (localStorage.getItem("token")) {
+      const token = JSON.parse(localStorage.getItem("token"));
+      dispatch(getUserDetails(token));
+    }
   }, [dispatch]);
 
   const handleLogout = () => {
-    dispatch(setToken(null));
-    dispatch(setUserData(null));
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    toast.success("Logged Out");
+    dispatch(logout());
+  };
+
+  const handlePlaceOrder = () => {
+    dispatch(
+      placeOrder({ addressId: filteredDefaultAddress[0]?._id, paymentId: "edas" })
+    );
+    dispatch(getAllCartServices())
+    navigate('/')
   };
 
   return (
@@ -119,16 +142,28 @@ const Checkout = () => {
             )}
 
             {user && currentStep === 1 && (
-              <div className="flex px-7 gap-2 py-4">
-                <button className="hover:text-blue-500" onClick={handleLogout}>
-                  Logout
-                </button>
+              <div className="flex px-7 gap-2 py-4 items-center justify-between">
+                <div className="flex gap-2">
+                  <button
+                    className="hover:text-blue-500"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+
+                  <button
+                    className="hover:text-red-500"
+                    onClick={() => handleChangeStep(2)}
+                  >
+                    Cancel
+                  </button>
+                </div>
 
                 <button
-                  className="hover:text-red-500"
+                  className="bg-orange-500 text-white py-2 px-6 rounded-md"
                   onClick={() => handleChangeStep(2)}
                 >
-                  Cancel
+                  Continue
                 </button>
               </div>
             )}
@@ -177,27 +212,32 @@ const Checkout = () => {
               )}
             </div>
 
-            {selectedAddress && currentStep !== 2 && (
+            {filteredDefaultAddress && currentStep !== 2 && (
               <div
                 className={`flex items-start w-full flex-col p-4 border-b cursor-pointer`}
               >
                 <div className="flex w-full items-center px-7">
                   <div>
-                    <span className="flex-grow">{selectedAddress.name}</span>
+                    <span className="flex-grow">
+                      {filteredDefaultAddress[0]?.name}
+                    </span>
                     <span className="text-sm mx-2 bg-gray-100 p-2 rounded-sm">
-                      {selectedAddress.addressType}
+                      {filteredDefaultAddress[0]?.addressType}
                     </span>
                     <span className="text-sm mx-2">
-                      {selectedAddress.phoneNo}
+                      {filteredDefaultAddress[0]?.phoneNo}
                     </span>
                   </div>
                 </div>
                 <div className="text-sm text-gray-600 mt-2 px-7">
-                  {selectedAddress.address}, {selectedAddress.locality},{" "}
-                  {selectedAddress.landmark && `${selectedAddress.landmark},`}{" "}
-                  {selectedAddress.city}, {selectedAddress.state},{" "}
+                  {filteredDefaultAddress[0]?.address},{" "}
+                  {filteredDefaultAddress[0]?.locality},{" "}
+                  {filteredDefaultAddress[0]?.landmark &&
+                    `${filteredDefaultAddress[0]?.landmark},`}{" "}
+                  {filteredDefaultAddress[0]?.city},{" "}
+                  {filteredDefaultAddress[0]?.state},{" "}
                   <span className="font-semibold">
-                    {selectedAddress.pincode}
+                    {filteredDefaultAddress[0]?.pincode}
                   </span>
                 </div>
               </div>
@@ -206,11 +246,16 @@ const Checkout = () => {
             {user && currentStep === 2 && (
               <>
                 {isNewAddress ? (
-                  <AddressForm handleAddAddressClick={handleAddAddressClick} />
+                  <AddressForm
+                    isNewAddress={isNewAddress}
+                    handleAddAddressClick={handleAddAddressClick}
+                    selectedAddress={selectedAddress}
+                  />
                 ) : (
                   <AddressList
-                    selectedAddress={selectedAddress}
                     handleSelectedAddress={handleSelectedAddress}
+                    filteredDefaultAddress={filteredDefaultAddress}
+                    onEditAddressClick={handleEditAddressClick}
                   />
                 )}
 
@@ -226,7 +271,7 @@ const Checkout = () => {
                   <button
                     className="bg-orange-500 text-white py-2 px-7 uppercase rounded-md"
                     onClick={handleNextStep}
-                    disabled={!selectedAddress}
+                    disabled={!filteredDefaultAddress}
                   >
                     Continue
                   </button>
@@ -359,7 +404,11 @@ const Checkout = () => {
               <div className="max-h-[65vh] overflow-y-auto">
                 <h1>Payment</h1>
                 <div className="flex w-full justify-end py-2 px-7 mb-4 shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
-                  <button className="bg-orange-500 text-white py-2 px-7 uppercase rounded-md">
+                  <button
+                    className="bg-orange-500 text-white py-2 px-7 uppercase rounded-md"
+                    onClick={handlePlaceOrder}
+                    disabled={isOrderLoading}
+                  >
                     Place Order
                   </button>
                 </div>

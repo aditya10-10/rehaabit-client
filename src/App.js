@@ -22,6 +22,9 @@ import { Category } from "./components/Dashboard/Category";
 import { MyService, Service } from "./components/Dashboard/Service";
 import Navbar from "./components/Navbar";
 import OtpModal from "./components/SignupLogin/OtpModal";
+import { getAllCartServices } from "./slices/cartSlice";
+import { showAllCategories } from "./slices/categorySlice";
+import { getAllServices } from "./slices/serviceSlice";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -37,7 +40,14 @@ export default function App() {
       const token = JSON.parse(localStorage.getItem("token"));
       dispatch(getUserDetails(token, navigate));
     }
-  }, []);
+  }, [dispatch, navigate]);
+
+  useEffect(() => {
+    dispatch(getAllCartServices())
+    dispatch(showAllCategories());
+    dispatch(showAllCategories());
+    dispatch(getAllServices());
+  }, [dispatch])
 
   const handleLoginClick = () => {
     setAnimationClass("modal-open");

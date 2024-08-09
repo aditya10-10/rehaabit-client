@@ -13,6 +13,7 @@ const {
 
 const initialState = {
   addresses: [],
+  filteredDefaultAddress: null,
   isLoading: false,
   error: null,
 };
@@ -52,7 +53,11 @@ export const updateAddress = createAsyncThunk(
   "address/updateAddress",
   async ({ addressData }, thunkAPI) => {
     try {
-      const response = await apiConnector("PUT", UPDATE_ADDRESS_API, addressData);
+      const response = await apiConnector(
+        "PUT",
+        UPDATE_ADDRESS_API,
+        addressData
+      );
 
       return response.data.data;
     } catch (error) {
@@ -79,8 +84,8 @@ export const deleteAddress = createAsyncThunk(
   }
 );
 
-const cartSlice = createSlice({
-  name: "cart",
+const addressSlice = createSlice({
+  name: "address",
   initialState,
   reducers: {},
 
@@ -95,13 +100,17 @@ const cartSlice = createSlice({
         state.isLoading = false;
         state.addresses.push(action.payload);
 
-        toast.success("Address Added Successfully!")
+        state.filteredDefaultAddress = state.addresses.filter(
+          (address) => address.status === "Default"
+        );
+
+        toast.success("Address Added Successfully!");
       })
       .addCase(addAddress.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
 
-        toast.error("Error in Adding Address!")
+        toast.error("Error in Adding Address!");
       })
 
       // GET USER ADDRESS
@@ -111,6 +120,9 @@ const cartSlice = createSlice({
       .addCase(getUserAddresses.fulfilled, (state, action) => {
         state.isLoading = false;
         state.addresses = action.payload;
+        state.filteredDefaultAddress = state.addresses.filter(
+          (address) => address.status === "Default"
+        );
       })
       .addCase(getUserAddresses.rejected, (state, action) => {
         state.isLoading = false;
@@ -123,15 +135,21 @@ const cartSlice = createSlice({
       })
       .addCase(updateAddress.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartServices = action.payload;
+        state.addresses = state.addresses.map((address) =>
+          address._id === action.payload._id ? action.payload : address
+        );
 
-        toast.success("Address Updated Successfully!")
+        state.filteredDefaultAddress = state.addresses.filter(
+          (address) => address.status === "Default"
+        );
+
+        toast.success("Address Updated Successfully!");
       })
       .addCase(updateAddress.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
 
-        toast.error("Error in Updating Address!")
+        toast.error("Error in Updating Address!");
       })
 
       // DELETE ADDRESS
@@ -140,19 +158,25 @@ const cartSlice = createSlice({
       })
       .addCase(deleteAddress.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartServices = action.payload;
+        state.addresses = state.addresses.filter(
+          (address) => address._id !== action.payload._id
+        );
 
-        toast.success("Address Deleted Successfully!")
+        state.filteredDefaultAddress = state.addresses.filter(
+          (address) => address.status === "Default"
+        );
+
+        toast.success("Address Deleted Successfully!");
       })
       .addCase(deleteAddress.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
 
-        toast.error("Error in Deleting Address!")
+        toast.error("Error in Deleting Address!");
       });
   },
 });
 
-export const {} = cartSlice.actions;
+export const {} = addressSlice.actions;
 
-export default cartSlice.reducer;
+export default addressSlice.reducer;

@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addAddress } from "../../slices/addressSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAddress, updateAddress } from "../../slices/addressSlice";
 
-const AddressForm = ({ handleAddAddressClick }) => {
+const AddressForm = ({ handleAddAddressClick, selectedAddress }) => {
   const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.address);
 
   const [formData, setFormData] = useState({
     address: "",
@@ -18,6 +20,12 @@ const AddressForm = ({ handleAddAddressClick }) => {
     phoneNo: "",
   });
 
+  useEffect(() => {
+    if (selectedAddress) {
+      setFormData(selectedAddress);
+    }
+  }, [selectedAddress]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -26,13 +34,23 @@ const AddressForm = ({ handleAddAddressClick }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(addAddress({ addressData: formData }));
+    if (selectedAddress) {
+      dispatch(
+        updateAddress({
+          addressData: { ...formData, addressId: selectedAddress._id },
+        })
+      );
+    } else {
+      dispatch(addAddress({ addressData: formData }));
+    }
+
+    handleAddAddressClick(false)
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full mt-4 max-h-96 overflow-y-auto p-6"
+      className="w-full mt-4 max-h-96 overflow-y-auto p-6 max-sm:p-2"
     >
       <div className="mb-4 flex gap-4">
         <input
@@ -160,8 +178,9 @@ const AddressForm = ({ handleAddAddressClick }) => {
         <button
           type="submit"
           className="bg-orange-500 uppercase text-white font-bold py-2 px-6 rounded-md"
+          disabled={isLoading}
         >
-          save
+          {selectedAddress ? "Update" : "Save"}
         </button>
 
         <button
@@ -170,7 +189,6 @@ const AddressForm = ({ handleAddAddressClick }) => {
         >
           Cancel
         </button>
-
       </div>
     </form>
   );

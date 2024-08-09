@@ -4,6 +4,8 @@ import { setError, setLoading, setToken } from "../../slices/authSlice";
 import { apiConnector } from "../apiConnector";
 import { endpoints } from "../apis";
 import { setUserData } from "../../slices/authSlice";
+import { getUserDetails } from "./profileAPI";
+import { setUser } from "../../slices/profileSlice";
 
 const { SENDOTP_API, SIGNUP_API, LOGIN_API } = endpoints;
 
@@ -97,7 +99,8 @@ export function login(contactNumber, otp, navigate) {
       );
 
       localStorage.setItem("token", JSON.stringify(response.data.token));
-      navigate("/");
+      // navigate("/");
+      if(response.data.token) dispatch(getUserDetails(response.data.token))
     } catch (error) {
       console.log("LOGIN API ERROR............", error);
       toast.error("Could Not Verify OTP");
@@ -114,9 +117,10 @@ export function logout(navigate) {
   return (dispatch) => {
     dispatch(setToken(null));
     dispatch(setUserData(null));
+    dispatch(setUser(null));
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged Out");
-    navigate("/");
+    // navigate("/");
   };
 }
