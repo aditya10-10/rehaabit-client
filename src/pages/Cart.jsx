@@ -19,11 +19,12 @@ const Cart = () => {
   const [selectedAddress, setSelectedAddress] = useState([]);
 
   const { cartServices, isLoading } = useSelector((state) => state.cart);
+  const { addresses, filteredDefaultAddress } = useSelector((state) => state.address);
 
-  // useEffect(() => {
-  //   dispatch(getAllCartServices());
-  //   dispatch(getUserAddresses());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllCartServices());
+    dispatch(getUserAddresses());
+  }, [dispatch]);
 
   const handleIncrease = (cartServiceId) => {
     dispatch(updateCart({ cartServiceId, action: "increment" }));
@@ -48,13 +49,11 @@ const Cart = () => {
     setSelectedAddress(address);
   };
 
-  console.log(selectedAddress);
-
   return (
     <>
       {isModalOpen && (
         <div
-          className={`fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 ${animationClass}`}
+          className={`fixed w-full inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 ${animationClass}`}
         >
           <AddressModal
             isOpen={isModalOpen}
@@ -68,20 +67,24 @@ const Cart = () => {
         <div className="gap-10 flex max-lg:flex-col">
           <div className="flex flex-col gap-5 w-full">
             <div className="flex w-full items-center justify-between p-2 shadow-custom-shadow rounded-lg">
-              {selectedAddress && (
+              {filteredDefaultAddress ? (
                 <div>
                   <h1 className="font-semibold">
                     Deliver To:{" "}
-                    <span className="font-normal">{selectedAddress.name}</span>
+                    <span className="font-normal">
+                      {filteredDefaultAddress[0]?.name}
+                    </span>
                   </h1>
-                  <span>{selectedAddress.locality}</span>
-                  <span>, {selectedAddress.address}</span>
-                  <span>, {selectedAddress.landmark}</span>
-                  <span>, {selectedAddress.city}</span>
-                  <span>, {selectedAddress.pincode}</span>
-                  <span>, {selectedAddress.state}</span>
-                  <span>, {selectedAddress.phoneNo}</span>
+                  <span>{filteredDefaultAddress[0]?.locality}</span>
+                  <span>, {filteredDefaultAddress[0]?.address}</span>
+                  <span>, {filteredDefaultAddress[0]?.landmark}</span>
+                  <span>, {filteredDefaultAddress[0]?.city}</span>
+                  <span>, {filteredDefaultAddress[0]?.pincode}</span>
+                  <span>, {filteredDefaultAddress[0]?.state}</span>
+                  <span>, {filteredDefaultAddress[0]?.phoneNo}</span>
                 </div>
+              ) : (
+                <h1>Select Delivery Address</h1>
               )}
 
               <button

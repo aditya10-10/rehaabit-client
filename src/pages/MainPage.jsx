@@ -16,11 +16,11 @@ import { getAllCartServices } from "../slices/cartSlice";
 const MainPage = () => {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(showAllCategories());
-  //   dispatch(getAllServices());
-  //   dispatch(getAllCartServices());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(showAllCategories());
+    dispatch(getAllServices());
+    dispatch(getAllCartServices());
+  }, [dispatch]);
 
   return (
     <div className="flex w-screen min-h-screen flex-col mb-10 bg-white overflow-x-hidden">

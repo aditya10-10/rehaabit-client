@@ -7,6 +7,7 @@ import profileReducer from "../slices/profileSlice";
 import serviceReducer from "../slices/serviceSlice";
 import cartReducer from "../slices/cartSlice";
 import addressReducer from "../slices/addressSlice";
+import orderReducer from "../slices/orderSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   service: serviceReducer,
   cart: cartReducer,
   address: addressReducer,
+  order: orderReducer,
 });
 
 export default rootReducer;

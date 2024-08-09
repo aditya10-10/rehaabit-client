@@ -58,6 +58,10 @@ const Categories = () => {
     dispatch(removeFromCart({ cartServiceId }));
   };
 
+  const handleBuyNow = (service) => {
+    console.log(service)
+  }
+
   return (
     <>
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
@@ -128,7 +132,7 @@ const Categories = () => {
                         </Link>
 
                         <div className="flex gap-2 justify-end w-full mt-4">
-                          <button className="bg-red-400 px-4 py-2 rounded-md text-sm text-white">
+                          <button className="bg-red-400 px-4 py-2 rounded-md text-sm text-white" onClick={() => handleBuyNow(service)}>
                             Buy Now
                           </button>
 
