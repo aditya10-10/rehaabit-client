@@ -8,9 +8,12 @@ import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
 import { ServiceCard } from "../components";
 import {
   addToCart,
+  addCartToLocalStorage,
   getAllCartServices,
   removeFromCart,
   updateCart,
+  removeServiceFromLocalStorage,
+  updateCartInLocalStorage,
 } from "../slices/cartSlice";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 
@@ -25,6 +28,7 @@ const Categories = () => {
   );
   const { allServices } = useSelector((state) => state.service);
   const { cartServices, isLoading } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.profile);
   const categoryRefs = useRef({});
 
   useEffect(() => {
@@ -39,28 +43,58 @@ const Categories = () => {
   };
 
   const handleAddToCart = (service) => {
-    dispatch(
-      addToCart({ serviceData: { ...service, qty: 1, serviceId: service._id } })
-    );
+    if (user) {
+      dispatch(
+        addToCart({
+          serviceData: { ...service, qty: 1, serviceId: service._id },
+        })
+      );
+    } else {
+      dispatch(
+        addCartToLocalStorage({
+          serviceData: { ...service, qty: 1, serviceId: service._id },
+        })
+      );
+    }
   };
 
-  const handleIncrease = (cartServiceId) => {
-    dispatch(updateCart({ cartServiceId, action: "increment" }));
-    console.log(cartServiceId);
+  const handleIncrease = (cartServiceId, service) => {
+    if (user) {
+      dispatch(updateCart({ cartServiceId, action: "increment" }));
+    } else {
+      dispatch(
+        updateCartInLocalStorage({
+          serviceId: service._id,
+          acTion: "increment",
+        })
+      );
+    }
   };
 
-  const handleDecrease = (cartServiceId) => {
-    dispatch(updateCart({ cartServiceId, action: "decrement" }));
-    console.log(cartServiceId);
+  const handleDecrease = (cartServiceId, service) => {
+    if (user) {
+      dispatch(updateCart({ cartServiceId, action: "decrement" }));
+    } else {
+      dispatch(
+        updateCartInLocalStorage({
+          serviceId: service._id,
+          acTion: "decrement",
+        })
+      );
+    }
   };
 
-  const handleRemove = (cartServiceId) => {
-    dispatch(removeFromCart({ cartServiceId }));
+  const handleRemove = (cartServiceId, service) => {
+    if (user) {
+      dispatch(removeFromCart({ cartServiceId }));
+    } else {
+      dispatch(removeServiceFromLocalStorage({ serviceId: service._id }));
+    }
   };
 
   const handleBuyNow = (service) => {
-    console.log(service)
-  }
+    console.log(service);
+  };
 
   return (
     <>
@@ -132,7 +166,10 @@ const Categories = () => {
                         </Link>
 
                         <div className="flex gap-2 justify-end w-full mt-4">
-                          <button className="bg-red-400 px-4 py-2 rounded-md text-sm text-white" onClick={() => handleBuyNow(service)}>
+                          <button
+                            className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
+                            onClick={() => handleBuyNow(service)}
+                          >
                             Buy Now
                           </button>
 
@@ -143,7 +180,7 @@ const Categories = () => {
                                   className="border px-2 border-gray-400 rounded-full"
                                   disabled={isLoading}
                                   onClick={() =>
-                                    handleDecrease(cartService._id)
+                                    handleDecrease(cartService._id, service)
                                   }
                                 >
                                   -
@@ -157,7 +194,7 @@ const Categories = () => {
                                   className="border px-2 border-gray-400 rounded-full"
                                   disabled={isLoading}
                                   onClick={() =>
-                                    handleIncrease(cartService._id)
+                                    handleIncrease(cartService._id, service)
                                   }
                                 >
                                   +
@@ -166,7 +203,9 @@ const Categories = () => {
                                 <button
                                   className="px-2 text-gray-600 hover:text-red-500"
                                   disabled={isLoading}
-                                  onClick={() => handleRemove(cartService._id)}
+                                  onClick={() =>
+                                    handleRemove(cartService._id, service)
+                                  }
                                 >
                                   REMOVE
                                 </button>

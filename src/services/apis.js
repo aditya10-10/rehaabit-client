@@ -58,6 +58,7 @@ export const cartEndpoints = {
   UPDATE_CART_API: BASE_URL + "/updateCart",
   REMOVE_FROM_CART_API: BASE_URL + "/removeFromCart",
   ADD_TO_CART_API: BASE_URL + "/addToCart",
+  UPDATE_CART_FROM_LOCAL_STORAGE_API: BASE_URL + "/updateCartFromLocalStorage",
 };
 
 // ADDRESS ENDPOINTS
