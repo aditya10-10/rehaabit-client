@@ -7,7 +7,14 @@ import Navbar from "../components/Navbar";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import FAQ from "../assets/faq.svg";
-import { addToCart, removeFromCart, updateCart } from "../slices/cartSlice";
+import {
+  addCartToLocalStorage,
+  addToCart,
+  removeFromCart,
+  removeServiceFromLocalStorage,
+  updateCart,
+  updateCartInLocalStorage,
+} from "../slices/cartSlice";
 
 const ServiceDetailsPage = () => {
   const dispatch = useDispatch();
@@ -24,6 +31,7 @@ const ServiceDetailsPage = () => {
   const { service } = useSelector((state) => state.service);
   const { categories } = useSelector((state) => state.categories);
   const { cartServices, isLoading } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.profile);
 
   const cartService = cartServices.find(
     (service) => service.serviceId === serviceId
@@ -79,25 +87,57 @@ const ServiceDetailsPage = () => {
   };
 
   const handleAddToCart = () => {
-    dispatch(
-      addToCart({ serviceData: { ...service, qty: 1, serviceId: service._id } })
-    );
+    if (user) {
+      dispatch(
+        addToCart({
+          serviceData: { ...service, qty: 1, serviceId: service._id },
+        })
+      );
+    } else {
+      dispatch(
+        addCartToLocalStorage({
+          serviceData: { ...service, qty: 1, serviceId: service._id },
+        })
+      );
+    }
   };
 
   const handleIncrease = () => {
-    dispatch(
-      updateCart({ cartServiceId: cartService._id, action: "increment" })
-    );
+    if (user) {
+      dispatch(
+        updateCart({ cartServiceId: cartService._id, action: "increment" })
+      );
+    } else {
+      dispatch(
+        updateCartInLocalStorage({
+          serviceId: service._id,
+          acTion: "increment",
+        })
+      );
+    }
   };
 
   const handleDecrease = () => {
-    dispatch(
-      updateCart({ cartServiceId: cartService._id, action: "decrement" })
-    );
+    if (user) {
+      dispatch(
+        updateCart({ cartServiceId: cartService._id, action: "decrement" })
+      );
+    } else {
+      dispatch(
+        updateCartInLocalStorage({
+          serviceId: service._id,
+          acTion: "decrement",
+        })
+      );
+    }
   };
 
   const handleRemove = () => {
-    dispatch(removeFromCart({ cartServiceId: cartService._id }));
+    if (user) {
+      dispatch(removeFromCart({ cartServiceId: cartService._id }));
+    } else {
+      dispatch(removeServiceFromLocalStorage({ serviceId: service._id }));
+    }
   };
 
   useEffect(() => {
