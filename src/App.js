@@ -61,7 +61,7 @@ export default function App() {
   useEffect(() => {
     if (
       localStorage.getItem("cart") &&
-      JSON.parse(localStorage.getItem("cart")).cartServices.length === 0
+      JSON.parse(localStorage.getItem("cart")).totalQty === 0
     ) {
       localStorage.removeItem("cart");
     }
@@ -95,21 +95,35 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<MainPage />} />
-
         <Route path="/thank-you" element={<Thankyou />} />
         <Route path="/:category/:id" element={<Categories />} />
         <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
 
-        <Route path="/dashboard/*" element={<Dashboard />}>
-          <Route path="category" element={<Category />} />
-          <Route path="sub-category" element={<SubCategory />} />
-          <Route path="my-profile" element={<MyProfile />} />
-          <Route path="edit-profile" element={<EditProfile />} />
-          <Route path="my-services" element={<MyService />} />
-          <Route path="service/create-service/*" element={<Service />} />
-        </Route>
+        {(user?.accountType === "Admin" || user?.accountType === "User") && (
+          <></>
+        )}
+
+        {user?.accountType === "Admin" && (
+          <>
+            <Route path="/dashboard/*" element={<Dashboard />}>
+              <Route path="category" element={<Category />} />
+              <Route path="sub-category" element={<SubCategory />} />
+              <Route path="my-profile" element={<MyProfile />} />
+              <Route path="edit-profile" element={<EditProfile />} />
+              <Route path="my-services" element={<MyService />} />
+              <Route path="service/create-service/*" element={<Service />} />
+            </Route>
+          </>
+        )}
+
+        {(user?.accountType === "User" || user?.accountType === "Admin") && (
+          <>
+            <Route path="my-profile" element={<MyProfile />} />
+            <Route path="edit-profile" element={<EditProfile />} />
+          </>
+        )}
       </Routes>
     </div>
   );

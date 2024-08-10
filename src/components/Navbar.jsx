@@ -14,6 +14,10 @@ import { getAllServices } from "../slices/serviceSlice";
 import { showAllCategories } from "../slices/categorySlice";
 import { showAllSubCategories } from "../slices/subCategorySlice";
 import { getUserAddresses } from "../slices/addressSlice";
+import { IoSearchOutline } from "react-icons/io5";
+import { CiLocationOn } from "react-icons/ci";
+import { FiShoppingCart } from "react-icons/fi";
+import { IoIosHelpCircleOutline } from "react-icons/io";
 
 const Navbar = ({ onLoginClick }) => {
   const dispatch = useDispatch();
@@ -27,6 +31,10 @@ const Navbar = ({ onLoginClick }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [location, setLocation] = useState(null);
+  const [city, setCity] = useState("");
+  const [pincode, setPincode] = useState("");
 
   const handleProfileClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -37,13 +45,48 @@ const Navbar = ({ onLoginClick }) => {
     setIsDropdownOpen(false);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?query=${searchQuery}`);
+    }
+  };
+
   useEffect(() => {
     dispatch(getAllCartServices());
     dispatch(getAllServices());
     dispatch(showAllCategories());
     dispatch(showAllSubCategories());
     dispatch(getUserAddresses());
-  }, [dispatch])
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+
+          // Fetch city and pincode from coordinates
+          fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              const city =
+                data.address.city || data.address.town || data.address.village;
+              const pincode = data.address.postcode;
+              setCity(city);
+              setPincode(pincode);
+            })
+            .catch((error) =>
+              console.error("Error fetching location data:", error)
+            );
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error);
+        }
+      );
+    }
+  }, [dispatch]);
 
   return (
     <header className="flex justify-between items-center px-16 py-2.5 w-full max-md:px-5 max-md:flex-wrap max-md:max-w-full">
@@ -55,8 +98,38 @@ const Navbar = ({ onLoginClick }) => {
         onClick={() => navigate("/")}
       />
 
+      <div className="flex gap-2">
+        {/* Geolocation */}
+
+        <div className="flex items-center gap-2 border p-2 rounded-md shadow-custom-shadow">
+          <span>
+            <CiLocationOn size={20} />
+          </span>
+          <span className="text-gray-600">
+            {city ? `${city}, ${pincode}` : "Fetching location..."}
+          </span>
+        </div>
+
+        {/* Search Bar */}
+        <form
+          onSubmit={handleSearch}
+          className="flex items-center max-md:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-1 rounded-md"
+        >
+          <input
+            type="text"
+            className="p-2 w-60 max-md:w-full"
+            placeholder="Search for services..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <span className="bg-red-400 p-2 text-white rounded-md">
+            <IoSearchOutline size={20} />
+          </span>
+        </form>
+      </div>
+
       {/* Desktop Navigation */}
-      <nav className="hidden lg:flex gap-5 justify-center self-stretch my-auto text-sm text-black max-md:flex-wrap">
+      {/* <nav className="hidden lg:flex gap-5 justify-center self-stretch my-auto text-sm text-black max-md:flex-wrap">
         <NavLink to="/">Home</NavLink>
         <div
           onMouseEnter={() => setIsFeaturesOpen(true)}
@@ -117,7 +190,7 @@ const Navbar = ({ onLoginClick }) => {
 
         <NavLink to="/contact">Contact</NavLink>
         <NavLink to="/about">About Us</NavLink>
-      </nav>
+      </nav> */}
 
       <div className="flex gap-5 items-center">
         {!token ? (
@@ -153,17 +226,52 @@ const Navbar = ({ onLoginClick }) => {
               )}
             </button>
 
+            {/* DROPDOWN */}
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20">
+                {user.accountType === "Admin" && (
+                  <button
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                      navigate("/dashboard");
+                    }}
+                  >
+                    <RiDashboardLine className="w-5 h-5 mr-2" />
+                    Dashboard
+                  </button>
+                )}
                 <button
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
                   onClick={() => {
                     setIsDropdownOpen(false);
-                    navigate("/dashboard");
+                    user.accountType === "Admin"
+                      ? navigate("/dashboard/my-profile")
+                      : navigate("/my-profile");
                   }}
                 >
-                  <RiDashboardLine className="w-5 h-5 mr-2" />
-                  Dashboard
+                  <CgProfile className="w-5 h-5 mr-2" />
+                  My Profile
+                </button>
+                <button
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+                  onClick={() => {
+                    setIsDropdownOpen(false);
+                    navigate("/my-orders");
+                  }}
+                >
+                  <FiShoppingCart className="w-5 h-5 mr-2" />
+                  My Orders
+                </button>
+                <button
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+                  onClick={() => {
+                    setIsDropdownOpen(false);
+                    navigate("/help");
+                  }}
+                >
+                  <IoIosHelpCircleOutline className="w-5 h-5 mr-2" />
+                  Help
                 </button>
                 <button
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"

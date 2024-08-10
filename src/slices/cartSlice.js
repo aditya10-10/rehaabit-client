@@ -125,7 +125,7 @@ const cartSlice = createSlice({
       }
 
       state.totalQty += serviceData.qty;
-      state.totalCost += (serviceData.price * serviceData.qty);
+      state.totalCost += serviceData.price * serviceData.qty;
 
       localStorage.setItem("cart", JSON.stringify(state));
 
@@ -133,7 +133,6 @@ const cartSlice = createSlice({
     },
 
     removeServiceFromLocalStorage: (state, action) => {
-      console.log(action);
       const { serviceId } = action.payload;
       const serviceInCart = state.cartServices.find(
         (cartService) => cartService._id === serviceId
@@ -143,9 +142,13 @@ const cartSlice = createSlice({
       );
 
       state.totalQty -= serviceInCart.qty;
-      state.totalCost -= (serviceInCart.price * serviceInCart.qty);
+      state.totalCost -= serviceInCart.price * serviceInCart.qty;
 
       localStorage.setItem("cart", JSON.stringify(state));
+
+      if (JSON.parse(localStorage.getItem("cart").totalQty === 0)) {
+        localStorage.removeItem("cart");
+      }
 
       toast.error("Item removed from cart");
     },

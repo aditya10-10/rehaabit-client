@@ -8,6 +8,7 @@ import serviceReducer from "../slices/serviceSlice";
 import cartReducer from "../slices/cartSlice";
 import addressReducer from "../slices/addressSlice";
 import orderReducer from "../slices/orderSlice";
+import modalReducer from "../slices/modalSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   address: addressReducer,
   order: orderReducer,
+  modal: modalReducer,
 });
 
 export default rootReducer;

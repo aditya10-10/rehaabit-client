@@ -15,6 +15,8 @@ import {
   updateCart,
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
+import ConfirmationModal from "../components/ConfimationModal";
+import { openModal } from "../slices/modalSlice";
 
 const ServiceDetailsPage = () => {
   const dispatch = useDispatch();
@@ -23,6 +25,7 @@ const ServiceDetailsPage = () => {
 
   const [showInfo, setShowInfo] = useState(false);
   const [activeId, setActiveId] = useState(null);
+  const [onRemove, setOnRemove] = useState(null);
 
   useEffect(() => {
     dispatch(getFullServiceDetails({ serviceId }));
@@ -133,11 +136,16 @@ const ServiceDetailsPage = () => {
   };
 
   const handleRemove = () => {
-    if (user) {
-      dispatch(removeFromCart({ cartServiceId: cartService._id }));
-    } else {
-      dispatch(removeServiceFromLocalStorage({ serviceId: service._id }));
-    }
+    const removeHandler = () => {
+      if (user) {
+        dispatch(removeFromCart({ cartServiceId: cartService._id }));
+      } else {
+        dispatch(removeServiceFromLocalStorage({ serviceId: service._id }));
+      }
+    };
+
+    setOnRemove(() => removeHandler);
+    dispatch(openModal("removeConfirmation"));
   };
 
   useEffect(() => {
@@ -151,6 +159,8 @@ const ServiceDetailsPage = () => {
 
   return (
     <>
+    <ConfirmationModal text="Remove" onDelete={onRemove} />
+
       <div className="flex flex-col items-center justify-center w-full px-20 max-lg:px-10">
         {/* SERVICE OVERVIEW */}
         <ServiceCard {...service} />
