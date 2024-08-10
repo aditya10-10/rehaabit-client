@@ -16,12 +16,16 @@ import {
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
+import { openModal } from "../slices/modalSlice";
+import ConfirmationModal from "../components/ConfimationModal";
 
 const Categories = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const categoryName = params.category;
   const categoryId = params.id;
+
+  const [onRemove, setOnRemove] = useState(null);
 
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
@@ -85,11 +89,16 @@ const Categories = () => {
   };
 
   const handleRemove = (cartServiceId, service) => {
-    if (user) {
-      dispatch(removeFromCart({ cartServiceId }));
-    } else {
-      dispatch(removeServiceFromLocalStorage({ serviceId: service._id }));
-    }
+    const removeHandler = () => {
+      if (user) {
+        dispatch(removeFromCart({ cartServiceId }));
+      } else {
+        dispatch(removeServiceFromLocalStorage({ serviceId: service._id }));
+      }
+    };
+
+    setOnRemove(() => removeHandler);
+    dispatch(openModal("removeConfirmation"));
   };
 
   const handleBuyNow = (service) => {
@@ -98,6 +107,8 @@ const Categories = () => {
 
   return (
     <>
+      <ConfirmationModal text="Remove" onDelete={onRemove} />
+
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <div className="w-[40%] max-md:w-full">
           <h1 className="text-5xl mb-10 max-sm:text-4xl">{categoryName}</h1>

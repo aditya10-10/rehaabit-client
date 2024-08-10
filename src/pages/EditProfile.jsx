@@ -6,7 +6,7 @@ import DeleteAccount from '../components/Dashboard/EditPage/DeleteAccount';
 
 function ProfilePage() {
   return (
-    <div className='flex items-center mx-auto'>
+    <div className='flex items-center w-full justify-center'>
       <main className="flex flex-col pb-10 bg-white shadow-custom-shadow px-10 rounded-lg">
       <ProfileHeader />
       <div className="flex flex-col self-center mt-6 max-w-full w-[793px]">
