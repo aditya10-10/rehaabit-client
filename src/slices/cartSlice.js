@@ -125,7 +125,7 @@ const cartSlice = createSlice({
       }
 
       state.totalQty += serviceData.qty;
-      state.totalCost += serviceData.price * serviceData.qty;
+      state.totalCost += (serviceData.price * serviceData.qty);
 
       localStorage.setItem("cart", JSON.stringify(state));
 
@@ -143,12 +143,13 @@ const cartSlice = createSlice({
       );
 
       state.totalQty -= serviceInCart.qty;
-      state.totalCost -= serviceInCart.price * serviceInCart.qty;
+      state.totalCost -= (serviceInCart.price * serviceInCart.qty);
 
       localStorage.setItem("cart", JSON.stringify(state));
 
       toast.error("Item removed from cart");
     },
+
     updateCartInLocalStorage: (state, action) => {
       const { serviceId, acTion } = action.payload;
       const serviceInCart = state.cartServices.find(

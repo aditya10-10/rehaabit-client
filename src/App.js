@@ -22,7 +22,10 @@ import { Category } from "./components/Dashboard/Category";
 import { MyService, Service } from "./components/Dashboard/Service";
 import Navbar from "./components/Navbar";
 import OtpModal from "./components/SignupLogin/OtpModal";
-import { getAllCartServices, updateCartFromLocalStorage } from "./slices/cartSlice";
+import {
+  getAllCartServices,
+  updateCartFromLocalStorage,
+} from "./slices/cartSlice";
 import { showAllCategories } from "./slices/categorySlice";
 import { getAllServices } from "./slices/serviceSlice";
 
@@ -30,7 +33,7 @@ export default function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useSelector((state) => state.profile)
+  const { user } = useSelector((state) => state.profile);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
@@ -43,17 +46,26 @@ export default function App() {
   }, [dispatch, navigate]);
 
   useEffect(() => {
-    dispatch(getAllCartServices())
+    dispatch(getAllCartServices());
     dispatch(showAllCategories());
     dispatch(showAllCategories());
     dispatch(getAllServices());
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
-    if(user && localStorage.getItem("cart")){
+    if (user && localStorage.getItem("cart")) {
       dispatch(updateCartFromLocalStorage());
     }
-  }, [dispatch, user])
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("cart") &&
+      JSON.parse(localStorage.getItem("cart")).cartServices.length === 0
+    ) {
+      localStorage.removeItem("cart");
+    }
+  }, []);
 
   const handleLoginClick = () => {
     setAnimationClass("modal-open");
