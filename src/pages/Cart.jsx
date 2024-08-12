@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { AddressModal, PriceDetailsCard } from "../components/Cart";
 import { getUserAddresses } from "../slices/addressSlice";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../components/ConfimationModal";
+import ConfirmationModal from "../components/ConfirmationModal";
 import { openModal } from "../slices/modalSlice";
 
 const Cart = () => {

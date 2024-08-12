@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 
 const PriceDetailsCard = () => {
   const { totalQty, totalCost } = useSelector((state) => state.cart);
+  const { singleOrder } = useSelector((state) => state.order);
 
   return (
     <div className="flex flex-col w-[40%] max-lg:w-full sticky top-10 max-h-96">
@@ -9,8 +10,8 @@ const PriceDetailsCard = () => {
         <h1 className="text-gray-500 border-b">PRICE DETAILS</h1>
 
         <div className="flex w-full justify-between">
-          <span>Price ({totalQty} item)</span>
-          <span>₹ {totalCost}</span>
+          <span>Price ({singleOrder[0] ? singleOrder[0]?.qty : totalQty} item)</span>
+          <span>₹ {singleOrder[0] ? singleOrder[0]?.totalCost.toFixed(2) : totalCost.toFixed(2)}</span>
         </div>
 
         {/* <div className="flex w-full justify-between">
@@ -25,7 +26,7 @@ const PriceDetailsCard = () => {
 
         <div className="flex w-full justify-between mt-2 border-t">
           <span className="text-xl font-bold">Total Amount</span>
-          <span className="text-xl font-bold">₹ {totalCost.toFixed(2)}</span>
+          <span className="text-xl font-bold">₹ {singleOrder[0] ? singleOrder[0]?.totalCost.toFixed(2) : totalCost.toFixed(2)}</span>
         </div>
       </div>
 

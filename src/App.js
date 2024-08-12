@@ -28,6 +28,7 @@ import {
 } from "./slices/cartSlice";
 import { showAllCategories } from "./slices/categorySlice";
 import { getAllServices } from "./slices/serviceSlice";
+import { clearSingleOrder } from "./slices/orderSlice";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,12 @@ export default function App() {
   }, [dispatch, user]);
 
   useEffect(() => {
+    if (!location.pathname.includes("/checkout")) {
+      dispatch(clearSingleOrder());
+    }
+  }, [location, dispatch]);
+
+  useEffect(() => {
     if (
       localStorage.getItem("cart") &&
       JSON.parse(localStorage.getItem("cart")).totalQty === 0
@@ -80,7 +87,7 @@ export default function App() {
   };
 
   return (
-    <div className="w-screen min-h-screen">
+    <>
       {location.pathname.includes("/dashboard") ? null : (
         <Navbar onLoginClick={handleLoginClick} />
       )}
@@ -93,38 +100,40 @@ export default function App() {
         </div>
       )}
 
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/thank-you" element={<Thankyou />} />
-        <Route path="/:category/:id" element={<Categories />} />
-        <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
+      <div className="w-screen min-h-screen">
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/thank-you" element={<Thankyou />} />
+          <Route path="/:category/:id" element={<Categories />} />
+          <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
 
-        {(user?.accountType === "Admin" || user?.accountType === "User") && (
-          <></>
-        )}
+          {(user?.accountType === "Admin" || user?.accountType === "User") && (
+            <></>
+          )}
 
-        {user?.accountType === "Admin" && (
-          <>
-            <Route path="/dashboard/*" element={<Dashboard />}>
-              <Route path="category" element={<Category />} />
-              <Route path="sub-category" element={<SubCategory />} />
+          {user?.accountType === "Admin" && (
+            <>
+              <Route path="/dashboard/*" element={<Dashboard />}>
+                <Route path="category" element={<Category />} />
+                <Route path="sub-category" element={<SubCategory />} />
+                <Route path="my-profile" element={<MyProfile />} />
+                <Route path="edit-profile" element={<EditProfile />} />
+                <Route path="my-services" element={<MyService />} />
+                <Route path="service/create-service/*" element={<Service />} />
+              </Route>
+            </>
+          )}
+
+          {(user?.accountType === "User" || user?.accountType === "Admin") && (
+            <>
               <Route path="my-profile" element={<MyProfile />} />
               <Route path="edit-profile" element={<EditProfile />} />
-              <Route path="my-services" element={<MyService />} />
-              <Route path="service/create-service/*" element={<Service />} />
-            </Route>
-          </>
-        )}
-
-        {(user?.accountType === "User" || user?.accountType === "Admin") && (
-          <>
-            <Route path="my-profile" element={<MyProfile />} />
-            <Route path="edit-profile" element={<EditProfile />} />
-          </>
-        )}
-      </Routes>
-    </div>
+            </>
+          )}
+        </Routes>
+      </div>
+    </>
   );
 }

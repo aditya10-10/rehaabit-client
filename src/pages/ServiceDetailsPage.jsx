@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getFullServiceDetails } from "../slices/serviceSlice";
-import { ReviewCards, ServiceCard } from "../components";
-import Navbar from "../components/Navbar";
+import { ReviewCards, ServiceCard, ConfirmationModal } from "../components";
+
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+
 import FAQ from "../assets/faq.svg";
+
+import { getFullServiceDetails } from "../slices/serviceSlice";
 import {
   addCartToLocalStorage,
   addToCart,
@@ -15,7 +17,6 @@ import {
   updateCart,
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
-import ConfirmationModal from "../components/ConfimationModal";
 import { openModal } from "../slices/modalSlice";
 
 const ServiceDetailsPage = () => {
@@ -159,7 +160,7 @@ const ServiceDetailsPage = () => {
 
   return (
     <>
-    <ConfirmationModal text="Remove" onDelete={onRemove} />
+      <ConfirmationModal text="Remove" onDelete={onRemove} />
 
       <div className="flex flex-col items-center justify-center w-full px-20 max-lg:px-10">
         {/* SERVICE OVERVIEW */}
@@ -309,48 +310,50 @@ const ServiceDetailsPage = () => {
         </div>
 
         {/* FAQ */}
-        <div className="flex justify-center gap-40 w-full mt-20 max-xl:gap-20 max-lg:gap-5 max-md:flex-col max-md:mt-10">
-          <img
-            src={FAQ}
-            alt="FAQ"
-            className="h-96 w-[40rem] max-xl:w-[30rem] max-lg:w-[20rem] max-md:w-full"
-          />
+        {service?.faqs.length > 0 && (
+          <div className="flex justify-center gap-40 w-full mt-20 max-xl:gap-20 max-lg:gap-5 max-md:flex-col max-md:mt-10">
+            <img
+              src={FAQ}
+              alt="FAQ"
+              className="h-96 w-[40rem] max-xl:w-[30rem] max-lg:w-[20rem] max-md:w-full"
+            />
 
-          <div className="flex flex-col gap-5 w-[40%] max-xl:w-[50%] max-lg:w-full shadow-custom-shadow rounded-lg p-6">
-            {service?._id &&
-              service?.faqs.length >= 1 &&
-              service?.faqs.map((faq) => {
-                const { _id, question, answer } = faq;
+            <div className="flex flex-col gap-5 w-[40%] max-xl:w-[50%] max-lg:w-full shadow-custom-shadow rounded-lg p-6">
+              {service?._id &&
+                service?.faqs.length >= 1 &&
+                service?.faqs.map((faq) => {
+                  const { _id, question, answer } = faq;
 
-                return (
-                  <div key={_id} className="flex w-full rounded-lg border">
-                    <button
-                      onClick={() => {
-                        setShowInfo(!showInfo);
-                        setActiveId(_id);
-                      }}
-                      className="flex flex-col items-center w-full bg-gray-50 p-2 transition-all duration-300"
-                    >
-                      <div className="flex justify-between items-center w-full">
-                        <span>{question}</span>
-                        {showInfo && activeId === _id ? (
-                          <RiArrowDropUpLine size={30} />
-                        ) : (
-                          <RiArrowDropDownLine size={30} />
+                  return (
+                    <div key={_id} className="flex w-full rounded-lg border">
+                      <button
+                        onClick={() => {
+                          setShowInfo(!showInfo);
+                          setActiveId(_id);
+                        }}
+                        className="flex flex-col items-center w-full bg-gray-50 p-2 transition-all duration-300"
+                      >
+                        <div className="flex justify-between items-center w-full">
+                          <span>{question}</span>
+                          {showInfo && activeId === _id ? (
+                            <RiArrowDropUpLine size={30} />
+                          ) : (
+                            <RiArrowDropDownLine size={30} />
+                          )}
+                        </div>
+
+                        {showInfo && activeId === _id && (
+                          <span className="text-start mt-4 text-gray-600 w-full">
+                            {answer}
+                          </span>
                         )}
-                      </div>
-
-                      {showInfo && activeId === _id && (
-                        <span className="text-start mt-4 text-gray-600 w-full">
-                          {answer}
-                        </span>
-                      )}
-                    </button>
-                  </div>
-                );
-              })}
+                      </button>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* CATEGORIES */}
         <div className="flex flex-col w-full mt-10 mb-10">
