@@ -5,7 +5,7 @@ import {
   LoginSignup,
   PriceDetailsCard,
 } from "../components/Cart";
-import { ServiceCard } from "../components";
+import { ServiceCard, ConfirmationModal } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllCartServices,
@@ -15,14 +15,14 @@ import {
 } from "../slices/cartSlice";
 import { FaCheck } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
-import toast from "react-hot-toast";
-import { setToken, setUserData } from "../slices/authSlice";
-import { setUser } from "../slices/profileSlice";
 import { getUserDetails } from "../services/operations/profileAPI";
 import { logout } from "../services/operations/authAPI";
-import { placeOrder } from "../slices/orderSlice";
+import {
+  clearSingleOrder,
+  placeOrder,
+  updateSingleOrder,
+} from "../slices/orderSlice";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../components/ConfimationModal";
 import { openModal } from "../slices/modalSlice";
 
 const Checkout = () => {
@@ -37,24 +37,41 @@ const Checkout = () => {
     (state) => state.cart
   );
   const { user } = useSelector((state) => state.profile);
-  const { isOrderLoading } = useSelector((state) => state.order);
+  const { isOrderLoading, singleOrder, isSingleOrder } = useSelector(
+    (state) => state.order
+  );
   const { addresses, filteredDefaultAddress } = useSelector(
     (state) => state.address
   );
 
+  const CartServices = isSingleOrder === true ? singleOrder : cartServices;
+
   const [currentStep, setCurrentStep] = useState(user ? 2 : 1);
 
   const handleIncrease = (cartServiceId) => {
-    dispatch(updateCart({ cartServiceId, action: "increment" }));
+    if (isSingleOrder) {
+      dispatch(updateSingleOrder("increment"));
+    } else {
+      dispatch(updateCart({ cartServiceId, action: "increment" }));
+    }
   };
 
   const handleDecrease = (cartServiceId) => {
-    dispatch(updateCart({ cartServiceId, action: "decrement" }));
+    if (isSingleOrder) {
+      dispatch(updateSingleOrder("decrement"));
+    } else {
+      dispatch(updateCart({ cartServiceId, action: "decrement" }));
+    }
   };
 
   const handleRemove = (cartServiceId) => {
     const removeHandler = () => {
-      dispatch(removeFromCart({ cartServiceId }));
+      if (isSingleOrder) {
+        dispatch(clearSingleOrder());
+        navigate("/cart");
+      } else {
+        dispatch(removeFromCart({ cartServiceId }));
+      }
     };
 
     setOnRemove(() => removeHandler);
@@ -93,15 +110,15 @@ const Checkout = () => {
   useEffect(() => {
     if (user && localStorage.getItem("cart")) {
       dispatch(updateCartFromLocalStorage());
-      setCurrentStep(2)
+      setCurrentStep(2);
     }
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (totalQty === 0) {
-      navigate('/cart')
+    if (totalQty === 0 || CartServices.length === 0) {
+      navigate("/cart");
     }
-  }, [navigate, totalQty]);
+  }, [navigate, totalQty, CartServices.length]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -335,7 +352,7 @@ const Checkout = () => {
                     ORDER SUMMARY
                   </h1>
 
-                  {cartServices.length > 0 && currentStep > 3 && (
+                  {CartServices.length > 0 && currentStep > 3 && (
                     <FaCheck size={20} className="text-blue-500" />
                   )}
                 </div>
@@ -361,8 +378,8 @@ const Checkout = () => {
               {user && currentStep === 3 && (
                 <>
                   <div className="max-h-[65vh] overflow-y-auto p-4">
-                    {cartServices &&
-                      cartServices.map((service) => {
+                    {CartServices &&
+                      CartServices.map((service) => {
                         const { _id, qty } = service;
 
                         return (
@@ -370,13 +387,15 @@ const Checkout = () => {
                             <ServiceCard {...service} />
 
                             <div className="flex items-center mt-4 gap-2">
-                              <button
-                                className="border px-2 border-gray-400 rounded-full"
-                                onClick={() => handleDecrease(_id)}
-                                disabled={isLoading}
-                              >
-                                -
-                              </button>
+                              {qty > 1 && (
+                                <button
+                                  className="border px-2 border-gray-400 rounded-full"
+                                  onClick={() => handleDecrease(_id)}
+                                  disabled={isLoading}
+                                >
+                                  -
+                                </button>
+                              )}
 
                               <span className="mx-2 text-gray-500">{qty}</span>
 

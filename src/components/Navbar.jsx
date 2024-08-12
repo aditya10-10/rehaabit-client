@@ -117,7 +117,7 @@ const Navbar = ({ onLoginClick }) => {
         >
           <input
             type="text"
-            className="p-2 w-60 max-md:w-full"
+            className="p-2 w-60 max-md:w-full mr-2"
             placeholder="Search for services..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

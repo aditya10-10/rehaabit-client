@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
-import { ServiceCard } from "../components";
+import { ServiceCard, ConfirmationModal } from "../components";
 import {
   addToCart,
   addCartToLocalStorage,
@@ -17,10 +17,12 @@ import {
 } from "../slices/cartSlice";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { openModal } from "../slices/modalSlice";
-import ConfirmationModal from "../components/ConfimationModal";
+import { setSingleOrder } from "../slices/orderSlice";
 
 const Categories = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const params = useParams();
   const categoryName = params.category;
   const categoryId = params.id;
@@ -102,7 +104,15 @@ const Categories = () => {
   };
 
   const handleBuyNow = (service) => {
-    console.log(service);
+    dispatch(
+      setSingleOrder({
+        ...service,
+        qty: 1,
+        totalCost: service.price,
+        serviceId: service._id,
+      })
+    );
+    navigate("/checkout");
   };
 
   return (
