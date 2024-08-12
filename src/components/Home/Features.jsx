@@ -26,7 +26,7 @@ const Features = () => {
       <div className="absolute w-72 h-72 bg-[#6200EE] text-white font-bold text-xl rounded-[16px] -rotate-[30deg] right-[384px] top-[288px]"></div>
       <div className="absolute w-24 h-48 bg-[#E86558] text-white font-bold text-xl rounded-[30px] -rotate-[70deg] top-[510px] max-md:top-[384px]"></div>
 
-      <section className="relative z-50 flex flex-col items-center justify-center self-center px-5 py-16 mt-40 bg-amber-100 rounded-3xl shadow-lg max-w-full md:px-20 md:w-[938px] max-md:mt-20">
+      <section className="relative z-40 flex flex-col items-center justify-center self-center px-5 py-16 mt-40 bg-amber-100 rounded-3xl shadow-lg max-w-full md:px-20 md:w-[938px] max-md:mt-20">
         <h2 className="text-4xl font-bold text-center text-purple-950">
           Categories
         </h2>

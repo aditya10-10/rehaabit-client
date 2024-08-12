@@ -8,6 +8,8 @@ const { PLACE_ORDER_API, PURCHASE_SERVICE_API } = orderEndpoints;
 
 const initialState = {
   orders: [],
+  singleOrder: [],
+  isSingleOrder: false,
   isOrderLoading: false,
   error: null,
 };
@@ -52,7 +54,25 @@ export const purchaseService = createAsyncThunk(
 const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    setSingleOrder: (state, action) => {
+      state.singleOrder.push(action.payload);
+      state.isSingleOrder = true;
+    },
+    updateSingleOrder: (state, action) => {
+      if (action.payload === "increment") {
+        state.singleOrder[0].qty += 1;
+        state.singleOrder[0].totalCost += state.singleOrder[0].price;
+      } else {
+        state.singleOrder[0].qty -= 1;
+        state.singleOrder[0].totalCost -= state.singleOrder[0].price;
+      }
+    },
+    clearSingleOrder: (state, action) => {
+      state.singleOrder = [];
+      state.isSingleOrder = false;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -63,7 +83,6 @@ const orderSlice = createSlice({
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.isOrderLoading = false;
-
 
         toast.success("Order Placed Successfully!");
       })
@@ -81,7 +100,6 @@ const orderSlice = createSlice({
       .addCase(purchaseService.fulfilled, (state, action) => {
         state.isOrderLoading = false;
 
-
         toast.success("Service Purchased Successfully!");
       })
       .addCase(purchaseService.rejected, (state, action) => {
@@ -93,6 +111,6 @@ const orderSlice = createSlice({
   },
 });
 
-export const {} = orderSlice.actions;
+export const { setSingleOrder, clearSingleOrder, updateSingleOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;
