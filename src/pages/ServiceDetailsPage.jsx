@@ -310,7 +310,7 @@ const ServiceDetailsPage = () => {
         </div>
 
         {/* FAQ */}
-        {service?.faqs.length > 0 && (
+        {service?.faqs && service?.faqs.length > 0 && (
           <div className="flex justify-center gap-40 w-full mt-20 max-xl:gap-20 max-lg:gap-5 max-md:flex-col max-md:mt-10">
             <img
               src={FAQ}
