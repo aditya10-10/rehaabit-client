@@ -74,3 +74,9 @@ export const orderEndpoints = {
   PLACE_ORDER_API: BASE_URL + "/placeOrder",
   PURCHASE_SERVICE_API: BASE_URL + "/purchaseOrder",
 };
+
+//  PAYMENT ENDPOINTS
+export const paymentEndpoints = {
+  SERVICE_PAYMENT_API: BASE_URL + "/processPayment",
+  VERIFY_PAYMENT_API: BASE_URL + "/verifyPayment",
+};

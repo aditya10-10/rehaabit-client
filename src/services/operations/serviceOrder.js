@@ -1,0 +1,103 @@
+import { toast } from "react-hot-toast";
+
+import { paymentEndpoints } from "../apis";
+import { apiConnector } from "../apiConnector";
+import rzpLogo from "../../assets/images/LOGO_1.png";
+
+const { SERVICE_PAYMENT_API, VERIFY_PAYMENT_API } = paymentEndpoints;
+
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
+
+export async function placeOrder(token, services, navigate, dispatch) {
+  const toastId = toast.loading("Loading...");
+  try {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      toast.error("RazorPay SDK failed to load");
+      return;
+    }
+
+    console.log("Services being sent:", services);
+
+    const orderResponse = await apiConnector(
+      "POST",
+      SERVICE_PAYMENT_API,
+      { services },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    console.log("Order Response:", orderResponse);
+
+    if (!orderResponse.data.success) {
+      throw new Error(orderResponse.data.message);
+    }
+
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_KEY,
+      currency: orderResponse.data.message.currency,
+      amount: `${orderResponse.data.message.amount}`,
+      order_id: orderResponse.data.message.id,
+      name: "Rehaabit",
+      description: "Thank You for Purchasing the Service",
+      image: rzpLogo,
+      prefill: {
+        name: "Gaurav Kumar", // Replace with dynamic user details
+        contact: "9026589058", // Replace with dynamic user details
+      },
+      handler: function (response) {
+        verifyPayment({ ...response, services }, token, navigate, dispatch);
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+    paymentObject.on("payment.failed", function (response) {
+      toast.error("Oops, payment failed");
+      console.log("Payment Failed Details:", response.error);
+    });
+  } catch (error) {
+    console.error("PAYMENT API ERROR:", error);
+    toast.error("Could not make Payment");
+  } finally {
+    toast.dismiss(toastId);
+  }
+}
+
+// Verify Payment
+async function verifyPayment(bodyData, token, navigate, dispatch) {
+  const toastId = toast.loading("Verifying Payment...");
+  try {
+    const response = await apiConnector("POST", VERIFY_PAYMENT_API, bodyData, {
+      Authorization: `Bearer ${token}`,
+    });
+
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    toast.success("Payment Successful! You are added to the service.");
+    navigate("/success-page"); // Navigate to a success page or dashboard
+  } catch (error) {
+    console.error("PAYMENT VERIFY ERROR:", error);
+    toast.error("Could not verify Payment");
+  } finally {
+    toast.dismiss(toastId);
+  }
+}

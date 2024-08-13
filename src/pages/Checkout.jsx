@@ -17,17 +17,15 @@ import { FaCheck } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import { getUserDetails } from "../services/operations/profileAPI";
 import { logout } from "../services/operations/authAPI";
-import {
-  clearSingleOrder,
-  placeOrder,
-  updateSingleOrder,
-} from "../slices/orderSlice";
+import { clearSingleOrder, updateSingleOrder } from "../slices/orderSlice";
+import { placeOrder } from "../services/operations/serviceOrder";
 import { useNavigate } from "react-router-dom";
 import { openModal } from "../slices/modalSlice";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
 
   const [isNewAddress, setIsNewAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -125,12 +123,17 @@ const Checkout = () => {
   };
 
   const handlePlaceOrder = () => {
-    dispatch(
-      placeOrder({
-        addressId: filteredDefaultAddress[0]?._id,
-        paymentId: "edas",
-      })
+    console.log("Placing order");
+
+    // Extract the service IDs from the cartServices array
+    const serviceIds = cartServices.map(
+      (service) => service.serviceId || service._id
     );
+
+    // Pass the correct data structure to the placeOrder function
+    placeOrder(token, serviceIds, navigate, dispatch);
+
+    // Refresh the cart services after placing the order
     dispatch(getAllCartServices());
     navigate("/");
   };
