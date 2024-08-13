@@ -4,38 +4,43 @@ import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Logo from '../../assets/LOGO.svg'
 
-const FooterColumn = ({ title, items }) => {
+const FooterColumn = ({ title, items, links }) => {
   return (
     <div className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full max-md:text-center">
       <nav className="flex relative flex-col grow text-sm leading-6 text-emerald-800 whitespace-nowrap max-md:mt-10">
         <h3>{title}</h3>
         {items.map((item, index) => (
-          <a href="/" key={index} className="mt-4">
+          <Link to={links[index]} key={index} className="mt-4">
             {item}
-          </a>
+          </Link>
         ))}
       </nav>
     </div>
   );
 };
 
+
 const Footer = () => {
   const footerData = [
     {
       title: "Company",
       items: ["About", "Careers", "Newsroom"],
+      links: ["/about", "/careers", "/newsroom"],
     },
     {
       title: "Features",
       items: ["Quick", "Services", "Updates"],
+      links: ["/quick", "/services", "/updates"],
     },
     {
       title: "Social",
       items: ["Twitter", "Instagram", "Threads"],
+      links: ["https://twitter.com", "https://instagram.com", "https://threads.com"],
     },
     {
       title: "Legal",
       items: ["Terms", "Privacy"],
+      links: ["/terms-and-conditions", "/privacy"],
     },
   ];
 
@@ -43,22 +48,22 @@ const Footer = () => {
     {
       id: 1,
       icon: <FaFacebook />,
-      to: "",
+      to: "https://facebook.com",
     },
     {
       id: 2,
       icon: <FaGoogle />,
-      to: "",
+      to: "https://google.com",
     },
     {
       id: 3,
       icon: <FaTwitter />,
-      to: "",
+      to: "https://twitter.com",
     },
     {
       id: 4,
       icon: <FaYoutube />,
-      to: "",
+      to: "https://youtube.com",
     },
   ];
 
@@ -96,6 +101,7 @@ const Footer = () => {
                       key={index}
                       title={column.title}
                       items={column.items}
+                      links={column.links}
                     />
                   ))}
                 </div>

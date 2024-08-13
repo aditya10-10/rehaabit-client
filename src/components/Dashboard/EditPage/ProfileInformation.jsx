@@ -172,9 +172,7 @@ function ProfileInformation() {
         <button
           className="justify-center px-6 py-3 text-red-400 rounded-lg border border-red-400 border-solid max-md:px-5"
           onClick={() => {
-            user.accountType === "Admin"
-              ? navigate("/dashboard/my-profile")
-              : navigate("/my-profile");
+            navigate("/dashboard/my-profile");
           }}
         >
           Cancel
