@@ -10,11 +10,7 @@ function EditButton() {
   return (
     <button
       className="flex gap-2 px-5 py-2 my-auto text-base font-medium leading-6 text-center text-white whitespace-nowrap bg-emerald-700 rounded-lg"
-      onClick={() =>
-        user.accountType === "Admin"
-          ? navigate("/dashboard/edit-profile")
-          : navigate("edit-profile")
-      }
+      onClick={() => navigate("/dashboard/edit-profile")}
     >
       <img
         loading="lazy"

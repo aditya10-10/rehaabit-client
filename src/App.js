@@ -15,12 +15,13 @@ import {
   ServiceDetailsPage,
   Cart,
   Checkout,
+  TermsAndConditions,
 } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
 import { MyService, Service } from "./components/Dashboard/Service";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import OtpModal from "./components/SignupLogin/OtpModal";
 import {
   getAllCartServices,
@@ -108,12 +109,13 @@ export default function App() {
           <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
 
           {(user?.accountType === "Admin" || user?.accountType === "User") && (
             <></>
           )}
 
-          {user?.accountType === "Admin" && (
+          {(user?.accountType === "User" || user?.accountType === "Admin") && (
             <>
               <Route path="/dashboard/*" element={<Dashboard />}>
                 <Route path="category" element={<Category />} />
@@ -126,12 +128,12 @@ export default function App() {
             </>
           )}
 
-          {(user?.accountType === "User" || user?.accountType === "Admin") && (
+          {/* {(user?.accountType === "User" || user?.accountType === "Admin") && (
             <>
               <Route path="my-profile" element={<MyProfile />} />
               <Route path="edit-profile" element={<EditProfile />} />
             </>
-          )}
+          )} */}
         </Routes>
       </div>
     </>

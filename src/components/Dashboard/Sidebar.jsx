@@ -13,39 +13,52 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { clearServiceForm } from "../../slices/serviceSlice";
+import { CgProfile } from "react-icons/cg";
 import Swal from "sweetalert2";
 
 const sidebarLinks = [
+  {
+    id: 0,
+    icon: <CgProfile />,
+    text: "My Profile",
+    to: "/dashboard/my-profile",
+    index: true,
+  },
   {
     id: 1,
     icon: <GoHomeFill />,
     text: "Dashboard",
     to: "/dashboard",
     index: true,
+    adminOnly: true,
   },
   {
     id: 2,
     icon: <BiSolidCategory />,
     text: "Category",
     to: "category",
+    adminOnly: true,
   },
   {
     id: 3,
     icon: <MdCategory />,
     text: "Sub-Category",
     to: "sub-category",
+    adminOnly: true,
   },
   {
     id: 4,
     icon: <MdHomeRepairService />,
     text: "My Services",
     to: "my-services",
+    adminOnly: true,
   },
   {
     id: 5,
     icon: <MdMedicalServices />,
     text: "Add Service",
     to: "service/create-service",
+    adminOnly: true,
   },
   {
     id: 6,
@@ -58,12 +71,13 @@ const sidebarLinks = [
     icon: <FaUsers />,
     text: "Users",
     to: "users",
+    adminOnly: true,
   },
   {
     id: 8,
     icon: <IoMdSettings />,
     text: "Settings",
-    to: "settings",
+    to: "edit-profile",
   },
 ];
 
@@ -72,6 +86,7 @@ const Sidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { service, serviceId } = useSelector((state) => state.service);
+  const { user } = useSelector((state) => state.profile);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -108,10 +123,14 @@ const Sidebar = () => {
     }
   };
 
+  const filteredSidebarLinks = sidebarLinks.filter(
+    (link) => !link.adminOnly || user.accountType === "Admin"
+  );
+
   return (
     <div className="sticky top-[100px] flex flex-col items-center shadow-custom-shadow p-4 min-w-[300px] h-[90vh] bg-white">
       <div className="p-4 w-full">
-        {sidebarLinks.map((link) => {
+        {filteredSidebarLinks.map((link) => {
           const { id, icon, text, to, index } = link;
 
           return (

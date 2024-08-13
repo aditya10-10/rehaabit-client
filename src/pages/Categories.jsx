@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Navbar from "../components/Navbar";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
 import { Link, useNavigate, useParams } from "react-router-dom";
