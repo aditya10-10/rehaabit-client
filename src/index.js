@@ -9,7 +9,6 @@ import rootReducer from "./reducer/index.js";
 import { configureStore } from "@reduxjs/toolkit";
 import { Toaster } from "react-hot-toast";
 
-
 const store = configureStore({
   reducer: rootReducer,
 });
@@ -17,11 +16,11 @@ const store = configureStore({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-          <Toaster />
-        </BrowserRouter>
-      </Provider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+        <Toaster />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
