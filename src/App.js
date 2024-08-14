@@ -16,6 +16,7 @@ import {
   Cart,
   Checkout,
   TermsAndConditions,
+  MyOrders,
 } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
@@ -29,7 +30,7 @@ import {
 } from "./slices/cartSlice";
 import { showAllCategories } from "./slices/categorySlice";
 import { getAllServices } from "./slices/serviceSlice";
-import { clearSingleOrder } from "./slices/orderSlice";
+import { clearSingleOrder, getUserOrders } from "./slices/orderSlice";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ export default function App() {
     dispatch(showAllCategories());
     dispatch(showAllCategories());
     dispatch(getAllServices());
+    dispatch(getUserOrders());
   }, [dispatch]);
 
   useEffect(() => {
@@ -109,7 +111,10 @@ export default function App() {
           <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route
+            path="/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
 
           {(user?.accountType === "Admin" || user?.accountType === "User") && (
             <></>
@@ -124,6 +129,7 @@ export default function App() {
                 <Route path="edit-profile" element={<EditProfile />} />
                 <Route path="my-services" element={<MyService />} />
                 <Route path="service/create-service/*" element={<Service />} />
+                <Route path="orders" element={<MyOrders />} />
               </Route>
             </>
           )}
