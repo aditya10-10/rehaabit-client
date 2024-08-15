@@ -15,8 +15,8 @@ import CustomSearchBox from "./CustomSearchBox";
 import { useState } from "react";
 
 const searchClient = algoliasearch(
-  process.env.REACT_APP_ID,
-  process.env.REACT_ALGOLIA_APP_ID
+  "BOY7KEYJ5O",
+  "495325d42c91dfd227a8d93ba5f48752"
 );
 
 export const Search = () => {

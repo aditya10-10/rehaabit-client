@@ -126,12 +126,17 @@ const Checkout = () => {
     console.log("Placing order");
 
     // Extract the service IDs from the cartServices array
-    const serviceIds = cartServices.map(
-      (service) => service.serviceId || service._id
-    );
+    // Extract the service details from the cartServices array
+    const serviceDetails = cartServices.map((service) => ({
+      serviceId: service.serviceId || service._id,
+      price: service.price,
+      qty: service.qty,
+    }));
+
+    console.log("service details", serviceDetails);
 
     // Pass the correct data structure to the placeOrder function
-    placeOrder(token, serviceIds, navigate, dispatch);
+    placeOrder(token, serviceDetails, navigate, dispatch);
 
     // Refresh the cart services after placing the order
     dispatch(getAllCartServices());

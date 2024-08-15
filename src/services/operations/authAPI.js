@@ -100,7 +100,7 @@ export function login(contactNumber, otp, navigate) {
 
       localStorage.setItem("token", JSON.stringify(response.data.token));
       // navigate("/");
-      if(response.data.token) dispatch(getUserDetails(response.data.token))
+      if (response.data.token) dispatch(getUserDetails(response.data.token));
     } catch (error) {
       console.log("LOGIN API ERROR............", error);
       toast.error("Could Not Verify OTP");
