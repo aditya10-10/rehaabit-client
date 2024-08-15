@@ -48,7 +48,6 @@ export function signUp(firstName, lastName, contactNumber, otp, navigate) {
         lastName,
         contactNumber,
         otp,
-        accountType: "Admin",
       });
 
       console.log("SIGNUP API RESPONSE............", response);
