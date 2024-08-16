@@ -26,7 +26,7 @@ const Cart = () => {
   const { cartServices, isLoading, totalQty } = useSelector(
     (state) => state.cart
   );
-  const { addresses, filteredDefaultAddress } = useSelector(
+  const { filteredDefaultAddress } = useSelector(
     (state) => state.address
   );
   const { user } = useSelector((state) => state.profile);

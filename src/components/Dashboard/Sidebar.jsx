@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { clearServiceForm } from "../../slices/serviceSlice";
 import { CgProfile } from "react-icons/cg";
+import { FaAddressBook } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const sidebarLinks = [
@@ -75,6 +76,12 @@ const sidebarLinks = [
   },
   {
     id: 8,
+    icon: <FaAddressBook />,
+    text: "Addresses",
+    to: "addresses",
+  },
+  {
+    id: 9,
     icon: <IoMdSettings />,
     text: "Settings",
     to: "edit-profile",

@@ -305,12 +305,14 @@ const Checkout = () => {
                       isNewAddress={isNewAddress}
                       handleAddAddressClick={handleAddAddressClick}
                       selectedAddress={selectedAddress}
+                      height="10vh"
                     />
                   ) : (
                     <AddressList
                       handleSelectedAddress={handleSelectedAddress}
                       filteredDefaultAddress={filteredDefaultAddress}
                       onEditAddressClick={handleEditAddressClick}
+                      height="10vh"
                     />
                   )}
 

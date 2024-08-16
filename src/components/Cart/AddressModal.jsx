@@ -42,6 +42,7 @@ const AddressModal = ({
               isNewAddress={isNewAddress}
               handleAddAddressClick={handleAddAddressClick}
               selectedAddress={selectedAddress}
+              height="60vh"
             />
           ) : (
             <>
@@ -49,6 +50,7 @@ const AddressModal = ({
                 handleSelectedAddress={handleSelectedAddress}
                 filteredDefaultAddress={filteredDefaultAddress}
                 onEditAddressClick={handleEditAddressClick}
+                height="60vh"
               />
 
               <div className="flex w-full mt-10 justify-end">

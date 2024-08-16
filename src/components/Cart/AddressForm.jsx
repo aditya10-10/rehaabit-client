@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAddress, updateAddress } from "../../slices/addressSlice";
 
-const AddressForm = ({ handleAddAddressClick, selectedAddress }) => {
+const AddressForm = ({ handleAddAddressClick, selectedAddress, height }) => {
   const dispatch = useDispatch();
 
   const { isLoading } = useSelector((state) => state.address);
@@ -50,7 +50,7 @@ const AddressForm = ({ handleAddAddressClick, selectedAddress }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full mt-4 max-h-96 overflow-y-auto p-6 max-sm:p-2"
+      className={`w-full mt-4 max-h-[${height}] overflow-y-auto p-6 max-sm:p-2`}
     >
       <div className="mb-4 flex gap-4">
         <input

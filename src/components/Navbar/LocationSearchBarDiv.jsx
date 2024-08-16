@@ -142,7 +142,7 @@ const LocationSearchBarDiv = () => {
       </div>
 
       {/* Search Bar */}
-      {/* <form
+      <form
         onSubmit={handleSearch}
         className="flex items-center max-lg:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-1 rounded-md"
       >
@@ -156,10 +156,12 @@ const LocationSearchBarDiv = () => {
         <span className="bg-red-400 p-2 text-white rounded-md">
           <IoSearchOutline size={20} />
         </span>
-      </form> */}
-      <div className="relative flex flex-col w-96 items-center max-lg:w-full">
+      </form>
+
+      {/* ALGOLIA SEARCH */}
+      {/* <div className="relative flex flex-col w-96 items-center max-lg:w-full">
         <Search />
-      </div>
+      </div> */}
     </>
   );
 };

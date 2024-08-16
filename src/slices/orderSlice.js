@@ -4,8 +4,12 @@ import { toast } from "react-hot-toast";
 import { orderEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
 
-const { PLACE_ORDER_API, PURCHASE_SERVICE_API, GET_USER_ORDERS_API } =
-  orderEndpoints;
+const {
+  PLACE_ORDER_API,
+  PURCHASE_SERVICE_API,
+  GET_USER_ORDERS_API,
+  GET_ALL_ORDERS_API,
+} = orderEndpoints;
 
 const initialState = {
   orders: [],
@@ -39,6 +43,21 @@ export const getUserOrders = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_USER_ORDERS_API);
+
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+// GET ALL ORDERS
+export const getAllOrders = createAsyncThunk(
+  "order/getAllOrders",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", GET_ALL_ORDERS_API);
 
       return response.data.data;
     } catch (error) {
@@ -116,14 +135,23 @@ const orderSlice = createSlice({
       .addCase(getUserOrders.fulfilled, (state, action) => {
         state.isOrderLoading = false;
         state.orders = action.payload;
-
-        toast.success("Order Placed Successfully!");
       })
       .addCase(getUserOrders.rejected, (state, action) => {
         state.isOrderLoading = false;
         state.error = action;
+      })
 
-        toast.error("Error in Placing Order");
+      // GET ALL ORDERS
+      .addCase(getAllOrders.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(getAllOrders.fulfilled, (state, action) => {
+        state.isOrderLoading = false;
+        state.orders = action.payload;
+      })
+      .addCase(getAllOrders.rejected, (state, action) => {
+        state.isOrderLoading = false;
+        state.error = action;
       })
 
       // PURCHASE SERVICE
