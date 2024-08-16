@@ -2,17 +2,19 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { OrdersList } from "../components/Orders";
+import NothingToShow from "../components/NothingToShow";
 
 const MyOrders = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const { categories } = useSelector((state) => state.categories);
   const { subcategories } = useSelector((state) => state.subcategories);
   const { orders } = useSelector((state) => state.order);
+  const { user } = useSelector((state) => state.profile);
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSubcategory, setSelectedSubcategory] = useState("All");
-
+  const [searchContact, setSearchContact] = useState("");
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
@@ -23,24 +25,35 @@ const MyOrders = () => {
     setSelectedSubcategory(e.target.value);
   };
 
-  const filteredServices = orders.filter((service) => {
+  const handleContactSearch = (e) => {
+    setSearchContact(e.target.value);
+  };
+
+  const filteredOrders = orders.filter((order) => {
     const categoryMatch =
-      selectedCategory === "All" || service.categoryId === selectedCategory;
+      selectedCategory === "All" ||
+      categories.find((category) => category._id === selectedCategory)?.name ===
+        order.service[0].serviceId.categoryName;
 
     const subcategoryMatch =
       selectedSubcategory === "All" ||
-      service.subCategoryId === selectedSubcategory;
+      subcategories.find((subcat) => subcat._id === selectedSubcategory)
+        ?.subCategoryName === order.service[0].serviceId.subCategoryName;
 
-    return categoryMatch && subcategoryMatch;
+    const contactMatch =
+      searchContact === "" || order.user.contactNumber.includes(searchContact);
+
+    return categoryMatch && subcategoryMatch && contactMatch;
   });
 
   return (
     <div className="flex flex-col items-center w-full p-10">
       <nav className="flex w-full justify-between">
         <div className="flex items-center">
-          <h1 className="text-4xl font-semibold">My Orders</h1>
+          <h1 className="text-4xl font-semibold mb-6">My Orders</h1>
 
-          <select
+          {/* Search by Category */}
+          {/* <select
             value={selectedCategory}
             onChange={handleCategoryChange}
             className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6"
@@ -51,9 +64,10 @@ const MyOrders = () => {
                 {name}
               </option>
             ))}
-          </select>
+          </select> */}
 
-          <select
+          {/* Search by Subcategory */}
+          {/* <select
             value={selectedSubcategory}
             onChange={handleSubcategoryChange}
             className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6"
@@ -64,16 +78,33 @@ const MyOrders = () => {
                 {subCategoryName}
               </option>
             ))}
-          </select>
+          </select> */}
+
+          {/* Search by Contact Number */}
+          {user.accountType === "Admin" && (
+            <div className="ml-6 mb-6">
+              <input
+                type="text"
+                value={searchContact}
+                onChange={handleContactSearch}
+                placeholder="Search by Contact..."
+                className="shadow-custom-shadow border rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+          )}
         </div>
       </nav>
 
       {/* ORDERS LIST */}
-      <div className="mt-6 w-full border rounded-lg">
-        <OrdersList orders={orders} />
-      </div>
+      {!filteredOrders?.length >= 1 ? (
+        <NothingToShow text="Orders" btnText="shopping" />
+      ) : (
+        <div className="mt-6 w-full border rounded-lg">
+          <OrdersList orders={filteredOrders} />
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default MyOrders
+export default MyOrders;

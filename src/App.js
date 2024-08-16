@@ -17,6 +17,7 @@ import {
   Checkout,
   TermsAndConditions,
   MyOrders,
+  Addresses,
 } from "./pages";
 
 import { SubCategory } from "./components/Dashboard/SubCategory";
@@ -30,7 +31,12 @@ import {
 } from "./slices/cartSlice";
 import { showAllCategories } from "./slices/categorySlice";
 import { getAllServices } from "./slices/serviceSlice";
-import { clearSingleOrder, getUserOrders } from "./slices/orderSlice";
+import {
+  clearSingleOrder,
+  getAllOrders,
+  getUserOrders,
+} from "./slices/orderSlice";
+import { showAllSubCategories } from "./slices/subCategorySlice";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -51,10 +57,14 @@ export default function App() {
   useEffect(() => {
     dispatch(getAllCartServices());
     dispatch(showAllCategories());
-    dispatch(showAllCategories());
+    dispatch(showAllSubCategories());
     dispatch(getAllServices());
-    dispatch(getUserOrders());
-  }, [dispatch]);
+    if (user?.accountType === "Admin") {
+      dispatch(getAllOrders());
+    } else {
+      dispatch(getUserOrders());
+    }
+  }, [dispatch, user?.accountType]);
 
   useEffect(() => {
     if (user && localStorage.getItem("cart")) {
@@ -67,6 +77,12 @@ export default function App() {
       dispatch(clearSingleOrder());
     }
   }, [location, dispatch]);
+
+  useEffect(() => {
+    if (!user && !location.pathname.includes("/checkout") && !location.pathname.includes("/")) {
+      navigate('/')
+    }
+  }, [location, navigate, user]);
 
   useEffect(() => {
     if (
@@ -130,6 +146,7 @@ export default function App() {
                 <Route path="my-services" element={<MyService />} />
                 <Route path="service/create-service/*" element={<Service />} />
                 <Route path="orders" element={<MyOrders />} />
+                <Route path="addresses" element={<Addresses />} />
               </Route>
             </>
           )}

@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
+import { RxCross2 } from "react-icons/rx";
 
 import { Search } from "./Search";
+import SearchData from "./SearchData";
 
 const LocationSearchBarDiv = () => {
   const navigate = useNavigate();
@@ -17,12 +19,14 @@ const LocationSearchBarDiv = () => {
   const [city, setCity] = useState("");
   const [pincode, setPincode] = useState("");
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?query=${searchQuery}`);
-    }
-  };
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   if (searchQuery.trim()) {
+  //     navigate(`/search?query=${searchQuery}`);
+  //   }
+  // };
+
+  // console.log(searchQuery)
 
   const handleLocationSearch = (e) => {
     const query = e.target.value;
@@ -142,10 +146,7 @@ const LocationSearchBarDiv = () => {
       </div>
 
       {/* Search Bar */}
-      {/* <form
-        onSubmit={handleSearch}
-        className="flex items-center max-lg:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-1 rounded-md"
-      >
+      <div className="relative flex items-center max-lg:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-1 rounded-md">
         <input
           type="text"
           className="p-2 w-96 max-xl:w-72 max-lg:w-60 max-md:w-full mr-2"
@@ -153,13 +154,24 @@ const LocationSearchBarDiv = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+
+        {searchQuery && <RxCross2
+          size={20}
+          className="mr-2 cursor-pointer"
+          onClick={() => setSearchQuery("")}
+        />}
+
         <span className="bg-red-400 p-2 text-white rounded-md">
           <IoSearchOutline size={20} />
         </span>
-      </form> */}
-      <div className="relative flex flex-col w-96 items-center max-lg:w-full">
-        <Search />
+
+        <SearchData searchQuery={searchQuery} />
       </div>
+
+      {/* ALGOLIA SEARCH */}
+      {/* <div className="relative flex flex-col w-96 items-center max-lg:w-full">
+        <Search />
+      </div> */}
     </>
   );
 };

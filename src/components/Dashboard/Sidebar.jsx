@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { clearServiceForm } from "../../slices/serviceSlice";
 import { CgProfile } from "react-icons/cg";
+import { FaAddressBook } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const sidebarLinks = [
@@ -75,6 +76,13 @@ const sidebarLinks = [
   },
   {
     id: 8,
+    icon: <FaAddressBook />,
+    text: "Addresses",
+    to: "addresses",
+    userOnly: true,
+  },
+  {
+    id: 9,
     icon: <IoMdSettings />,
     text: "Settings",
     to: "edit-profile",
@@ -124,7 +132,9 @@ const Sidebar = () => {
   };
 
   const filteredSidebarLinks = sidebarLinks.filter(
-    (link) => !link.adminOnly || user.accountType === "Admin"
+    (link) =>
+      (!link.adminOnly || user.accountType === "Admin") &&
+      !(link.text === "Addresses" && user.accountType === "Admin")
   );
 
   return (

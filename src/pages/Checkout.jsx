@@ -272,7 +272,7 @@ const Checkout = () => {
                 )}
               </div>
 
-              {filteredDefaultAddress && currentStep !== 2 && (
+              {filteredDefaultAddress?.length !== 0 && currentStep !== 2 && (
                 <div
                   className={`flex items-start w-full flex-col p-4 border-b cursor-pointer`}
                 >
@@ -310,12 +310,14 @@ const Checkout = () => {
                       isNewAddress={isNewAddress}
                       handleAddAddressClick={handleAddAddressClick}
                       selectedAddress={selectedAddress}
+                      height="10vh"
                     />
                   ) : (
                     <AddressList
                       handleSelectedAddress={handleSelectedAddress}
                       filteredDefaultAddress={filteredDefaultAddress}
                       onEditAddressClick={handleEditAddressClick}
+                      height="10vh"
                     />
                   )}
 
@@ -327,15 +329,17 @@ const Checkout = () => {
                     <span>Add a New Address</span>
                   </button>
 
-                  <div className="flex w-full justify-end py-2 px-7 mb-4 shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
-                    <button
-                      className="bg-orange-500 text-white py-2 px-7 uppercase rounded-md"
-                      onClick={handleNextStep}
-                      disabled={!filteredDefaultAddress}
-                    >
-                      Continue
-                    </button>
-                  </div>
+                  {filteredDefaultAddress?.length !== 0 && (
+                    <div className="flex w-full justify-end py-2 px-7 mb-4 shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
+                      <button
+                        className="bg-orange-500 text-white py-2 px-7 uppercase rounded-md"
+                        onClick={handleNextStep}
+                        disabled={!filteredDefaultAddress}
+                      >
+                        Continue
+                      </button>
+                    </div>
+                  )}
                 </>
               )}
             </div>
