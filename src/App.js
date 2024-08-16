@@ -36,6 +36,7 @@ import {
   getAllOrders,
   getUserOrders,
 } from "./slices/orderSlice";
+import { showAllSubCategories } from "./slices/subCategorySlice";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -56,13 +57,14 @@ export default function App() {
   useEffect(() => {
     dispatch(getAllCartServices());
     dispatch(showAllCategories());
+    dispatch(showAllSubCategories());
     dispatch(getAllServices());
-    if (user.accountType === "Admin") {
+    if (user?.accountType === "Admin") {
       dispatch(getAllOrders());
     } else {
       dispatch(getUserOrders());
     }
-  }, [dispatch, user.accountType]);
+  }, [dispatch, user?.accountType]);
 
   useEffect(() => {
     if (user && localStorage.getItem("cart")) {
@@ -75,6 +77,12 @@ export default function App() {
       dispatch(clearSingleOrder());
     }
   }, [location, dispatch]);
+
+  useEffect(() => {
+    if (!user && !location.pathname.includes("/checkout") && !location.pathname.includes("/")) {
+      navigate('/')
+    }
+  }, [location, navigate, user]);
 
   useEffect(() => {
     if (

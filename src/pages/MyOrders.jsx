@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { OrdersList } from "../components/Orders";
+import NothingToShow from "../components/NothingToShow";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -49,10 +50,10 @@ const MyOrders = () => {
     <div className="flex flex-col items-center w-full p-10">
       <nav className="flex w-full justify-between">
         <div className="flex items-center">
-          <h1 className="text-4xl font-semibold">My Orders</h1>
+          <h1 className="text-4xl font-semibold mb-6">My Orders</h1>
 
           {/* Search by Category */}
-          <select
+          {/* <select
             value={selectedCategory}
             onChange={handleCategoryChange}
             className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6"
@@ -63,10 +64,10 @@ const MyOrders = () => {
                 {name}
               </option>
             ))}
-          </select>
+          </select> */}
 
           {/* Search by Subcategory */}
-          <select
+          {/* <select
             value={selectedSubcategory}
             onChange={handleSubcategoryChange}
             className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6"
@@ -77,17 +78,17 @@ const MyOrders = () => {
                 {subCategoryName}
               </option>
             ))}
-          </select>
+          </select> */}
 
           {/* Search by Contact Number */}
           {user.accountType === "Admin" && (
-            <div className="ml-6">
+            <div className="ml-6 mb-6">
               <input
                 type="text"
                 value={searchContact}
                 onChange={handleContactSearch}
                 placeholder="Search by Contact..."
-                className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow-custom-shadow border rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
           )}
@@ -95,9 +96,13 @@ const MyOrders = () => {
       </nav>
 
       {/* ORDERS LIST */}
-      <div className="mt-6 w-full border rounded-lg">
-        <OrdersList orders={filteredOrders} />
-      </div>
+      {!filteredOrders?.length >= 1 ? (
+        <NothingToShow text="Orders" btnText="shopping" />
+      ) : (
+        <div className="mt-6 w-full border rounded-lg">
+          <OrdersList orders={filteredOrders} />
+        </div>
+      )}
     </div>
   );
 };

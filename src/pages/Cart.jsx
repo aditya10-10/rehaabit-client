@@ -13,6 +13,7 @@ import { getUserAddresses } from "../slices/addressSlice";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/ConfirmationModal";
 import { openModal } from "../slices/modalSlice";
+import NothingToShow from "../components/NothingToShow";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -95,6 +96,8 @@ const Cart = () => {
     setSelectedAddress(address);
   };
 
+  // console.log(filteredDefaultAddress)
+
   return (
     <>
       <ConfirmationModal text="Remove" onDelete={onRemove} />
@@ -115,7 +118,7 @@ const Cart = () => {
         <div className="gap-10 flex max-lg:flex-col">
           <div className="flex flex-col gap-5 w-full">
             <div className="flex w-full items-center justify-between p-2 shadow-custom-shadow rounded-lg">
-              {filteredDefaultAddress ? (
+              {filteredDefaultAddress && filteredDefaultAddress?.length === 1 ? (
                 <div>
                   <h1 className="font-semibold">
                     Deliver To:{" "}
@@ -147,17 +150,7 @@ const Cart = () => {
             </div>
 
             {cartServices.totalQty === 0 || totalQty === 0 ? (
-              <div className="w-full shadow-custom-shadow rounded-lg p-48">
-                <div className="flex items-center flex-col">
-                  <h1 className="text-6xl">Your Cart is Empty!</h1>
-                  <button
-                    className="uppercase bg-orange-500 py-2 px-6 rounded-md text-white mt-6"
-                    onClick={() => navigate("/")}
-                  >
-                    Continue Shopping
-                  </button>
-                </div>
-              </div>
+              <NothingToShow text="Cart" btnText="shopping"/>
             ) : (
               <div className="w-full shadow-custom-shadow rounded-lg">
                 <div className="max-h-[65vh] overflow-y-auto p-4">

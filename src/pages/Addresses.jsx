@@ -3,16 +3,19 @@ import { AddressForm, AddressList } from "../components/Cart";
 import { useDispatch, useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import { getUserAddresses } from "../slices/addressSlice";
+import NothingToShow from "../components/NothingToShow";
 
 const Addresses = () => {
   const dispatch = useDispatch();
 
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isNewAddress, setIsNewAddress] = useState(false);
 
   const { filteredDefaultAddress } = useSelector((state) => state.address);
 
   const handleAddAddressClick = () => {
     setSelectedAddress(null);
+    setIsNewAddress(!isNewAddress)
   };
 
   const handleEditAddressClick = (address) => {
@@ -42,12 +45,27 @@ const Addresses = () => {
       </div>
 
       <div className="mt-6 w-full border rounded-lg">
-        <AddressList
-          //   handleSelectedAddress={handleSelectedAddress}
-          height="70vh"
-          filteredDefaultAddress={filteredDefaultAddress}
-          onEditAddressClick={handleEditAddressClick}
-        />
+        {!filteredDefaultAddress?.length ? (
+          <NothingToShow text="Addresses" btnText="" />
+        ) : (
+          <>
+            {isNewAddress ? (
+              <AddressForm
+                // isNewAddress={isNewAddress}
+                handleAddAddressClick={handleAddAddressClick}
+                selectedAddress={selectedAddress}
+                height="70vh"
+              />
+            ) : (
+              <AddressList
+                // handleSelectedAddress={handleSelectedAddress}
+                filteredDefaultAddress={filteredDefaultAddress}
+                onEditAddressClick={handleEditAddressClick}
+                height="70vh"
+              />
+            )}
+          </>
+        )}
       </div>
     </div>
   );

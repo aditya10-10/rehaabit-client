@@ -79,6 +79,7 @@ const sidebarLinks = [
     icon: <FaAddressBook />,
     text: "Addresses",
     to: "addresses",
+    userOnly: true,
   },
   {
     id: 9,
@@ -131,7 +132,9 @@ const Sidebar = () => {
   };
 
   const filteredSidebarLinks = sidebarLinks.filter(
-    (link) => !link.adminOnly || user.accountType === "Admin"
+    (link) =>
+      (!link.adminOnly || user.accountType === "Admin") &&
+      !(link.text === "Addresses" && user.accountType === "Admin")
   );
 
   return (
