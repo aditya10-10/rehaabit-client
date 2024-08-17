@@ -20,6 +20,8 @@ import {
   Addresses,
 } from "./pages";
 
+import PrivacyPolicy from "./pages/privacy-and-policy";
+
 import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
 import { MyService, Service } from "./components/Dashboard/Service";
@@ -79,8 +81,12 @@ export default function App() {
   }, [location, dispatch]);
 
   useEffect(() => {
-    if (!user && !location.pathname.includes("/checkout") && !location.pathname.includes("/")) {
-      navigate('/')
+    if (
+      !user &&
+      !location.pathname.includes("/checkout") &&
+      !location.pathname.includes("/")
+    ) {
+      navigate("/");
     }
   }, [location, navigate, user]);
 
@@ -131,6 +137,7 @@ export default function App() {
             path="/terms-and-conditions"
             element={<TermsAndConditions />}
           />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
           {(user?.accountType === "Admin" || user?.accountType === "User") && (
             <></>
