@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import lunr from "lunr";
 import Fuse from "fuse.js";
 
-const SearchData = ({ searchQuery }) => {
+const SearchData = ({ searchQuery, handleSearchQuery }) => {
   // console.log(searchQuery);
+  const navigate = useNavigate();
   const { categories } = useSelector((state) => state.categories);
   const { subcategories } = useSelector((state) => state.subcategories);
   const { allServices } = useSelector((state) => state.service);
@@ -26,7 +27,7 @@ const SearchData = ({ searchQuery }) => {
 
   const Data = [...categories, ...subcategoryData, ...allServicesData];
 
-  console.log(Data);
+  // console.log(Data);
 
   const options = {
     keys: ["name", "description"],
@@ -37,46 +38,48 @@ const SearchData = ({ searchQuery }) => {
 
   const results = fuse.search(searchQuery);
 
-  // const index = lunr(function () {
-  //   this.ref("_id");
-  //   this.field("name");
+  const handleSearchClick = (data) => {
+    const { _id, name, categoryId, subCategoryId } = data.item;
 
-  //   Data.forEach((doc) => {
-  //     this.add(doc);
-  //   });
-  // });
+    if (data.item.subCategoryName) {
+      // If subcategory
+      navigate(`/${name}/${categoryId}`, {
+        state: { scrollTo: "subcategory", subCategoryId: _id },
+      });
+    } else if (data.item.serviceName) {
+      // If service
+      navigate(`/${name}/${categoryId}`, {
+        state: { scrollTo: "service", serviceId: _id },
+      });
+    } else {
+      // If category
+      navigate(`/${name}/${_id}`);
+    }
 
-  // const results = index.search(searchQuery);
-
-  // const filteredData = Data.filter((data) =>
-  //   data.name.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
-
-  console.log(results);
-
-  const filteredData = results;
+    handleSearchQuery();
+  };
 
   return (
     <>
-      {searchQuery !== "" && filteredData.length !== 0 && (
+      {searchQuery !== "" && results.length !== 0 && (
         <div className="absolute z-50 top-full left-0 w-full mt-1 bg-white rounded-md shadow-custom-shadow max-h-60 overflow-y-auto p-4">
-          {filteredData.map((data) => {
+          {results.map((data) => {
             const { _id, name } = data.item;
 
             return (
-              <Link
+              <div
                 key={_id}
-                to={`/${name}/${_id}`}
+                onClick={() => handleSearchClick(data)}
                 className="p-2 flex hover:bg-gray-100 cursor-pointer border rounded-md mb-2"
               >
                 {name}
-              </Link>
+              </div>
             );
           })}
         </div>
       )}
 
-      {searchQuery !== "" && filteredData.length === 0 && (
+      {searchQuery !== "" && results.length === 0 && (
         <div className="absolute z-50 top-full left-0 w-full mt-1 bg-white rounded-md shadow-custom-shadow p-2">
           No results found.
         </div>

@@ -18,7 +18,7 @@ function EditButton() {
         alt=""
         className="shrink-0 my-auto aspect-square w-[18px]"
       />
-      <span>Edit</span>
+      <span className="max-sm:hidden">Edit</span>
     </button>
   );
 }

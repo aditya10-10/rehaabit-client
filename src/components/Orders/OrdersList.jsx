@@ -36,7 +36,7 @@ const OrdersList = ({ orders }) => {
         </thead>
         <tbody className="flex flex-col w-full">
           {orders.map((order) => {
-            const { _id, service, status, createdAt, paymentId } = order;
+            const { _id, services, status, createdAt, paymentId } = order;
 
             // Calculate total price
             // const totalPrice = service.reduce(
@@ -44,37 +44,37 @@ const OrdersList = ({ orders }) => {
             //   0
             // );
 
-            return service.map((item, index) => (
+            return services.map((item, index) => (
               <tr
                 key={item._id}
                 className={`grid grid-cols-7 gap-x-6 border-b px-6 py-4 ${
                   index === 0 ? "mt-2" : ""
                 }`}
               >
-                <td rowSpan={service.length} className="text-sm">
+                <td rowSpan={services.length} className="text-sm">
                   {formattedDate(createdAt)}
                 </td>
 
                 <td className="text-sm">
-                  <span>{item.serviceId.serviceName}</span>
+                  <span>{item.serviceId?.serviceName}</span>
                   <span className="block text-xs text-gray-500">
-                    ID: {item.serviceId._id}
+                    ID: {item.serviceId?._id}
                   </span>
                 </td>
-                <td className="text-sm">{item.serviceId.serviceName}</td>
+                <td className="text-sm">{item.serviceId?.serviceName}</td>
 
-                <td rowSpan={service.length} className="text-sm font-medium">
+                <td rowSpan={services.length} className="text-sm font-medium">
                   ₹ {item.qty * item.price}
                 </td>
-                <td rowSpan={service.length} className="text-sm font-medium">
+                <td rowSpan={services.length} className="text-sm font-medium">
                   {item.qty}
                 </td>
-                <td rowSpan={service.length} className="text-sm font-medium">
+                <td rowSpan={services.length} className="text-sm font-medium">
                   {paymentId ? "Paid" : "Unpaid"}
                 </td>
-                <td rowSpan={service.length} className="text-sm font-medium">
+                {/* <td rowSpan={services.length} className="text-sm font-medium">
                   {status.status}
-                </td>
+                </td> */}
               </tr>
             ));
           })}

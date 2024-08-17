@@ -19,12 +19,9 @@ const LocationSearchBarDiv = () => {
   const [city, setCity] = useState("");
   const [pincode, setPincode] = useState("");
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  //   if (searchQuery.trim()) {
-  //     navigate(`/search?query=${searchQuery}`);
-  //   }
-  // };
+  const handleSearchQuery = () => {
+    setSearchQuery("");
+  };
 
   // console.log(searchQuery)
 
@@ -155,17 +152,22 @@ const LocationSearchBarDiv = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        {searchQuery && <RxCross2
-          size={20}
-          className="mr-2 cursor-pointer"
-          onClick={() => setSearchQuery("")}
-        />}
+        {searchQuery && (
+          <RxCross2
+            size={20}
+            className="mr-2 cursor-pointer"
+            onClick={() => setSearchQuery("")}
+          />
+        )}
 
         <span className="bg-red-400 p-2 text-white rounded-md">
           <IoSearchOutline size={20} />
         </span>
 
-        <SearchData searchQuery={searchQuery} />
+        <SearchData
+          searchQuery={searchQuery}
+          handleSearchQuery={handleSearchQuery}
+        />
       </div>
 
       {/* ALGOLIA SEARCH */}

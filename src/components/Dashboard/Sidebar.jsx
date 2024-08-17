@@ -138,8 +138,8 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="sticky top-[100px] flex flex-col items-center shadow-custom-shadow p-4 min-w-[300px] h-[90vh] bg-white">
-      <div className="p-4 w-full">
+    <div className="sticky top-0 left-0 flex flex-col items-center shadow-custom-shadow p-4 max-sm:p-0 w-[300px] max-lg:w-28 max-sm:w-20 h-screen bg-white">
+      <div className="p-4 w-full max-xs:p-2">
         {filteredSidebarLinks.map((link) => {
           const { id, icon, text, to, index } = link;
 
@@ -154,21 +154,23 @@ const Sidebar = () => {
               }}
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center mb-4 bg-[#E9F5FE] w-full rounded-[5px] text-[#0C7FDA] font-[600]"
-                  : "flex items-center mb-4 hover:bg-[#E9F5FE] w-full rounded-[5px] text-[#6A6C6B] hover:text-[#0C7FDA] hover:font-[600]"
+                  ? "flex items-center mb-4 bg-[#E9F5FE] w-full rounded-[5px] text-[#0C7FDA] font-[600] max-xs:justify-center"
+                  : "flex items-center mb-4 hover:bg-[#E9F5FE] w-full rounded-[5px] text-[#6A6C6B] hover:text-[#0C7FDA] hover:font-[600] max-xs:justify-center"
               }
             >
-              <span className="mr-5 text-3xl p-2">{icon}</span>
-              <span className="text-sm">{text}</span>
+              <span className="mr-5 max-xs:mr-0 text-3xl p-2">{icon}</span>
+              <span className="text-sm max-lg:hidden">{text}</span>
             </NavLink>
           );
         })}
       </div>
 
-      <div className="flex items-center w-full bg-[#667A8A] p-2 rounded-[5px] mt-6">
+      <button className="flex items-center w-full max-lg:w-14 max-sm:w-10 bg-[#667A8A] p-2 rounded-[5px] mt-6">
         <img src={LogoutSVG} alt="logout" className="mr-2" />
-        <button className="text-white font-[600] text-sm">Logout</button>
-      </div>
+        <span className="text-white font-[600] text-sm max-lg:hidden">
+          Logout
+        </span>
+      </button>
     </div>
   );
 };
