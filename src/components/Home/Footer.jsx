@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../assets/images/LOGO_1.png";
 import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Logo from '../../assets/LOGO.svg'
+import Logo from "../../assets/LOGO.svg";
 
 const FooterColumn = ({ title, items, links }) => {
   return (
@@ -19,7 +19,6 @@ const FooterColumn = ({ title, items, links }) => {
   );
 };
 
-
 const Footer = () => {
   const footerData = [
     {
@@ -35,12 +34,16 @@ const Footer = () => {
     {
       title: "Social",
       items: ["Twitter", "Instagram", "Threads"],
-      links: ["https://twitter.com", "https://instagram.com", "https://threads.com"],
+      links: [
+        "https://twitter.com",
+        "https://instagram.com",
+        "https://threads.com",
+      ],
     },
     {
       title: "Legal",
-      items: ["Terms", "Privacy"],
-      links: ["/terms-and-conditions", "/privacy"],
+      items: ["Terms and Conditions", "Privacy and Policy"],
+      links: ["/terms-and-conditions", "/privacy-policy"],
     },
   ];
 
