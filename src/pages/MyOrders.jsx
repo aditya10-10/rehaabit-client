@@ -12,6 +12,8 @@ const MyOrders = () => {
   const { orders } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.profile);
 
+  // console.log(orders);
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSubcategory, setSelectedSubcategory] = useState("All");
   const [searchContact, setSearchContact] = useState("");
@@ -32,53 +34,59 @@ const MyOrders = () => {
   const filteredOrders = orders.filter((order) => {
     const categoryMatch =
       selectedCategory === "All" ||
-      categories.find((category) => category._id === selectedCategory)?.name ===
-        order.service[0].serviceId.categoryName;
+      order.services.some(
+        (service) => service.serviceId.categoryId === selectedCategory
+      );
 
     const subcategoryMatch =
       selectedSubcategory === "All" ||
-      subcategories.find((subcat) => subcat._id === selectedSubcategory)
-        ?.subCategoryName === order.service[0].serviceId.subCategoryName;
+      order.services.some(
+        (service) => service.serviceId.subCategoryId === selectedSubcategory
+      );
 
     const contactMatch =
-      searchContact === "" || order.user.contactNumber.includes(searchContact);
+      searchContact === "" || order.user.contactNumber?.includes(searchContact);
 
     return categoryMatch && subcategoryMatch && contactMatch;
   });
 
   return (
-    <div className="flex flex-col items-center w-full p-10">
+    <div className="flex flex-col items-center w-full p-10 max-md:p-4">
       <nav className="flex w-full justify-between">
-        <div className="flex items-center">
-          <h1 className="text-4xl font-semibold mb-6">My Orders</h1>
+        <div className="flex w-full items-center max-sm:flex-col max-sm:justify-center">
+          <h1 className="text-4xl max-md:text-2xl max-sm:text-4xl font-semibold mb-6">
+            My Orders
+          </h1>
 
-          {/* Search by Category */}
-          {/* <select
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-            className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6"
-          >
-            <option value="All">All Categories</option>
-            {categories.map(({ _id, name }) => (
-              <option key={_id} value={_id}>
-                {name}
-              </option>
-            ))}
-          </select> */}
+          <div className="max-sm:flex max-sm:w-full max-sm:justify-center">
+            {/* Search by Category */}
+            <select
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6"
+            >
+              <option value="All">All Categories</option>
+              {categories.map(({ _id, name }) => (
+                <option key={_id} value={_id}>
+                  {name}
+                </option>
+              ))}
+            </select>
 
-          {/* Search by Subcategory */}
-          {/* <select
-            value={selectedSubcategory}
-            onChange={handleSubcategoryChange}
-            className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6"
-          >
-            <option value="All">All Subcategories</option>
-            {subcategories.map(({ _id, subCategoryName }) => (
-              <option key={_id} value={_id}>
-                {subCategoryName}
-              </option>
-            ))}
-          </select> */}
+            {/* Search by Subcategory */}
+            <select
+              value={selectedSubcategory}
+              onChange={handleSubcategoryChange}
+              className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6"
+            >
+              <option value="All">All Subcategories</option>
+              {subcategories.map(({ _id, subCategoryName }) => (
+                <option key={_id} value={_id}>
+                  {subCategoryName}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {/* Search by Contact Number */}
           {user.accountType === "Admin" && (
@@ -96,7 +104,7 @@ const MyOrders = () => {
       </nav>
 
       {/* ORDERS LIST */}
-      {!filteredOrders?.length >= 1 ? (
+      {filteredOrders?.length === 0 ? (
         <NothingToShow text="Orders" btnText="shopping" />
       ) : (
         <div className="mt-6 w-full border rounded-lg">

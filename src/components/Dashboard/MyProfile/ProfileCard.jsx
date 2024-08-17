@@ -9,7 +9,7 @@ function ProfileCard() {
   const navigate = useNavigate();
 
   return (
-    <section className="flex gap-5 p-6 mt-9 max-w-full bg-amber-50 rounded-lg shadow-sm w-[792px] max-md:flex-wrap max-md:px-5">
+    <section className="flex gap-5 p-6 max-sm:p-2 mt-9 max-sm:mt-2 w-full bg-amber-50 rounded-lg shadow-custom-shadow max-md:flex-wrap max-md:px-5">
       <div className="flex flex-1 gap-5 max-md:flex-wrap">
         {user?.image ? (
           <img

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
 import { ServiceCard, ConfirmationModal } from "../components";
 import {
@@ -21,10 +21,14 @@ import { setSingleOrder } from "../slices/orderSlice";
 const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const params = useParams();
   const categoryName = params.category;
   const categoryId = params.id;
+  const { scrollTo, subCategoryId, serviceId } = location.state || {};
+
+  // console.log(location.state)
 
   const [onRemove, setOnRemove] = useState(null);
 
@@ -35,6 +39,7 @@ const Categories = () => {
   const { cartServices, isLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const categoryRefs = useRef({});
+  const serviceRefs = useRef({});
 
   useEffect(() => {
     dispatch(showAllCategories());
@@ -42,6 +47,15 @@ const Categories = () => {
     dispatch(getSubCategoriesByCategory({ categoryId }));
     dispatch(getAllCartServices());
   }, [dispatch, categoryId]);
+
+  useEffect(() => {
+    if (scrollTo === "subcategory" && subCategoryId) {
+      categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
+    }
+    if (scrollTo === "service" && serviceId && allServices.length > 0) {
+      serviceRefs.current[serviceId]?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [scrollTo, subCategoryId, serviceId, allServices]);
 
   const handleCategoryClick = (subCategoryId) => {
     categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
@@ -123,11 +137,11 @@ const Categories = () => {
           <h1 className="text-5xl mb-10 max-sm:text-4xl">{categoryName}</h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
-            <h1 className="text-4xl text-center max-lg:text-2xl">
+            <h1 className="text-4xl text-center max-lg:text-2xl mb-10">
               Select Sub-Category
             </h1>
 
-            <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-24 max-2xl:gap-x-14">
+            <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-20 max-2xl:gap-x-14">
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
@@ -136,11 +150,12 @@ const Categories = () => {
                     key={_id}
                     className="flex flex-col items-center justify-center text-center hover:shadow-custom-shadow p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
                     onClick={() => handleCategoryClick(_id)}
+                    ref={(e) => (categoryRefs.current[_id] = e)}
                   >
                     <img
                       src={icon}
                       alt="Icon"
-                      className="h-12 w-12 rounded-full"
+                      className="h-20 w-20 rounded-full"
                     />
                     <span>{subCategoryName}</span>
                   </div>
@@ -179,6 +194,7 @@ const Categories = () => {
                     return (
                       <div
                         key={_id}
+                        ref={(e) => (serviceRefs.current[_id] = e)}
                         className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
                       >
                         <Link to={`/service-details/${_id}`} className="w-full">

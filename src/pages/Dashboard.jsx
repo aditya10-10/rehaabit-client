@@ -26,17 +26,16 @@ function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-3.5rem)]">
+    <>
       <Navbar />
+
       <div className="flex">
-        <div className="sticky top-0 z-40">
-          <Sidebar />
-        </div>
-        <div className="flex w-full">
+        <Sidebar />
+        <div className="flex-grow overflow-y-auto">
           <Outlet />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

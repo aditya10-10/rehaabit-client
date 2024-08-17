@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../../services/operations/SettingsAPI";
 import { useForm } from "react-hook-form";
+import { sendEmailOTP, verifyEmailOTP } from "../../../slices/emailSlice";
 
 function ProfileInformation() {
-  const { user } = useSelector((state) => state.profile);
-  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.profile);
+  const { token } = useSelector((state) => state.auth);
+  const { emailVerified } = useSelector((state) => state.email);
 
   const {
     register,
@@ -19,6 +22,17 @@ function ProfileInformation() {
 
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState(user?.additionalDetails?.email || "");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
+
+  // console.log(email)
+
+  useEffect(() => {
+    if (emailVerified) {
+      setOtpSent(false);
+    }
+  }, [emailVerified]);
 
   useEffect(() => {
     if (user?.contactNumber) {
@@ -35,9 +49,24 @@ function ProfileInformation() {
     try {
       const fullPhoneNumber = `${data.countryCode}${data.phoneNumber}`;
       const updatedData = { ...data, contactNumber: fullPhoneNumber };
-      dispatch(updateProfile(token, updatedData));
+      await dispatch(updateProfile(token, updatedData));
+      navigate("/dashboard/my-profile"); // navigate after profile update
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
+    }
+  };
+
+  const handleEmailVerification = (e) => {
+    e.preventDefault();
+
+    if (!otpSent) {
+      dispatch(sendEmailOTP({ email }))
+        .then(() => setOtpSent(true))
+        .catch((error) => console.log("Error sending OTP", error));
+    } else {
+      dispatch(verifyEmailOTP({ email, otp }))
+        .then(() => console.log("OTP Verified"))
+        .catch((error) => console.log("OTP Verification failed", error));
     }
   };
 
@@ -52,11 +81,11 @@ function ProfileInformation() {
         </h2>
         <div className="mt-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0 justify-center items-center">
-            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col grow pb-7 max-md:mt-6 max-md:max-w-full">
+            <div className="flex flex-col w-full max-md:ml-0 max-md:w-full">
+              <div className="flex flex-col grow pb-7 max-md:mt-6 max-md:w-full">
                 <label
                   htmlFor="firstName"
-                  className="text-sm leading-5 text-black max-md:max-w-full"
+                  className="text-sm leading-5 text-black max-md:w-full"
                 >
                   First Name
                 </label>
@@ -65,22 +94,22 @@ function ProfileInformation() {
                   name="firstName"
                   id="firstName"
                   placeholder="Enter first name"
-                  className="justify-center items-start p-3 mt-1.5 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm text-neutral-500 max-md:pr-5 max-md:max-w-full"
+                  className="p-3 mt-1.5 bg-amber-50 rounded-lg shadow-sm text-neutral-500"
                   {...register("firstName", { required: true })}
                   defaultValue={user?.additionalDetails?.firstName}
                 />
-                {/* {errors.firstName && (
+                {errors.firstName && (
                   <span className="-mt-1 text-yellow-100 text-[12px]">
                     Please enter your first name.
                   </span>
-                )} */}
+                )}
               </div>
             </div>
-            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full justify-center items-center">
-              <div className="flex flex-col grow pb-7 max-md:mt-6 max-md:max-w-full">
+            <div className="flex flex-col w-full">
+              <div className="flex flex-col grow pb-7 max-md:mt-6 max-md:w-full">
                 <label
                   htmlFor="lastName"
-                  className="text-sm leading-5 text-black max-md:max-w-full"
+                  className="text-sm leading-5 text-black max-md:w-full"
                 >
                   Last Name
                 </label>
@@ -89,20 +118,21 @@ function ProfileInformation() {
                   name="lastName"
                   id="lastName"
                   placeholder="Enter last name"
-                  className="justify-center items-start p-3 mt-1.5 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm text-neutral-500 max-md:pr-5 max-md:max-w-full"
+                  className="p-3 mt-1.5 bg-amber-50 rounded-lg shadow-sm text-neutral-500"
                   {...register("lastName", { required: true })}
                   defaultValue={user?.additionalDetails?.lastName}
                 />
-                {/* {errors.lastName && (
+                {errors.lastName && (
                   <span className="-mt-1 text-[12px] text-yellow-100">
                     Please enter your last name.
                   </span>
-                )} */}
+                )}
               </div>
             </div>
           </div>
         </div>
-        <div className="flex gap-5 mt-5 max-md:flex-wrap">
+
+        <div className="flex gap-5 mt-5 max-md:flex-wrap max-2xl:flex-col">
           <div className="flex flex-1 gap-5 max-md:flex-wrap max-md:max-w-full w-full">
             <div className="flex flex-col">
               <label
@@ -111,78 +141,77 @@ function ProfileInformation() {
               >
                 Phone Number
               </label>
-              <div className="flex gap-2.5 mt-1.5 text-base font-medium leading-6 whitespace-nowrap bg-amber-50 text-neutral-500 max-md:pr-5">
-                <span className="justify-center items-start self-end p-3 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm text-neutral-500 max-md:pr-5 w-11/12">
-                  <span className="bg-amber-50 text-neutral-500">+91</span>{" "}
-                  {phoneNumber}
+              <div className="flex gap-2.5 mt-1.5 bg-amber-50 rounded-lg shadow-sm text-neutral-500">
+                <span className="p-3 bg-amber-50 text-neutral-500">
+                  {countryCode}
                 </span>
-
-                {/* EDIT PHONE NUMBER */}
-                {/* <input
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  type="tel"
-                  className="justify-center items-start self-end p-3 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm text-neutral-500 max-md:pr-5 w-11/12"
-                  placeholder="12345 67890"
-                  {...register("phoneNumber", {
-                    required: {
-                      value: true,
-                      message: "Please enter your Contact Number.",
-                    },
-                    maxLength: { value: 12, message: "Invalid Contact Number" },
-                    minLength: { value: 10, message: "Invalid Contact Number" },
-                  })}
+                <input
+                  type="text"
                   value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                /> */}
-                {/* {errors.contactNumber && (
-                  <span className="-mt-1 text-[12px] text-yellow-100">
-                    {errors.contactNumber.message}
-                  </span>
-                )} */}
+                  className="p-3 bg-amber-50 text-neutral-500 rounded-lg shadow-sm"
+                  disabled
+                />
               </div>
             </div>
           </div>
+
           <div className="flex flex-col flex-1 max-md:max-w-full">
-            <label
-              htmlFor="email"
-              className="text-sm leading-5 text-black max-md:max-w-full"
-            >
+            <label htmlFor="email" className="text-sm leading-5 text-black">
               Email
             </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              className="justify-center items-start p-3 mt-1.5 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm text-neutral-500 max-md:pr-5 max-md:max-w-full"
-              placeholder="Enter your Email address"
-              {...register("email", { required: true })}
-              defaultValue={user?.additionalDetails?.email}
-            />
-            {/* {errors.email && (
-                <span className='-mt-1 text-[12px] text-yellow-100'>
-                    Please enter your bio details
-                </span>
-            )} */}
+
+            <div className="flex w-full gap-2 max-xs:flex-col max-xs:w-full">
+              {!otpSent ? (
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  className="p-3 mt-1.5 bg-amber-50 rounded-lg shadow-sm w-full text-neutral-500"
+                  placeholder="Enter your Email address"
+                  {...register("email", { required: true })}
+                  defaultValue={user?.additionalDetails?.email}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              ) : (
+                <input
+                  id="otp"
+                  type="number"
+                  name="otp"
+                  className="p-3 mt-1.5 bg-amber-50 rounded-lg shadow-sm w-full text-neutral-500"
+                  placeholder="Enter your 6-Digit OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+              )}
+              {!emailVerified && (
+                <button
+                  className="text-emerald-700 w-40 rounded-lg uppercase max-xs:w-full max-xs:flex max-xs:justify-end"
+                  onClick={(e) => handleEmailVerification(e)}
+                >
+                  {!otpSent ? "SEND OTP" : "Verify OTP"}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="flex gap-5 self-end mt-6 text-base font-medium leading-6 text-center whitespace-nowrap">
+      <div className="flex gap-5 self-end mt-6">
         <button
-          className="justify-center px-6 py-3 text-red-400 rounded-lg border border-red-400 border-solid max-md:px-5"
-          onClick={() => {
-            navigate("/dashboard/my-profile");
-          }}
+          className="px-6 py-3 text-red-400 border border-red-400 rounded-lg"
+          onClick={() => navigate("/dashboard/my-profile")}
         >
           Cancel
         </button>
-        <button
-          type="submit"
-          className="justify-center px-6 py-3 text-emerald-50 bg-emerald-700 rounded-lg max-md:px-5"
-        >
-          Save
-        </button>
+        {(emailVerified || user?.additionalDetails?.email) && (
+          <button
+            type="submit"
+            className="px-6 py-3 bg-emerald-700 text-emerald-50 rounded-lg"
+          >
+            Save
+          </button>
+        )}
       </div>
     </form>
   );

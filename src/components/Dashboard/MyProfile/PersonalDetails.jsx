@@ -17,7 +17,7 @@ function PersonalDetails() {
   let contact = contactStr.substring(0, 3) + " " + contactStr.substring(3);
 
   return (
-    <section className="flex flex-col justify-center p-6 mt-6 max-w-full bg-amber-50 rounded-lg shadow-sm w-[792px] max-md:px-5">
+    <section className="flex flex-col justify-center p-6 max-sm:p-2 mt-6 w-full bg-amber-50 rounded-lg shadow-custom-shadow max-md:px-5">
       <header className="flex gap-5 max-md:flex-wrap">
         <h2 className="flex-1 my-auto text-lg font-semibold leading-6 text-violet-900 max-md:max-w-full">
           Personal Details

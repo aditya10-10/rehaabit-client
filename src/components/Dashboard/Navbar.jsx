@@ -11,7 +11,7 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.profile);
 
   return (
-    <nav className="sticky top-0 z-50 flex justify-between items-center w-full p-4 h-[100px] shadow-custom-shadow bg-white">
+    <nav className="flex justify-between items-center w-full p-4 h-[100px] shadow-custom-shadow bg-white">
       <div className="flex items-baseline">
         <img
           src={Logo}

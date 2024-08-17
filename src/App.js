@@ -54,6 +54,8 @@ export default function App() {
     }
   }, [dispatch, navigate]);
 
+  // console.log(user.accountType)
+
   useEffect(() => {
     dispatch(getAllCartServices());
     dispatch(showAllCategories());

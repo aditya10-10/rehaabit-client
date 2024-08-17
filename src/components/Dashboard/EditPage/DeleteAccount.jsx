@@ -29,16 +29,18 @@ function DeleteAccount() {
     <>
       <ConfirmationModal text="Delete Account" onDelete={onDelete} />
 
-      <div className="flex gap-5 p-6 mt-6 bg-rose-200 rounded-lg max-md:flex-wrap max-md:px-5 max-md:mt-10 max-md:max-w-full">
-        <div className="flex flex-col justify-center items-start self-start p-3.5 bg-rose-50 rounded-[200px] max-md:pr-5">
+      <div className="flex gap-5 p-6 mt-6 bg-rose-200 rounded-lg max-md:flex-wrap max-md:px-5 max-md:mt-10 max-md:max-w-full max-xs:flex-col max-xs:justify-center max-xs:w-full">
+        <div className="flex flex-col justify-center items-start self-start p-3.5 bg-rose-50 rounded-full max-md:pr-5 max-xs:self-center max-xs:w-full max-xs:rounded-lg">
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3289887045046119419d1f47215c35674915583b02f0c38a313c637cfe4a016?apiKey=52bcba1d2cc448b4873671e81d06b3cd&"
             alt=""
-            className="w-6 aspect-square"
+            className="w-6 aspect-square max-xs:place-self-center"
           />
         </div>
-        <div className="flex flex-col flex-1 text-sm font-medium text-black max-md:max-w-full">
+
+
+        <div className="flex flex-col flex-1 text-sm font-medium text-black max-md:max-w-full max-xs:text-center">
           <h3 className="text-lg font-bold leading-6 text-yellow-900 max-md:max-w-full">
             Delete Account
           </h3>
@@ -51,7 +53,7 @@ function DeleteAccount() {
           </p>
           <button
             type="button"
-            className="mt-2 flex text-base italic leading-6 text-red-400 max-md:max-w-full"
+            className="mt-2 flex text-base italic leading-6 text-red-400 max-md:max-w-full max-sm:justify-center"
             onClick={handleDeleteAccount}
           >
             I want to delete my account.

@@ -82,3 +82,9 @@ export const paymentEndpoints = {
   SERVICE_PAYMENT_API: BASE_URL + "/processPayment",
   VERIFY_PAYMENT_API: BASE_URL + "/verifyPayment",
 };
+
+// EMAIL ENDPOINTS
+export const emailEndpoints = {
+  SEND_EMAIL_OTP_API: BASE_URL + "/send-email-otp",
+  VERIFY_EMAIL_OTP_API: BASE_URL + "/verifyEmailOTP",
+}

@@ -9,6 +9,7 @@ import cartReducer from "../slices/cartSlice";
 import addressReducer from "../slices/addressSlice";
 import orderReducer from "../slices/orderSlice";
 import modalReducer from "../slices/modalSlice";
+import emailReducer from "../slices/emailSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   address: addressReducer,
   order: orderReducer,
   modal: modalReducer,
+  email: emailReducer,
 });
 
 export default rootReducer;
