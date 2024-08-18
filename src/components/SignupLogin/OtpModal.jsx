@@ -226,6 +226,19 @@ const OtpModal = ({ isOpen, onClose }) => {
           </>
         )}
 
+        <div className="mt-5 text-center text-neutral-500">
+          <p>By signing in you agree to our Terms & Conditions.</p>
+          <div className="flex justify-center space-x-2">
+            <a href="/privacy" className="underline text-gray-700">
+              Privacy Policy
+            </a>
+            <span>|</span>
+            <a href="/terms" className="underline text-gray-700">
+              Terms & Conditions
+            </a>
+          </div>
+        </div>
+
         <div className="flex items-center">
           <p className="self-stretch mt-5 text-base text-center text-neutral-500">
             {!isSignup ? "Don't have an account?" : "Already have an account?"}

@@ -23,8 +23,6 @@ const LocationSearchBarDiv = () => {
     setSearchQuery("");
   };
 
-  // console.log(searchQuery)
-
   const handleLocationSearch = (e) => {
     const query = e.target.value;
     setLocationSearch(query);
@@ -85,6 +83,16 @@ const LocationSearchBarDiv = () => {
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
+  }, []);
+
+  useEffect(() => {
+    // Check if location permission is already granted
+    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+      if (result.state === "granted") {
+        // If granted, automatically detect location
+        handleDetectLocation();
+      }
+    });
   }, []);
 
   return (
@@ -169,11 +177,6 @@ const LocationSearchBarDiv = () => {
           handleSearchQuery={handleSearchQuery}
         />
       </div>
-
-      {/* ALGOLIA SEARCH */}
-      {/* <div className="relative flex flex-col w-96 items-center max-lg:w-full">
-        <Search />
-      </div> */}
     </>
   );
 };
