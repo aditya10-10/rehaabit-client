@@ -131,7 +131,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/thank-you" element={<Thankyou />} />
-          <Route path="/:category/:id" element={<Categories />} />
+          <Route path="/:id" element={<Categories />} />
           <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

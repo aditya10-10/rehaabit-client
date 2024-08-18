@@ -27,7 +27,7 @@ const HowDoesItWorks = () => {
 
       <div className="absolute w-44 h-44 text-white font-bold text-xl rounded-[30px] bg-[#E86558] translate-x-[200px] translate-y-[1px] -rotate-[70deg]"></div>
 
-      <section className="self-center p-12 mt-72 w-full bg-amber-100 shadow-sm max-w-[1118px] rounded-[30px] max-md:px-5 max-md:mt-10 max-md:max-w-full z-50">
+      <section className="self-center p-12 mt-72 w-full bg-amber-100 shadow-sm max-w-[1118px] rounded-[30px] max-md:px-5 max-md:mt-10 max-md:max-w-full z-40">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
             <div className="flex flex-col grow justify-center py-2.5 text-center max-w-[480px] rounded-[30px] max-md:max-w-full">

@@ -24,7 +24,6 @@ const Categories = () => {
   const location = useLocation();
 
   const params = useParams();
-  const categoryName = params.category;
   const categoryId = params.id;
   const { scrollTo, subCategoryId, serviceId } = location.state || {};
 
@@ -38,6 +37,14 @@ const Categories = () => {
   const { allServices } = useSelector((state) => state.service);
   const { cartServices, isLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
+  const { categories } = useSelector((state) => state.categories);
+
+  const categoryName = categories.find(
+    (category) => category._id === categoryId
+  );
+
+  // console.log(categoryName.name)
+
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
 
@@ -50,7 +57,9 @@ const Categories = () => {
 
   useEffect(() => {
     if (scrollTo === "subcategory" && subCategoryId) {
-      categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
+      categoryRefs.current[subCategoryId]?.scrollIntoView({
+        behavior: "smooth",
+      });
     }
     if (scrollTo === "service" && serviceId && allServices.length > 0) {
       serviceRefs.current[serviceId]?.scrollIntoView({ behavior: "smooth" });
@@ -134,7 +143,7 @@ const Categories = () => {
 
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <div className="w-[40%] max-md:w-full">
-          <h1 className="text-5xl mb-10 max-sm:text-4xl">{categoryName}</h1>
+          <h1 className="text-5xl mb-10 max-sm:text-4xl">{categoryName?.name}</h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
             <h1 className="text-4xl text-center max-lg:text-2xl mb-10">

@@ -43,17 +43,17 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
 
     if (data.item.subCategoryName) {
       // If subcategory
-      navigate(`/${name}/${categoryId}`, {
+      navigate(`/${categoryId}`, {
         state: { scrollTo: "subcategory", subCategoryId: _id },
       });
     } else if (data.item.serviceName) {
       // If service
-      navigate(`/${name}/${categoryId}`, {
+      navigate(`/${categoryId}`, {
         state: { scrollTo: "service", serviceId: _id },
       });
     } else {
       // If category
-      navigate(`/${name}/${_id}`);
+      navigate(`/${_id}`);
     }
 
     handleSearchQuery();
