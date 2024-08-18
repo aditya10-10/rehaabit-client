@@ -7,8 +7,8 @@ import Logo from "../../assets/LOGO.svg";
 const FooterColumn = ({ title, items, links }) => {
   return (
     <div className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full max-md:text-center">
-      <nav className="flex relative flex-col grow text-sm leading-6 text-emerald-800 whitespace-nowrap max-md:mt-10">
-        <h3>{title}</h3>
+      <nav className="flex relative flex-col grow text-sm leading-6 text-black-500 whitespace-nowrap max-md:mt-10">
+        <h3 className="font-bold text-lg text-violet-700">{title}</h3>
         {items.map((item, index) => (
           <Link to={links[index]} key={index} className="mt-4">
             {item}

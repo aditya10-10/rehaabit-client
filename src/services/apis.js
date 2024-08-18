@@ -73,8 +73,8 @@ export const addressEndpoints = {
 export const orderEndpoints = {
   PLACE_ORDER_API: BASE_URL + "/placeOrder",
   PURCHASE_SERVICE_API: BASE_URL + "/purchaseOrder",
-  GET_USER_ORDERS_API : BASE_URL + '/getUserOrders',
-  GET_ALL_ORDERS_API : BASE_URL + '/getAllOrders'
+  GET_USER_ORDERS_API: BASE_URL + "/getUserOrders",
+  GET_ALL_ORDERS_API: BASE_URL + "/getAllOrders",
 };
 
 //  PAYMENT ENDPOINTS
@@ -87,4 +87,4 @@ export const paymentEndpoints = {
 export const emailEndpoints = {
   SEND_EMAIL_OTP_API: BASE_URL + "/send-email-otp",
   VERIFY_EMAIL_OTP_API: BASE_URL + "/verifyEmailOTP",
-}
+};
