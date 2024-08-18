@@ -99,7 +99,7 @@ const LocationSearchBarDiv = () => {
     <>
       <div className="relative" ref={locationDropdownRef}>
         <div
-          className="flex items-center gap-2 border p-4 rounded-md shadow-custom-shadow w-60 max-xl:w-40 max-lg:hidden cursor-pointer"
+          className="flex items-center gap-2 border p-2 rounded-md shadow-custom-shadow w-60 max-lg:hidden cursor-pointer"
           onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
         >
           <span>
@@ -113,13 +113,13 @@ const LocationSearchBarDiv = () => {
         <span
           ref={locationDropdownRef}
           onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
-          className="items-center gap-2 p-4 max-md:mt-2 rounded-md hidden cursor-pointer max-lg:flex"
+          className="items-center gap-2 max-lg:p-2 max-md:mt-2 rounded-md hidden cursor-pointer max-lg:flex"
         >
           <CiLocationOn size={20} />
         </span>
 
         {isLocationDropdownOpen && (
-          <div className="absolute z-20 mt-2 w-64 bg-white rounded-md shadow-lg py-2">
+          <div className="absolute z-20 mt-2 w-60 bg-white rounded-md shadow-lg py-2">
             <input
               type="text"
               className="w-full px-3 py-2 border-b"
@@ -127,6 +127,9 @@ const LocationSearchBarDiv = () => {
               value={locationSearch}
               onChange={handleLocationSearch}
             />
+            <span className="text-gray-600 px-3">
+              {city ? `${city}, ${pincode}` : "Search for a location..."}
+            </span>
             <button
               className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
               onClick={handleDetectLocation}
@@ -154,7 +157,7 @@ const LocationSearchBarDiv = () => {
       <div className="relative flex items-center max-lg:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-1 rounded-md">
         <input
           type="text"
-          className="p-2 w-96 max-xl:w-72 max-lg:w-60 max-md:w-full mr-2"
+          className="px-2 w-96 max-xl:w-72 max-lg:w-60 max-md:w-full mr-2 outline-none"
           placeholder="Search for services..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -168,7 +171,7 @@ const LocationSearchBarDiv = () => {
           />
         )}
 
-        <span className="bg-red-400 p-2 text-white rounded-md">
+        <span className="bg-red-400 p-1 text-white rounded-md">
           <IoSearchOutline size={20} />
         </span>
 

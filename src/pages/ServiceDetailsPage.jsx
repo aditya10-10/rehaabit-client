@@ -32,6 +32,10 @@ const ServiceDetailsPage = () => {
     dispatch(getFullServiceDetails({ serviceId }));
   }, [dispatch, serviceId]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { service } = useSelector((state) => state.service);
   const { categories } = useSelector((state) => state.categories);
   const { cartServices, isLoading } = useSelector((state) => state.cart);

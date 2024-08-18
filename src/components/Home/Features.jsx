@@ -32,7 +32,7 @@ const Features = () => {
         </h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 mt-6 max-w-full w-[676px]">
           {categories.map((feature) => (
-            <Link key={feature._id} to={`${feature.name}/${feature._id}`}>
+            <Link key={feature._id} to={`${feature._id}`}>
               <FeatureItem {...feature} />
             </Link>
           ))}

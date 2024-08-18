@@ -59,12 +59,12 @@ const Navbar = ({ onLoginClick }) => {
   // }, [dispatch]);
 
   return (
-    <header className="flex justify-between items-center px-16 py-2.5 w-full max-md:px-5 max-md:flex-wrap max-md:max-w-full gap-2">
+    <header className="sticky top-0 left-0 z-50 bg-white flex justify-between items-center px-16 w-full max-md:px-5 max-md:flex-wrap max-md:max-w-full gap-2 max-sm:gap-0 max-sm:pb-4 mb-10">
       <img
         loading="lazy"
         src={Logo}
         alt="Company logo"
-        className="h-28 max-md:h-16 cursor-pointer"
+        className="h-20 max-md:h-16 cursor-pointer"
         onClick={() => navigate("/")}
       />
 
