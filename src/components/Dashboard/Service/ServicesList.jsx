@@ -17,8 +17,6 @@ const ServicesList = ({allServices}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
-
   const handleDeleteService = (e, serviceId, subCategoryId) => {
     Swal.fire({
       title: "Are you sure?",

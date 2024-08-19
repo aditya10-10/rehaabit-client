@@ -288,6 +288,7 @@ export const {
   addCartToLocalStorage,
   removeServiceFromLocalStorage,
   updateCartInLocalStorage,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

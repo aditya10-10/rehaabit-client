@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/LOGO.svg";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
+import { clearAuthError } from "../../slices/authSlice";
 
 const OtpModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -32,6 +33,15 @@ const OtpModal = ({ isOpen, onClose }) => {
     }
   }, [isOtpSent]);
 
+  useEffect(() => {
+    if (error) {
+      const interval = setInterval(() => {
+        dispatch(clearAuthError());
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [dispatch, error]);
+
   const handleVerifyPhone = async () => {
     if (!phone) {
       toast.error("Phone number is required");
@@ -39,7 +49,7 @@ const OtpModal = ({ isOpen, onClose }) => {
     }
 
     try {
-      await dispatch(sendOtp(phone));
+      await dispatch(sendOtp(phone, isSignup));
       setIsOtpSent(true);
     } catch (err) {
       setIsOtpSent(false);
@@ -229,11 +239,11 @@ const OtpModal = ({ isOpen, onClose }) => {
         <div className="mt-5 text-center text-neutral-500">
           <p>By signing in you agree to our Terms & Conditions.</p>
           <div className="flex justify-center space-x-2">
-            <a href="/privacy" className="underline text-gray-700">
+            <a href="/privacy-policy" className="underline text-gray-700">
               Privacy Policy
             </a>
             <span>|</span>
-            <a href="/terms" className="underline text-gray-700">
+            <a href="/terms-and-conditions" className="underline text-gray-700">
               Terms & Conditions
             </a>
           </div>

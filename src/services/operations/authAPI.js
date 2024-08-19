@@ -6,16 +6,18 @@ import { endpoints } from "../apis";
 import { setUserData } from "../../slices/authSlice";
 import { getUserDetails } from "./profileAPI";
 import { setUser } from "../../slices/profileSlice";
+import { clearCart } from "../../slices/cartSlice";
 
 const { SENDOTP_API, SIGNUP_API, LOGIN_API } = endpoints;
 
-export function sendOtp(contactNumber) {
+export function sendOtp(contactNumber, isSignup) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
         contactNumber,
+        isSignup,
       });
       console.log("SENDOTP API RESPONSE............", response);
 
@@ -112,7 +114,7 @@ export function login(contactNumber, otp, navigate) {
   };
 }
 
-export function logout(navigate) {
+export function logout(navigate, pathname) {
   return (dispatch) => {
     dispatch(setToken(null));
     dispatch(setUserData(null));
@@ -120,6 +122,9 @@ export function logout(navigate) {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged Out");
-    // navigate("/");
+    if (pathname !== "/checkout") {
+      navigate("/");
+      dispatch(clearCart());
+    }
   };
 }

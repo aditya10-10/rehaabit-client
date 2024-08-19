@@ -21,7 +21,7 @@ function loadScript(src) {
   });
 }
 
-export async function placeOrder(token, services, navigate, dispatch) {
+export async function placeOrder(token, navigate, dispatch) {
   const toastId = toast.loading("Loading...");
   try {
     const res = await loadScript(
@@ -33,12 +33,12 @@ export async function placeOrder(token, services, navigate, dispatch) {
       return;
     }
 
-    console.log("Services being sent:", services);
+    // console.log("Services being sent:", services);
 
     const orderResponse = await apiConnector(
       "POST",
       SERVICE_PAYMENT_API,
-      { services },
+      // { services },
       {
         Authorization: `Bearer ${token}`,
       }
@@ -52,9 +52,9 @@ export async function placeOrder(token, services, navigate, dispatch) {
 
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY,
-      currency: orderResponse.data.message.currency,
-      amount: `${orderResponse.data.message.amount}`,
-      order_id: orderResponse.data.message.id,
+      currency: orderResponse.data.paymentDetails.currency,
+      amount: `${orderResponse.data.paymentDetails.amount}`,
+      order_id: orderResponse.data.paymentDetails.id,
       name: "Rehaabit",
       description: "Thank You for Purchasing the Service",
       image: rzpLogo,
@@ -63,12 +63,18 @@ export async function placeOrder(token, services, navigate, dispatch) {
         contact: "9026589058", // Replace with dynamic user details
       },
       handler: function (response) {
-        verifyPayment({ ...response, services }, token, navigate, dispatch);
+        // verifyPayment({ ...response, services }, token, navigate, dispatch);
+        verifyPayment({ ...response }, token, navigate, dispatch);
       },
     };
 
+    console.log(options);
+
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
+
+    console.log(paymentObject);
+
     paymentObject.on("payment.failed", function (response) {
       toast.error("Oops, payment failed");
       console.log("Payment Failed Details:", response.error);

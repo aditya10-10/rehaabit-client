@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { OrdersList } from "../components/Orders";
+import { OrdersList, OrdersListUsers } from "../components/Orders";
 import NothingToShow from "../components/NothingToShow";
 
 const MyOrders = () => {
@@ -108,7 +108,7 @@ const MyOrders = () => {
         <NothingToShow text="Orders" btnText="shopping" />
       ) : (
         <div className="mt-6 w-full border rounded-lg">
-          <OrdersList orders={filteredOrders} />
+          <OrdersListUsers orders={filteredOrders} />
         </div>
       )}
     </div>

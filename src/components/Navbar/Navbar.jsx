@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/LOGO.svg";
 import { logout } from "../../services/operations/authAPI";
 import { CgProfile } from "react-icons/cg";
@@ -17,6 +17,7 @@ import LocationSearchBarDiv from "./LocationSearchBarDiv";
 const Navbar = ({ onLoginClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const profileDropdownRef = useRef(null);
 
   const { token } = useSelector((state) => state.auth);
@@ -30,7 +31,7 @@ const Navbar = ({ onLoginClick }) => {
   };
 
   const handleLogout = () => {
-    dispatch(logout(navigate));
+    dispatch(logout(navigate, location.pathname));
     setIsProfileDropdownOpen(false);
   };
 
