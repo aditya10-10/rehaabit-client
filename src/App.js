@@ -82,15 +82,16 @@ export default function App() {
     }
   }, [location, dispatch]);
 
-  useEffect(() => {
-    if (
-      !user &&
-      !location.pathname.includes("/checkout") &&
-      !location.pathname.includes("/")
-    ) {
-      navigate("/");
-    }
-  }, [location, navigate, user]);
+  // useEffect(() => {
+  //   if (
+  //     !user &&
+  //     !location.pathname.includes("/checkout") &&
+  //     location.pathname !== "/"
+  //   ) {
+  //     navigate("/");
+  //     dispatch(getAllCartServices());
+  //   }
+  // }, [location, navigate, user, dispatch]);
 
   useEffect(() => {
     if (

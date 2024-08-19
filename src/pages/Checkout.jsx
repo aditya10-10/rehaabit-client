@@ -19,12 +19,13 @@ import { getUserDetails } from "../services/operations/profileAPI";
 import { logout } from "../services/operations/authAPI";
 import { clearSingleOrder, updateSingleOrder } from "../slices/orderSlice";
 import { placeOrder } from "../services/operations/serviceOrder";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { openModal } from "../slices/modalSlice";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { token } = useSelector((state) => state.auth);
 
   const [isNewAddress, setIsNewAddress] = useState(false);
@@ -119,7 +120,7 @@ const Checkout = () => {
   }, [navigate, totalQty, CartServices.length]);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout(navigate, location.pathname));
   };
 
   const handlePlaceOrder = () => {
@@ -127,16 +128,17 @@ const Checkout = () => {
 
     // Extract the service IDs from the cartServices array
     // Extract the service details from the cartServices array
-    const serviceDetails = cartServices.map((service) => ({
-      serviceId: service.serviceId || service._id,
-      price: service.price,
-      qty: service.qty,
-    }));
+    // const serviceDetails = cartServices.map((service) => ({
+    //   serviceId: service.serviceId || service._id,
+    //   price: service.price,
+    //   qty: service.qty,
+    // }));
 
-    console.log("service details", serviceDetails);
+    // console.log("service details", serviceDetails);
 
     // Pass the correct data structure to the placeOrder function
-    placeOrder(token, serviceDetails, navigate, dispatch);
+    // placeOrder(token, serviceDetails, navigate, dispatch);
+    placeOrder(token, navigate, dispatch);
 
     // Refresh the cart services after placing the order
     dispatch(getAllCartServices());
