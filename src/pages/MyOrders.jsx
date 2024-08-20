@@ -51,19 +51,19 @@ const MyOrders = () => {
   });
 
   return (
-    <div className="flex flex-col items-center w-full p-10 max-md:p-4">
+    <div className="flex flex-col items-center w-full p-10 max-md:p-4 max-sm:p-2">
       <nav className="flex w-full justify-between">
         <div className="flex w-full items-center max-sm:flex-col max-sm:justify-center">
-          <h1 className="text-4xl max-md:text-2xl max-sm:text-4xl font-semibold mb-6">
+          <h1 className="text-4xl max-md:text-2xl font-semibold mb-6 max-sm:mb-4">
             My Orders
           </h1>
 
-          <div className="max-sm:flex max-sm:w-full max-sm:justify-center">
+          <div className="max-sm:flex max-sm:w-full max-sm:justify-center max-sm:flex-col">
             {/* Search by Category */}
             <select
               value={selectedCategory}
               onChange={handleCategoryChange}
-              className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6"
+              className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6 max-sm:ml-0 max-sm:mb-4"
             >
               <option value="All">All Categories</option>
               {categories.map(({ _id, name }) => (
@@ -77,7 +77,7 @@ const MyOrders = () => {
             <select
               value={selectedSubcategory}
               onChange={handleSubcategoryChange}
-              className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6"
+              className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6 max-sm:ml-0 max-sm:mb-4"
             >
               <option value="All">All Subcategories</option>
               {subcategories.map(({ _id, subCategoryName }) => (
@@ -107,7 +107,7 @@ const MyOrders = () => {
       {filteredOrders?.length === 0 ? (
         <NothingToShow text="Orders" btnText="shopping" />
       ) : (
-        <div className="mt-6 w-full border rounded-lg">
+        <div className="w-full border rounded-lg">
           <OrdersListUsers orders={filteredOrders} />
         </div>
       )}

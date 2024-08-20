@@ -21,7 +21,13 @@ function loadScript(src) {
   });
 }
 
-export async function placeOrder(token, navigate, dispatch) {
+export async function placeOrder(
+  token,
+  singleOrder,
+  isSingleOrder,
+  navigate,
+  dispatch
+) {
   const toastId = toast.loading("Loading...");
   try {
     const res = await loadScript(
@@ -38,7 +44,7 @@ export async function placeOrder(token, navigate, dispatch) {
     const orderResponse = await apiConnector(
       "POST",
       SERVICE_PAYMENT_API,
-      // { services },
+      { singleOrder, isSingleOrder },
       {
         Authorization: `Bearer ${token}`,
       }
@@ -64,7 +70,7 @@ export async function placeOrder(token, navigate, dispatch) {
       },
       handler: function (response) {
         // verifyPayment({ ...response, services }, token, navigate, dispatch);
-        verifyPayment({ ...response }, token, navigate, dispatch);
+        verifyPayment({ ...response, singleOrder, isSingleOrder }, token, navigate, dispatch);
       },
     };
 
