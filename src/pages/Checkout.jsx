@@ -32,7 +32,7 @@ const Checkout = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [onRemove, setOnRemove] = useState(null);
 
-  const { cartServices, isLoading, totalQty } = useSelector(
+  const { cartServices, isLoading, totalQty, totalCost } = useSelector(
     (state) => state.cart
   );
   const { user } = useSelector((state) => state.profile);
@@ -114,10 +114,10 @@ const Checkout = () => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (totalQty === 0 || CartServices.length === 0) {
+    if ((totalQty === 0 || CartServices.length === 0) && !isSingleOrder) {
       navigate("/cart");
     }
-  }, [navigate, totalQty, CartServices.length]);
+  }, [navigate, totalQty, CartServices.length, isSingleOrder]);
 
   const handleLogout = () => {
     dispatch(logout(navigate, location.pathname));
@@ -138,11 +138,11 @@ const Checkout = () => {
 
     // Pass the correct data structure to the placeOrder function
     // placeOrder(token, serviceDetails, navigate, dispatch);
-    placeOrder(token, navigate, dispatch);
+    placeOrder(token, singleOrder, isSingleOrder, navigate, dispatch);
 
     // Refresh the cart services after placing the order
     dispatch(getAllCartServices());
-    navigate("/");
+    // navigate("/");
   };
 
   return (
@@ -385,7 +385,9 @@ const Checkout = () => {
 
               {user && currentStep > 3 && (
                 <div className="flex w-full px-7 pb-6">
-                  <span className="ml-7 mr-1">{totalQty} items</span>
+                  <span className="ml-7 mr-1">
+                    {totalQty ? totalQty : singleOrder[0]?.qty} items
+                  </span>
                 </div>
               )}
 
@@ -470,7 +472,41 @@ const Checkout = () => {
 
               {user && currentStep === 4 && (
                 <div className="max-h-[65vh] overflow-y-auto">
-                  <h1>Payment</h1>
+                  <div className="flex flex-col p-6">
+                    <div className="flex w-full justify-between">
+                      <span>
+                        Price ({singleOrder[0] ? singleOrder[0]?.qty : totalQty}{" "}
+                        item)
+                      </span>
+                      <span>
+                        ₹{" "}
+                        {singleOrder[0]
+                          ? singleOrder[0]?.totalCost.toFixed(2)
+                          : totalCost.toFixed(2)}
+                      </span>
+                    </div>
+
+                    {/* <div className="flex w-full justify-between">
+              <span>Discount</span>
+              <span>₹ 2000</span>
+            </div> */}
+
+                    {/* <div className="flex w-full justify-between">
+              <span>Delivery Charges</span>
+              <span>₹ 2000</span>
+            </div> */}
+
+                    <div className="flex w-full justify-between mt-2 border-t">
+                      <span className="text-xl font-bold">Total Amount</span>
+                      <span className="text-xl font-bold">
+                        ₹{" "}
+                        {singleOrder[0]
+                          ? singleOrder[0]?.totalCost.toFixed(2)
+                          : totalCost.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
                   <div className="flex w-full justify-end py-2 px-7 mb-4 shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
                     <button
                       className="bg-orange-500 text-white py-2 px-7 uppercase rounded-md"

@@ -13,7 +13,9 @@ const OrdersListUsers = ({ orders }) => {
             <th className="flex-1 text-left text-sm font-medium uppercase ">
               orders
             </th>
-            <th className="text-left text-sm font-medium uppercase ">Price</th>
+            <th className="text-left text-sm font-medium uppercase ">
+              Total Price
+            </th>
           </tr>
         </thead>
 
@@ -22,23 +24,25 @@ const OrdersListUsers = ({ orders }) => {
             const { _id, services, status, createdAt, paymentId } = order;
 
             return services.map((item, index) => (
-              <tr key={_id} className="flex gap-x-10 border-b px-6 py-8">
+              <tr key={item._id} className="flex gap-x-10 border-b px-6 py-2">
                 <td className="flex flex-1 gap-x-4">
                   <img
                     src={item.thumbnail}
                     alt="thumbnail"
-                    className="h-[148px] w-[220px] rounded-lg object-cover"
+                    className="h-20 w-20 rounded-lg object-cover"
                   />
                   <div className="flex flex-col justify-between">
                     <p className="text-lg font-semibold">{item.serviceName}</p>
-                    <p className="text-xs">{item.serviceDescription}</p>
+                    {/* <p className="text-xs"> | {item.serviceDescription}</p>
+                    <p className="text-xs"> | Price: ₹{item.price}</p>
+                    <p className="text-xs"> | Quantity: {item.qty}</p> */}
                     <p className="text-[12px]">
-                      Created: {formattedDate(createdAt)}
+                      Placed on: {formattedDate(createdAt)}
                     </p>
-                    {status === "Draft" ? (
-                      <p className="flex w-fit flex-row items-center gap-2 rounded-full px-2 py-[2px] text-[12px] font-medium">
-                        <HiClock size={14} />
-                        {status}
+                    {status.status === "placed" ? (
+                      <p className="flex w-fit flex-row items-center gap-2 rounded-full px-2 py-[2px] text-[12px] font-medium text-green-500">
+                        <FaCheck size={8} />
+                        {status.status}
                       </p>
                     ) : (
                       <p className="flex w-fit flex-row items-center gap-2 rounded-full-700 px-2 py-[2px] text-[12px] font-medium text-[#0C7FDA]">

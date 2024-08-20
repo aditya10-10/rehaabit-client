@@ -8,7 +8,11 @@ import {
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
 import { useEffect, useState } from "react";
-import { AddressModal, PriceDetailsCard } from "../components/Cart";
+import {
+  AddressModal,
+  LoginSignup,
+  PriceDetailsCard,
+} from "../components/Cart";
 import { getUserAddresses } from "../slices/addressSlice";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -27,9 +31,7 @@ const Cart = () => {
   const { cartServices, isLoading, totalQty } = useSelector(
     (state) => state.cart
   );
-  const { filteredDefaultAddress } = useSelector(
-    (state) => state.address
-  );
+  const { filteredDefaultAddress } = useSelector((state) => state.address);
   const { user } = useSelector((state) => state.profile);
 
   useEffect(() => {
@@ -118,7 +120,8 @@ const Cart = () => {
         <div className="gap-10 flex max-lg:flex-col">
           <div className="flex flex-col gap-5 w-full">
             <div className="flex w-full items-center justify-between p-2 shadow-custom-shadow rounded-lg">
-              {filteredDefaultAddress && filteredDefaultAddress?.length === 1 ? (
+              {filteredDefaultAddress &&
+              filteredDefaultAddress?.length === 1 ? (
                 <div>
                   <h1 className="font-semibold">
                     Deliver To:{" "}
@@ -135,22 +138,32 @@ const Cart = () => {
                   <span>, {filteredDefaultAddress[0]?.phoneNo}</span>
                 </div>
               ) : (
-                <h1>Select Delivery Address</h1>
+                <>
+                  {user ? (
+                    <h1>Select Delivery Address</h1>
+                  ) : (
+                    <div className="px-7 py-4">
+                      <span>Login/SignUp First</span>
+                    </div>
+                  )}
+                </>
               )}
 
-              <button
-                className="bg-emerald-600 text-white px-4 py-2 rounded-md"
-                onClick={() => {
-                  setAnimationClass("modal-open");
-                  setIsModalOpen(true);
-                }}
-              >
-                Change
-              </button>
+              {user && (
+                <button
+                  className="bg-emerald-600 text-white px-4 py-2 rounded-md"
+                  onClick={() => {
+                    setAnimationClass("modal-open");
+                    setIsModalOpen(true);
+                  }}
+                >
+                  Change
+                </button>
+              )}
             </div>
 
             {cartServices.totalQty === 0 || totalQty === 0 ? (
-              <NothingToShow text="Cart" btnText="shopping"/>
+              <NothingToShow text="Cart" btnText="shopping" />
             ) : (
               <div className="w-full shadow-custom-shadow rounded-lg">
                 <div className="max-h-[65vh] overflow-y-auto p-4">
