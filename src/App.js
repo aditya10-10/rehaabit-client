@@ -18,6 +18,7 @@ import {
   TermsAndConditions,
   MyOrders,
   Addresses,
+  PartnerPage,
 } from "./pages";
 
 import PrivacyPolicy from "./pages/privacy-and-policy";
@@ -116,7 +117,8 @@ export default function App() {
 
   return (
     <>
-      {location.pathname.includes("/dashboard") ? null : (
+      {location.pathname.includes("/dashboard") ||
+      location.pathname.includes("/partner") ? null : (
         <Navbar onLoginClick={handleLoginClick} />
       )}
 
@@ -141,6 +143,7 @@ export default function App() {
             element={<TermsAndConditions />}
           />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/partner" element={<PartnerPage />} />
 
           {(user?.accountType === "Admin" || user?.accountType === "User") && (
             <></>

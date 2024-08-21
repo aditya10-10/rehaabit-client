@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../../services/operations/SettingsAPI";
 import { useForm } from "react-hook-form";
-import { sendEmailOTP, verifyEmailOTP } from "../../../slices/emailSlice";
+import {
+  clearEmailVerificationStatus,
+  sendEmailOTP,
+  verifyEmailOTP,
+} from "../../../slices/emailSlice";
 
 function ProfileInformation() {
   const navigate = useNavigate();
@@ -25,12 +29,12 @@ function ProfileInformation() {
   const [email, setEmail] = useState(user?.additionalDetails?.email || "");
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
-
-  // console.log(email)
+  const [isEditingEmail, setIsEditingEmail] = useState(false); // New state for editing email
 
   useEffect(() => {
     if (emailVerified) {
       setOtpSent(false);
+      setIsEditingEmail(false); // Stop editing after email is verified
     }
   }, [emailVerified]);
 
@@ -51,6 +55,7 @@ function ProfileInformation() {
       const updatedData = { ...data, contactNumber: fullPhoneNumber };
       await dispatch(updateProfile(token, updatedData));
       navigate("/dashboard/my-profile"); // navigate after profile update
+      dispatch(clearEmailVerificationStatus());
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
     }
@@ -161,7 +166,17 @@ function ProfileInformation() {
             </label>
 
             <div className="flex w-full gap-2 max-xs:flex-col max-xs:w-full">
-              {!otpSent ? (
+              {!otpSent && !isEditingEmail ? (
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  className="p-3 mt-1.5 bg-amber-50 rounded-lg shadow-sm w-full text-neutral-500"
+                  placeholder="Enter your Email address"
+                  value={email}
+                  disabled
+                />
+              ) : !otpSent && isEditingEmail ? (
                 <input
                   id="email"
                   type="email"
@@ -169,7 +184,6 @@ function ProfileInformation() {
                   className="p-3 mt-1.5 bg-amber-50 rounded-lg shadow-sm w-full text-neutral-500"
                   placeholder="Enter your Email address"
                   {...register("email", { required: true })}
-                  defaultValue={user?.additionalDetails?.email}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -185,12 +199,27 @@ function ProfileInformation() {
                 />
               )}
               {!emailVerified && (
-                <button
-                  className="text-emerald-700 w-40 rounded-lg uppercase max-xs:w-full max-xs:flex max-xs:justify-end"
-                  onClick={(e) => handleEmailVerification(e)}
-                >
-                  {!otpSent ? "SEND OTP" : "Verify OTP"}
-                </button>
+                <>
+                  {!isEditingEmail && (
+                    <button
+                      className="text-emerald-700 w-40 rounded-lg uppercase max-xs:w-full max-xs:flex max-xs:justify-end"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsEditingEmail(true);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {isEditingEmail && (
+                    <button
+                      className="text-emerald-700 w-40 rounded-lg uppercase max-xs:w-full max-xs:flex max-xs:justify-end"
+                      onClick={(e) => handleEmailVerification(e)}
+                    >
+                      {!otpSent ? "SEND OTP" : "Verify OTP"}
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -204,7 +233,7 @@ function ProfileInformation() {
         >
           Cancel
         </button>
-        {(emailVerified || user?.additionalDetails?.email) && (
+        {(emailVerified || !isEditingEmail) && (
           <button
             type="submit"
             className="px-6 py-3 bg-emerald-700 text-emerald-50 rounded-lg"

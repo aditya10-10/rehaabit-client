@@ -5,7 +5,7 @@ import Logo from "../../assets/LOGO.svg";
 import { logout } from "../../services/operations/authAPI";
 import { CgProfile } from "react-icons/cg";
 import { RiDashboardLine } from "react-icons/ri";
-import { IoLogOutOutline } from "react-icons/io5";
+import { IoCartOutline, IoLogOutOutline } from "react-icons/io5";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import { getAllCartServices } from "../../slices/cartSlice";
 import { getAllServices } from "../../slices/serviceSlice";
@@ -130,8 +130,15 @@ const Navbar = ({ onLoginClick }) => {
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
                   onClick={() => navigate("/dashboard/orders")}
                 >
-                  <IoIosHelpCircleOutline size={20} />
+                  <IoCartOutline size={20} />
                   <span className="ml-2">My Orders</span>
+                </button>
+                <button
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+                  onClick={() => navigate("/help")}
+                >
+                  <IoIosHelpCircleOutline size={20} />
+                  <span className="ml-2">Help</span>
                 </button>
                 <button
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"

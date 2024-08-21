@@ -274,36 +274,38 @@ const Checkout = () => {
                 )}
               </div>
 
-              {filteredDefaultAddress?.length !== 0 && currentStep !== 2 && (
-                <div
-                  className={`flex items-start w-full flex-col p-4 border-b cursor-pointer`}
-                >
-                  <div className="flex w-full items-center px-7">
-                    <div>
-                      <span className="flex-grow">
-                        {filteredDefaultAddress[0]?.name}
-                      </span>
-                      <span className="text-sm mx-2 bg-gray-100 p-2 rounded-sm">
-                        {filteredDefaultAddress[0]?.addressType}
-                      </span>
-                      <span className="text-sm mx-2">
-                        {filteredDefaultAddress[0]?.phoneNo}
+              {filteredDefaultAddress &&
+                filteredDefaultAddress?.length !== 0 &&
+                currentStep !== 2 && (
+                  <div
+                    className={`flex items-start w-full flex-col p-4 border-b cursor-pointer`}
+                  >
+                    <div className="flex w-full items-center px-7">
+                      <div>
+                        <span className="flex-grow">
+                          {filteredDefaultAddress[0]?.name}
+                        </span>
+                        <span className="text-sm mx-2 bg-gray-100 p-2 rounded-sm">
+                          {filteredDefaultAddress[0]?.addressType}
+                        </span>
+                        <span className="text-sm mx-2">
+                          {filteredDefaultAddress[0]?.phoneNo}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-600 mt-2 px-7">
+                      {filteredDefaultAddress[0]?.address},{" "}
+                      {filteredDefaultAddress[0]?.locality},{" "}
+                      {filteredDefaultAddress[0]?.landmark &&
+                        `${filteredDefaultAddress[0]?.landmark},`}{" "}
+                      {filteredDefaultAddress[0]?.city},{" "}
+                      {filteredDefaultAddress[0]?.state},{" "}
+                      <span className="font-semibold">
+                        {filteredDefaultAddress[0]?.pincode}
                       </span>
                     </div>
                   </div>
-                  <div className="text-sm text-gray-600 mt-2 px-7">
-                    {filteredDefaultAddress[0]?.address},{" "}
-                    {filteredDefaultAddress[0]?.locality},{" "}
-                    {filteredDefaultAddress[0]?.landmark &&
-                      `${filteredDefaultAddress[0]?.landmark},`}{" "}
-                    {filteredDefaultAddress[0]?.city},{" "}
-                    {filteredDefaultAddress[0]?.state},{" "}
-                    <span className="font-semibold">
-                      {filteredDefaultAddress[0]?.pincode}
-                    </span>
-                  </div>
-                </div>
-              )}
+                )}
 
               {user && currentStep === 2 && (
                 <>
