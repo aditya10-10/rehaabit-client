@@ -7,6 +7,7 @@ import { setUserData } from "../../slices/authSlice";
 import { getUserDetails } from "./profileAPI";
 import { setUser } from "../../slices/profileSlice";
 import { clearCart } from "../../slices/cartSlice";
+import { clearAddresses } from "../../slices/addressSlice";
 
 const { SENDOTP_API, SIGNUP_API, LOGIN_API } = endpoints;
 
@@ -119,6 +120,7 @@ export function logout(navigate, pathname) {
     dispatch(setToken(null));
     dispatch(setUserData(null));
     dispatch(setUser(null));
+    dispatch(clearAddresses());
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged Out");

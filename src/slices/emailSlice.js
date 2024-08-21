@@ -50,7 +50,11 @@ export const verifyEmailOTP = createAsyncThunk(
 const emailSlice = createSlice({
   name: "email",
   initialState,
-  reducers: {},
+  reducers: {
+    clearEmailVerificationStatus: (state, action) => {
+      state.emailVerified = false;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -90,5 +94,6 @@ const emailSlice = createSlice({
   },
 });
 
+export const { clearEmailVerificationStatus } = emailSlice.actions;
 
 export default emailSlice.reducer;
