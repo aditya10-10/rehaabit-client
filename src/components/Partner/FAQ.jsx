@@ -36,7 +36,7 @@ const FAQ = () => {
 
   return (
     <div
-      className="flex w-full justify-center gap-20 py-40 px-60"
+      className="flex w-full justify-center gap-20 py-40 px-60 h-[757px]"
       style={{
         backgroundImage: `
     linear-gradient(to right, rgba(253, 96, 55, 0.12),rgba(117, 45, 220, 0.06),rgba(255, 255, 255, 0.06),rgba(117, 45, 220, 0.06),rgba(253, 96, 55, 0.06))`,

@@ -8,6 +8,8 @@ module.exports = {
       },
       fontFamily: {
         amaranth: ["Amaranth", "sans-serif"],
+        lato: ["Lato", "sans-serif"],
+        lexend: ["Lexend", "sans-serif"],
       },
       backgroundImage: {
         "custom-gradient":

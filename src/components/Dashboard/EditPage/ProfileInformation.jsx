@@ -208,16 +208,30 @@ function ProfileInformation() {
                         setIsEditingEmail(true);
                       }}
                     >
-                      Edit
+                      {user?.additionalDetails?.email ? "Edit" : "Add Email"}
                     </button>
                   )}
                   {isEditingEmail && (
-                    <button
-                      className="text-emerald-700 w-40 rounded-lg uppercase max-xs:w-full max-xs:flex max-xs:justify-end"
-                      onClick={(e) => handleEmailVerification(e)}
-                    >
-                      {!otpSent ? "SEND OTP" : "Verify OTP"}
-                    </button>
+                    <>
+                      <button
+                        className="text-emerald-700 w-40 rounded-lg uppercase max-xs:w-full max-xs:flex max-xs:justify-end"
+                        onClick={(e) => handleEmailVerification(e)}
+                      >
+                        {!otpSent ? "SEND OTP" : "Verify OTP"}
+                      </button>
+                      <button
+                        className="text-red-500 uppercase max-xs:justify-end"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsEditingEmail(false);
+                          setEmail(user?.additionalDetails?.email || "");
+                          setOtp("");
+                          setOtpSent(false);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </>
                   )}
                 </>
               )}

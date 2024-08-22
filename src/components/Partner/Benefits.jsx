@@ -7,7 +7,7 @@ import { MdArrowOutward } from "react-icons/md";
 const Benefits = () => {
   return (
     <div
-      className="flex flex-col p-20"
+      className="flex flex-col p-20 h-[1058px]"
       style={{
         backgroundImage: `
         linear-gradient(to right, rgba(253, 96, 55, 0.12),rgba(117, 45, 220, 0.06),rgba(255, 255, 255, 0.06),rgba(117, 45, 220, 0.06),rgba(253, 96, 55, 0.06))`,

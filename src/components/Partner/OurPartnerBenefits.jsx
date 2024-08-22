@@ -3,7 +3,7 @@ import png1 from "../../assets//partner/eOym8ocxAKRkqB2LZGE4Inari8.png.svg";
 
 const OurPartnerBenefits = () => {
   return (
-    <div className="flex flex-col items-center justify-center px-20 py-20">
+    <div className="flex flex-col items-center justify-center px-20 py-20 h-[1023px]">
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl capitalize font-bold">our partner benefits</h1>
         <span className="text-2xl text-gray-500 text-center w-[90%]">

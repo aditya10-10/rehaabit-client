@@ -4,7 +4,7 @@ import svg3 from "../../assets/partner/svg1742727197_3467.svg";
 
 const WhyChooseRehaabit = () => {
   return (
-    <div className="flex flex-col items-center justify-center px-20 py-20">
+    <div className="flex flex-col items-center justify-center px-20 py-20 h-[713px]">
       <div className="flex flex-col items-center justify-center w-[40%]">
         <h1 className="font-bold text-3xl capitalize">Why choose rehaabit?</h1>
         <span className="text-xl text-gray-500 text-center">
