@@ -40,6 +40,7 @@ import {
   getUserOrders,
 } from "./slices/orderSlice";
 import { showAllSubCategories } from "./slices/subCategorySlice";
+import { PartnerForm } from "./components/Partner";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -143,7 +144,6 @@ export default function App() {
             element={<TermsAndConditions />}
           />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/partner" element={<PartnerPage />} />
 
           {(user?.accountType === "Admin" || user?.accountType === "User") && (
             <></>
@@ -170,6 +170,13 @@ export default function App() {
               <Route path="edit-profile" element={<EditProfile />} />
             </>
           )} */}
+
+          {/* PARTNER */}
+          <Route path="/partner" element={<PartnerPage />} />
+          <Route
+            path="/partner-form/*"
+            element={<PartnerForm />}
+          />
         </Routes>
       </div>
     </>

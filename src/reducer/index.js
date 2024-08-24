@@ -11,6 +11,8 @@ import orderReducer from "../slices/orderSlice";
 import modalReducer from "../slices/modalSlice";
 import emailReducer from "../slices/emailSlice";
 
+import partnerReducer from '../slices/partnerSlice'
+
 const rootReducer = combineReducers({
   auth: authReducer,
   categories: categoryReducer,
@@ -22,6 +24,7 @@ const rootReducer = combineReducers({
   order: orderReducer,
   modal: modalReducer,
   email: emailReducer,
+  partner: partnerReducer,
 });
 
 export default rootReducer;

@@ -1,8 +1,10 @@
 import Navbar from "./Navbar";
-
 import image from "../../assets/partner/Hero.svg";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       className="bg-[#FFF7F6] h-[950px] relative overflow-hidden"
@@ -17,13 +19,13 @@ const Hero = () => {
         style={{
           background:
             "linear-gradient(310deg, rgba(253, 96, 55, 1) -10%, rgba(255, 247, 246, 1) 10%)",
-          mixBlendMode: "multiply", // or overlay, screen, etc., depending on the desired effect
-          zIndex: 2,
+          mixBlendMode: "multiply",
+          zIndex: 1, // Lower the z-index here
         }}
       ></div>
 
       <div className="flex relative">
-        <div className="p-10 flex flex-col w-[38%] mt-20">
+        <div className="p-10 flex flex-col w-[38%] mt-20 z-20"> {/* Raised z-index */}
           <div className="flex flex-col">
             <span className="uppercase text-purple-600 text-lg ml-2">
               best place for
@@ -39,11 +41,12 @@ const Hero = () => {
             </span>
           </div>
 
-          <div className="my-20 w-52">
-            <button className="bg-[#F56944] w-full text-white rounded-lg px-6 py-3">
-              Join Now
-            </button>
-          </div>
+          <button
+            className="bg-[#F56944] my-20 w-52 text-white rounded-lg px-6 py-3 z-30"
+            onClick={() => navigate("/partner-form/personal-information")}
+          >
+            Join Now
+          </button>
 
           <div className="flex gap-6">
             <div className="flex flex-col px-6 py-2">
@@ -63,15 +66,15 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="absolute z-40 right-0 top-0 translate-x-40 -translate-y-10">
+        <div className="absolute z-10 right-0 top-0 translate-x-40 -translate-y-10">
           <img className="w-[110rem]" src={image} alt="HeroImage" />
         </div>
 
-        <div className="absolute z-50 right-[260px] -rotate-[15deg] bg-[#ffe7e2] h-16 w-16"></div>
+        <div className="absolute z-15 right-[260px] -rotate-[15deg] bg-[#ffe7e2] h-16 w-16"></div>
 
-        <div className="absolute z-50 right-[700px] top-[300px] -rotate-[30deg] bg-[#ffe7e2] h-4 w-4"></div>
+        <div className="absolute z-15 right-[700px] top-[300px] -rotate-[30deg] bg-[#ffe7e2] h-4 w-4"></div>
 
-        <div className="absolute z-50 left-[600px] top-[100px] -rotate-[30deg] bg-[#8937FF] h-4 w-4"></div>
+        <div className="absolute z-15 left-[600px] top-[100px] -rotate-[30deg] bg-[#8937FF] h-4 w-4"></div>
       </div>
     </div>
   );
