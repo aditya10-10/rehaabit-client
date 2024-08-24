@@ -18,12 +18,14 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/ConfirmationModal";
 import { openModal } from "../slices/modalSlice";
 import NothingToShow from "../components/NothingToShow";
+import OtpModal from "../components/SignupLogin/OtpModal";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
   const [selectedAddress, setSelectedAddress] = useState([]);
   const [onRemove, setOnRemove] = useState(null);
@@ -100,9 +102,29 @@ const Cart = () => {
 
   // console.log(filteredDefaultAddress)
 
+  const handleCloseOtpModal = () => {
+    setAnimationClass("modal-close");
+    setTimeout(() => {
+      setIsOtpModalOpen(false);
+    }, 300);
+  };
+
+  const handleLoginClick = () => {
+    setAnimationClass("modal-open");
+    setIsOtpModalOpen(true);
+  };
+
   return (
     <>
       <ConfirmationModal text="Remove" onDelete={onRemove} />
+
+      {isOtpModalOpen && (
+        <div
+          className={`fixed inset-0 flex items-center justify-center z-50 top-0 bg-black bg-opacity-50 ${animationClass} max-h-screen`}
+        >
+          <OtpModal isOpen={isOtpModalOpen} onClose={handleCloseOtpModal} />
+        </div>
+      )}
 
       {isModalOpen && (
         <div
@@ -142,8 +164,13 @@ const Cart = () => {
                   {user ? (
                     <h1>Select Delivery Address</h1>
                   ) : (
-                    <div className="px-7 py-4">
-                      <span>Login/SignUp First</span>
+                    <div className="px-7 py-4 flex w-full justify-end">
+                      <button
+                        onClick={handleLoginClick}
+                        className="bg-emerald-600 text-white px-4 py-2 rounded-md"
+                      >
+                        Login
+                      </button>
                     </div>
                   )}
                 </>

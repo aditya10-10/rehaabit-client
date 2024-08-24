@@ -88,3 +88,8 @@ export const emailEndpoints = {
   SEND_EMAIL_OTP_API: BASE_URL + "/send-email-otp",
   VERIFY_EMAIL_OTP_API: BASE_URL + "/verifyEmailOTP",
 };
+
+// PARTNER ENDPOINTS
+export const partnerEndpoints = {
+  ADD_PARTNER_INFORMATION_API: BASE_URL + "/addPartnerInformation",
+};

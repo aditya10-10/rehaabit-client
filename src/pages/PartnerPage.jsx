@@ -11,7 +11,7 @@ import {
 
 const PartnerPage = () => {
   return (
-    <div className="flex w-screen min-h-screen flex-col mb-10 bg-white overflow-x-hidden">
+    <div className="flex w-screen min-h-screen font-lato flex-col bg-white overflow-x-hidden">
       {/* <Navbar /> */}
       <Hero />
       <WhyChooseRehaabit />

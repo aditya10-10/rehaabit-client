@@ -7,7 +7,7 @@ import {
 import { BsFillHandbagFill } from "react-icons/bs";
 import { BiSolidCategory } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
-import { IoMdSettings } from "react-icons/io";
+import { IoIosHelpCircleOutline, IoMdSettings } from "react-icons/io";
 import LogoutSVG from "../../assets/icons/Logout.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,6 +86,12 @@ const sidebarLinks = [
     icon: <IoMdSettings />,
     text: "Settings",
     to: "edit-profile",
+  },
+  {
+    id: 10,
+    icon: <IoIosHelpCircleOutline />,
+    text: "Help",
+    to: "help",
   },
 ];
 
