@@ -69,8 +69,8 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
 
   return (
     <>
-      <form className="w-[50%] mx-auto mt-4 p-6">
-        <div className="flex gap-5">
+      <form className="w-1/2 max-2xl:w-3/4 max-lg:w-11/12 mx-auto mt-4 p-6 max-sm:p-4">
+        <div className="flex max-sm:flex-col gap-5 max-sm:gap-0">
           {/* BUSINESS NAME */}
           <div className="mb-4 w-full">
             <label
@@ -188,7 +188,7 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
           </div>
         </div>
 
-        <div className="flex gap-5">
+        <div className="flex max-sm:flex-col gap-5 max-sm:gap-0">
           {/* ALTERNATIVE CONTACT */}
           <div className="mb-4 w-full">
             <label
@@ -239,7 +239,7 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
       </div> */}
       </form>
 
-      <div className="flex w-1/2 justify-end px-6">
+      <div className="flex w-1/2 max-2xl:w-3/4 max-lg:w-11/12 justify-end px-6 max-sm:mb-10">
         {currentStep > 0 && (
           <button
             onClick={handleBack}

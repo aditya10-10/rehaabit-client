@@ -90,9 +90,9 @@ const PersonalInformation = ({ onSave, handleNext }) => {
 
   return (
     <>
-      <form className="w-[50%] mx-auto mt-4 p-6">
+      <form className="w-1/2 max-2xl:w-3/4 max-lg:w-11/12 mx-auto mt-4 p-6 max-sm:p-4">
         {/* FIRST AND LAST NAME */}
-        <div className="mb-4 flex gap-5">
+        <div className="mb-4 flex max-sm:flex-col gap-5">
           <div className="flex flex-col w-full">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -133,7 +133,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
         </div>
 
         {/* GENDER AND DOB */}
-        <div className="mb-4 flex gap-5">
+        <div className="mb-4 flex max-sm:flex-col gap-5">
           <div className="flex flex-col w-full">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -176,7 +176,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
         </div>
 
         {/* NATIONALITY AND EMAIL */}
-        <div className="mb-4 flex gap-5">
+        <div className="mb-4 flex max-sm:flex-col gap-5">
           <div className="flex flex-col w-full">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -217,7 +217,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
         </div>
 
         {/* IDENTIFICATION TYPE AND NUMBER */}
-        <div className="mb-4 flex gap-5">
+        <div className="mb-4 flex max-sm:flex-col gap-5">
           <div className="flex flex-col w-full">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -395,7 +395,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
       </div> */}
       </form>
 
-      <div className="flex w-1/2 justify-end px-6">
+      <div className="flex w-1/2 max-2xl:w-3/4 max-lg:w-11/12 justify-end px-6 max-sm:mb-10">
         {currentStep < 3 && (
           <button
             onClick={handleSaveAndNext}

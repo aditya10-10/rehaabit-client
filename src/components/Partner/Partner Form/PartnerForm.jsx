@@ -126,35 +126,6 @@ const PartnerForm = () => {
             <Route key={index} path={step.path} element={step.component} />
           ))}
         </Routes>
-
-        <div className="flex justify-end w-1/2 p-6">
-          {/* {currentStep > 0 && (
-            <button
-              onClick={handleBack}
-              className="flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded-md"
-            >
-              <FaAngleLeft size={20} /> Back
-            </button>
-          )} */}
-
-          {/* {currentStep === steps.length - 1 && (
-            <button
-              onClick={handleSubmit}
-              className={`flex items-center bg-blue-500 text-white font-bold py-2 px-4 rounded-md ml-4`}
-            >
-              Submit
-            </button>
-          )} */}
-
-          {/* {currentStep < steps.length - 1 && (
-            <button
-              onClick={handleNext}
-              className={`flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded-md ml-4`}
-            >
-              Next <FaAngleRight size={20} />
-            </button>
-          )} */}
-        </div>
       </div>
     </div>
   );

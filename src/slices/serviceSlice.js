@@ -74,7 +74,7 @@ export const getFullServiceDetails = createAsyncThunk(
       const response = await apiConnector(
         "POST",
         GET_FULL_SERVICE_DETAILS_API,
-        {serviceId},
+        { serviceId }
       );
       return response.data.data;
     } catch (error) {
@@ -281,7 +281,10 @@ export const createHowDoesItWorks = createAsyncThunk(
       const response = await apiConnector(
         "POST",
         CREATE_HOW_DOES_IT_WORKS_API,
-        formData
+        formData,
+        {
+          "Content-Type": "multipart/form-data",
+        }
       );
       return response.data;
     } catch (error) {
@@ -293,13 +296,20 @@ export const createHowDoesItWorks = createAsyncThunk(
 
 export const updateHowDoesItWorks = createAsyncThunk(
   "service/updateHowDoesItWorks",
-  async ({ id, serviceId, point }, thunkAPI) => {
+  async ({ id, serviceId, point, description, icon }, thunkAPI) => {
     try {
-      const response = await apiConnector("PUT", UPDATE_HOW_DOES_IT_WORKS_API, {
-        id,
-        serviceId,
-        point,
-      });
+      const response = await apiConnector(
+        "PUT",
+        UPDATE_HOW_DOES_IT_WORKS_API,
+        {
+          id,
+          serviceId,
+          point,
+          description,
+          icon,
+        },
+        { "Content-Type": "multipart/form-data" }
+      );
       return response.data.data;
     } catch (error) {
       console.log(error);
