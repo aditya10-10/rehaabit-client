@@ -8,7 +8,7 @@ import {
 import { getAllCartServices } from "../../slices/cartSlice";
 import AddressForm from "./AddressForm";
 import { openModal } from "../../slices/modalSlice";
-import { ConfirmationModal } from "../../components";
+import { ConfirmationModal } from "..";
 
 const AddressList = ({ height }) => {
   const dispatch = useDispatch();

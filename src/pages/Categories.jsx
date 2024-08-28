@@ -2,12 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
 import {
-  ServiceCard,
   ConfirmationModal,
-  ServiceDetailsModal,
 } from "../components";
 import {
   addToCart,
@@ -18,9 +16,10 @@ import {
   removeServiceFromLocalStorage,
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
-import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { openModal } from "../slices/modalSlice";
 import { setSingleOrder } from "../slices/orderSlice";
+import { ServiceCard } from "../components/Dashboard/Service";
+import ServiceDetailsModal from "../components/ServiceDetailsModal";
 
 const Categories = () => {
   const dispatch = useDispatch();

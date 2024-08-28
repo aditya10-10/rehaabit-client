@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import lunr from "lunr";
 import Fuse from "fuse.js";
 
 const SearchData = ({ searchQuery, handleSearchQuery }) => {

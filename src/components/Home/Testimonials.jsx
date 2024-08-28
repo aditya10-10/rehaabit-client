@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
-import ReviewCards from '../ReviewCards';
+import ReviewCards from '../Reviews/ReviewCards'
 
 const TestimonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

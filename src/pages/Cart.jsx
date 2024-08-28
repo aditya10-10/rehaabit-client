@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import ServiceCard from "../components/ServiceCard";
+import ServiceCard from "../components/Dashboard/Service/ServiceCard";
 import {
   getAllCartServices,
   removeFromCart,
@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/ConfirmationModal";
 import { openModal } from "../slices/modalSlice";
 import NothingToShow from "../components/NothingToShow";
-import OtpModal from "../components/SignupLogin/OtpModal";
+import { OtpModal } from "../components";
 
 const Cart = () => {
   const dispatch = useDispatch();

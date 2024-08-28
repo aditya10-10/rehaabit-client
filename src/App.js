@@ -12,13 +12,14 @@ import {
   MyProfile,
   EditProfile,
   Categories,
-  ServiceDetailsPage,
   Cart,
   Checkout,
   TermsAndConditions,
   MyOrders,
   Addresses,
   PartnerPage,
+  ContactUs,
+  Help,
 } from "./pages";
 
 import PrivacyPolicy from "./pages/privacy-and-policy";
@@ -27,7 +28,6 @@ import { SubCategory } from "./components/Dashboard/SubCategory";
 import { Category } from "./components/Dashboard/Category";
 import { MyService, Service } from "./components/Dashboard/Service";
 import Navbar from "./components/Navbar/Navbar";
-import OtpModal from "./components/SignupLogin/OtpModal";
 import {
   getAllCartServices,
   updateCartFromLocalStorage,
@@ -41,6 +41,7 @@ import {
 } from "./slices/orderSlice";
 import { showAllSubCategories } from "./slices/subCategorySlice";
 import { PartnerForm } from "./components/Partner";
+import { OtpModal } from "./components";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -136,7 +137,7 @@ export default function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/thank-you" element={<Thankyou />} />
           <Route path="/:id" element={<Categories />} />
-          <Route path="/service-details/:id" element={<ServiceDetailsPage />} />
+          {/* <Route path="/service-details/:id" element={<ServiceDetailsPage />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route
@@ -144,6 +145,8 @@ export default function App() {
             element={<TermsAndConditions />}
           />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/help" element={<Help />} />
 
           {(user?.accountType === "Admin" || user?.accountType === "User") && (
             <></>

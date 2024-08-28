@@ -5,7 +5,7 @@ import {
   LoginSignup,
   PriceDetailsCard,
 } from "../components/Cart";
-import { ServiceCard, ConfirmationModal } from "../components";
+import { ConfirmationModal } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllCartServices,
@@ -21,6 +21,7 @@ import { clearSingleOrder, updateSingleOrder } from "../slices/orderSlice";
 import { placeOrder } from "../services/operations/serviceOrder";
 import { useLocation, useNavigate } from "react-router-dom";
 import { openModal } from "../slices/modalSlice";
+import { ServiceCard } from "../components/Dashboard/Service";
 
 const Checkout = () => {
   const dispatch = useDispatch();

@@ -5,11 +5,9 @@ import Services from "../components/Home/Services";
 import HowDoesItWorks from "../components/Home/HowDoesItWorks";
 import Testimonials from "../components/Home/Testimonials";
 import Footer from "../components/Home/Footer";
-import OtpModal from "../components/SignupLogin/OtpModal";
 import { useDispatch } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
-import { Outlet } from "react-router-dom";
 import { getAllCartServices } from "../slices/cartSlice";
 
 const MainPage = () => {

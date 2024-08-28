@@ -87,12 +87,6 @@ const sidebarLinks = [
     text: "Settings",
     to: "edit-profile",
   },
-  {
-    id: 10,
-    icon: <IoIosHelpCircleOutline />,
-    text: "Help",
-    to: "help",
-  },
 ];
 
 const Sidebar = () => {
