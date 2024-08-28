@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { ReviewCards, ServiceCard, ConfirmationModal } from "../components";
+import {  ConfirmationModal } from "../components";
 
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
@@ -18,6 +18,8 @@ import {
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
 import { openModal } from "../slices/modalSlice";
+import { ServiceCard } from "../components/Dashboard/Service";
+import ReviewCards from '../components/Reviews/ReviewCards'
 
 const ServiceDetailsPage = () => {
   const dispatch = useDispatch();

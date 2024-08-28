@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "react-phone-input-2/lib/style.css";
 import { IoIosClose } from "react-icons/io";
-import { login, sendOtp, signUp } from "../../services/operations/authAPI";
+import { login, sendOtp, signUp } from "../services/operations/authAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/LOGO.svg";
+import Logo from "../assets/LOGO.svg";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
-import { clearAuthError } from "../../slices/authSlice";
+import { clearAuthError } from "../slices/authSlice";
 
 const OtpModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();

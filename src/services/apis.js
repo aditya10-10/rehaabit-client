@@ -33,7 +33,7 @@ export const serviceEndpoints = {
   UPDATE_EXCLUDE_API: BASE_URL + "/updateExclude",
   CREATE_FAQ_API: BASE_URL + "/createFAQ",
   UPDATE_FAQ_API: BASE_URL + "/updateFAQ",
-  GET_FAQ_API: BASE_URL + "/getAllFAQ",
+  GET_FAQ_API: BASE_URL + "/getAllFAQs",
   DELETE_FAQ_API: BASE_URL + "/deleteFAQ",
   CREATE_HOW_DOES_IT_WORKS_API: BASE_URL + "/createHowDoesItWorks",
   DELETE_HOW_DOES_IT_WORKS_API: BASE_URL + "/deleteHowDoesItWorks",
@@ -92,4 +92,9 @@ export const emailEndpoints = {
 // PARTNER ENDPOINTS
 export const partnerEndpoints = {
   ADD_PARTNER_INFORMATION_API: BASE_URL + "/addPartnerInformation",
+};
+
+// CONTACT ENDPOINTS
+export const contactEndpoints = {
+  CONTACT_API: BASE_URL + "/contact",
 };

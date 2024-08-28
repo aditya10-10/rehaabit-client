@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ReviewCards = ({ testimonials, sliderRef }) => {
   return (
     <div

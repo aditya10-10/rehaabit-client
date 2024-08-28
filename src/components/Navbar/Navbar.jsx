@@ -135,7 +135,7 @@ const Navbar = ({ onLoginClick }) => {
                 </button>
                 <button
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
-                  onClick={() => navigate("/dashboard/help")}
+                  onClick={() => navigate("/help")}
                 >
                   <IoIosHelpCircleOutline size={20} />
                   <span className="ml-2">Help</span>

@@ -28,6 +28,7 @@ const initialState = {
   service: [],
   serviceDetails: [],
   allServices: [],
+  faqs: [],
   serviceId: null,
   isLoading: false,
   error: null,
@@ -719,7 +720,8 @@ const serviceSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllFAQs.fulfilled, (state, action) => {
-        state.service.faqs = action.payload.faqs;
+        if(state.service.faqs) state.service.faqs = action.payload.faqs;
+        state.faqs = action.payload.faqs;
         state.isLoading = false;
       })
       .addCase(getAllFAQs.rejected, (state, action) => {

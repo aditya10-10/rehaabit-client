@@ -6,3 +6,4 @@ export { default as Exclude } from "./Exclude";
 export { default as FAQ } from "./FAQ";
 export { default as HowDoesItWorks } from "./HowDoesItWorks";
 export { default as MyService } from "./MyServices";
+export { default as ServiceCard } from "./ServiceCard";

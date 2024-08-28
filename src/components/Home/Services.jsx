@@ -65,6 +65,7 @@ const Services = () => {
               </h2>
               {allServices.slice(0, 5).map((service) => (
                 <div
+                  key={service._id}
                   className="w-full cursor-pointer"
                   onClick={() => {
                     setIsServiceModalOpen(!isServiceModalOpen);

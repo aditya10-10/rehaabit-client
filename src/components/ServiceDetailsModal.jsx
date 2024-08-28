@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReviewCards, ServiceCard, ConfirmationModal } from "../components";
+import {  ConfirmationModal } from "../components";
 
 import {
   IoIosArrowRoundForward,
@@ -21,6 +21,8 @@ import {
 } from "../slices/cartSlice";
 import { openModal } from "../slices/modalSlice";
 import HIWCard from "./HIWCard";
+import { ServiceCard } from "./Dashboard/Service";
+import ReviewCards from "../components/Reviews/ReviewCards";
 
 const ServiceDetailsModal = ({
   isServiceModalOpen,
@@ -80,39 +82,6 @@ const ServiceDetailsModal = ({
       name: "David Lee",
       imageSrc:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/f3096cc0e65c499f92866c157674c95caa62f07ef5f037db9eb05ea7d269f923?apiKey=14bc5a83475145d8890ac8c4aa074f6f&",
-    },
-  ];
-
-  const howDoesItWorks = [
-    {
-      id: 1,
-      description: "lorem ipsum blblblblblbllblblbbhlhl",
-      point: "kfmsdl",
-      icon: "https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/shifting-requirement.svg",
-    },
-    {
-      id: 2,
-      description: "lorem ipsum blblblblblbllblblbbhlhl",
-      point: "kfmsdl",
-      icon: "https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/shifting-requirement.svg",
-    },
-    {
-      id: 3,
-      description: "lorem ipsum blblblblblbllblblbbhlhl",
-      point: "kfmsdl",
-      icon: "https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/shifting-requirement.svg",
-    },
-    {
-      id: 4,
-      description: "lorem ipsum blblblblblbllblblbbhlhl",
-      point: "kfmsdl",
-      icon: "https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/shifting-requirement.svg",
-    },
-    {
-      id: 5,
-      description: "lorem ipsum blblblblblbllblblbbhlhl",
-      point: "kfmsdl",
-      icon: "https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/shifting-requirement.svg",
     },
   ];
 

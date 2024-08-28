@@ -10,8 +10,9 @@ import addressReducer from "../slices/addressSlice";
 import orderReducer from "../slices/orderSlice";
 import modalReducer from "../slices/modalSlice";
 import emailReducer from "../slices/emailSlice";
+import contactReducer from "../slices/contactSlice";
 
-import partnerReducer from '../slices/partnerSlice'
+import partnerReducer from "../slices/partnerSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   email: emailReducer,
   partner: partnerReducer,
+  contact: contactReducer,
 });
 
 export default rootReducer;
