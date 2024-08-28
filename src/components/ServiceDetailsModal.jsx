@@ -312,7 +312,6 @@ const ServiceDetailsModal = ({
                   <h1 className="text-2xl text-purple-600">How It Work?</h1>
 
                   <div className="flex flex-col">
-
                     {service?._id &&
                       service?.howDoesItWorks.length >= 1 &&
                       service?.howDoesItWorks.map((howDoesItWork) => {
