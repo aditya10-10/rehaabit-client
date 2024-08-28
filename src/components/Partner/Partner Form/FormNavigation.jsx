@@ -13,7 +13,7 @@ const FormNavigation = () => {
   ];
 
   return (
-    <div className="grid grid-cols-3 w-1/2 mt-4 py-4">
+    <div className="grid grid-cols-3 w-1/2 max-2xl:w-3/4 max-lg:w-11/12 mt-4 py-4">
       {navLinks.map((navLink, index) => {
         const { id, to, text } = navLink;
         const isActive = currentStep === index;

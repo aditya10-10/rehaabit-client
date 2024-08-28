@@ -4,7 +4,11 @@ import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
-import { ServiceCard, ConfirmationModal } from "../components";
+import {
+  ServiceCard,
+  ConfirmationModal,
+  ServiceDetailsModal,
+} from "../components";
 import {
   addToCart,
   addCartToLocalStorage,
@@ -30,6 +34,8 @@ const Categories = () => {
   // console.log(location.state)
 
   const [onRemove, setOnRemove] = useState(null);
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [serviceIdToPass, setServiceIdToPass] = useState(null);
 
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
@@ -137,13 +143,25 @@ const Categories = () => {
     navigate("/checkout");
   };
 
+  const handleServiceModal = () => {
+    setIsServiceModalOpen(!isServiceModalOpen);
+  };
+
   return (
     <>
       <ConfirmationModal text="Remove" onDelete={onRemove} />
 
+      <ServiceDetailsModal
+        isServiceModalOpen={isServiceModalOpen}
+        handleServiceModal={handleServiceModal}
+        serviceId={serviceIdToPass}
+      />
+
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <div className="w-[40%] max-md:w-full">
-          <h1 className="text-5xl mb-10 max-sm:text-4xl">{categoryName?.name}</h1>
+          <h1 className="text-5xl mb-10 max-sm:text-4xl">
+            {categoryName?.name}
+          </h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
             <h1 className="text-4xl text-center max-lg:text-2xl mb-10">
@@ -206,9 +224,18 @@ const Categories = () => {
                         ref={(e) => (serviceRefs.current[_id] = e)}
                         className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
                       >
-                        <Link to={`/service-details/${_id}`} className="w-full">
+                        <div
+                          className="w-full cursor-pointer"
+                          onClick={() => {
+                            setIsServiceModalOpen(!isServiceModalOpen);
+                            setServiceIdToPass(_id);
+                          }}
+                        >
                           <ServiceCard {...service} />
-                        </Link>
+                        </div>
+                        {/* <Link to={`/service-details/${_id}`} className="w-full">
+                          <ServiceCard {...service} />
+                        </Link> */}
 
                         <div className="flex gap-2 justify-end w-full mt-4">
                           <button
