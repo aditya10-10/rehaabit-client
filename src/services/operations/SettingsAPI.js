@@ -1,4 +1,4 @@
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import { setUser } from "../../slices/profileSlice";
 import { settingsEndpoints } from "../apis";

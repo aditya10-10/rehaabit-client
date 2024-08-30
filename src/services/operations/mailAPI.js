@@ -1,6 +1,6 @@
 import { apiConnector } from "../apiConnector";
 import { endpoints } from "../apis";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 const { SENDMAIL_API } = endpoints;
 

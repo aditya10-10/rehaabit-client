@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import { cartEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
@@ -129,7 +129,7 @@ const cartSlice = createSlice({
 
       localStorage.setItem("cart", JSON.stringify(state));
 
-      toast.success("Item added to cart");
+      // toast.success("Item added to cart");
     },
 
     removeServiceFromLocalStorage: (state, action) => {
@@ -150,7 +150,7 @@ const cartSlice = createSlice({
         localStorage.removeItem("cart");
       }
 
-      toast.error("Item removed from cart");
+      // toast.error("Item removed from cart");
     },
 
     updateCartInLocalStorage: (state, action) => {
@@ -177,7 +177,7 @@ const cartSlice = createSlice({
 
       localStorage.setItem("cart", JSON.stringify(state));
 
-      toast.success("Cart updated");
+      // toast.success("Cart updated");
     },
     clearCart: (state, action) => {
       localStorage.setItem("cart", JSON.stringify(defaultState));
@@ -198,7 +198,7 @@ const cartSlice = createSlice({
         state.totalQty = action.payload.totalQty;
         state.totalCost = action.payload.totalCost;
 
-        toast.success("Service Added to Cart Successfully!");
+        // toast.success("Service Added to Cart Successfully!");
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.isLoading = false;
@@ -232,7 +232,7 @@ const cartSlice = createSlice({
         state.totalQty = action.payload.totalQty;
         state.totalCost = action.payload.totalCost;
 
-        toast.success("Cart Service Updated Successfully!");
+        // toast.success("Cart Service Updated Successfully!");
       })
       .addCase(updateCart.rejected, (state, action) => {
         state.isLoading = false;
@@ -251,7 +251,7 @@ const cartSlice = createSlice({
         state.totalQty = action.payload.totalQty;
         state.totalCost = action.payload.totalCost;
 
-        toast.success("Service Deleted from Cart Successfully!");
+        // toast.success("Service Deleted from Cart Successfully!");
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.isLoading = false;

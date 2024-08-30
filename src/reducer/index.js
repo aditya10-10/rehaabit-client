@@ -11,7 +11,7 @@ import orderReducer from "../slices/orderSlice";
 import modalReducer from "../slices/modalSlice";
 import emailReducer from "../slices/emailSlice";
 import contactReducer from "../slices/contactSlice";
-
+import careersReducer from "../slices/careersSlice";
 import partnerReducer from "../slices/partnerSlice";
 
 const rootReducer = combineReducers({
@@ -27,6 +27,7 @@ const rootReducer = combineReducers({
   email: emailReducer,
   partner: partnerReducer,
   contact: contactReducer,
+  careers: careersReducer
 });
 
 export default rootReducer;

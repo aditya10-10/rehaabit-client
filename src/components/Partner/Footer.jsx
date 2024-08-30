@@ -28,7 +28,7 @@ const FooterColumn = ({ title, items, links }) => {
   );
 };
 
-const Footer = () => {
+const Footer = ({JoinRehaabitFamilyText}) => {
   const footerData = [
     {
       title: "Company",
@@ -67,33 +67,29 @@ const Footer = () => {
     {
       id: 1,
       icon: Facebook,
-      to: "https://facebook.com",
+      to: "https://www.facebook.com/rehaabit/",
     },
     {
       id: 2,
       icon: Twitter,
-      to: "https://google.com",
+      to: "https://x.com/rehaabit",
     },
     {
       id: 3,
       icon: Instagram,
-      to: "https://twitter.com",
+      to: "https://www.instagram.com/rehaabit/",
     },
     {
       id: 4,
       icon: Linkedin,
-      to: "https://youtube.com",
-    },
-    {
-      id: 5,
-      icon: Youtube,
-      to: "https://youtube.com",
+      to: "https://www.linkedin.com/company/rehaabit/",
     },
   ];
 
+
   return (
-    <div className="relative flex items-center justify-center w-full bg-[#151613] h-[651px] mt-20">
-      <JoinRehaabitFamily />
+    <div className="relative flex items-center justify-center w-full bg-[#151613] h-[651px]">
+      <JoinRehaabitFamily JoinRehaabitFamilyText={JoinRehaabitFamilyText} />
 
       <footer className="absolute bottom-0 right-0 left-0 flex flex-col justify-center mt-10">
         <section className="flex overflow-hidden relative flex-col justify-center items-center px-16 py-14 w-full min-h-[250px] stroke-[74px] stroke-violet-500 max-md:px-5 max-md:max-w-full">

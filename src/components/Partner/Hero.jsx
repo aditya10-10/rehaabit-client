@@ -1,8 +1,9 @@
 import Navbar from "./Navbar";
 import image from "../../assets/partner/Hero.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({ HeroSectionText }) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
   return (
@@ -25,29 +26,26 @@ const Hero = () => {
       ></div>
 
       <div className="flex relative">
-        <div className="p-10 flex flex-col w-[38%] mt-20 z-20"> {/* Raised z-index */}
+        <div className="p-10 flex flex-col w-[38%] mt-20 z-20">
+          {" "}
+          {/* Raised z-index */}
           <div className="flex flex-col">
             <span className="uppercase text-purple-600 text-lg ml-2">
               best place for
             </span>
             <span className="capitalize text-6xl mb-6 font-lexend font-bold">
-              transform your expertise into income!
+              {HeroSectionText.text1}
             </span>
             <span className="capitalize text-xl text-gray-600">
-              Join rehaabit today - where home service
-            </span>
-            <span className="capitalize text-xl text-gray-600">
-              Pros connect with clients effortlessly
+              {HeroSectionText.text2}
             </span>
           </div>
-
           <button
             className="bg-[#F56944] my-20 w-52 text-white rounded-lg px-6 py-3 z-30"
             onClick={() => navigate("/partner-form/personal-information")}
           >
             Join Now
           </button>
-
           <div className="flex gap-6">
             <div className="flex flex-col px-6 py-2">
               <span className="text-4xl font-semibold">110+</span>

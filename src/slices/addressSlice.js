@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import { addressEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
@@ -182,6 +182,6 @@ const addressSlice = createSlice({
   },
 });
 
-export const {clearAddresses} = addressSlice.actions;
+export const { clearAddresses } = addressSlice.actions;
 
 export default addressSlice.reducer;

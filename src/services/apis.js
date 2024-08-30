@@ -92,9 +92,15 @@ export const emailEndpoints = {
 // PARTNER ENDPOINTS
 export const partnerEndpoints = {
   ADD_PARTNER_INFORMATION_API: BASE_URL + "/addPartnerInformation",
+  GET_ALL_PARTNERS_API: BASE_URL + "/getAllPartners",
 };
 
 // CONTACT ENDPOINTS
 export const contactEndpoints = {
   CONTACT_API: BASE_URL + "/contact",
+};
+
+// CAREERS ENDPOINTS
+export const careersEndpoints = {
+  ADD_CANDIDATE_INFORMATION_API: BASE_URL + "/addCandidateInformation",
 };

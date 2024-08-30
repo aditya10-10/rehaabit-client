@@ -7,7 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import rootReducer from "./reducer/index.js";
 import { configureStore } from "@reduxjs/toolkit";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
+import { Toaster } from 'sonner'
 
 const store = configureStore({
   reducer: rootReducer,
@@ -19,7 +20,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <App />
-        <Toaster />
+        <Toaster position="top-right" expand={false} richColors closeButton />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

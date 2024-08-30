@@ -20,6 +20,7 @@ import {
   PartnerPage,
   ContactUs,
   Help,
+  Careers,
 } from "./pages";
 
 import PrivacyPolicy from "./pages/privacy-and-policy";
@@ -42,6 +43,7 @@ import {
 import { showAllSubCategories } from "./slices/subCategorySlice";
 import { PartnerForm } from "./components/Partner";
 import { OtpModal } from "./components";
+import PartnerPageAdmin from "./components/Dashboard/Partner/PartnerPageAdmin";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -120,7 +122,8 @@ export default function App() {
   return (
     <>
       {location.pathname.includes("/dashboard") ||
-      location.pathname.includes("/partner") ? null : (
+      location.pathname.includes("/partner") ||
+      location.pathname.includes("/careers") ? null : (
         <Navbar onLoginClick={handleLoginClick} />
       )}
 
@@ -147,6 +150,7 @@ export default function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/help" element={<Help />} />
+          <Route path="/careers" element={<Careers />} />
 
           {(user?.accountType === "Admin" || user?.accountType === "User") && (
             <></>
@@ -162,6 +166,7 @@ export default function App() {
                 <Route path="my-services" element={<MyService />} />
                 <Route path="service/create-service/*" element={<Service />} />
                 <Route path="orders" element={<MyOrders />} />
+                <Route path="partners" element={<PartnerPageAdmin />} />
                 <Route path="addresses" element={<Addresses />} />
               </Route>
             </>
@@ -176,10 +181,7 @@ export default function App() {
 
           {/* PARTNER */}
           <Route path="/partner" element={<PartnerPage />} />
-          <Route
-            path="/partner-form/*"
-            element={<PartnerForm />}
-          />
+          <Route path="/partner-form/*" element={<PartnerForm />} />
         </Routes>
       </div>
     </>

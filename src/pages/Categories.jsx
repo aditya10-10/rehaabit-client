@@ -2,11 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
-import {  useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
-import {
-  ConfirmationModal,
-} from "../components";
+import { ConfirmationModal } from "../components";
 import {
   addToCart,
   addCartToLocalStorage,
@@ -148,13 +146,17 @@ const Categories = () => {
 
   return (
     <>
-      <ConfirmationModal text="Remove" onDelete={onRemove} />
+      {isServiceModalOpen && (
+        <ServiceDetailsModal
+          isServiceModalOpen={isServiceModalOpen}
+          handleServiceModal={handleServiceModal}
+          serviceId={serviceIdToPass}
+        />
+      )}
 
-      <ServiceDetailsModal
-        isServiceModalOpen={isServiceModalOpen}
-        handleServiceModal={handleServiceModal}
-        serviceId={serviceIdToPass}
-      />
+      {!isServiceModalOpen && (
+        <ConfirmationModal text="Remove" onDelete={onRemove} />
+      )}
 
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <div className="w-[40%] max-md:w-full">
