@@ -1,6 +1,6 @@
 import Hero from "../../assets/partner/Hero.svg";
 
-const JoinRehaabitFamily = () => {
+const JoinRehaabitFamily = ({ JoinRehaabitFamilyText }) => {
   return (
     <div className="absolute w-full z-40 -top-40 left-96 right-96">
       <div className="flex rounded-3xl h-[368px] w-[1144px] bg-[#8937FF]">
@@ -9,10 +9,7 @@ const JoinRehaabitFamily = () => {
             join the rehaabit family
           </h1>
 
-          <p className="text-lg text-white">
-            Plumbing jobs or electrical work can boost your income. Professional
-            connections stimulate business growth that may advance your career.
-          </p>
+          <p className="text-lg text-white">{JoinRehaabitFamilyText.text1}</p>
 
           <div>
             <button className="bg-white capitalize rounded-lg py-2 px-6">

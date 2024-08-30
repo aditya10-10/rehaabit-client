@@ -3,7 +3,7 @@ import { partnerEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
 import toast from "react-hot-toast";
 
-const { ADD_PARTNER_INFORMATION_API } = partnerEndpoints;
+const { ADD_PARTNER_INFORMATION_API, GET_ALL_PARTNERS_API } = partnerEndpoints;
 
 const initialState = {
   partnerFormData: {
@@ -11,6 +11,7 @@ const initialState = {
     businessInformation: {},
     additionalInformation: {},
   },
+  partners: [],
   isLoading: false,
   currentStep: 0,
   error: null,
@@ -50,6 +51,20 @@ export const addPartnerInformation = createAsyncThunk(
   }
 );
 
+export const getAllPartners = createAsyncThunk(
+  "partner/getAllPartners",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", GET_ALL_PARTNERS_API);
+
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
 const partnerSlice = createSlice({
   name: "partner",
   initialState,
@@ -81,6 +96,22 @@ const partnerSlice = createSlice({
         state.error = action;
 
         toast.error("Error adding partner information");
+      })
+
+      .addCase(getAllPartners.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllPartners.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.partners = action.payload;
+
+        // toast.success("Partner information added successfully");
+      })
+      .addCase(getAllPartners.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        // toast.error("Error adding partner information");
       });
   },
 });

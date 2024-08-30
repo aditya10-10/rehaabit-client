@@ -4,7 +4,7 @@ import png1 from "../../assets/partner/X94yM6Vbr2CAwfsQFuA0SX7awg.png.svg";
 
 const OurExperiences = () => {
   return (
-    <div className="flex flex-col py-40 px-60 gap-20 h-[801px]">
+    <div className="flex flex-col py-40 px-60 gap-20 h-[901px]">
       <div className="flex justify-between">
         <h1 className="text-4xl font-bold w-[20%] capitalize">
           Our Experiences customers satisfaction

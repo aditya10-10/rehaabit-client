@@ -7,3 +7,5 @@ export { default as Footer } from "./Footer";
 export { default as Benefits } from "./Benefits";
 export { default as Hero } from "./Hero";
 export { default as PartnerForm } from "./Partner Form/PartnerForm";
+export { default as ResumeSubmissionForm } from "./ResumeSubmissionForm";
+export { default as OpenPositions } from "./OpenPositions";

@@ -18,7 +18,7 @@ const ContactUs = () => {
   return (
     <div className="flex flex-col items-center justify-center text-center w-full font-poppins">
       <h1 className="text-[40px] font-bold text-[#FFDA54] mb-2">Contact Us</h1>
-      <span className="text-lg font-[500] text-gray-500 mb-10">
+      <span className="text-lg font-[500] text-gray-500 mb-10 px-2">
         Any question or remarks? Just write us a message!
       </span>
 
@@ -53,7 +53,7 @@ const ContactUs = () => {
           </div>
 
           <div className="flex">
-            <div className="flex gap-5 text-white absolute bottom-10 max-xs:-translate-x-16 max-xs:w-full">
+            <div className="flex gap-5 text-white absolute bottom-10 max-xs:-translate-x-16">
               <button className="bg-[#FF6F61] rounded-full p-2">
                 <FaTwitter />
               </button>

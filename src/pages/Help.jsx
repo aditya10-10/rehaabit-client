@@ -32,18 +32,15 @@ const Help = () => {
     ? fuse.search(searchQuery)
     : faqs.map((faq) => ({ item: faq }));
 
-  const handleSearchClick = (data) => {
-    const { _id, question } = data.item;
-    // Implement navigation or other logic here
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center w-full mb-10 font-poppins">
+    <div className="flex flex-col items-center justify-center w-full mb-10 px-2 font-poppins">
       <img src={LOGO} alt="Rehaabit" className="w-48" />
-      <h1 className="text-6xl">How can we help you?</h1>
+      <h1 className="text-6xl max-md:text-4xl max-sm:text-2xl">
+        How can we help you?
+      </h1>
 
       {/* Search */}
-      <div className="relative flex items-center max-lg:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-4 rounded-md my-10">
+      <div className="relative flex items-center max-lg:w-[50%] max-sm:w-[90%] max-md:mt-2 shadow-custom-shadow border px-2 py-4 rounded-md my-10">
         <span className="mr-4">
           <IoSearchOutline size={20} />
         </span>
@@ -66,9 +63,9 @@ const Help = () => {
       </div>
 
       {/* FAQ */}
-      <div className="flex flex-col w-1/2">
+      <div className="flex flex-col w-1/2 max-lg:w-4/5 max-sm:w-[90%]">
         {results.length > 0 && (
-          <div className="flex flex-col gap-5 w-full p-6 mt-4">
+          <div className="flex flex-col gap-5 w-full p-6 max-sm:p-4 mt-4">
             {results.map((faq) => {
               const { _id, question, answer } = faq.item;
               const isActive = activeId === _id;
@@ -109,18 +106,20 @@ const Help = () => {
         <div className="text-2xl">No results found.</div>
       )}
 
-      <div className="border rounded-lg p-6 flex flex-col items-center mt-10">
+      <div className="border rounded-lg p-6 max-sm:p-4 flex flex-col items-center mt-10 max-sm:mt-6">
         <h1 className="text-2xl">Need more help?</h1>
         <span>Try these next steps</span>
 
         <button
-          className="flex items-center mt-10 gap-5 bg-blue-50 rounded-lg p-6"
+          className="flex max-sm:flex-col items-center mt-10 max-sm:mt-6 gap-5 bg-blue-50 rounded-lg p-6 max-sm:p-4"
           onClick={() => navigate("/contact-us")}
         >
           <IoMdContacts size={30} />
 
-          <div className="flex flex-col items-start">
-            <span>Post to the help community</span>
+          <div className="flex flex-col items-start max-sm:text-center max-sm:w-full">
+            <span className="max-sm:text-center max-sm:w-full">
+              Post to the help community
+            </span>
             <p className="text-gray-500">Get answers from community members</p>
           </div>
         </button>

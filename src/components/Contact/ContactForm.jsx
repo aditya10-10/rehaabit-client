@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { contact } from "../../slices/contactSlice";
+import { useNavigate } from "react-router-dom";
 
 const ContactForm = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -26,6 +28,15 @@ const ContactForm = () => {
     console.log("Form submitted:", formData);
 
     dispatch(contact({ formData }));
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      subject: "",
+      message: "",
+    });
+    navigate("/help");
   };
 
   return (

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import { emailEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
@@ -66,7 +66,7 @@ const emailSlice = createSlice({
       .addCase(sendEmailOTP.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        toast.success("OTP Send Successfully!");
+        // toast.success("OTP Send Successfully!");
       })
       .addCase(sendEmailOTP.rejected, (state, action) => {
         state.isLoading = false;
@@ -83,7 +83,7 @@ const emailSlice = createSlice({
         state.isLoading = false;
         state.emailVerified = true;
 
-        toast.success("OTP Verified Successfully!");
+        // toast.success("OTP Verified Successfully!");
       })
       .addCase(verifyEmailOTP.rejected, (state, action) => {
         state.isLoading = false;

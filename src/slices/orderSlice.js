@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import { orderEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
@@ -119,7 +119,7 @@ const orderSlice = createSlice({
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.isOrderLoading = false;
 
-        toast.success("Order Placed Successfully!");
+        // toast.success("Order Placed Successfully!");
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.isOrderLoading = false;
@@ -161,7 +161,7 @@ const orderSlice = createSlice({
       .addCase(purchaseService.fulfilled, (state, action) => {
         state.isOrderLoading = false;
 
-        toast.success("Service Purchased Successfully!");
+        // toast.success("Service Purchased Successfully!");
       })
       .addCase(purchaseService.rejected, (state, action) => {
         state.isOrderLoading = false;

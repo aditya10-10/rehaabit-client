@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  ConfirmationModal } from "../components";
+import { ConfirmationModal } from "../components";
 
 import {
   IoIosArrowRoundForward,
@@ -23,12 +23,15 @@ import { openModal } from "../slices/modalSlice";
 import HIWCard from "./HIWCard";
 import { ServiceCard } from "./Dashboard/Service";
 import ReviewCards from "../components/Reviews/ReviewCards";
+import { setSingleOrder } from "../slices/orderSlice";
+import { useNavigate } from "react-router-dom";
 
 const ServiceDetailsModal = ({
   isServiceModalOpen,
   handleServiceModal,
   serviceId,
 }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [activeId, setActiveId] = useState(null);
@@ -168,6 +171,19 @@ const ServiceDetailsModal = ({
     }
   }, [currentIndex]);
 
+  const handleBuyNow = (service) => {
+    dispatch(
+      setSingleOrder({
+        ...service,
+        qty: 1,
+        totalCost: service.price,
+        serviceId: service._id,
+      })
+    );
+    handleServiceModal();
+    navigate("/checkout");
+  };
+
   return (
     <>
       <ConfirmationModal text="Remove" onDelete={onRemove} />
@@ -181,7 +197,7 @@ const ServiceDetailsModal = ({
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white p-6 rounded-lg shadow-lg w-1/3 max-lg:w-3/4 max-h-[70vh] overflow-y-auto relative"
+              className="bg-white p-6 max-xs:p-4 rounded-lg shadow-lg w-1/3 max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[70vh] overflow-y-auto relative"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
@@ -199,7 +215,10 @@ const ServiceDetailsModal = ({
 
                 {/* BUTTONS */}
                 <div className="flex gap-2 justify-end w-full my-4">
-                  <button className="bg-red-400 px-4 py-2 rounded-md text-sm text-white">
+                  <button
+                    className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
+                    onClick={() => handleBuyNow(service)}
+                  >
                     Buy Now
                   </button>
 
@@ -245,8 +264,10 @@ const ServiceDetailsModal = ({
                 </div>
 
                 {/* SERVICE INCLUDES */}
-                <div className="shadow-custom-shadow rounded-xl p-6 w-full mb-4">
-                  <h1 className="text-2xl text-purple-600">Service Includes</h1>
+                <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
+                  <h1 className="text-2xl max-xs:text-xl text-purple-600">
+                    Service Includes
+                  </h1>
 
                   <div className="flex flex-col">
                     {service?._id &&
@@ -260,8 +281,8 @@ const ServiceDetailsModal = ({
                 </div>
 
                 {/* SERVICE EXCLUDES */}
-                <div className="shadow-custom-shadow rounded-xl p-6 w-full mb-4">
-                  <h1 className="text-2xl text-purple-600">
+                <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
+                  <h1 className="text-2xl max-xs:text-xl text-purple-600">
                     Service does not includes
                   </h1>
 
@@ -277,8 +298,10 @@ const ServiceDetailsModal = ({
                 </div>
 
                 {/* HOW IT WORK? */}
-                <div className="shadow-custom-shadow rounded-xl p-6 w-full">
-                  <h1 className="text-2xl text-purple-600">How It Work?</h1>
+                <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full">
+                  <h1 className="text-2xl max-xs:text-xl text-purple-600">
+                    How It Work?
+                  </h1>
 
                   <div className="flex flex-col">
                     {service?._id &&
@@ -291,14 +314,18 @@ const ServiceDetailsModal = ({
 
                 {/* WARRANTY DETAILS */}
                 <div className="bg-[#E6F7F3] border-2 border-[#009F78] rounded-lg w-full mt-10 p-4">
-                  <h1 className="text-[#006049] text-2xl">Warranty Details</h1>
+                  <h1 className="text-[#006049] text-2xl max-xs:text-xl">
+                    Warranty Details
+                  </h1>
 
                   <span>{service.warranty}</span>
                 </div>
 
                 {/* REVIEWS */}
                 <div className="flex flex-col w-full mt-10">
-                  <h1 className="text-2xl text-purple-600">Reviews</h1>
+                  <h1 className="text-2xl max-xs:text-xl text-purple-600">
+                    Reviews
+                  </h1>
 
                   <ReviewCards
                     testimonials={testimonials}
@@ -325,11 +352,11 @@ const ServiceDetailsModal = ({
 
                 {/* FAQ */}
                 <div className="flex flex-col w-full mt-10">
-                  <h1 className="text-2xl text-purple-600">
+                  <h1 className="text-2xl max-xs:text-xl text-purple-600">
                     Frequently Asked Questions
                   </h1>
                   {service?.faqs && service?.faqs.length > 0 && (
-                    <div className="flex flex-col gap-5 w-full p-6 mt-4">
+                    <div className="flex flex-col gap-5 w-full p-6 max-xs:p-2 mt-4">
                       {service?._id &&
                         service?.faqs.length >= 1 &&
                         service?.faqs.map((faq) => {
@@ -369,30 +396,6 @@ const ServiceDetailsModal = ({
                     </div>
                   )}
                 </div>
-
-                {/* CATEGORIES */}
-                {/* <div className="flex flex-col w-full mt-10 mb-10">
-                  <h1 className="text-2xl text-purple-600">Select Category</h1>
-
-                  <div className="grid grid-cols-6 p-2 gap-4 max-md:grid-cols-3 w-full max-xl:grid-cols-4 max-sm:grid-cols-2 justify-center mt-6">
-                    {categories.map((category) => {
-                      const { _id, name, icon } = category;
-
-                      return (
-                        <Link key={_id} to={`/${name}/${_id}`}>
-                          <div className="flex flex-col items-center justify-center text-center hover:shadow-custom-shadow px-2 py-6 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]">
-                            <img
-                              src={icon}
-                              alt="Icon"
-                              className="h-20 w-20 rounded-lg"
-                            />
-                            <span>{name}</span>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div> */}
               </div>
             </motion.div>
           </motion.div>

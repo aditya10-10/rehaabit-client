@@ -4,7 +4,7 @@ import png3 from "../../assets/partner/sNkB7IB6mi9wAYmmOmDEpVRQ.png.svg";
 import png4 from "../../assets/partner/gGRPNWntCuxJyX5rQbpX5dERMTM.png.svg";
 import { MdArrowOutward } from "react-icons/md";
 
-const Benefits = () => {
+const Benefits = ({BenefitsText}) => {
   return (
     <div
       className="flex flex-col p-20 h-[1058px]"
@@ -15,11 +15,10 @@ const Benefits = () => {
     >
       <div className="w-full flex justify-between">
         <h1 className="text-4xl font-bold w-[30%]">
-          We Offer You Success in Every Home You Serve.
+          {BenefitsText.text1}
         </h1>
         <span className="text-lg text-gray-800 w-[40%]">
-          If your goal is mastering your craft, growing your business, or
-          reaching more clients, Rehaabit is the platform for you!
+        {BenefitsText.text2}
         </span>
       </div>
 
@@ -29,7 +28,7 @@ const Benefits = () => {
 
           <div className="flex items-center w-full justify-between py-4">
             <span className="text-2xl font-[500] capitalize">
-              Expert network
+            {BenefitsText.text3}
             </span>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />
@@ -42,7 +41,7 @@ const Benefits = () => {
 
           <div className="flex items-center w-full justify-between py-4">
             <span className="text-2xl font-[500] capitalize">
-              job flexibility
+            {BenefitsText.text4}
             </span>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />
@@ -54,7 +53,7 @@ const Benefits = () => {
           <img src={png3} alt="skill growth png" />
 
           <div className="flex items-center w-full justify-between py-4">
-            <span className="text-2xl font-[500] capitalize">skill growth</span>
+            <span className="text-2xl font-[500] capitalize">{BenefitsText.text5}</span>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />
             </span>
@@ -66,7 +65,7 @@ const Benefits = () => {
 
           <div className="flex items-center w-full justify-between py-4">
             <span className="text-2xl font-[500] capitalize">
-              reliable earnings
+            {BenefitsText.text6}
             </span>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />

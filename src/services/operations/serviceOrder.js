@@ -1,4 +1,4 @@
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import { paymentEndpoints } from "../apis";
 import { apiConnector } from "../apiConnector";
@@ -25,6 +25,7 @@ export async function placeOrder(
   token,
   singleOrder,
   isSingleOrder,
+  partnerId,
   navigate,
   dispatch
 ) {
@@ -44,7 +45,7 @@ export async function placeOrder(
     const orderResponse = await apiConnector(
       "POST",
       SERVICE_PAYMENT_API,
-      { singleOrder, isSingleOrder },
+      { singleOrder, isSingleOrder, partnerId },
       {
         Authorization: `Bearer ${token}`,
       }
@@ -70,7 +71,12 @@ export async function placeOrder(
       },
       handler: function (response) {
         // verifyPayment({ ...response, services }, token, navigate, dispatch);
-        verifyPayment({ ...response, singleOrder, isSingleOrder }, token, navigate, dispatch);
+        verifyPayment(
+          { ...response, singleOrder, isSingleOrder, partnerId },
+          token,
+          navigate,
+          dispatch
+        );
       },
     };
 
@@ -105,7 +111,7 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
       throw new Error(response.data.message);
     }
     toast.success("Payment Successful! You are added to the service.");
-    navigate("/success-page"); // Navigate to a success page or dashboard
+    navigate("/"); // Navigate to a success page or dashboard
   } catch (error) {
     console.error("PAYMENT VERIFY ERROR:", error);
     toast.error("Could not verify Payment");

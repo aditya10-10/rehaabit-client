@@ -1,11 +1,11 @@
 import { MdArrowOutward } from "react-icons/md";
 import png1 from "../../assets//partner/eOym8ocxAKRkqB2LZGE4Inari8.png.svg";
 
-const OurPartnerBenefits = () => {
+const OurPartnerBenefits = ({OurBenefitsText}) => {
   return (
     <div className="flex flex-col items-center justify-center px-20 py-20 h-[1023px]">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-4xl capitalize font-bold">our partner benefits</h1>
+        <h1 className="text-4xl capitalize font-bold">{OurBenefitsText.text1}</h1>
         <span className="text-2xl text-gray-500 text-center w-[90%]">
           Join the service revolution, your skills, your success!
         </span>
@@ -18,7 +18,7 @@ const OurPartnerBenefits = () => {
               <MdArrowOutward size={20} />
             </span>
             <span className="absolute bottom-4 left-6 text-3xl capitalize">
-              secure payments
+            {OurBenefitsText.text2}
             </span>
           </div>
 
@@ -27,7 +27,7 @@ const OurPartnerBenefits = () => {
               <MdArrowOutward size={20} />
             </span>
             <span className="absolute bottom-4 left-6 text-3xl capitalize">
-              customer connections
+            {OurBenefitsText.text3}
             </span>
           </div>
 
@@ -36,7 +36,7 @@ const OurPartnerBenefits = () => {
               <MdArrowOutward size={20} />
             </span>
             <span className="absolute bottom-4 left-6 text-3xl capitalize">
-              professional tools
+            {OurBenefitsText.text4}
             </span>
           </div>
 
@@ -45,7 +45,7 @@ const OurPartnerBenefits = () => {
               <MdArrowOutward size={20} />
             </span>
             <span className="absolute bottom-4 left-6 text-3xl capitalize">
-              flexible scheduling
+            {OurBenefitsText.text5}
             </span>
           </div>
         </div>

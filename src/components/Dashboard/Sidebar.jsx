@@ -16,6 +16,7 @@ import { clearServiceForm } from "../../slices/serviceSlice";
 import { CgProfile } from "react-icons/cg";
 import { FaAddressBook } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { FaUsersGear } from "react-icons/fa6";
 
 const sidebarLinks = [
   {
@@ -76,13 +77,20 @@ const sidebarLinks = [
   },
   {
     id: 8,
+    icon: <FaUsersGear />,
+    text: "Partners",
+    to: "partners",
+    adminOnly: true,
+  },
+  {
+    id: 9,
     icon: <FaAddressBook />,
     text: "Addresses",
     to: "addresses",
     userOnly: true,
   },
   {
-    id: 9,
+    id: 10,
     icon: <IoMdSettings />,
     text: "Settings",
     to: "edit-profile",

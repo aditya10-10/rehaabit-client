@@ -3,46 +3,22 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaCircleMinus } from "react-icons/fa6";
 
 import png1 from "../../assets/partner/X94yM6Vbr2CAwfsQFuA0SX7awg.png.svg";
+import { useLocation } from "react-router-dom";
 
-const FAQ = () => {
+const FAQ = ({ faqs }) => {
+  const location = useLocation();
+
   const [activeId, setActiveId] = useState(null);
-
-  const faqs = [
-    {
-      id: 1,
-      question: "How do I get started on the Rehaabit Platform?",
-      answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
-    },
-    {
-      id: 2,
-      question: "How do I get started on the Rehaabit Platform?",
-      answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
-    },
-    {
-      id: 3,
-      question: "How do I get started on the Rehaabit Platform?",
-      answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
-    },
-    {
-      id: 4,
-      question: "How do I get started on the Rehaabit Platform?",
-      answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
-    },
-  ];
 
   return (
     <div
-      className="flex w-full justify-center gap-20 py-40 px-60 h-[757px]"
+      className="flex w-full justify-center gap-20 py-40 px-60"
       style={{
         backgroundImage: `
     linear-gradient(to right, rgba(253, 96, 55, 0.12),rgba(117, 45, 220, 0.06),rgba(255, 255, 255, 0.06),rgba(117, 45, 220, 0.06),rgba(253, 96, 55, 0.06))`,
       }}
     >
-      <div className="flex flex-col w-[60%]">
+      {location.pathname === '/partner' && <div className="flex flex-col w-[60%]">
         <div className="flex flex-col gap-44 w-[70%]">
           <h1 className="text-4xl font-bold">Frequently asked question</h1>
 
@@ -62,7 +38,7 @@ const FAQ = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
 
       <div className="flex w-full">
         {faqs.length > 0 && (
@@ -84,7 +60,7 @@ const FAQ = () => {
                       className="flex flex-col items-center w-full p-4"
                     >
                       <div className="flex justify-between items-center w-full">
-                        <span>{question}</span>
+                        <span className="capitalize font-[500]">{question}</span>
                         {isActive ? (
                           <FaCircleMinus
                             className="text-purple-500"
