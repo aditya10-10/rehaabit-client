@@ -140,13 +140,12 @@ const Checkout = () => {
     // Pass the correct data structure to the placeOrder function
     // placeOrder(token, serviceDetails, navigate, dispatch);
 
-    const partnerId = "66c9c8a413a342ca56c368c4";
+    // const partnerId = "66c9c8a413a342ca56c368c4";
 
     placeOrder(
       token,
       singleOrder,
       isSingleOrder,
-      partnerId,
       navigate,
       dispatch
     );

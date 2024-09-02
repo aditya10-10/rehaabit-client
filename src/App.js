@@ -44,6 +44,8 @@ import { showAllSubCategories } from "./slices/subCategorySlice";
 import { PartnerForm } from "./components/Partner";
 import { OtpModal } from "./components";
 import PartnerPageAdmin from "./components/Dashboard/Partner/PartnerPageAdmin";
+import { useQuery } from "@tanstack/react-query";
+import Users from "./components/Dashboard/Users/Users";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -53,6 +55,26 @@ export default function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
+
+  const Categoriesquery = useQuery({
+    queryKey: ["Categories"],
+    queryFn: () => dispatch(showAllCategories()),
+  });
+
+  const subcategoriesQuery = useQuery({
+    queryKey: ["subcategories"],
+    queryFn: () => dispatch(showAllSubCategories()),
+  });
+
+  const servicesQuery = useQuery({
+    queryKey: ["allServices"],
+    queryFn: () => dispatch(getAllServices()),
+  });
+
+  const cartServicesQuery = useQuery({
+    queryKey: ["cartServices"],
+    queryFn: () => dispatch(getAllCartServices()),
+  });
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -64,10 +86,10 @@ export default function App() {
   // console.log(user.accountType)
 
   useEffect(() => {
-    dispatch(getAllCartServices());
-    dispatch(showAllCategories());
-    dispatch(showAllSubCategories());
-    dispatch(getAllServices());
+    // dispatch(getAllCartServices());
+    // dispatch(showAllCategories());
+    // dispatch(showAllSubCategories());
+    // dispatch(getAllServices());
     if (user?.accountType === "Admin") {
       dispatch(getAllOrders());
     } else {
@@ -168,6 +190,7 @@ export default function App() {
                 <Route path="orders" element={<MyOrders />} />
                 <Route path="partners" element={<PartnerPageAdmin />} />
                 <Route path="addresses" element={<Addresses />} />
+                <Route path="users" element={<Users />} />
               </Route>
             </>
           )}

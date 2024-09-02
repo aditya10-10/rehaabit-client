@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { OrdersList, OrdersListUsers } from "../components/Orders";
-import NothingToShow from "../components/NothingToShow";
+import NothingToShow from "../../NothingToShow";
+import OrdersList from "./OrdersList";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -108,7 +108,7 @@ const MyOrders = () => {
         <NothingToShow text="Orders" btnText="shopping" />
       ) : (
         <div className="w-full border rounded-lg">
-          <OrdersListUsers orders={filteredOrders} />
+          <OrdersList orders={filteredOrders} />
         </div>
       )}
     </div>
