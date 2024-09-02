@@ -1,8 +1,15 @@
 import { FaCheck } from "react-icons/fa";
-import { formattedDate } from "../../utils/dateFormatter";
+import { FiEdit2 } from "react-icons/fi";
 import { HiClock } from "react-icons/hi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { formattedDate } from "../../../utils/dateFormatter";
 
-const OrdersListUsers = ({ orders }) => {
+const OrdersList = ({ orders }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   console.log(orders);
 
   return (
@@ -66,4 +73,4 @@ const OrdersListUsers = ({ orders }) => {
   );
 };
 
-export default OrdersListUsers;
+export default OrdersList;

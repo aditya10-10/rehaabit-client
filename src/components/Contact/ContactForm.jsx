@@ -178,7 +178,7 @@ const ContactForm = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="message" className="text-sm font-[500] text-gray-400">
+        <label htmlFor="message" className="text-sm font-[500] text-gray-400 text-start">
           Message
         </label>
         <textarea
@@ -191,7 +191,7 @@ const ContactForm = () => {
         ></textarea>
       </div>
 
-      <div className="flex justify-end w-full">
+      <div className="flex justify-end w-full mt-10">
         <button
           type="submit"
           className="bg-[#00AF84] text-white font-bold py-2 px-6 rounded-md z-10 relative"

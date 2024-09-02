@@ -13,9 +13,9 @@ const Category = () => {
 
   const { categories } = useSelector((state) => state.categories);
 
-  useEffect(() => {
-    dispatch(showAllCategories());
-}, [dispatch])
+//   useEffect(() => {
+//     dispatch(showAllCategories());
+// }, [dispatch])
 
   return (
     <div className="p-10 w-full">

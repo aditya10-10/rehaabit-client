@@ -19,6 +19,9 @@ import { setSingleOrder } from "../slices/orderSlice";
 import { ServiceCard } from "../components/Dashboard/Service";
 import ServiceDetailsModal from "../components/ServiceDetailsModal";
 
+// REACT QUERY
+import { useQuery } from "@tanstack/react-query";
+
 const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,6 +32,35 @@ const Categories = () => {
   const { scrollTo, subCategoryId, serviceId } = location.state || {};
 
   // console.log(location.state)
+
+  // const subcategoriesQuery = useQuery({
+  //   queryKey: ["subcategories", categoryId],
+  //   queryFn: () => dispatch(getSubCategoriesByCategory({ categoryId })),
+  // });
+  
+  // const servicesQuery = useQuery({
+  //   queryKey: ["allServices", categoryId],
+  //   queryFn: () => dispatch(getAllServices()),
+  // });
+  
+  // const cartServicesQuery = useQuery({
+  //   queryKey:[ "cartServices", categoryId],
+  //   queryFn: () => dispatch(getAllCartServices()),
+  // });
+
+  // const query = useQuery({
+  //   queryKey: ["data", categoryId],
+  //   queryFn: async () => {
+  //     const subcategories = await dispatch(getSubCategoriesByCategory({ categoryId }));
+  //     const services = await dispatch(getAllServices());
+  //     const cartServices = await dispatch(getAllCartServices());
+  
+  //     return { subcategories, services, cartServices };
+  //   },
+  // });
+  
+
+  // console.log(query);
 
   const [onRemove, setOnRemove] = useState(null);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
@@ -48,14 +80,16 @@ const Categories = () => {
 
   // console.log(categoryName.name)
 
+  // console.log(subCategoriesByCategory);
+
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
 
   useEffect(() => {
-    dispatch(showAllCategories());
-    dispatch(getAllServices());
+    // dispatch(showAllCategories());
+    // dispatch(getAllServices());
     dispatch(getSubCategoriesByCategory({ categoryId }));
-    dispatch(getAllCartServices());
+    // dispatch(getAllCartServices());
   }, [dispatch, categoryId]);
 
   useEffect(() => {

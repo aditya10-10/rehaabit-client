@@ -14,7 +14,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(showAllCategories());
+    // dispatch(showAllCategories());
     dispatch(getAllServices());
     dispatch(getAllCartServices());
   }, [dispatch]);

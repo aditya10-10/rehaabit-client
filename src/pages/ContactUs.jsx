@@ -22,7 +22,7 @@ const ContactUs = () => {
         Any question or remarks? Just write us a message!
       </span>
 
-      <div className="flex max-md:flex-col shadow-custom-shadow max-xs:shadow-none max-xs:p-0 rounded-xl p-2 w-2/3 max-2xl:w-3/4 max-xl:w-11/12 h-[60vh] max-md:h-screen relative">
+      <div className="flex max-md:flex-col shadow-custom-shadow max-xs:shadow-none max-xs:p-0 rounded-xl p-2 w-2/3 max-2xl:w-3/4 max-xl:w-11/12 max-md:h-screen relative">
         <div className="flex flex-col bg-purple-800 p-6 rounded-lg gap-10 w-2/5 max-md:w-full relative max-xs:items-center max-sm:justify-center">
           <div className="flex flex-col max-xs:items-center max-sm:justify-center max-xs:w-full mb-10 max-xs:mb-4">
             <h1 className="text-3xl font-semibold text-white">
@@ -52,7 +52,7 @@ const ContactUs = () => {
             </div>
           </div>
 
-          <div className="flex">
+          <div className="flex mt-20">
             <div className="flex gap-5 text-white absolute bottom-10 max-xs:-translate-x-16">
               <button className="bg-[#FF6F61] rounded-full p-2">
                 <FaTwitter />
@@ -82,11 +82,11 @@ const ContactUs = () => {
           <ContactForm />
         </div>
 
-        <img
+        {/* <img
           src={LetterSend}
           alt="letter send svg"
           className="absolute -bottom-10 right-20 w-80 z-0 max-xs:hidden"
-        />
+        /> */}
       </div>
     </div>
   );

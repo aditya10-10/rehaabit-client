@@ -104,3 +104,8 @@ export const contactEndpoints = {
 export const careersEndpoints = {
   ADD_CANDIDATE_INFORMATION_API: BASE_URL + "/addCandidateInformation",
 };
+
+// USERS ENDPOINTS
+export const usersEndpoints = {
+  GET_ALL_USERS_API: BASE_URL + "/getAllUsers",
+};

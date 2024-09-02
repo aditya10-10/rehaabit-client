@@ -8,7 +8,7 @@ export { default as ServiceDetailsPage } from "./ServiceDetailsPage";
 export { default as Cart } from "./Cart";
 export { default as Checkout } from "./Checkout";
 export { default as TermsAndConditions } from "./TermsAndConditions";
-export { default as MyOrders } from "./MyOrders";
+export { default as MyOrders } from "../components/Dashboard/Orders/MyOrders";
 export { default as Addresses } from "./Addresses";
 export { default as PartnerPage } from "./PartnerPage";
 export { default as ContactUs } from "./ContactUs";

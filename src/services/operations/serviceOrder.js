@@ -25,7 +25,6 @@ export async function placeOrder(
   token,
   singleOrder,
   isSingleOrder,
-  partnerId,
   navigate,
   dispatch
 ) {
@@ -45,7 +44,7 @@ export async function placeOrder(
     const orderResponse = await apiConnector(
       "POST",
       SERVICE_PAYMENT_API,
-      { singleOrder, isSingleOrder, partnerId },
+      { singleOrder, isSingleOrder },
       {
         Authorization: `Bearer ${token}`,
       }
@@ -72,7 +71,7 @@ export async function placeOrder(
       handler: function (response) {
         // verifyPayment({ ...response, services }, token, navigate, dispatch);
         verifyPayment(
-          { ...response, singleOrder, isSingleOrder, partnerId },
+          { ...response, singleOrder, isSingleOrder },
           token,
           navigate,
           dispatch
