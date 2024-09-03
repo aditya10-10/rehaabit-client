@@ -90,7 +90,7 @@ const ProfilePicture = () => {
 
   return (
     <div className="flex gap-5 p-6 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm max-md:flex-wrap max-md:px-5 max-xs:w-full max-xs:justify-center">
-      {previewSource || user?.imaage ? (
+      {previewSource || user?.image ? (
         <img
           src={previewSource || user?.image}
           alt={`profile-${user?.firstName}`}

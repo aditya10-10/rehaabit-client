@@ -5,20 +5,63 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { formattedDate } from "../../../utils/dateFormatter";
+import { useState } from "react";
+import UserDetailsModal from "./UserDetailsModal";
+import { deleteUser, setUserDetails } from "../../../slices/usersSlice";
+import Swal from "sweetalert2";
 
 const UsersList = ({ users }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(users);
+  const [isUserDetailsModalOpen, setIsUserDetailsModalOpen] = useState(false);
+
+  const handleUserDetailsModal = () => {
+    setIsUserDetailsModalOpen(!isUserDetailsModalOpen);
+  };
+
+  const handleDelete = (e, userId) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#06952c",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteUser({ userId }));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "User has been deleted.",
+          icon: "success",
+        });
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire({
+          title: "Cancelled",
+          text: "User is safe :)",
+          icon: "error",
+        });
+      }
+    });
+  };
 
   return (
     <>
-      {/* <PartnerDetailsModal
-        isPartnerModalOpen={isPartnerModalOpen}
-        handlePartnerModal={handlePartnerModal}
-        partners={partners}
-      /> */}
+      <UserDetailsModal
+        isUserDetailsModalOpen={isUserDetailsModalOpen}
+        handleUserDetailsModal={handleUserDetailsModal}
+      />
 
       <table className="w-full">
         <thead>
@@ -28,18 +71,10 @@ const UsersList = ({ users }) => {
             <th className="text-left text-sm font-medium uppercase">
               Phone Numbers
             </th>
-            <th className="text-left text-sm font-medium uppercase">
-              Email
-            </th>
-            <th className="text-left text-sm font-medium uppercase">
-              address
-            </th>
-            <th className="text-left text-sm font-medium uppercase">
-              Service Offered
-            </th>
-            <th className="text-left text-sm font-medium uppercase">
-              Business Name
-            </th>
+            <th className="text-left text-sm font-medium uppercase">Email</th>
+            <th className="text-left text-sm font-medium uppercase"></th>
+            <th className="text-left text-sm font-medium uppercase"></th>
+            <th className="text-left text-sm font-medium uppercase">actions</th>
           </tr>
         </thead>
 
@@ -52,7 +87,12 @@ const UsersList = ({ users }) => {
               <tr
                 key={_id}
                 className={`grid grid-cols-7 gap-x-6 border-b px-6 py-4 items-center cursor-pointer`}
-                // onClick={handlePartnerModal}
+                onClick={() => {
+                  // console.log("clicked");
+                  // navigate(`/dashboard/users/${_id}`);
+                  handleUserDetailsModal();
+                  dispatch(setUserDetails(user));
+                }}
               >
                 <td>
                   <img
@@ -66,8 +106,17 @@ const UsersList = ({ users }) => {
                 </td>
                 <td className="text-sm">{contactNumber}</td>
                 <td className="text-sm">{additionalDetails?.email}</td>
-                <td className="text-sm">{additionalDetails?.email}</td>
-                
+                {/* <td className="text-sm">{additionalDetails}</td> */}
+                <td></td>
+                <td></td>
+                <td>
+                  <button
+                    className="px-4 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]"
+                    onClick={(e) => handleDelete(e, _id)}
+                  >
+                    <RiDeleteBin6Line size={20} />
+                  </button>
+                </td>
               </tr>
             );
           })}
