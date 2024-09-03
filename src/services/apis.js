@@ -108,4 +108,7 @@ export const careersEndpoints = {
 // USERS ENDPOINTS
 export const usersEndpoints = {
   GET_ALL_USERS_API: BASE_URL + "/getAllUsers",
+  UPDATE_USER_DETAILS_API: BASE_URL + "/updateUserDetails",
+  DELETE_USER_API: BASE_URL + "/deleteUser",
+  CREATE_NEW_USER_API: BASE_URL + "/createNewUser",
 };

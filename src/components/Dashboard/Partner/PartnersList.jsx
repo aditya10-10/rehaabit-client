@@ -12,9 +12,11 @@ const PartnersList = ({ partners }) => {
   const navigate = useNavigate();
 
   const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
+  const [partnerData, setPartnerData] = useState([]);
 
-  const handlePartnerModal = () => {
+  const handlePartnerModal = (partner) => {
     setIsPartnerModalOpen(!isPartnerModalOpen);
+    setPartnerData(partner)
   };
 
   return (
@@ -22,7 +24,7 @@ const PartnersList = ({ partners }) => {
       <PartnerDetailsModal
         isPartnerModalOpen={isPartnerModalOpen}
         handlePartnerModal={handlePartnerModal}
-        partners={partners}
+        partnerData={partnerData}
       />
 
       <table className="w-full">
@@ -80,7 +82,7 @@ const PartnersList = ({ partners }) => {
               <tr
                 key={_id}
                 className={`grid grid-cols-7 gap-x-6 border-b px-6 py-4 items-center cursor-pointer`}
-                onClick={handlePartnerModal}
+                onClick={() => handlePartnerModal(partner)}
               >
                 <td>
                   <img
