@@ -14,6 +14,7 @@ import contactReducer from "../slices/contactSlice";
 import careersReducer from "../slices/careersSlice";
 import partnerReducer from "../slices/partnerSlice";
 import usersReducer from "../slices/usersSlice";
+import ratingAndreviewsReducer from "../slices/ratingAndReviewsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   contact: contactReducer,
   careers: careersReducer,
   users: usersReducer,
+  ratingAndReviews: ratingAndreviewsReducer,
 });
 
 export default rootReducer;

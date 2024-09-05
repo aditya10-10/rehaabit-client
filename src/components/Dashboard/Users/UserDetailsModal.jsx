@@ -3,7 +3,9 @@ import { IoIosClose } from "react-icons/io";
 import { FaRegEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { updateUserDetails } from "../../../slices/usersSlice";
+import { getAllUsers, getUser, updateUserDetails } from "../../../slices/usersSlice";
+import { CgProfile } from "react-icons/cg";
+import { CartServices } from "../../Cart";
 
 const UserDetailsModal = ({
   isUserDetailsModalOpen,
@@ -12,6 +14,8 @@ const UserDetailsModal = ({
   const dispatch = useDispatch();
 
   const { userDetails } = useSelector((state) => state.users);
+
+  console.log(userDetails);
 
   const [firstName, setFirstName] = useState(
     userDetails?.additionalDetails?.firstName || ""
@@ -31,13 +35,20 @@ const UserDetailsModal = ({
   const [isEditingLastName, setIsEditingLastName] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [isEditingContactNumber, setIsEditingContactNumber] = useState(false);
+  const [cartServices, setCartServices] = useState([]);
+
+  // const { cartServices, isLoading, totalQty } = useSelector(
+  //   (state) => state.cart
+  // );
 
   useEffect(() => {
     setFirstName(userDetails?.additionalDetails?.firstName);
     setLastName(userDetails?.additionalDetails?.lastName);
     setEmail(userDetails?.additionalDetails?.email);
     setContactNumber(userDetails?.contactNumber);
-  }, [userDetails]);
+    setCartServices(userDetails?.cart?.services);
+    // dispatch(getUser())
+  }, [userDetails, dispatch]);
 
   const { _id, additionalDetails, address, image } = userDetails;
 
@@ -87,11 +98,15 @@ const UserDetailsModal = ({
             <div className="flex flex-col items-center justify-center w-full px-10 max-lg:px-4">
               <div className="w-full flex flex-col items-center justify-center">
                 <div className="relative mb-6">
-                  <img
-                    src={image}
-                    alt="profile"
-                    className="h-20 w-20 rounded-full"
-                  />
+                  {image ? (
+                    <img
+                      src={image}
+                      alt="profile"
+                      className="rounded-full h-16 w-16"
+                    />
+                  ) : (
+                    <CgProfile size={70} className="text-blue-300" />
+                  )}
                   <input
                     type="file"
                     id={`newImage-${_id}`}
@@ -272,7 +287,7 @@ const UserDetailsModal = ({
                     <tr>
                       <td className="font-bold p-2">Address:</td>
                       <td className="p-2">
-                        {address.map((addr) => (
+                        {address && address.map((addr) => (
                           <div key={addr._id} className="mb-2">
                             {addr.status === "Default" && (
                               <span className="text-blue-500">Default</span>
@@ -285,6 +300,15 @@ const UserDetailsModal = ({
                   </tbody>
                 </table>
               </div>
+            </div>
+
+            <div className="w-full shadow-custom-shadow rounded-lg">
+              {userDetails?.cart?.services && (
+                <CartServices
+                  cartServices={cartServices}
+                  // isLoading={isLoading}
+                />
+              )}
             </div>
           </motion.div>
         </motion.div>

@@ -7,8 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { formattedDate } from "../../../utils/dateFormatter";
 import { useState } from "react";
 import UserDetailsModal from "./UserDetailsModal";
-import { deleteUser, setUserDetails } from "../../../slices/usersSlice";
+import {
+  deleteUser,
+  getUser,
+  setUserDetails,
+} from "../../../slices/usersSlice";
 import Swal from "sweetalert2";
+import { CgProfile } from "react-icons/cg";
 
 const UsersList = ({ users }) => {
   const dispatch = useDispatch();
@@ -91,15 +96,19 @@ const UsersList = ({ users }) => {
                   // console.log("clicked");
                   // navigate(`/dashboard/users/${_id}`);
                   handleUserDetailsModal();
-                  dispatch(setUserDetails(user));
+                  dispatch(getUser({ userId: _id }));
                 }}
               >
                 <td>
-                  <img
-                    src={image}
-                    alt="profile"
-                    className="rounded-full h-16 w-16"
-                  />
+                  {image ? (
+                    <img
+                      src={image}
+                      alt="profile"
+                      className="rounded-full h-16 w-16"
+                    />
+                  ) : (
+                    <CgProfile size={70} className="text-blue-300" />
+                  )}
                 </td>
                 <td className="text-sm">
                   {additionalDetails?.firstName} {additionalDetails?.lastName}
