@@ -14,7 +14,7 @@ const OrdersList = ({ orders }) => {
   const { ratingAndReviews } = useSelector((state) => state.ratingAndReviews);
 
   // console.log(ratingAndReviews);
-  console.log(orders);
+  // console.log(orders);
 
   const [isRateAndReviewModalOpen, setIsRateAndReviewModalOpen] =
     useState(false);

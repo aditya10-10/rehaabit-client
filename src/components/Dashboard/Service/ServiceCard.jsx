@@ -7,7 +7,10 @@ const ServiceCard = ({
   serviceDescription,
   price,
   timeToComplete,
+  ratingAndReviews,
+  avgRating,
 }) => {
+  console.log(avgRating);
 
   return (
     <div className="flex max-sm:flex-col max-sm:justify-center max-sm:w-full w-full">
@@ -19,11 +22,13 @@ const ServiceCard = ({
 
       <div className="flex flex-col">
         <span className="text-2xl mb-2 text-purple-600">{serviceName}</span>
+
         <div className="flex items-center mb-2 gap-2 text-xl">
-          <GoStarFill className="text-yellow-400" />
-          <span>4.5</span>
-          <span>(4.17k reviews)</span>
+          {avgRating && <GoStarFill className="text-yellow-400" />}
+          <span>{avgRating}</span>
+          <span>({ratingAndReviews.length} reviews)</span>
         </div>
+
         <div className="flex items-center mb-2">
           <span className="mr-2 text-emerald-600 text-2xl">₹{price}</span>
           <span className="text-gray-500">• {timeToComplete} min</span>
