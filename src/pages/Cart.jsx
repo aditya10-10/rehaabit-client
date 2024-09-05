@@ -1,22 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import ServiceCard from "../components/Dashboard/Service/ServiceCard";
-import {
-  getAllCartServices,
-  removeFromCart,
-  removeServiceFromLocalStorage,
-  updateCart,
-  updateCartInLocalStorage,
-} from "../slices/cartSlice";
+import { getAllCartServices } from "../slices/cartSlice";
 import { useEffect, useState } from "react";
 import {
   AddressModal,
-  LoginSignup,
+  CartServices,
   PriceDetailsCard,
 } from "../components/Cart";
 import { getUserAddresses } from "../slices/addressSlice";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../components/ConfirmationModal";
-import { openModal } from "../slices/modalSlice";
 import NothingToShow from "../components/NothingToShow";
 import { OtpModal } from "../components";
 
@@ -28,7 +20,6 @@ const Cart = () => {
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
   const [selectedAddress, setSelectedAddress] = useState([]);
-  const [onRemove, setOnRemove] = useState(null);
 
   const { cartServices, isLoading, totalQty } = useSelector(
     (state) => state.cart
@@ -49,45 +40,6 @@ const Cart = () => {
       localStorage.removeItem("cart");
     }
   }, []);
-
-  const handleIncrease = (cartServiceId, service) => {
-    if (user) {
-      dispatch(updateCart({ cartServiceId, action: "increment" }));
-    } else {
-      dispatch(
-        updateCartInLocalStorage({
-          serviceId: service._id,
-          acTion: "increment",
-        })
-      );
-    }
-  };
-
-  const handleDecrease = (cartServiceId, service) => {
-    if (user) {
-      dispatch(updateCart({ cartServiceId, action: "decrement" }));
-    } else {
-      dispatch(
-        updateCartInLocalStorage({
-          serviceId: service._id,
-          acTion: "decrement",
-        })
-      );
-    }
-  };
-
-  const handleRemove = (cartServiceId, service) => {
-    const removeHandler = () => {
-      if (user) {
-        dispatch(removeFromCart({ cartServiceId }));
-      } else {
-        dispatch(removeServiceFromLocalStorage({ serviceId: service._id }));
-      }
-    };
-
-    setOnRemove(() => removeHandler);
-    dispatch(openModal("removeConfirmation"));
-  };
 
   const handleCloseModal = () => {
     setAnimationClass("modal-close");
@@ -116,8 +68,6 @@ const Cart = () => {
 
   return (
     <>
-      <ConfirmationModal text="Remove" onDelete={onRemove} />
-
       {isOtpModalOpen && (
         <div
           className={`fixed inset-0 flex items-center justify-center z-50 top-0 bg-black bg-opacity-50 ${animationClass} max-h-screen`}
@@ -193,46 +143,10 @@ const Cart = () => {
               <NothingToShow text="Cart" btnText="shopping" />
             ) : (
               <div className="w-full shadow-custom-shadow rounded-lg">
-                <div className="max-h-[65vh] overflow-y-auto p-4">
-                  {cartServices &&
-                    cartServices.map((service) => {
-                      const { _id, qty } = service;
-
-                      return (
-                        <div key={_id} className="mb-4 border-b-2 p-4">
-                          <ServiceCard {...service} />
-
-                          <div className="flex items-center mt-4 gap-2">
-                            <button
-                              className="border px-2 border-gray-400 rounded-full"
-                              onClick={() => handleDecrease(_id, service)}
-                              disabled={isLoading}
-                            >
-                              -
-                            </button>
-
-                            <span className="mx-2 text-gray-500">{qty}</span>
-
-                            <button
-                              className="border px-2 border-gray-400 rounded-full"
-                              onClick={() => handleIncrease(_id, service)}
-                              disabled={isLoading}
-                            >
-                              +
-                            </button>
-
-                            <button
-                              className="hover:text-blue-500"
-                              onClick={() => handleRemove(_id, service)}
-                              disabled={isLoading}
-                            >
-                              REMOVE
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
+                <CartServices
+                  cartServices={cartServices}
+                  isLoading={isLoading}
+                />
 
                 <div className="flex w-full p-4 justify-end shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
                   <button

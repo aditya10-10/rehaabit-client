@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import NothingToShow from "../../NothingToShow";
 import OrdersList from "./OrdersList";
+import {
+  getAllRatingAndReviews,
+  getUsersRatingAndReviews,
+} from "../../../slices/ratingAndReviewsSlice";
+import { getAllOrders, getUserOrders } from "../../../slices/orderSlice";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -30,6 +35,16 @@ const MyOrders = () => {
   const handleContactSearch = (e) => {
     setSearchContact(e.target.value);
   };
+
+  useEffect(() => {
+    if (user.accountType === "Admin") {
+      dispatch(getAllOrders());
+      dispatch(getAllRatingAndReviews());
+    } else {
+      dispatch(getUserOrders());
+      dispatch(getUsersRatingAndReviews());
+    }
+  }, [dispatch, user]);
 
   const filteredOrders = orders.filter((order) => {
     const categoryMatch =

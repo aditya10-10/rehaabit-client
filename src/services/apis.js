@@ -108,7 +108,16 @@ export const careersEndpoints = {
 // USERS ENDPOINTS
 export const usersEndpoints = {
   GET_ALL_USERS_API: BASE_URL + "/getAllUsers",
+  GET_USER_API: BASE_URL + "/getUser",
   UPDATE_USER_DETAILS_API: BASE_URL + "/updateUserDetails",
   DELETE_USER_API: BASE_URL + "/deleteUser",
   CREATE_NEW_USER_API: BASE_URL + "/createNewUser",
+};
+
+// RATING AND REVIEWS ENDPOINTS
+export const ratingAndReviewsEndpoints = {
+  CREATE_RATING_API: BASE_URL + "/createRating",
+  GET_AVERAGE_RATING_API: BASE_URL + "/getAverageRating",
+  GET_ALL_RATING_API: BASE_URL + "/getAllRating",
+  GET_USERS_RATING_AND_REVIEWS_API: BASE_URL + "/getUsersRatingAndReviews",
 };

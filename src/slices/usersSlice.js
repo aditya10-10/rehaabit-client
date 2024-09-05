@@ -10,6 +10,7 @@ const {
   UPDATE_USER_DETAILS_API,
   DELETE_USER_API,
   CREATE_NEW_USER_API,
+  GET_USER_API,
 } = usersEndpoints;
 
 const initialState = {
@@ -25,6 +26,21 @@ export const getAllUsers = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_ALL_USERS_API);
+
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+// GET USER
+export const getUser = createAsyncThunk(
+  "users/getUser",
+  async ({ userId }, thunkAPI) => {
+    try {
+      const response = await apiConnector("POST", GET_USER_API, { userId });
 
       return response.data.data;
     } catch (error) {
@@ -119,6 +135,25 @@ const usersSlice = createSlice({
         state.error = action;
       })
 
+      // GET USER
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+
+        // Swal.showLoading();
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userDetails = action.payload;
+
+        // Swal.hideLoading();
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        // Swal.hideLoading();
+      })
+
       // UPDATE USER DETAILS
       .addCase(updateUserDetails.pending, (state) => {
         state.isLoading = true;
@@ -201,7 +236,7 @@ const usersSlice = createSlice({
           title: "Error in Creating New User!",
           icon: "error",
         });
-      })
+      });
   },
 });
 

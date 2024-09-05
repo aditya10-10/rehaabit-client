@@ -2,34 +2,51 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ServiceDetailsModal from "../ServiceDetailsModal";
+import { GoStar, GoStarFill } from "react-icons/go";
 
-const ServiceCard = ({ serviceName, serviceDescription, price, thumbnail }) => (
-  <div className="flex flex-col justify-center items-start px-4 py-2 mt-4 bg-amber-50 rounded-xl shadow-sm max-md:px-5 max-md:max-w-full">
-    <div className="flex gap-5">
-      <img src={thumbnail} alt="Thumbnail" className="w-20 h-20 rounded-xl" />
-      <div className="flex flex-col">
-        <span className="text-lg font-medium text-black">{serviceName}</span>
-        <span className="text-sm text-zinc-700">
-          {serviceDescription.length > 30
-            ? `${serviceDescription.slice(0, 30)}...`
-            : serviceDescription}
-        </span>
-        <span className="text-sm text-zinc-700">₹ {price}</span>
-        <div className="flex gap-1 pr-20 max-md:pr-5">
-          {[...Array(5)].map((_, i) => (
-            <img
-              key={i}
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/77def546a5b9a453f43bcf17e7cfcafa7d2628c3913c17c926c78b99eed52269?apiKey=4aa4f4b9f3a34924a64c875e602547ca&"
-              alt=""
-              className="shrink-0 w-6 aspect-square fill-yellow-400"
-            />
-          ))}
+const ServiceCard = ({
+  serviceName,
+  serviceDescription,
+  price,
+  thumbnail,
+  ratingAndReviews,
+  avgRating,
+}) => {
+  const rating = avgRating > 0 ? avgRating : 0;
+
+  const renderStars = (rating) => {
+    return [...Array(5)].map((_, index) => (
+      <span key={index}>
+        {index + 1 <= rating ? (
+          <GoStarFill className="text-yellow-400" />
+        ) : (
+          <GoStar className="text-gray-400" />
+        )}
+      </span>
+    ));
+  };
+
+  return (
+    <div className="flex flex-col justify-center items-start px-4 py-2 mt-4 bg-amber-50 rounded-xl shadow-sm max-md:px-5 max-md:max-w-full">
+      <div className="flex gap-5">
+        <img src={thumbnail} alt="Thumbnail" className="w-20 h-20 rounded-xl" />
+        <div className="flex flex-col">
+          <span className="text-lg font-medium text-black">{serviceName}</span>
+          <span className="text-sm text-zinc-700">
+            {serviceDescription.length > 30
+              ? `${serviceDescription.slice(0, 30)}...`
+              : serviceDescription}
+          </span>
+          <span className="text-sm text-zinc-700">₹ {price}</span>
+          <div className="flex items-center gap-1">
+            {renderStars(rating)}
+            <span className="text-gray-500 text-sm">({rating}/5)</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Services = () => {
   const { allServices } = useSelector((state) => state.service);
