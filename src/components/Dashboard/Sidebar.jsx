@@ -91,6 +91,13 @@ const sidebarLinks = [
   },
   {
     id: 10,
+    icon: <FaAddressBook />,
+    text: "Enquiries",
+    to: "user-enquires",
+    adminOnly: true,
+  },
+  {
+    id: 11,
     icon: <IoMdSettings />,
     text: "Settings",
     to: "edit-profile",

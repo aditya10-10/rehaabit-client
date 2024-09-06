@@ -10,7 +10,7 @@ const ServiceCard = ({
   ratingAndReviews,
   avgRating,
 }) => {
-  console.log(avgRating);
+  // console.log(avgRating);
 
   return (
     <div className="flex max-sm:flex-col max-sm:justify-center max-sm:w-full w-full">
@@ -26,7 +26,7 @@ const ServiceCard = ({
         <div className="flex items-center mb-2 gap-2 text-xl">
           {avgRating && <GoStarFill className="text-yellow-400" />}
           <span>{avgRating}</span>
-          <span>({ratingAndReviews.length} reviews)</span>
+          <span>({ratingAndReviews?.length} reviews)</span>
         </div>
 
         <div className="flex items-center mb-2">

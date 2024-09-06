@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
 import { getAllCartServices } from "../slices/cartSlice";
+import PopularSearches from "../components/Home/PopularSearches";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const MainPage = () => {
     <div className="flex w-screen min-h-screen flex-col mb-10 bg-white overflow-x-hidden">
       <Hero />
       <Features />
+      <PopularSearches />
       <Services />
       <HowDoesItWorks />
       <Testimonials />
