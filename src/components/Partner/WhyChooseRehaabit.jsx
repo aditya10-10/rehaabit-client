@@ -6,8 +6,10 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
   return (
     <div className="flex flex-col items-center justify-center px-20 py-20 h-[713px]">
       <div className="flex flex-col items-center justify-center w-[40%]">
-        <h1 className="font-bold text-3xl capitalize">Why choose rehaabit?</h1>
-        <span className="text-xl text-gray-500 text-center">
+        <h1 className="font-bold text-3xl capitalize mb-4">
+          Why choose rehaabit?
+        </h1>
+        <span className="text-l text-gray-500 text-center mt-4">
           {WhyChooseText.text1}
         </span>
       </div>
@@ -20,9 +22,7 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
             {WhyChooseText.text2}
           </h1>
 
-          <span className="text-lg text-gray-500">
-            {WhyChooseText.text3}
-          </span>
+          <span className="text-sm text-gray-500">{WhyChooseText.text3}</span>
         </div>
 
         <div className="border border-purple-100 p-6 rounded-3xl">
@@ -32,9 +32,7 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
             {WhyChooseText.text4}
           </h1>
 
-          <span className="text-lg text-gray-500">
-            {WhyChooseText.text5}
-          </span>
+          <span className="text-sm text-gray-500">{WhyChooseText.text5}</span>
         </div>
 
         <div className="border border-purple-100 p-6 rounded-3xl">
@@ -44,9 +42,7 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
             {WhyChooseText.text6}
           </h1>
 
-          <span className="text-lg text-gray-500">
-            {WhyChooseText.text7}
-          </span>
+          <span className="text-sm text-gray-500">{WhyChooseText.text7}</span>
         </div>
       </div>
     </div>

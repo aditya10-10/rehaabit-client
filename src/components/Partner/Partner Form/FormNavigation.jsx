@@ -21,7 +21,7 @@ const FormNavigation = () => {
         const showTick = index < currentStep;
 
         return (
-          <div key={id} className="flex w-full">
+          <div key={id} className="flex w-full mt-16">
             {id > 1 && <span className="border-t-2 w-full mt-5"></span>}
             <div className="flex flex-col w-full items-center">
               <NavLink
@@ -37,7 +37,7 @@ const FormNavigation = () => {
               >
                 {showTick ? <FaCheck size={20} /> : id}
               </NavLink>
-              <span className="mt-2 text-gray-500 text-sm font-[400] w-20 text-center">
+              <span className="mt-2 text-gray-500 text-sm font-[400] w-20 text-center ">
                 {text}
               </span>
             </div>

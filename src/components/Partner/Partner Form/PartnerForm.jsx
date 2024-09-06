@@ -118,7 +118,7 @@ const PartnerForm = () => {
       }}
     >
       <div className="flex flex-col items-center justify-center w-full font-lato">
-        <Navbar />
+        {/* <Navbar /> */}
         <FormNavigation />
 
         <Routes>

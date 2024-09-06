@@ -3,6 +3,7 @@ import {
   FAQ,
   Footer,
   Hero,
+  Navbar,
   OurExperiences,
   OurPartnerBenefits,
   WhyChooseRehaabit,
@@ -11,7 +12,8 @@ import {
 const PartnerPage = () => {
   const HeroSectionText = {
     text1: "Transform Your Expertise into Income!",
-    text2: "Join Rehaabit Today – Where Home Service Pros Connect with Clients Effortlessly.",
+    text2:
+      "Join Rehaabit Today – Where Home Service Pros Connect with Clients Effortlessly.",
   };
 
   const WhyChooseText = {
@@ -60,26 +62,27 @@ const PartnerPage = () => {
     },
     {
       id: 2,
-      question: "How do I get started on the Rehaabit Platform?",
+      question: "How does Rehaabit Platform help me find clients?",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "Our platform matches your skills and availability with homeowners' needs. We promote your services, handle booking logistics, and provide tools to manage your projects efficiently, helping you focus on what you do best.",
     },
     {
       id: 3,
-      question: "How do I get started on the Rehaabit Platform?",
+      question: "What types of home services can I offer on the platform?",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "We welcome a wide range of professionals, including plumbers, electricians, carpenters, painters, landscapers, cleaners, and more. If you provide a home-related service, there's likely a place for you on our platform.",
     },
     {
       id: 4,
-      question: "How do I get started on the Rehaabit Platform?",
+      question: "How does payment work?",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "We ensure secure and timely payments for all completed jobs. Clients pay through our platform, and we transfer the funds to you, minus a small service fee. This system provides financial protection and peace of mind for both you and your clients.",
     },
   ];
 
   return (
     <div className="flex w-screen min-h-screen font-lato flex-col bg-white overflow-x-hidden">
+      <Navbar />
       <Hero HeroSectionText={HeroSectionText} />
       <WhyChooseRehaabit WhyChooseText={WhyChooseText} />
       <Benefits BenefitsText={BenefitsText} />
