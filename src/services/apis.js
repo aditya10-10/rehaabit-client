@@ -121,3 +121,10 @@ export const ratingAndReviewsEndpoints = {
   GET_ALL_RATING_API: BASE_URL + "/getAllRating",
   GET_USERS_RATING_AND_REVIEWS_API: BASE_URL + "/getUsersRatingAndReviews",
 };
+
+// ENQUIRE NOW - NON PRICED SERVICES
+export const enquireEndpoints = {
+  ENQUIRE_API: BASE_URL + "/enquire",
+  GET_ALL_ENQUIRIES_API: BASE_URL + "/getAllEnquiries",
+  GET_ENQUIRY_BY_ID_API: BASE_URL + "/getEnquiryById",
+};

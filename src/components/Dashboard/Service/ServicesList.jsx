@@ -13,7 +13,7 @@ import {
 } from "../../../slices/serviceSlice";
 import Swal from "sweetalert2";
 
-const ServicesList = ({allServices}) => {
+const ServicesList = ({ allServices }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,7 +66,6 @@ const ServicesList = ({allServices}) => {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-
         dispatch(getFullServiceDetails({ serviceId }));
         navigate("/dashboard/service/create-service");
       } else if (
@@ -107,6 +106,7 @@ const ServicesList = ({allServices}) => {
                 timeToComplete,
                 createdAt,
                 status,
+                priceStatus,
                 price,
                 categoryId,
                 subCategoryId,
@@ -126,19 +126,28 @@ const ServicesList = ({allServices}) => {
                       <p className="text-[12px]">
                         Created: {formattedDate(createdAt)}
                       </p>
-                      {status === "Draft" ? (
-                        <p className="flex w-fit flex-row items-center gap-2 rounded-full px-2 py-[2px] text-[12px] font-medium">
-                          <HiClock size={14} />
-                          {status}
-                        </p>
-                      ) : (
-                        <p className="flex w-fit flex-row items-center gap-2 rounded-full-700 px-2 py-[2px] text-[12px] font-medium text-[#0C7FDA]">
-                          <div className="flex h-3 w-3 items-center justify-center rounded-full bg-[#E9F5FE]">
-                            <FaCheck size={8} />
-                          </div>
-                          Published
-                        </p>
-                      )}
+
+                      <div className="flex gap-2">
+                        {status === "Draft" ? (
+                          <p className="flex w-fit flex-row items-center gap-2 rounded-full px-2 py-[2px] text-[12px] font-medium">
+                            <HiClock size={14} />
+                            {status}
+                          </p>
+                        ) : (
+                          <p className="flex w-fit flex-row items-center gap-2 rounded-full-700 px-2 py-[2px] text-[12px] font-medium text-[#0C7FDA]">
+                            <div className="flex h-3 w-3 items-center justify-center rounded-full bg-[#E9F5FE]">
+                              <FaCheck size={8} />
+                            </div>
+                            Published
+                          </p>
+                        )}
+
+                        {priceStatus === "non-priced" && (
+                          <p className="flex w-fit flex-row items-center gap-2 rounded-full px-2 py-[2px] text-[12px] font-medium bg-[#E9F5FE] text-[#0C7FDA] capitalize">
+                            {priceStatus}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </td>
                   <td className="text-sm font-medium">₹ {price}</td>

@@ -264,7 +264,7 @@ const ServiceDetailsModal = ({
                 </div>
 
                 {/* SERVICE INCLUDES */}
-                <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
+                {service?.includes?.length > 0 && <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
                   <h1 className="text-2xl max-xs:text-xl text-purple-600">
                     Service Includes
                   </h1>
@@ -278,10 +278,10 @@ const ServiceDetailsModal = ({
                         return <span key={_id}>{content}</span>;
                       })}
                   </div>
-                </div>
+                </div>}
 
                 {/* SERVICE EXCLUDES */}
-                <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
+                {service?.excludes?.length > 0 && <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
                   <h1 className="text-2xl max-xs:text-xl text-purple-600">
                     Service does not includes
                   </h1>
@@ -295,10 +295,10 @@ const ServiceDetailsModal = ({
                         return <span key={_id}>{content}</span>;
                       })}
                   </div>
-                </div>
+                </div>}
 
                 {/* HOW IT WORK? */}
-                <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full">
+                {service?.howDoesItWorks?.length > 0 && <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full">
                   <h1 className="text-2xl max-xs:text-xl text-purple-600">
                     How It Work?
                   </h1>
@@ -310,7 +310,7 @@ const ServiceDetailsModal = ({
                         return <HIWCard {...howDoesItWork} />;
                       })}
                   </div>
-                </div>
+                </div>}
 
                 {/* WARRANTY DETAILS */}
                 <div className="bg-[#E6F7F3] border-2 border-[#009F78] rounded-lg w-full mt-10 p-4">
@@ -351,7 +351,7 @@ const ServiceDetailsModal = ({
                 </div>
 
                 {/* FAQ */}
-                <div className="flex flex-col w-full mt-10">
+                {service?.faqs?.length > 0 && <div className="flex flex-col w-full mt-10">
                   <h1 className="text-2xl max-xs:text-xl text-purple-600">
                     Frequently Asked Questions
                   </h1>
@@ -395,7 +395,7 @@ const ServiceDetailsModal = ({
                         })}
                     </div>
                   )}
-                </div>
+                </div>}
               </div>
             </motion.div>
           </motion.div>

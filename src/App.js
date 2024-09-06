@@ -47,6 +47,7 @@ import PartnerPageAdmin from "./components/Dashboard/Partner/PartnerPageAdmin";
 import { useQuery } from "@tanstack/react-query";
 import Users from "./components/Dashboard/Users/Users";
 import UserDetails from "./components/Dashboard/Users/UserDetailsModal";
+import UsersEnquiries from "./components/Enquiry/UsersEnquiries";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -191,9 +192,8 @@ export default function App() {
                 <Route path="orders" element={<MyOrders />} />
                 <Route path="partners" element={<PartnerPageAdmin />} />
                 <Route path="addresses" element={<Addresses />} />
-                <Route path="users/*" element={<Users />}>
-                  <Route path=":id" element={<UserDetails />} />
-                </Route>
+                <Route path="users" element={<Users />} />
+                <Route path="user-enquires" element={<UsersEnquiries />} />
               </Route>
             </>
           )}
