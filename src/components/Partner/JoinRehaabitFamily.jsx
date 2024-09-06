@@ -1,8 +1,11 @@
 import Hero from "../../assets/partner/Hero.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const JoinRehaabitFamily = ({ JoinRehaabitFamilyText }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="absolute w-full z-40 -top-40 left-96 right-96">
+    <div className="absolute w-full z-40 -top-40 flex items-center justify-center">
       <div className="flex rounded-3xl h-[368px] w-[1144px] bg-[#8937FF]">
         <div className="flex flex-col gap-10 p-10">
           <h1 className="text-white font-bold text-4xl capitalize">
@@ -12,8 +15,11 @@ const JoinRehaabitFamily = ({ JoinRehaabitFamilyText }) => {
           <p className="text-lg text-white">{JoinRehaabitFamilyText.text1}</p>
 
           <div>
-            <button className="bg-white capitalize rounded-lg py-2 px-6">
-              get started
+            <button
+              className="bg-white capitalize rounded-lg py-2 px-6"
+              onClick={() => navigate("/partner-form/personal-information")}
+            >
+              Join Now
             </button>
           </div>
         </div>

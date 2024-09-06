@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import LogoDark from "../../assets/partner/LOGO_Dark.svg";
 import Facebook from "../../assets/partner/facebook.svg";
 import Instagram from "../../assets/partner/instagram.svg";
-import Youtube from "../../assets/partner/youtube.svg";
 import Linkedin from "../../assets/partner/linkedin.svg";
 import Twitter from "../../assets/partner/tweeter.svg";
 import AppStore from "../../assets/partner/AppStore.svg";
@@ -28,38 +27,36 @@ const FooterColumn = ({ title, items, links }) => {
   );
 };
 
-const Footer = ({JoinRehaabitFamilyText}) => {
+const Footer = ({ JoinRehaabitFamilyText }) => {
   const footerData = [
     {
       title: "Company",
-      items: ["About", "Careers", "Newsroom"],
-      links: ["/about", "/careers", "/newsroom"],
+      items: ["About", "Careers", "Help", "Contact Us"],
+      links: ["/about", "/careers", "/help", "/contact-us"],
     },
     {
-      title: "For Professionals",
-      items: [
-        "Privacy Policy",
-        "Partner Welfare Policy",
-        "Terms & Conditions",
-        "Community",
-        "Blog",
+      title: "For Partners",
+      items: ["Privacy Policy", "Terms & Conditions", "Blog"],
+      links: [
+        "/partner/terms-and-conditions",
+        "/partner/privacy-policy",
+        "/blogs",
       ],
-      links: ["/quick", "/services", "/updates"],
     },
     {
       title: "For Customers",
       items: ["Book a service"],
-      links: ["https://twitter.com"],
+      links: ["https://rehaabit.com"],
     },
     {
       title: "Download App",
       items: [AppStore, PlayStore],
-      links: ["/terms-and-conditions", "/privacy-policy"],
+      links: [],
     },
     {
       title: "Contact Us",
       items: ["Call us", "+918928041978", "Email us", "support@rehaabit.com"],
-      links: ["/terms-and-conditions", "/privacy-policy"],
+      links: [],
     },
   ];
 
@@ -85,7 +82,6 @@ const Footer = ({JoinRehaabitFamilyText}) => {
       to: "https://www.linkedin.com/company/rehaabit/",
     },
   ];
-
 
   return (
     <div className="relative flex items-center justify-center w-full bg-[#151613] h-[651px]">
@@ -120,9 +116,9 @@ const Footer = ({JoinRehaabitFamilyText}) => {
                 </div>
               </div>
 
-              <div className="flex flex-col ml-5 p-2 w-8/12 max-md:ml-0 max-md:w-full">
+              <div className="flex flex-col ml-5 p-1 w-8/12 max-md:ml-0 max-md:w-full">
                 <div className="flex flex-wrap grow w-full justify-evenly max-md:max-w-full">
-                  <div className="flex gap-5 w-full pl-16 ml-11 max-md:pl-0 max-md:ml-0 max-md:flex-row">
+                  <div className="flex gap-10 w-full pl-16 ml-11 max-md:pl-0 max-md:ml-0 max-md:flex-row">
                     {footerData.map((column, index) => (
                       <FooterColumn
                         key={index}
@@ -134,6 +130,13 @@ const Footer = ({JoinRehaabitFamilyText}) => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="flex items-center flex-col mt-10 px-4">
+              <span className="block text-center text-gray-600 dark:text-gray-400">
+                © 2023-<span id="currentYear">2024</span>{" "}
+                <span className="text-emerald-800">Rehaabit</span> is a
+                registered trademark. All Rights Reserved.
+              </span>
             </div>
           </div>
         </section>
