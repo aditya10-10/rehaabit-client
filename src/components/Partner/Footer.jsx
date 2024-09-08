@@ -36,7 +36,7 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
     },
     {
       title: "For Partners",
-      items: ["Privacy Policy", "Terms & Conditions", "Blog"],
+      items: ["Terms & Conditions", "Privacy Policy", "Blog"],
       links: [
         "/partner/terms-and-conditions",
         "/partner/privacy-policy",

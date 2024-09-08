@@ -49,6 +49,8 @@ import Users from "./components/Dashboard/Users/Users";
 import UserDetails from "./components/Dashboard/Users/UserDetailsModal";
 import UsersEnquiries from "./components/Enquiry/UsersEnquiries";
 import ComingSoon from "./pages/ComingSoon";
+import PartnerPolicy from "./pages/Partnerpolicy";
+import PartnerTermsAndConditions from "./pages/PartnerTermAndCondition";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -210,6 +212,11 @@ export default function App() {
           {/* PARTNER */}
           <Route path="/partner" element={<PartnerPage />} />
           <Route path="/partner-form/*" element={<PartnerForm />} />
+          <Route path="/partner/privacy-policy" element={<PartnerPolicy />} />
+          <Route
+            path="/partner/terms-and-conditions"
+            element={<PartnerTermsAndConditions />}
+          />
           <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>
       </div>
