@@ -17,7 +17,7 @@ const FooterColumn = ({ title, items, links }) => {
           <Link
             to={links[index]}
             key={index}
-            className="mt-4 text-white underline"
+            className="mt-4 text-white underline max-md:flex max-md:justify-center max-md:items-center"
           >
             {!item.includes("/") ? item : <img src={item} alt="icon" />}
           </Link>
