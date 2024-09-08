@@ -48,6 +48,7 @@ import { useQuery } from "@tanstack/react-query";
 import Users from "./components/Dashboard/Users/Users";
 import UserDetails from "./components/Dashboard/Users/UserDetailsModal";
 import UsersEnquiries from "./components/Enquiry/UsersEnquiries";
+import ComingSoon from "./pages/ComingSoon";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -145,11 +146,12 @@ export default function App() {
 
   return (
     <>
-      {location.pathname.includes("/dashboard") ||
-      location.pathname.includes("/partner") ||
-      location.pathname.includes("/careers") ? null : (
+      {!location.pathname.includes("/dashboard") &&
+      !location.pathname.includes("/partner") &&
+      !location.pathname.includes("/careers") &&
+      location.pathname !== "/coming-soon" ? ( // Exclude Navbar from MainPage
         <Navbar onLoginClick={handleLoginClick} />
-      )}
+      ) : null}
 
       {isModalOpen && (
         <div
@@ -208,6 +210,7 @@ export default function App() {
           {/* PARTNER */}
           <Route path="/partner" element={<PartnerPage />} />
           <Route path="/partner-form/*" element={<PartnerForm />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>
       </div>
     </>

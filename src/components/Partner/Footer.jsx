@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import LogoDark from "../../assets/partner/LOGO_Dark.svg";
+import LogoDark from "../../assets/partner/transparentlogofordark.svg";
 import Facebook from "../../assets/partner/facebook.svg";
 import Instagram from "../../assets/partner/instagram.svg";
 import Linkedin from "../../assets/partner/linkedin.svg";
@@ -40,7 +40,7 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
       links: [
         "/partner/terms-and-conditions",
         "/partner/privacy-policy",
-        "/blogs",
+        "/coming-soon",
       ],
     },
     {
@@ -51,7 +51,7 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
     {
       title: "Download App",
       items: [AppStore, PlayStore],
-      links: [],
+      links: ["/coming-soon", "/coming-soon"],
     },
     {
       title: "Contact Us",
