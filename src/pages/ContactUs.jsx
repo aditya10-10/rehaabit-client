@@ -29,25 +29,25 @@ const ContactUs = () => {
               Contact Information
             </h1>
             <span className="text-lg text-[#C9C9C9]">
-              Say something to start a live chat!
+              We are here to help you!
             </span>
           </div>
 
           <div className="flex flex-col gap-10 max-xs:gap-5 w-2/3 max-2xl:w-3/4 max-xl:w-11/12 max-xs:w-full max-xs:items-center max-xs:justify-center max-xs:text-center">
             <div className="flex max-xs:flex-col items-center gap-5 max-xs:gap-2 text-white">
               <BiSolidPhoneCall size={20} />
-              <span>+1012 3456 789</span>
+              <span>+91 90265-89058</span>
             </div>
 
             <div className="flex max-xs:flex-col items-center gap-5 max-xs:gap-2 text-white">
               <IoMailSharp size={20} />
-              <span>demo@gmail.com</span>
+              <span>support@rehaabit.com</span>
             </div>
 
             <div className="flex max-xs:flex-col items-center gap-5 max-xs:gap-2 text-white">
               <FaLocationDot size={20} />
               <span className="text-start max-xs:text-center">
-                132 Dartmouth Street Boston, Massachusetts 02156 United States
+                Rehaabit, 203, Indra Nagar, Mumbai, Maharashtra, India
               </span>
             </div>
           </div>

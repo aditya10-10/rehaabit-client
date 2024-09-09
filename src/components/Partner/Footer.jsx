@@ -32,7 +32,7 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
     {
       title: "Company",
       items: ["About", "Careers", "Help", "Contact Us"],
-      links: ["/about", "/careers", "/help", "/contact-us"],
+      links: ["/about-us", "/careers", "/help", "/contact-us"],
     },
     {
       title: "For Partners",

@@ -51,6 +51,8 @@ import UsersEnquiries from "./components/Enquiry/UsersEnquiries";
 import ComingSoon from "./pages/ComingSoon";
 import PartnerPolicy from "./pages/Partnerpolicy";
 import PartnerTermsAndConditions from "./pages/PartnerTermAndCondition";
+import CancellationRefundPolicy from "./pages/CancellationAndRefundPolicy";
+import AboutPage from "./pages/AboutUs";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -176,7 +178,12 @@ export default function App() {
             element={<TermsAndConditions />}
           />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route
+            path="/cancellation-and-refund-policy"
+            element={<CancellationRefundPolicy />}
+          />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/about-us" element={<AboutPage />} />
           <Route path="/help" element={<Help />} />
           <Route path="/careers" element={<Careers />} />
 

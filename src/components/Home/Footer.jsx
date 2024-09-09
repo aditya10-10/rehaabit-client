@@ -30,8 +30,20 @@ const Footer = () => {
   const footerData = [
     {
       title: "Company",
-      items: ["About Us", "Terms & Conditions", "Privacy Policy", "Careers"],
-      links: ["/about", "/terms-and-conditions", "/privacy-policy", "/careers"],
+      items: [
+        "About Us",
+        "Terms & Conditions",
+        "Privacy Policy",
+        "Cancellation & Refund Policy",
+        "Careers",
+      ],
+      links: [
+        "/about-us",
+        "/terms-and-conditions",
+        "/privacy-policy",
+        "/cancellation-and-refund-policy",
+        "/careers",
+      ],
     },
     {
       title: "For Customers",

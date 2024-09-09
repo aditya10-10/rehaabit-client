@@ -10,7 +10,8 @@ module.exports = {
         amaranth: ["Amaranth", "sans-serif"],
         lato: ["Lato", "sans-serif"],
         lexend: ["Lexend", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"]
+        poppins: ["Poppins", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
       backgroundImage: {
         "custom-gradient":
