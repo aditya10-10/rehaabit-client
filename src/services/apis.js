@@ -23,6 +23,9 @@ export const serviceEndpoints = {
   CREATE_SERVICE_API: BASE_URL + "/createService",
   GET_FULL_SERVICE_DETAILS_API: BASE_URL + "/getFullServiceDetails",
   GET_ALL_SERVICES_API: BASE_URL + "/getAllServices",
+  GET_ALL_NON_PRICED_AND_PUBLISHED_SERVICE_API:
+    BASE_URL + "/getAllNoPricedPublishedServices",
+  GET_ALL_PUBLISHED_SERVICES_API: BASE_URL + "/getAllPublishedServices",
   EDIT_SERVICE_API: BASE_URL + "/editService",
   DELETE_SERVICE_API: BASE_URL + "/deleteService",
   CREATE_INCLUDE_API: BASE_URL + "/createInclude",

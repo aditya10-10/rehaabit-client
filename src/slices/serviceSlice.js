@@ -720,7 +720,7 @@ const serviceSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllFAQs.fulfilled, (state, action) => {
-        if(state.service.faqs) state.service.faqs = action.payload.faqs;
+        if (state.service.faqs) state.service.faqs = action.payload.faqs;
         state.faqs = action.payload.faqs;
         state.isLoading = false;
       })
