@@ -53,27 +53,29 @@ const PopularSearches = () => {
           {/* Scrollable Content */}
           <div
             ref={scrollRef}
-            className="flex gap-4 justify-center self-center w-full flex-nowrap overflow-x-auto px-4 scroll-smooth"
+            className="flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scroll-smooth"
           >
-            {nonPricedServices.map((service) => {
+            {nonPricedServices.map((service, index) => {
               const { _id, thumbnail, serviceName } = service;
 
               return (
                 <div
                   key={_id}
-                  className="min-w-[16rem] flex-shrink-0 snap-start first:ml-28 last:mr-4"
+                  className={`min-w-[20rem] flex-shrink-0 snap-start ${
+                    index === 0 ? "ml-4" : ""
+                  } ${index === nonPricedServices.length - 1 ? "mr-4" : ""}`}
                 >
                   <img
                     src={thumbnail}
                     alt={serviceName}
-                    className="w-full h-44 rounded-tl-xl rounded-tr-xl object-cover"
+                    className="w-full h-56 rounded-tl-xl rounded-tr-xl object-cover"
                   />
 
-                  <div className="bg-blue-500 px-4 py-2 rounded-bl-xl rounded-br-xl">
-                    <h1 className="text-white text-xl mb-4">{serviceName}</h1>
+                  <div className="bg-blue-500 px-6 py-4 rounded-bl-xl rounded-br-xl">
+                    <h1 className="text-white text-2xl mb-4">{serviceName}</h1>
 
                     <button
-                      className="text-blue-500 bg-white px-3 py-1 rounded-md"
+                      className="text-blue-500 bg-white px-4 py-2 rounded-md"
                       onClick={() => {
                         setServiceIdToPass(_id);
                         handleEnquireNowModal();

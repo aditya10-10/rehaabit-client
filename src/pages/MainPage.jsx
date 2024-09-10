@@ -6,6 +6,7 @@ import HowDoesItWorks from "../components/Home/HowDoesItWorks";
 import Testimonials from "../components/Home/Testimonials";
 import Footer from "../components/Home/Footer";
 import Banner from "../components/Home/Banner";
+import WhatWeOffer from "../components/Home/WhatWeOffer";
 import { useDispatch } from "react-redux";
 import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
@@ -27,8 +28,8 @@ const MainPage = () => {
       <Features />
       <PopularSearches />
       <Services />
+      <WhatWeOffer />
       <Banner />
-
       <HowDoesItWorks />
       <Testimonials />
       <Footer />
