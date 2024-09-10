@@ -86,7 +86,7 @@ const Hero = () => {
               </span>
             </h1>
             <p
-              className="text-gray-600 text-sm mt-4 leading-relaxed max-md:text-base max-sm:text-sm"
+              className="text-gray-600 text-sm mt-4 leading-relaxed max-md:text-base max-sm:text-sm hidden md:block"
               style={{ fontFamily: "Calibri, sans-serif" }}
             >
               <span className="text-purple-700 font-medium">
