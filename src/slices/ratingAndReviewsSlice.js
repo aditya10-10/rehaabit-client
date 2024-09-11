@@ -8,6 +8,7 @@ const {
   CREATE_RATING_API,
   GET_ALL_RATING_API,
   GET_AVERAGE_RATING_API,
+  GET_USERS_RATING_AND_REVIEWS_WITH_USERNAME_API,
   GET_USERS_RATING_AND_REVIEWS_API,
 } = ratingAndReviewsEndpoints;
 
@@ -38,7 +39,7 @@ export const createRating = createAsyncThunk(
 
 // GET USERS RATING AND REVIEWS
 export const getUsersRatingAndReviews = createAsyncThunk(
-  "ratingAndReviews/getUsersRatingAndReviews",
+  "ratingAndReviews/getAllRatingsAndReviewsWithUserNames",
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector(
@@ -59,9 +60,24 @@ export const getAllRatingAndReviews = createAsyncThunk(
   "ratingAndReviews/getAllRatingAndReviews",
   async (_, thunkAPI) => {
     try {
+      const response = await apiConnector("GET", GET_ALL_RATING_API);
+
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+// GET ALL RATING AND REVIEWS WITH USER NAMES
+export const getAllRatingAndReviewsWithUserNames = createAsyncThunk(
+  "ratingAndReviews/getAllRatingAndReviewsWithUserNames",
+  async (_, thunkAPI) => {
+    try {
       const response = await apiConnector(
         "GET",
-        GET_ALL_RATING_API
+        GET_USERS_RATING_AND_REVIEWS_WITH_USERNAME_API
       );
 
       return response.data.data;
@@ -133,6 +149,28 @@ const ratingAndreviewsSlice = createSlice({
 
         toast.error("Error...");
       })
+      // GET ALL RATING AND REVIEWS WITH USER NAMES
+      .addCase(getAllRatingAndReviewsWithUserNames.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        getAllRatingAndReviewsWithUserNames.fulfilled,
+        (state, action) => {
+          state.isLoading = false;
+          state.ratingAndReviews = action.payload;
+
+          //   // toast.success("OTP Send Successfully!");
+        }
+      )
+      .addCase(
+        getAllRatingAndReviewsWithUserNames.rejected,
+        (state, action) => {
+          state.isLoading = false;
+          state.error = action;
+
+          toast.error("Error...");
+        }
+      );
   },
 });
 

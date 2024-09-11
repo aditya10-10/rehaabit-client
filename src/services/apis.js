@@ -123,6 +123,8 @@ export const ratingAndReviewsEndpoints = {
   GET_AVERAGE_RATING_API: BASE_URL + "/getAverageRating",
   GET_ALL_RATING_API: BASE_URL + "/getAllRating",
   GET_USERS_RATING_AND_REVIEWS_API: BASE_URL + "/getUsersRatingAndReviews",
+  GET_USERS_RATING_AND_REVIEWS_WITH_USERNAME_API:
+    BASE_URL + "/getAllRatingsAndReviewsWithUserNames",
 };
 
 // ENQUIRE NOW - NON PRICED SERVICES
