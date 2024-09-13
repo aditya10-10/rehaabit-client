@@ -9,6 +9,12 @@ const Testimonials = () => {
   const { ratingAndReviews, isLoading, error } = useSelector(
     (state) => state.ratingAndReviews
   );
+
+  const withReviews = ratingAndReviews.filter(
+    (ratingAndReview) => ratingAndReview.review !== ""
+  );
+
+  // State to keep track of modal's current index
   const [currentIndex, setCurrentIndex] = useState(0);
   const sliderRef = useRef(null);
 
@@ -16,26 +22,15 @@ const Testimonials = () => {
     dispatch(getAllRatingAndReviewsWithUserNames());
   }, [dispatch]);
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 4 : ratingAndReviews.length - 1
-    );
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex < ratingAndReviews.length - 1 ? prevIndex + 1 : 0
-    );
-  };
-
-  useEffect(() => {
+  // Scroll logic to move left or right
+  const scroll = (direction) => {
     if (sliderRef.current) {
-      sliderRef.current.scrollTo({
-        left: currentIndex * sliderRef.current.offsetWidth,
+      sliderRef.current.scrollBy({
+        left: direction === "left" ? -390 : 390, // Adjust scrolling distance as needed
         behavior: "smooth",
       });
     }
-  }, [currentIndex]);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -51,42 +46,44 @@ const Testimonials = () => {
         Client Testimonials
       </h2>
       <div className="relative mt-10">
-        <div ref={sliderRef} className="overflow-hidden">
-          <div className="flex">
-            {Array.isArray(ratingAndReviews) && ratingAndReviews.length > 0 ? (
-              ratingAndReviews.map((review, index) => {
-                const { additionalDetails } = review.user || {};
-                const firstName = additionalDetails?.firstName || "Anonymous";
-                const lastName = additionalDetails?.lastName || "";
+        <div
+          ref={sliderRef}
+          className="flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scroll-smooth"
+        >
+          {Array.isArray(ratingAndReviews) && ratingAndReviews.length > 0 ? (
+            withReviews.slice(0, 5).map((review, index) => {
+              const { additionalDetails } = review.user || {};
+              const firstName = additionalDetails?.firstName || "Anonymous";
+              const lastName = additionalDetails?.lastName || "";
 
-                return (
-                  <ReviewCards
-                    key={index}
-                    quote={review.review || "No review provided."}
-                    name={`${firstName} ${lastName}`}
-                    rating={review.rating}
-                    imageSrc={""} // Provide a valid `imageSrc` if needed
-                  />
-                );
-              })
-            ) : (
-              <div>No reviews available</div>
-            )}
-          </div>
+              return (
+                <ReviewCards
+                  key={index}
+                  quote={review.review || "No review provided."}
+                  name={`${firstName} ${lastName}`}
+                  rating={review.rating}
+                  imageSrc={""} // Provide a valid `imageSrc` if needed
+                />
+              );
+            })
+          ) : (
+            <div>No reviews available</div>
+          )}
         </div>
 
+        {/* Scroll Buttons */}
         <div className="flex gap-4 justify-center self-center mt-12 max-md:mt-10">
           <button
             className="flex justify-center items-center py-4 w-14 h-14 border border-violet-700 border-solid rounded-[56px]"
             aria-label="Previous testimonial"
-            onClick={handlePrev}
+            onClick={() => scroll("left")} // Scroll left
           >
             <IoIosArrowRoundBack className="w-full h-full text-violet-700" />
           </button>
           <button
             className="flex justify-center items-center py-4 w-14 h-14 bg-red-400 rounded-[56px]"
             aria-label="Next testimonial"
-            onClick={handleNext}
+            onClick={() => scroll("right")} // Scroll right
           >
             <IoIosArrowRoundForward className="w-full h-full text-white" />
           </button>

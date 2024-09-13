@@ -2,38 +2,68 @@ import { useSelector } from "react-redux";
 import EnquireNowModal from "./EnquireNowModal";
 import { useState, useRef } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import ServiceDetailsModal from "../ServiceDetailsModal";
 
 const PopularSearches = () => {
   const { allServices } = useSelector((state) => state.service);
 
+  // State management for modals and the selected service ID
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
 
   const nonPricedServices = allServices.filter(
     (service) => service.priceStatus === "non-priced"
   );
 
-  const handleEnquireNowModal = () => {
-    setIsEnquireNowModalOpen(!isEnquireNowModalOpen);
-  };
-
+  // Scroll reference and scroll logic
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({
-        left: direction === "left" ? -300 : 300,
+        left: direction === "left" ? -355 : 355,
         behavior: "smooth",
       });
     }
   };
 
+  // Function to open the Service Details Modal
+  const handleServiceModalOpen = (serviceId) => {
+    setServiceIdToPass(serviceId); // Pass the selected service ID
+    setIsServiceModalOpen(true); // Open the Service Details Modal
+  };
+
+  // Function to close the Service Details Modal
+  const handleServiceModalClose = () => {
+    setIsServiceModalOpen(false); // Close the Service Details Modal
+  };
+
+  // Function to open the Enquire Now Modal
+  const handleEnquireNowModalOpen = (serviceId) => {
+    setServiceIdToPass(serviceId); // Pass the selected service ID
+    setIsEnquireNowModalOpen(true); // Open the Enquire Now Modal
+  };
+
+  // Function to close the Enquire Now Modal
+  const handleEnquireNowModalClose = () => {
+    setIsEnquireNowModalOpen(false); // Close the Enquire Now Modal
+  };
+
   return (
     <>
+      {/* Enquire Now Modal */}
       <EnquireNowModal
         isEnquireNowModalOpen={isEnquireNowModalOpen}
-        handleEnquireNowModal={handleEnquireNowModal}
+        handleEnquireNowModal={handleEnquireNowModalClose}
         serviceIdToPass={serviceIdToPass}
+      />
+
+      {/* Service Details Modal */}
+      <ServiceDetailsModal
+        isServiceModalOpen={isServiceModalOpen}
+        handleServiceModal={handleServiceModalClose}
+        serviceId={serviceIdToPass}
       />
 
       <section className="relative flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
@@ -74,12 +104,16 @@ const PopularSearches = () => {
                   <div className="bg-blue-500 px-6 py-4 rounded-bl-xl rounded-br-xl">
                     <h1 className="text-white text-2xl mb-4">{serviceName}</h1>
 
+                    {/* Redesigned Button */}
                     <button
-                      className="text-blue-500 bg-white px-4 py-2 rounded-md"
-                      onClick={() => {
-                        setServiceIdToPass(_id);
-                        handleEnquireNowModal();
-                      }}
+                      className="text-green-600 bg-white px-6 py-2 rounded-full mr-4 transition-all duration-300 hover:bg-green-600 hover:text-white shadow-lg border border-green-600"
+                      onClick={() => handleServiceModalOpen(_id)} // Open Service Modal
+                    >
+                      More Details
+                    </button>
+                    <button
+                      className="text-purple-600 bg-white px-6 py-2 rounded-full transition-all duration-300 hover:bg-purple-600 hover:text-white shadow-lg border border-purple-600"
+                      onClick={() => handleEnquireNowModalOpen(_id)} // Open Enquire Now Modal
                     >
                       Enquire Now
                     </button>

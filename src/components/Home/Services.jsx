@@ -57,6 +57,10 @@ const Services = () => {
     setIsServiceModalOpen(!isServiceModalOpen);
   };
 
+  const pricedServices = allServices.filter(
+    (service) => service.priceStatus === "priced"
+  );
+
   return (
     <>
       <ServiceDetailsModal
@@ -80,7 +84,7 @@ const Services = () => {
               <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
                 Services{" "}
               </h2>
-              {allServices.slice(0, 5).map((service) => (
+              {pricedServices.slice(0, 5).map((service) => (
                 <div
                   key={service._id}
                   className="w-full cursor-pointer"

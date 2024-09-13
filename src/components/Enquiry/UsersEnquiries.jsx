@@ -105,10 +105,9 @@ const UsersEnquiries = () => {
                 className="shadow-custom-shadow border rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-          )} */}
+          )}
         </div>
       </nav>
-
 
       {enquiries?.length === 0 ? (
         <NothingToShow text="Orders" btnText="shopping" />
