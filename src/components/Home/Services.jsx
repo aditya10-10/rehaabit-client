@@ -58,7 +58,7 @@ const Services = () => {
   };
 
   const pricedServices = allServices.filter(
-    (service) => service.priceStatus === "priced"
+    (service) => service.priceStatus === "priced" && service.status !== "Draft"
   );
 
   return (

@@ -16,6 +16,7 @@ import {
 } from "../slices/cartSlice";
 import { openModal } from "../slices/modalSlice";
 import { setSingleOrder } from "../slices/orderSlice";
+import EnquireNowModal from "../components/Home/EnquireNowModal";
 import { ServiceCard } from "../components/Dashboard/Service";
 import ServiceDetailsModal from "../components/ServiceDetailsModal";
 
@@ -31,40 +32,10 @@ const Categories = () => {
   const categoryId = params.id;
   const { scrollTo, subCategoryId, serviceId } = location.state || {};
 
-  // console.log(location.state)
-
-  // const subcategoriesQuery = useQuery({
-  //   queryKey: ["subcategories", categoryId],
-  //   queryFn: () => dispatch(getSubCategoriesByCategory({ categoryId })),
-  // });
-  
-  // const servicesQuery = useQuery({
-  //   queryKey: ["allServices", categoryId],
-  //   queryFn: () => dispatch(getAllServices()),
-  // });
-  
-  // const cartServicesQuery = useQuery({
-  //   queryKey:[ "cartServices", categoryId],
-  //   queryFn: () => dispatch(getAllCartServices()),
-  // });
-
-  // const query = useQuery({
-  //   queryKey: ["data", categoryId],
-  //   queryFn: async () => {
-  //     const subcategories = await dispatch(getSubCategoriesByCategory({ categoryId }));
-  //     const services = await dispatch(getAllServices());
-  //     const cartServices = await dispatch(getAllCartServices());
-  
-  //     return { subcategories, services, cartServices };
-  //   },
-  // });
-  
-
-  // console.log(query);
-
   const [onRemove, setOnRemove] = useState(null);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
+  const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
 
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
@@ -78,18 +49,11 @@ const Categories = () => {
     (category) => category._id === categoryId
   );
 
-  // console.log(categoryName.name)
-
-  // console.log(subCategoriesByCategory);
-
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
 
   useEffect(() => {
-    // dispatch(showAllCategories());
-    // dispatch(getAllServices());
     dispatch(getSubCategoriesByCategory({ categoryId }));
-    // dispatch(getAllCartServices());
   }, [dispatch, categoryId]);
 
   useEffect(() => {
@@ -178,6 +142,28 @@ const Categories = () => {
     setIsServiceModalOpen(!isServiceModalOpen);
   };
 
+  // Function to open the Service Details Modal
+  const handleServiceModalOpen = (serviceId) => {
+    setServiceIdToPass(serviceId); // Pass the selected service ID
+    setIsServiceModalOpen(true); // Open the Service Details Modal
+  };
+
+  // Function to close the Service Details Modal
+  const handleServiceModalClose = () => {
+    setIsServiceModalOpen(false); // Close the Service Details Modal
+  };
+
+  // Function to open the Enquire Now Modal
+  const handleEnquireNowModalOpen = (serviceId) => {
+    setServiceIdToPass(serviceId); // Pass the selected service ID
+    setIsEnquireNowModalOpen(true); // Open the Enquire Now Modal
+  };
+
+  // Function to close the Enquire Now Modal
+  const handleEnquireNowModalClose = () => {
+    setIsEnquireNowModalOpen(false); // Close the Enquire Now Modal
+  };
+
   return (
     <>
       {isServiceModalOpen && (
@@ -191,6 +177,12 @@ const Categories = () => {
       {!isServiceModalOpen && (
         <ConfirmationModal text="Remove" onDelete={onRemove} />
       )}
+
+      <EnquireNowModal
+        isEnquireNowModalOpen={isEnquireNowModalOpen}
+        handleEnquireNowModal={handleEnquireNowModalClose}
+        serviceIdToPass={serviceIdToPass}
+      />
 
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <div className="w-[40%] max-md:w-full">
@@ -232,7 +224,8 @@ const Categories = () => {
             const { _id, subCategoryName } = category;
 
             const services = allServices.filter(
-              (service) => service.subCategoryId === _id
+              (service) =>
+                service.subCategoryId === _id && service.status !== "Draft"
             );
 
             return services.length > 0 ? (
@@ -245,8 +238,14 @@ const Categories = () => {
 
                 <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
                   {services.map((service) => {
-                    const { _id, serviceName, thumbnail, serviceDescription } =
-                      service;
+                    const {
+                      _id,
+                      serviceName,
+                      thumbnail,
+                      serviceDescription,
+                      priceStatus,
+                      status,
+                    } = service;
 
                     const cartService = cartServices.find(
                       (service) => service.serviceId === _id
@@ -254,81 +253,99 @@ const Categories = () => {
                     const serviceQty = cartService ? cartService.qty : 0;
 
                     return (
-                      <div
-                        key={_id}
-                        ref={(e) => (serviceRefs.current[_id] = e)}
-                        className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
-                      >
+                      status !== "Draft" && (
                         <div
-                          className="w-full cursor-pointer"
-                          onClick={() => {
-                            setIsServiceModalOpen(!isServiceModalOpen);
-                            setServiceIdToPass(_id);
-                          }}
+                          key={_id}
+                          ref={(e) => (serviceRefs.current[_id] = e)}
+                          className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
                         >
-                          <ServiceCard {...service} />
-                        </div>
-                        {/* <Link to={`/service-details/${_id}`} className="w-full">
-                          <ServiceCard {...service} />
-                        </Link> */}
-
-                        <div className="flex gap-2 justify-end w-full mt-4">
-                          <button
-                            className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
-                            onClick={() => handleBuyNow(service)}
+                          <div
+                            className="w-full cursor-pointer"
+                            onClick={() => {
+                              setIsServiceModalOpen(!isServiceModalOpen);
+                              setServiceIdToPass(_id);
+                            }}
                           >
-                            Buy Now
-                          </button>
+                            <ServiceCard {...service} />
+                          </div>
 
-                          <div className="flex items-center">
-                            {serviceQty > 0 ? (
+                          <div className="flex gap-2 justify-end w-full mt-4">
+                            {priceStatus === "priced" ? (
                               <>
                                 <button
-                                  className="border px-2 border-gray-400 rounded-full"
-                                  disabled={isLoading}
-                                  onClick={() =>
-                                    handleDecrease(cartService._id, service)
-                                  }
+                                  className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
+                                  onClick={() => handleBuyNow(service)}
                                 >
-                                  -
+                                  Buy Now
                                 </button>
 
-                                <span className="mx-2 text-gray-500">
-                                  {serviceQty}
-                                </span>
+                                <div className="flex items-center">
+                                  {serviceQty > 0 ? (
+                                    <>
+                                      <button
+                                        className="border px-2 border-gray-400 rounded-full"
+                                        disabled={isLoading}
+                                        onClick={() =>
+                                          handleDecrease(
+                                            cartService._id,
+                                            service
+                                          )
+                                        }
+                                      >
+                                        -
+                                      </button>
 
-                                <button
-                                  className="border px-2 border-gray-400 rounded-full"
-                                  disabled={isLoading}
-                                  onClick={() =>
-                                    handleIncrease(cartService._id, service)
-                                  }
-                                >
-                                  +
-                                </button>
+                                      <span className="mx-2 text-gray-500">
+                                        {serviceQty}
+                                      </span>
 
-                                <button
-                                  className="px-2 text-gray-600 hover:text-red-500"
-                                  disabled={isLoading}
-                                  onClick={() =>
-                                    handleRemove(cartService._id, service)
-                                  }
-                                >
-                                  REMOVE
-                                </button>
+                                      <button
+                                        className="border px-2 border-gray-400 rounded-full"
+                                        disabled={isLoading}
+                                        onClick={() =>
+                                          handleIncrease(
+                                            cartService._id,
+                                            service
+                                          )
+                                        }
+                                      >
+                                        +
+                                      </button>
+
+                                      <button
+                                        className="px-2 text-gray-600 hover:text-red-500"
+                                        disabled={isLoading}
+                                        onClick={() =>
+                                          handleRemove(cartService._id, service)
+                                        }
+                                      >
+                                        REMOVE
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <button
+                                      className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
+                                      disabled={isLoading}
+                                      onClick={() => handleAddToCart(service)}
+                                    >
+                                      Add to Cart
+                                    </button>
+                                  )}
+                                </div>
                               </>
                             ) : (
                               <button
-                                className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
-                                disabled={isLoading}
-                                onClick={() => handleAddToCart(service)}
+                                className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
+                                onClick={() =>
+                                  handleEnquireNowModalOpen(service)
+                                } // Open Enquire Now Modal
                               >
-                                Add to Cart
+                                Enquire Now
                               </button>
                             )}
                           </div>
                         </div>
-                      </div>
+                      )
                     );
                   })}
                 </div>

@@ -13,7 +13,8 @@ const PopularSearches = () => {
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
 
   const nonPricedServices = allServices.filter(
-    (service) => service.priceStatus === "non-priced"
+    (service) =>
+      service.priceStatus === "non-priced" && service.status !== "Draft"
   );
 
   // Scroll reference and scroll logic
