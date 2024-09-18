@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 
-import { Sidebar, Navbar } from "../components/Dashboard";
+import Sidebar from "../components/Dashboard/Sidebar";
+import Navbar from "../components/Navbar/Navbar";
 import { useEffect } from "react";
 import { showAllCategories } from "../slices/categorySlice";
 import { showAllSubCategories } from "../slices/subCategorySlice";
@@ -27,11 +28,16 @@ function Dashboard() {
 
   return (
     <>
-      <Navbar />
+      {/* Navbar */}
+      {/* <Navbar /> */}
 
-      <div className="flex">
+      {/* Flexbox layout for the sidebar and main content */}
+      <div className="flex h-screen">
+        {/* Sidebar should be below the navbar */}
         <Sidebar />
-        <div className="flex-grow overflow-y-auto">
+
+        {/* Main content area, takes the rest of the screen width */}
+        <div className="flex-grow overflow-y-auto p-4">
           <Outlet />
         </div>
       </div>

@@ -53,6 +53,7 @@ import PartnerPolicy from "./pages/Partnerpolicy";
 import PartnerTermsAndConditions from "./pages/PartnerTermAndCondition";
 import CancellationRefundPolicy from "./pages/CancellationAndRefundPolicy";
 import AboutPage from "./pages/AboutUs";
+import Contact from "./components/Contact/ContactUs";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -150,8 +151,7 @@ export default function App() {
 
   return (
     <>
-      {!location.pathname.includes("/dashboard") &&
-      !location.pathname.includes("/partner") &&
+      {!location.pathname.includes("/partner") &&
       !location.pathname.includes("/careers") &&
       location.pathname !== "/coming-soon" ? ( // Exclude Navbar from MainPage
         <Navbar onLoginClick={handleLoginClick} />
@@ -165,7 +165,7 @@ export default function App() {
         </div>
       )}
 
-      <div className="w-screen min-h-screen">
+      <div className="">
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/thank-you" element={<Thankyou />} />
@@ -187,11 +187,18 @@ export default function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/careers" element={<Careers />} />
 
-          {(user?.accountType === "Admin" || user?.accountType === "User") && (
-            <></>
+          {user?.accountType === "User" && (
+            <>
+              <Route path="/dashboard/*" element={<Dashboard />}>
+                <Route path="my-profile" element={<MyProfile />} />
+                <Route path="edit-profile" element={<EditProfile />} />
+                <Route path="orders" element={<MyOrders />} />
+                <Route path="addresses" element={<Addresses />} />
+              </Route>
+            </>
           )}
 
-          {(user?.accountType === "User" || user?.accountType === "Admin") && (
+          {user?.accountType === "Admin" && (
             <>
               <Route path="/dashboard/*" element={<Dashboard />}>
                 <Route path="category" element={<Category />} />
@@ -205,6 +212,7 @@ export default function App() {
                 <Route path="addresses" element={<Addresses />} />
                 <Route path="users" element={<Users />} />
                 <Route path="user-enquires" element={<UsersEnquiries />} />
+                <Route path="contacts" element={<Contact />} />
               </Route>
             </>
           )}

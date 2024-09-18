@@ -101,6 +101,7 @@ export const partnerEndpoints = {
 // CONTACT ENDPOINTS
 export const contactEndpoints = {
   CONTACT_API: BASE_URL + "/contact",
+  GET_ALL_CONTACTS_API: BASE_URL + "/getAllContacts",
 };
 
 // CAREERS ENDPOINTS

@@ -97,6 +97,13 @@ const sidebarLinks = [
     adminOnly: true,
   },
   {
+    id: 12,
+    icon: <IoIosHelpCircleOutline />,
+    text: "Contact",
+    to: "contacts",
+    adminOnly: true,
+  },
+  {
     id: 11,
     icon: <IoMdSettings />,
     text: "Settings",

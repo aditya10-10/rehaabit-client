@@ -8,6 +8,7 @@ import {
   OurPartnerBenefits,
   WhyChooseRehaabit,
 } from "../components/Partner";
+import React, { useEffect } from "react";
 
 const PartnerPage = () => {
   const HeroSectionText = {
@@ -79,6 +80,10 @@ const PartnerPage = () => {
         "We ensure secure and timely payments for all completed jobs. Clients pay through our platform, and we transfer the funds to you, minus a small service fee. This system provides financial protection and peace of mind for both you and your clients.",
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex w-screen min-h-screen font-lato flex-col bg-white overflow-x-hidden">
