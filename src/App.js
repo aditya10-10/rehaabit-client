@@ -54,6 +54,7 @@ import PartnerTermsAndConditions from "./pages/PartnerTermAndCondition";
 import CancellationRefundPolicy from "./pages/CancellationAndRefundPolicy";
 import AboutPage from "./pages/AboutUs";
 import Contact from "./components/Contact/ContactUs";
+import PageNotFound from "./pages/PageNotFound";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -233,6 +234,7 @@ export default function App() {
             element={<PartnerTermsAndConditions />}
           />
           <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
     </>
