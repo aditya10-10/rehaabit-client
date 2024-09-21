@@ -142,13 +142,7 @@ const Checkout = () => {
 
     // const partnerId = "66c9c8a413a342ca56c368c4";
 
-    placeOrder(
-      token,
-      singleOrder,
-      isSingleOrder,
-      navigate,
-      dispatch
-    );
+    placeOrder(token, singleOrder, isSingleOrder, user, navigate, dispatch);
 
     // Refresh the cart services after placing the order
     dispatch(getAllCartServices());

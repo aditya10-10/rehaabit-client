@@ -25,6 +25,7 @@ export async function placeOrder(
   token,
   singleOrder,
   isSingleOrder,
+  user,
   navigate,
   dispatch
 ) {
@@ -65,8 +66,8 @@ export async function placeOrder(
       description: "Thank You for Purchasing the Service",
       image: rzpLogo,
       prefill: {
-        name: "Gaurav Kumar", // Replace with dynamic user details
-        contact: "9026589058", // Replace with dynamic user details
+        name: `${user.additionalDetails.firstName} ${user.additionalDetails.lastName}`,
+        contact: user.contactNumber, // Replace with dynamic user details
       },
       handler: function (response) {
         // verifyPayment({ ...response, services }, token, navigate, dispatch);
