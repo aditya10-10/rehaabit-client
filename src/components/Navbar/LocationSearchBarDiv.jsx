@@ -99,13 +99,26 @@ const LocationSearchBarDiv = () => {
     <>
       <div className="relative" ref={locationDropdownRef}>
         <div
-          className="flex items-center gap-2 border p-2 rounded-md shadow-custom-shadow w-60 max-lg:hidden cursor-pointer"
+          className="flex items-center gap-2 border p-2 rounded-full shadow-custom-shadow w-60 max-lg:hidden cursor-pointer"
           onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
+          style={{
+            fontFamily: "Montserrat, sans-serif",
+            // fontWeight: "italic",
+            fontSize: "48px",
+            color: "#333",
+          }}
         >
           <span>
             <CiLocationOn size={20} />
           </span>
-          <span className="text-gray-600">
+          <span
+            className="text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
+            style={{
+              fontFamily: "Open Sans, sans-serif",
+              fontSize: "16px",
+              color: "#444",
+            }}
+          >
             {city ? `${city}, ${pincode}` : "Search for a location..."}
           </span>
         </div>
@@ -113,19 +126,37 @@ const LocationSearchBarDiv = () => {
         <span
           ref={locationDropdownRef}
           onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
-          className="items-center gap-2 max-lg:p-2 max-md:mt-2 rounded-md hidden cursor-pointer max-lg:flex"
+          className="items-center gap-2 max-lg:p-2 max-md:mt-2 rounded-full hidden cursor-pointer max-lg:flex"
+          style={{
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: "bold",
+            fontSize: "48px",
+            color: "#333",
+          }}
         >
           <CiLocationOn size={20} />
         </span>
 
         {isLocationDropdownOpen && (
-          <div className="absolute z-20 mt-2 w-60 bg-white rounded-md shadow-lg py-2">
+          <div
+            className="absolute z-20 mt-2 w-60 bg-white rounded-md shadow-lg py-2"
+            style={{
+              fontFamily: "Open Sans, sans-serif",
+              fontSize: "16px",
+              color: "#444",
+            }}
+          >
             <input
               type="text"
               className="w-full px-3 py-2 border-b"
               placeholder="Search by city or pincode"
               value={locationSearch}
               onChange={handleLocationSearch}
+              style={{
+                fontFamily: "Open Sans, sans-serif",
+                fontSize: "16px",
+                color: "#444",
+              }}
             />
             <span className="text-gray-600 px-3">
               {city ? `${city}, ${pincode}` : "Search for a location..."}
@@ -133,6 +164,13 @@ const LocationSearchBarDiv = () => {
             <button
               className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
               onClick={handleDetectLocation}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "600",
+                fontSize: "16px",
+                color: "#FFF",
+                backgroundColor: "#F04A00",
+              }}
             >
               <CiLocationOn size={20} />
               Detect Location
@@ -140,10 +178,15 @@ const LocationSearchBarDiv = () => {
             {locationSuggestions.map((suggestion, index) => (
               <button
                 key={index}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full overflow-hidden text-ellipsis whitespace-nowrap"
                 onClick={() => {
                   setCity(suggestion);
                   setIsLocationDropdownOpen(false);
+                }}
+                style={{
+                  fontFamily: "Open Sans, sans-serif",
+                  fontSize: "16px",
+                  color: "#444",
                 }}
               >
                 {suggestion}
@@ -154,13 +197,25 @@ const LocationSearchBarDiv = () => {
       </div>
 
       {/* Search Bar */}
-      <div className="relative flex items-center max-lg:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-1 rounded-md">
+      <div
+        className="relative flex items-center max-lg:w-full max-md:mt-2 shadow-custom-shadow border px-2 py-1 rounded-full"
+        style={{
+          fontFamily: "Open Sans, sans-serif",
+          fontSize: "16px",
+          color: "#444",
+        }}
+      >
         <input
           type="text"
           className="px-2 w-96 max-xl:w-72 max-lg:w-60 max-md:w-full mr-2 outline-none"
           placeholder="Search for services..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          style={{
+            fontFamily: "Open Sans, sans-serif",
+            fontSize: "16px",
+            color: "#444",
+          }}
         />
 
         {searchQuery && (
@@ -168,16 +223,35 @@ const LocationSearchBarDiv = () => {
             size={20}
             className="mr-2 cursor-pointer"
             onClick={() => setSearchQuery("")}
+            style={{
+              fontFamily: "Open Sans, sans-serif",
+              fontSize: "16px",
+              color: "#444",
+            }}
           />
         )}
 
-        <span className="bg-red-400 p-1 text-white rounded-md">
+        <span
+          className="bg-red-400 p-1 text-white rounded-full"
+          style={{
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: "600",
+            fontSize: "16px",
+            color: "#FFF",
+            backgroundColor: "#F04A00",
+          }}
+        >
           <IoSearchOutline size={20} />
         </span>
 
         <SearchData
           searchQuery={searchQuery}
           handleSearchQuery={handleSearchQuery}
+          style={{
+            fontFamily: "Open Sans, sans-serif",
+            fontSize: "16px",
+            color: "#444",
+          }}
         />
       </div>
     </>
