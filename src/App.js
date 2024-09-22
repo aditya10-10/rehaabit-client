@@ -55,6 +55,7 @@ import CancellationRefundPolicy from "./pages/CancellationAndRefundPolicy";
 import AboutPage from "./pages/AboutUs";
 import Contact from "./components/Contact/ContactUs";
 import PageNotFound from "./pages/PageNotFound";
+import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -202,6 +203,7 @@ export default function App() {
           {user?.accountType === "Admin" && (
             <>
               <Route path="/dashboard/*" element={<Dashboard />}>
+                <Route path="admin" element={<AdminDashboard />} />
                 <Route path="category" element={<Category />} />
                 <Route path="sub-category" element={<SubCategory />} />
                 <Route path="my-profile" element={<MyProfile />} />
