@@ -11,6 +11,7 @@ const {
   DELETE_USER_API,
   CREATE_NEW_USER_API,
   GET_USER_API,
+  TOTAL_USER_COUNT_API,
 } = usersEndpoints;
 
 const initialState = {
@@ -106,6 +107,21 @@ export const createNewUser = createAsyncThunk(
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+// GET TOTAL USER COUNT
+export const getUserCount = createAsyncThunk(
+  "users/getUserCount",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", TOTAL_USER_COUNT_API);
+      // console.log("getUSerCount", response.data);
+      return response.data; // Ensure this matches the response structure
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -236,6 +252,19 @@ const usersSlice = createSlice({
           title: "Error in Creating New User!",
           icon: "error",
         });
+      })
+      // GET TOTAL USER COUNT
+      .addCase(getUserCount.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserCount.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userCount = action.payload;
+        console.log("get user count ", state.userCount);
+      })
+      .addCase(getUserCount.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

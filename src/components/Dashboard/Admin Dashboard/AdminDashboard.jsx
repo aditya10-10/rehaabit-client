@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import {
   FaUsers,
@@ -21,6 +22,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { getUserCount } from "../../../slices/usersSlice";
+import { getAllRatingsAndAverage } from "../../../slices/ratingAndReviewsSlice";
+import { getTotalPartnerCount } from "../../../slices/partnerSlice";
 
 // Register Chart.js components
 ChartJS.register(
@@ -34,6 +38,23 @@ ChartJS.register(
 );
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+  const userCount = useSelector((state) => state.users.userCount);
+  const isLoadingUsers = useSelector((state) => state.users.isLoading);
+  const { ratingAndReviews, isLoadingRatings, error } = useSelector(
+    (state) => state.ratingAndReviews
+  );
+  const totalPartnerCount = useSelector(
+    (state) => state.partner.totalPartnerCount
+  );
+  const isLoadingPartners = useSelector((state) => state.partner.isLoading);
+
+  useEffect(() => {
+    dispatch(getUserCount());
+    dispatch(getAllRatingsAndAverage());
+    dispatch(getTotalPartnerCount());
+  }, [dispatch]);
+
   // Data for the Line Chart (Booking Trends)
   const lineData = {
     labels: [
@@ -85,7 +106,11 @@ const AdminDashboard = () => {
           <FaUsers size={35} style={{ ...styles.icon, color: "#34D399" }} />
           <div>
             <h3 style={styles.kpiTitle}>Total Users</h3>
-            <h2 style={styles.kpiValue}>40,689</h2>
+            <h2 style={styles.kpiValue}>
+              {isLoadingUsers
+                ? "Loading..."
+                : userCount?.totalUsers?.toLocaleString()}
+            </h2>
           </div>
         </div>
 
@@ -118,7 +143,11 @@ const AdminDashboard = () => {
           <FaTasks size={35} style={{ ...styles.icon, color: "#3B82F6" }} />
           <div>
             <h3 style={styles.kpiTitle}>Active Providers</h3>
-            <h2 style={styles.kpiValue}>8,234</h2>
+            <h2 style={styles.kpiValue}>
+              {isLoadingPartners
+                ? "Loading..."
+                : totalPartnerCount.totalPartners}
+            </h2>
           </div>
         </div>
       </div>
@@ -176,7 +205,10 @@ const AdminDashboard = () => {
           <FaSmile size={35} style={{ ...styles.icon, color: "#FFD700" }} />
           <div>
             <h3 style={styles.kpiTitle}>Satisfaction Score</h3>
-            <h2 style={styles.kpiValue}>4.7 / 5</h2>
+            <h2 style={styles.kpiValue}>
+              {isLoadingRatings ? "Loading..." : ratingAndReviews.averageRating}{" "}
+              / 5
+            </h2>
           </div>
         </div>
       </div>

@@ -96,6 +96,7 @@ export const emailEndpoints = {
 export const partnerEndpoints = {
   ADD_PARTNER_INFORMATION_API: BASE_URL + "/addPartnerInformation",
   GET_ALL_PARTNERS_API: BASE_URL + "/getAllPartners",
+  TOTAL_PARTNER_COUNT_API: BASE_URL + "/getPartnerCount",
 };
 
 // CONTACT ENDPOINTS
@@ -116,6 +117,7 @@ export const usersEndpoints = {
   UPDATE_USER_DETAILS_API: BASE_URL + "/updateUserDetails",
   DELETE_USER_API: BASE_URL + "/deleteUser",
   CREATE_NEW_USER_API: BASE_URL + "/createNewUser",
+  TOTAL_USER_COUNT_API: BASE_URL + "/getUserCount",
 };
 
 // RATING AND REVIEWS ENDPOINTS
@@ -126,6 +128,7 @@ export const ratingAndReviewsEndpoints = {
   GET_USERS_RATING_AND_REVIEWS_API: BASE_URL + "/getUsersRatingAndReviews",
   GET_USERS_RATING_AND_REVIEWS_WITH_USERNAME_API:
     BASE_URL + "/getAllRatingsAndReviewsWithUserNames",
+  GET_ALL_RATING_AND_AVERAGE_API: BASE_URL + "/getAllRatingsAndAverage",
 };
 
 // ENQUIRE NOW - NON PRICED SERVICES

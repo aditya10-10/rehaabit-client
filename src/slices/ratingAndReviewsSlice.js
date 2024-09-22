@@ -10,6 +10,7 @@ const {
   GET_AVERAGE_RATING_API,
   GET_USERS_RATING_AND_REVIEWS_WITH_USERNAME_API,
   GET_USERS_RATING_AND_REVIEWS_API,
+  GET_ALL_RATING_AND_AVERAGE_API,
 } = ratingAndReviewsEndpoints;
 
 const initialState = {
@@ -81,6 +82,25 @@ export const getAllRatingAndReviewsWithUserNames = createAsyncThunk(
       );
 
       return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+// GET AVERAGE RATING
+export const getAllRatingsAndAverage = createAsyncThunk(
+  "ratingAndReviews/getAllRatingsAndAverage",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector(
+        "GET",
+        GET_ALL_RATING_AND_AVERAGE_API
+      );
+
+      console.log("rating avg", response.data);
+      return response.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -170,7 +190,23 @@ const ratingAndreviewsSlice = createSlice({
 
           toast.error("Error...");
         }
-      );
+      )
+      .addCase(getAllRatingsAndAverage.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllRatingsAndAverage.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.ratingAndReviews = action.payload;
+        console.log("rating avg dgdg", action.payload);
+
+        // toast.success("OTP Send Successfully!");
+      })
+      .addCase(getAllRatingsAndAverage.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        toast.error("Error...");
+      });
   },
 });
 

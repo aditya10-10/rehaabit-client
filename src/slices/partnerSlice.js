@@ -3,7 +3,11 @@ import { partnerEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
 import toast from "react-hot-toast";
 
-const { ADD_PARTNER_INFORMATION_API, GET_ALL_PARTNERS_API } = partnerEndpoints;
+const {
+  ADD_PARTNER_INFORMATION_API,
+  GET_ALL_PARTNERS_API,
+  TOTAL_PARTNER_COUNT_API,
+} = partnerEndpoints;
 
 const initialState = {
   partnerFormData: {
@@ -12,6 +16,7 @@ const initialState = {
     additionalInformation: {},
   },
   partners: [],
+  totalPartnerCount: 0, // Add this line
   isLoading: false,
   currentStep: 0,
   error: null,
@@ -65,6 +70,20 @@ export const getAllPartners = createAsyncThunk(
   }
 );
 
+export const getTotalPartnerCount = createAsyncThunk(
+  "partner/getPartnerCount",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", TOTAL_PARTNER_COUNT_API);
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
 const partnerSlice = createSlice({
   name: "partner",
   initialState,
@@ -108,6 +127,22 @@ const partnerSlice = createSlice({
         // toast.success("Partner information added successfully");
       })
       .addCase(getAllPartners.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+
+        // toast.error("Error adding partner information");
+      })
+      .addCase(getTotalPartnerCount.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTotalPartnerCount.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.totalPartnerCount = action.payload;
+        console.log("partner", state.totalPartnerCount);
+
+        // toast.success("Partner information added successfully");
+      })
+      .addCase(getTotalPartnerCount.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
 
