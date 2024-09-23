@@ -6,13 +6,17 @@ import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 
 const Testimonials = () => {
   const dispatch = useDispatch();
-  const { ratingAndReviews, isLoading, error } = useSelector(
-    (state) => state.ratingAndReviews
-  );
+  const {
+    ratingAndReviews = [],
+    isLoading,
+    error,
+  } = useSelector((state) => state.ratingAndReviews);
 
-  const withReviews = ratingAndReviews.filter(
-    (ratingAndReview) => ratingAndReview.review !== ""
-  );
+  const withReviews = Array.isArray(ratingAndReviews)
+    ? ratingAndReviews.filter(
+        (ratingAndReview) => ratingAndReview.review !== ""
+      )
+    : [];
 
   // State to keep track of modal's current index
   const [currentIndex, setCurrentIndex] = useState(0);
