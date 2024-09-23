@@ -228,7 +228,10 @@ const AdminDashboard = () => {
             <h2 style={styles.kpiValue}>
               {isLoadingRatings
                 ? "Loading..."
-                : ratingAndReviews.averageRating.toFixed(2)}{" "}
+                : ratingAndReviews &&
+                  ratingAndReviews.averageRating !== undefined
+                ? ratingAndReviews.averageRating.toFixed(2)
+                : "N/A"}{" "}
               / 5
             </h2>
           </div>
