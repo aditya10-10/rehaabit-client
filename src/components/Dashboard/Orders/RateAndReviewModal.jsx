@@ -16,7 +16,7 @@ const RateAndReviewModal = ({
   const [hoveredStar, setHoveredStar] = useState(0);
   const [selectedRating, setSelectedRating] = useState(0);
 
-  console.log(serviceIdToPass);
+  console.log("service passed ", serviceIdToPass);
 
   const handleMouseEnter = (star) => {
     setHoveredStar(star);

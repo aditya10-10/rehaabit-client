@@ -413,21 +413,20 @@ const ServiceDetailsModal = ({
                       service.ratingAndReviews.length > 0 ? (
                         service.ratingAndReviews.map((review, index) => {
                           const {
-                            user = {}, // Assuming 'user' is directly available in the 'review' object
+                            user = {}, // Default to an empty object if user is null or undefined
                             rating = 0,
                             review: reviewText = "No review provided.",
-                            date: date = "N/A",
-                            // Default review text if not provided
+                            date = "N/A",
                           } = review;
 
-                          // Destructure the user's additional details to get the name information
+                          // Safely destructuring additionalDetails
                           const {
                             additionalDetails: {
                               firstName = "Anonymous",
                               lastName = "",
-                            } = {}, // Safely accessing 'additionalDetails'
-                            image = "", // Assuming there is an 'image' property in 'user' object
-                          } = user;
+                            } = {},
+                            image = "",
+                          } = user || {}; // Provide a fallback for user
 
                           return (
                             <ServicesDetailsRatingCard
@@ -435,9 +434,9 @@ const ServiceDetailsModal = ({
                               quote={reviewText}
                               name={`${firstName} ${lastName}`}
                               rating={rating}
-                              imageSrc={image} // Provide user's image or empty string as fallback
+                              imageSrc={image}
                               date={date}
-                              services={service.serviceName} // Assuming 'serviceName' is available in the 'service' object
+                              services={service.serviceName}
                             />
                           );
                         })

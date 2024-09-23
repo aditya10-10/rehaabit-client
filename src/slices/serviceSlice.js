@@ -22,6 +22,7 @@ const {
   CREATE_HOW_DOES_IT_WORKS_API,
   DELETE_HOW_DOES_IT_WORKS_API,
   UPDATE_HOW_DOES_IT_WORKS_API,
+  GET_TOTAL_SERVICES_COUNT_API,
 } = serviceEndpoints;
 
 const initialState = {
@@ -34,6 +35,7 @@ const initialState = {
   error: null,
   currentStep: 0,
   isMyServiceEditing: false,
+  totalServicesCount: 0, // Add this line
 };
 
 // SERVICE
@@ -329,6 +331,21 @@ export const deleteHowDoesItWorks = createAsyncThunk(
         { id, serviceId }
       );
       return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const getTotalServicesCount = createAsyncThunk(
+  "service/getTotalServicesCount",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", GET_TOTAL_SERVICES_COUNT_API);
+      console.log("total servies api ", response.data);
+
+      return response.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
@@ -797,6 +814,18 @@ const serviceSlice = createSlice({
           title: "Error in Deleting How Does It Works!",
           icon: "error",
         });
+      })
+      .addCase(getTotalServicesCount.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTotalServicesCount.fulfilled, (state, action) => {
+        state.totalServicesCount = action.payload.totalServices;
+        console.log("total servies", state.totalServicesCount);
+        state.isLoading = false;
+      })
+      .addCase(getTotalServicesCount.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
       });
   },
 });

@@ -11,10 +11,9 @@ const OrdersList = ({ orders }) => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.profile);
-  const { ratingAndReviews } = useSelector((state) => state.ratingAndReviews);
-
-  // console.log(ratingAndReviews);
-  // console.log(orders);
+  const { ratingAndReviews = [], isLoading } = useSelector(
+    (state) => state.ratingAndReviews
+  );
 
   const [isRateAndReviewModalOpen, setIsRateAndReviewModalOpen] =
     useState(false);
@@ -35,6 +34,11 @@ const OrdersList = ({ orders }) => {
       </span>
     ));
   };
+
+  // Ensure that the component does not try to render until data is available
+  if (isLoading || !Array.isArray(ratingAndReviews)) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -61,9 +65,12 @@ const OrdersList = ({ orders }) => {
             const { _id, services, status, createdAt } = order;
 
             return services.map((item, index) => {
-              const userReview = ratingAndReviews.find(
-                (review) => review.service === item.serviceId
-              );
+              const userReview =
+                (Array.isArray(ratingAndReviews) &&
+                  ratingAndReviews.find(
+                    (review) => review.service === item.serviceId
+                  )) ||
+                null;
 
               const rating = userReview ? userReview.rating : 0;
 
@@ -82,7 +89,6 @@ const OrdersList = ({ orders }) => {
                       <p className="text-[12px]">
                         Placed on: {formattedDate(createdAt)}
                       </p>
-
                       <p className="flex w-fit flex-row items-center gap-2 rounded-full px-2 py-[2px] text-[12px] font-medium text-green-500">
                         <FaCheck size={8} />
                         {status.status}
@@ -99,7 +105,7 @@ const OrdersList = ({ orders }) => {
                         <button
                           className="text-blue-500 text-sm"
                           onClick={() => {
-                            setServiceIdToPass(item._id);
+                            setServiceIdToPass(item._id); // Ensure serviceId is passed correctly
                             handleRateAndReviewModal();
                           }}
                         >

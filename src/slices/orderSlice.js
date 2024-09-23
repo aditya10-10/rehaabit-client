@@ -9,6 +9,7 @@ const {
   PURCHASE_SERVICE_API,
   GET_USER_ORDERS_API,
   GET_ALL_ORDERS_API,
+  GET_REVENUE_API,
 } = orderEndpoints;
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   isSingleOrder: false,
   isOrderLoading: false,
   error: null,
+  totalRevenue: 0,
 };
 
 // PLACE ORDER
@@ -77,6 +79,21 @@ export const purchaseService = createAsyncThunk(
         PURCHASE_SERVICE_API,
         serviceData
       );
+
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+// GET REVENUE
+export const getRevenue = createAsyncThunk(
+  "order/getRevenue",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", GET_REVENUE_API);
 
       return response.data.data;
     } catch (error) {
@@ -168,6 +185,22 @@ const orderSlice = createSlice({
         state.error = action;
 
         toast.error("Error in Purchasing Service to Cart");
+      })
+
+      // GET REVENUE
+      .addCase(getRevenue.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(getRevenue.fulfilled, (state, action) => {
+        state.isOrderLoading = false;
+        console.log("Revenue:", action.payload);
+        state.totalRevenue = action.payload.totalRevenue; // Uncomment this line to update revenue state in the Redux store.
+      })
+      .addCase(getRevenue.rejected, (state, action) => {
+        state.isOrderLoading = false;
+        state.error = action;
+
+        toast.error("Error in Getting Revenue");
       });
   },
 });

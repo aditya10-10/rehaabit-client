@@ -29,15 +29,17 @@ export const createRating = createAsyncThunk(
         review,
         serviceId,
       });
-
+      toast.success("Review submitted successfully!");
       return response.data.data;
     } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.message.data);
+      console.log("Error submitting review: ", error);
+      toast.error("Failed to submit the review.");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "An unknown error occurred."
+      );
     }
   }
 );
-
 // GET USERS RATING AND REVIEWS
 export const getUsersRatingAndReviews = createAsyncThunk(
   "ratingAndReviews/getAllRatingsAndReviewsWithUserNames",
@@ -131,9 +133,11 @@ const ratingAndreviewsSlice = createSlice({
       })
       .addCase(createRating.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action;
+        state.error = action.payload;
 
-        toast.error("Error...");
+        toast.error(
+          action.payload || "An error occurred while submitting your review."
+        );
       })
 
       // GET USERS RATING AND REVIEWS

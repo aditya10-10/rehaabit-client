@@ -41,6 +41,7 @@ export const serviceEndpoints = {
   CREATE_HOW_DOES_IT_WORKS_API: BASE_URL + "/createHowDoesItWorks",
   DELETE_HOW_DOES_IT_WORKS_API: BASE_URL + "/deleteHowDoesItWorks",
   UPDATE_HOW_DOES_IT_WORKS_API: BASE_URL + "/updateHowDoesItWorks",
+  GET_TOTAL_SERVICES_COUNT_API: BASE_URL + "/getTotalServicesCount",
 };
 
 // PROFILE ENDPOINTS
@@ -78,6 +79,7 @@ export const orderEndpoints = {
   PURCHASE_SERVICE_API: BASE_URL + "/purchaseOrder",
   GET_USER_ORDERS_API: BASE_URL + "/getUserOrders",
   GET_ALL_ORDERS_API: BASE_URL + "/getAllOrders",
+  GET_REVENUE_API: BASE_URL + "/getRevenue",
 };
 
 //  PAYMENT ENDPOINTS

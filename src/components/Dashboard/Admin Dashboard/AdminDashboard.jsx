@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import {
   FaUsers,
-  FaDollarSign,
+  FaRupeeSign,
   FaClipboardCheck,
   FaClock,
   FaConciergeBell,
@@ -25,6 +25,8 @@ import {
 import { getUserCount } from "../../../slices/usersSlice";
 import { getAllRatingsAndAverage } from "../../../slices/ratingAndReviewsSlice";
 import { getTotalPartnerCount } from "../../../slices/partnerSlice";
+import { getTotalServicesCount } from "../../../slices/serviceSlice";
+import { getRevenue } from "../../../slices/orderSlice";
 
 // Register Chart.js components
 ChartJS.register(
@@ -44,15 +46,30 @@ const AdminDashboard = () => {
   const { ratingAndReviews, isLoadingRatings, error } = useSelector(
     (state) => state.ratingAndReviews
   );
+  const totalServicesCount = useSelector(
+    (state) => state.service.totalServicesCount
+  );
+  const isLoadingServices = useSelector((state) => state.service.isLoading);
   const totalPartnerCount = useSelector(
     (state) => state.partner.totalPartnerCount
   );
   const isLoadingPartners = useSelector((state) => state.partner.isLoading);
+  const totalRevenue = useSelector((state) => state.order.totalRevenue);
+  const isOrderLoading = useSelector((state) => state.order.isOrderLoading);
+  // const { allOrders } = useSelector((state) => state.orders);
+
+  // const pendingServices = allOrders.filter(
+  //   (service) => service.stat === "priced" && service.status !== "Draft"
+  // );
+
+  // const placedOrders = allOrders.filter((order) => order.status === "Placed");
 
   useEffect(() => {
     dispatch(getUserCount());
     dispatch(getAllRatingsAndAverage());
     dispatch(getTotalPartnerCount());
+    dispatch(getTotalServicesCount());
+    dispatch(getRevenue());
   }, [dispatch]);
 
   // Data for the Line Chart (Booking Trends)
@@ -122,19 +139,22 @@ const AdminDashboard = () => {
           />
           <div>
             <h3 style={styles.kpiTitle}>Total Services</h3>
-            <h2 style={styles.kpiValue}>12,345</h2>
+            <h2 style={styles.kpiValue}>
+              {isLoadingServices ? "Loading..." : totalServicesCount}
+            </h2>
           </div>
         </div>
 
         {/* Total Revenue */}
         <div style={styles.kpiCard}>
-          <FaDollarSign
-            size={35}
-            style={{ ...styles.icon, color: "#F472B6" }}
-          />
+          <FaRupeeSign size={35} style={{ ...styles.icon, color: "#F472B6" }} />
           <div>
             <h3 style={styles.kpiTitle}>Total Revenue</h3>
-            <h2 style={styles.kpiValue}>$150,000</h2>
+            <h2 style={styles.kpiValue}>
+              {isOrderLoading
+                ? "Loading..."
+                : `₹${totalRevenue.toLocaleString()}`}
+            </h2>{" "}
           </div>
         </div>
 
@@ -206,7 +226,9 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Satisfaction Score</h3>
             <h2 style={styles.kpiValue}>
-              {isLoadingRatings ? "Loading..." : ratingAndReviews.averageRating}{" "}
+              {isLoadingRatings
+                ? "Loading..."
+                : ratingAndReviews.averageRating.toFixed(2)}{" "}
               / 5
             </h2>
           </div>
