@@ -3,7 +3,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-
+import { TbCurrentLocation } from "react-icons/tb";
 import { Search } from "./Search";
 import SearchData from "./SearchData";
 
@@ -42,6 +42,8 @@ const LocationSearchBarDiv = () => {
 
   const handleDetectLocation = () => {
     if (navigator.geolocation) {
+      console.log("Geolocation is supported");
+      console.log(navigator.geolocation.getCurrentPosition);
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -51,12 +53,16 @@ const LocationSearchBarDiv = () => {
           )
             .then((response) => response.json())
             .then((data) => {
+              console.log("Location data:", data);
               const detectedCity =
-                data.address.city || data.address.town || data.address.village;
+                data.address.city || data.address.town || data.address.village || data.display_name;
               const detectedPincode = data.address.postcode;
               setCity(detectedCity);
               setPincode(detectedPincode);
               setIsLocationDropdownOpen(false);
+              setLocationSuggestions([
+                `${detectedCity}`
+              ]);
             })
             .catch((error) =>
               console.error("Error fetching location data:", error)
@@ -77,7 +83,11 @@ const LocationSearchBarDiv = () => {
       setIsLocationDropdownOpen(false);
     }
   };
-
+  const handleClearlocation = () => {
+    setLocationSuggestions([]);
+    setCity("");
+    setPincode("");
+  }
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
     return () => {
@@ -94,7 +104,7 @@ const LocationSearchBarDiv = () => {
       }
     });
   }, []);
-
+  
   return (
     <>
       <div className="relative" ref={locationDropdownRef}>
@@ -119,7 +129,7 @@ const LocationSearchBarDiv = () => {
               color: "#444",
             }}
           >
-            {city ? `${city}, ${pincode}` : "Search for a location..."}
+            {city ? `${city}` : "Search for a location..."}
           </span>
         </div>
 
@@ -139,61 +149,78 @@ const LocationSearchBarDiv = () => {
 
         {isLocationDropdownOpen && (
           <div
-            className="absolute z-20 mt-2 w-60 bg-white rounded-md shadow-lg py-2"
+            className="absolute z-20 mt-2 w-96 bg-white rounded-md shadow-lg py-4"
             style={{
               fontFamily: "Open Sans, sans-serif",
               fontSize: "16px",
               color: "#444",
             }}
           >
-            <input
-              type="text"
-              className="w-full px-3 py-2 border-b"
-              placeholder="Search by city or pincode"
-              value={locationSearch}
-              onChange={handleLocationSearch}
-              style={{
-                fontFamily: "Open Sans, sans-serif",
-                fontSize: "16px",
-                color: "#444",
-              }}
-            />
-            <span className="text-gray-600 px-3">
-              {city ? `${city}, ${pincode}` : "Search for a location..."}
-            </span>
             <button
-              className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+              className="flex items-center gap-2 px-4 py-2 text-sm text-blue-500 hover:bg-gray-100 w-full"
               onClick={handleDetectLocation}
               style={{
                 fontFamily: "Montserrat, sans-serif",
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "16px",
-                color: "#FFF",
-                backgroundColor: "#F04A00",
+                color: "#4CB4F9", 
+                backgroundColor: "#fff",
               }}
             >
-              <CiLocationOn size={20} />
+              <TbCurrentLocation size={20} />
               Detect Location
             </button>
-            {locationSuggestions.map((suggestion, index) => (
+            <div
+              className="flex justify-between items-center px-4 py-2"
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+                color: "#888", 
+                fontSize: "10px", 
+              }}
+            >
+              <span>RECENT LOCATIONS</span>
               <button
-                key={index}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full overflow-hidden text-ellipsis whitespace-nowrap"
-                onClick={() => {
-                  setCity(suggestion);
-                  setIsLocationDropdownOpen(false);
-                }}
+                className="text-s text-blue-500"
                 style={{
                   fontFamily: "Open Sans, sans-serif",
-                  fontSize: "16px",
-                  color: "#444",
+                  fontWeight: "bold",
+                  color: "#4CB4F9", 
+                  fontSize: "12px",
                 }}
+                onClick={handleClearlocation}
               >
-                {suggestion}
+                Clear All
               </button>
-            ))}
+            </div>
+
+            {locationSuggestions.length ? (
+              locationSuggestions.map((suggestion, index) => (
+                <button
+                  key={index}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full overflow-hidden text-ellipsis whitespace-nowrap"
+                  onClick={() => {
+                    setCity(suggestion);
+                    setIsLocationDropdownOpen(false);
+                  }}
+                  style={{
+                    fontFamily: "Open Sans, sans-serif",
+                    fontSize: "16px",
+                    color: "#444",
+                  }}
+                >
+                  {suggestion}
+                </button>
+              ))
+            ) : (
+              <div className="px-4 py-2 text-sm text-gray-700">
+                No recent locations
+              </div>
+            )}
           </div>
         )}
+
+
       </div>
 
       {/* Search Bar */}
