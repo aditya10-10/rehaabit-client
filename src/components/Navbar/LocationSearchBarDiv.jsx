@@ -42,8 +42,6 @@ const LocationSearchBarDiv = () => {
 
   const handleDetectLocation = () => {
     if (navigator.geolocation) {
-      console.log("Geolocation is supported");
-      console.log(navigator.geolocation.getCurrentPosition);
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
