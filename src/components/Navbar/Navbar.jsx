@@ -89,11 +89,12 @@ const Navbar = ({ onLoginClick }) => {
             <span>Login</span>
           </button>
         ) : (
-          <div className="relative" ref={profileDropdownRef}>
+          <div className="relative" >
             <button
               type="button"
               className="flex justify-center items-center h-[50px] rounded-full w-[50px] max-md:h-[40px] max-md:w-[40px]"
               onClick={handleProfileClick}
+              ref={profileDropdownRef}
             >
               {user?.image ? (
                 <img

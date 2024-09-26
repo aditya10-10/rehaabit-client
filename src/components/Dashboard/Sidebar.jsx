@@ -19,6 +19,7 @@ import { IoIosHelpCircleOutline, IoMdSettings } from "react-icons/io";
 import { VscSignOut } from "react-icons/vsc";
 import ConfirmationModal from "../common/ConfirmationModal";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { FiSearch } from "react-icons/fi";
 
 const SidebarContext = createContext();
 
@@ -108,7 +109,9 @@ export default function Sidebar({ children }) {
   const { service, serviceId } = useSelector((state) => state.service);
   const { user } = useSelector((state) => state.profile);
   const [isEditing, setIsEditing] = useState(false);
-  const [confirmationModal, setConfirmationModal] = useState(null); // State for confirmation modal
+  const [confirmationModal, setConfirmationModal] = useState(null);
+  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+
 
   useEffect(() => {
     if (
@@ -202,15 +205,25 @@ export default function Sidebar({ children }) {
 
           {user.accountType === "Admin" && (
             <div className="p-4">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search..."
-                className="w-full p-2 border rounded"
-                style={{ fontFamily: "Roboto, sans-serif" }}
-              />
+              {!expanded ? (
+                <button
+                  onClick={() => setIsSearchModalVisible(true)} // Open search modal on icon click
+                  className="p-2 rounded-full bg-gray-50 hover:bg-gray-100"
+                >
+                  <FiSearch className="text-xl" />
+                </button>
+              ) : (
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search..."
+                  className="w-full p-2 border rounded"
+                  style={{ fontFamily: "Roboto, sans-serif" }}
+                />
+              )}
             </div>
+
           )}
 
           <SidebarContext.Provider value={{ expanded }}>
@@ -252,11 +265,10 @@ function SidebarItem({ icon, text, to, index, handleNavigation, isFirst }) {
 
   return (
     <li
-      className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
-        isActive
+      className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${isActive
           ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
           : "hover:bg-indigo-50 text-gray-600"
-      } ${isFirst && isActive ? "text-indigo-800" : ""}`}
+        } ${isFirst && isActive ? "text-indigo-800" : ""}`}
       onClick={(e) => {
         e.preventDefault();
         handleNavigation(to);
@@ -265,9 +277,8 @@ function SidebarItem({ icon, text, to, index, handleNavigation, isFirst }) {
     >
       {icon}
       <span
-        className={`overflow-hidden transition-all ${
-          expanded ? "w-52 ml-3" : "w-0"
-        }`}
+        className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"
+          }`}
         style={{ fontFamily: "Roboto, sans-serif" }}
       >
         {text}

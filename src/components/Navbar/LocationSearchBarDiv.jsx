@@ -147,7 +147,7 @@ const LocationSearchBarDiv = () => {
 
         {isLocationDropdownOpen && (
           <div
-            className="absolute z-20 mt-2 w-96 bg-white rounded-md shadow-lg py-4"
+            className="absolute z-20 mt-2 w-96 max-md:w-80 bg-white rounded-md shadow-lg py-4"
             style={{
               fontFamily: "Open Sans, sans-serif",
               fontSize: "16px",

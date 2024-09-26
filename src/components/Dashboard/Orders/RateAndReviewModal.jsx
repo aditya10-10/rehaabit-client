@@ -54,7 +54,7 @@ const RateAndReviewModal = ({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white p-6 rounded-lg shadow-lg w-1/4 relative"
+            className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 relative"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.8 }}
@@ -69,7 +69,7 @@ const RateAndReviewModal = ({
             <h1 className="text-lg mb-4">Add Review</h1>
 
             {/* Rate */}
-            <div className="flex space-x-2 mb-4">
+            <div className="flex justify-center space-x-2 mb-4">
               {Array.from({ length: 5 }, (_, index) => {
                 const starValue = index + 1;
 
@@ -93,7 +93,7 @@ const RateAndReviewModal = ({
 
             {/* Review */}
             <div className="flex flex-col mb-4">
-              <label htmlFor="review" className="mb-2">
+              <label htmlFor="review" className="mb-2 text-sm">
                 Add Your Experience
               </label>
 
@@ -101,8 +101,8 @@ const RateAndReviewModal = ({
                 id="review"
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
-                placeholder="Share details of your experience for this course"
-                className="outline-none border rounded-md p-2"
+                placeholder="Share details of your experience"
+                className="outline-none border rounded-md p-2 h-24"
               />
             </div>
 
@@ -127,6 +127,7 @@ const RateAndReviewModal = ({
             </div>
           </motion.div>
         </motion.div>
+
       )}
     </AnimatePresence>
   );

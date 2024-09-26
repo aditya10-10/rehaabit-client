@@ -80,7 +80,7 @@ function ProfileInformation() {
       onSubmit={handleSubmit(submitProfileForm)}
       className="flex flex-col justify-center"
     >
-      <div className="flex flex-col justify-center p-6 mt-6 bg-amber-50 rounded-lg border border-amber-50 border-solid shadow-sm max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col justify-center p-6 mt-6 bg-amber-50 rounded-lg border border-amber-50 border-solid shadow-sm max-md:px-5 max-md:max-w-full max-sm:text-sm">
         <h2 className="text-lg font-semibold leading-6 text-violet-900 max-md:max-w-full">
           Profile Information
         </h2>
