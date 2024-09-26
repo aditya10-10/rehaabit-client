@@ -15,6 +15,7 @@ const AddressList = ({ height }) => {
   const { addresses, filteredDefaultAddress } = useSelector(
     (state) => state.address
   );
+  console.log(addresses);
   const [editingAddressId, setEditingAddressId] = useState(null);
   const [onDelete, setOnDelete] = useState(null);
 
@@ -91,18 +92,20 @@ const AddressList = ({ height }) => {
                           type="radio"
                           checked={isSelected}
                           readOnly
-                          className="mr-4"
+                          className="mr-2 max-sm:mr-2"
                         />
-                        <span className="font-semibold flex-grow">{name}</span>
-                        <span className="text-sm mx-2 bg-gray-100 p-2 rounded-sm">
+                        {/* <span className="font-semibold flex-grow max-sm:hidden">{name}</span> */}
+                        <span className="text-sm mx-2 bg-gray-100 p-0 max-sm:p-0 rounded-sm">
                           {addressType}
                         </span>
-                        <span className="text-sm mx-2">{phoneNo}</span>
                       </div>
                       <div className="text-sm text-gray-600 mt-2 px-7">
                         {addr}, {locality}, {landmark && `${landmark},`} {city},{" "}
                         {state}, {pincode}
+                        <br/>
+                        Ph: +91 {phoneNo}
                       </div>
+                      {/* <span className="text-sm text-gray-600 mt-2 px-7">{phoneNo}</span> */}
                     </div>
                   </div>
 

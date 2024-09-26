@@ -10,7 +10,9 @@ const Addresses = () => {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isNewAddress, setIsNewAddress] = useState(false);
-
+  console.log(useSelector((state) => state.address));
+  console.log(useSelector((state) => state.address.filteredDefaultAddress));
+  console.log(selectedAddress);
   const { filteredDefaultAddress } = useSelector((state) => state.address);
 
   const handleAddAddressClick = () => {

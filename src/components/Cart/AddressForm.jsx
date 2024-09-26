@@ -50,9 +50,9 @@ const AddressForm = ({ handleAddAddressClick, selectedAddress, height }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`w-full mt-4 max-h-[${height}] overflow-y-auto p-6 max-sm:p-2`}
+      className={`w-full mt-4 max-h-[${height}] overflow-y-auto p-6 max-sm:p-2 max-sm:text-sm`}
     >
-      <div className="mb-4 flex gap-4">
+      <div className="mb-4 flex gap-4 max-sm:flex-col">
         <input
           id="name"
           name="name"
@@ -77,7 +77,7 @@ const AddressForm = ({ handleAddAddressClick, selectedAddress, height }) => {
         />
       </div>
 
-      <div className="mb-4 flex gap-4">
+      <div className="mb-4 flex gap-4 max-sm:flex-col">
         <input
           id="pincode"
           name="pincode"
@@ -136,7 +136,7 @@ const AddressForm = ({ handleAddAddressClick, selectedAddress, height }) => {
         />
       </div>
 
-      <div className="mb-4 flex gap-4">
+      <div className="mb-4 flex gap-4 max-sm:flex-col">
         <input
           id="landmark"
           name="landmark"
