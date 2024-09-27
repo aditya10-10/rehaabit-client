@@ -110,7 +110,7 @@ function ProfileInformation() {
                 )}
               </div>
             </div>
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full max-md:w-full">
               <div className="flex flex-col grow pb-7 max-md:mt-6 max-md:w-full">
                 <label
                   htmlFor="lastName"
@@ -138,7 +138,7 @@ function ProfileInformation() {
         </div>
 
         <div className="flex gap-5 mt-5 max-md:flex-wrap max-2xl:flex-col">
-          <div className="flex flex-1 gap-5 max-md:flex-wrap max-md:max-w-full w-full">
+          <div className="flex flex-1 gap-5 max-md:flex-wrap ">
             <div className="flex flex-col">
               <label
                 htmlFor="phoneNumber"
@@ -153,7 +153,7 @@ function ProfileInformation() {
                 <input
                   type="text"
                   value={phoneNumber}
-                  className="p-3 bg-amber-50 text-neutral-500 rounded-lg shadow-sm"
+                  className="p-3 bg-amber-50 max-sm:w-60% text-neutral-500 rounded-lg shadow-sm"
                   disabled
                 />
               </div>
