@@ -19,12 +19,18 @@ const AddressList = ({ height }) => {
   const [editingAddressId, setEditingAddressId] = useState(null);
   const [onDelete, setOnDelete] = useState(null);
 
-  const handleDefaultAddress = (addressId) => {
-    if (filteredDefaultAddress[0]?._id !== addressId)
-      dispatch(
+  const handleDefaultAddress = async (addressId) => {
+    if (filteredDefaultAddress[0]?._id !== addressId) {
+      if (filteredDefaultAddress.length > 0) {
+        await dispatch(
+          updateAddress({ addressData: { addressId: filteredDefaultAddress[0]._id, status: "" } })
+        );
+      }
+      await dispatch(
         updateAddress({ addressData: { addressId, status: "Default" } })
       );
-    dispatch(getUserAddresses());
+      dispatch(getUserAddresses());
+    }
   };
 
   const handleEditClick = (addressId) => {
