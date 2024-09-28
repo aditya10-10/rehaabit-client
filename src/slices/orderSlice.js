@@ -10,6 +10,7 @@ const {
   GET_USER_ORDERS_API,
   GET_ALL_ORDERS_API,
   GET_REVENUE_API,
+  GET_PENDING_ORDERS_API_COUNT
 } = orderEndpoints;
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   isOrderLoading: false,
   error: null,
   totalRevenue: 0,
+  pendingOrdersCount: 0,
 };
 
 // PLACE ORDER
@@ -45,7 +47,7 @@ export const getUserOrders = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_USER_ORDERS_API);
-
+      console.log("User Orders:", response.data.data);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -60,7 +62,7 @@ export const getAllOrders = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_ALL_ORDERS_API);
-
+      console.log("All Orders:", response.data.data);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -95,6 +97,21 @@ export const getRevenue = createAsyncThunk(
     try {
       const response = await apiConnector("GET", GET_REVENUE_API);
 
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+// GET PENDING ORDERS COUNT
+
+export const getPendingOrdersCount = createAsyncThunk(
+  "order/getPendingOrdersCount",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiConnector("GET", GET_PENDING_ORDERS_API_COUNT);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -165,6 +182,7 @@ const orderSlice = createSlice({
       .addCase(getAllOrders.fulfilled, (state, action) => {
         state.isOrderLoading = false;
         state.orders = action.payload;
+        console.log("All Orders:", action.payload);
       })
       .addCase(getAllOrders.rejected, (state, action) => {
         state.isOrderLoading = false;
@@ -201,6 +219,22 @@ const orderSlice = createSlice({
         state.error = action;
 
         toast.error("Error in Getting Revenue");
+      })
+
+      // GET PENDING ORDERS COUNT
+      .addCase(getPendingOrdersCount.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(getPendingOrdersCount.fulfilled, (state, action) => {
+        state.isOrderLoading = false;
+        console.log("Pending Orders Count:", action.payload);
+        state.pendingOrdersCount = action.payload; 
+      })
+      .addCase(getPendingOrdersCount.rejected, (state, action) => {
+        state.isOrderLoading = false;
+        state.error = action;
+
+        toast.error("Error in Getting Pending Orders Count");
       });
   },
 });

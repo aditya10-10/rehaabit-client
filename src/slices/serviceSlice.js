@@ -62,6 +62,7 @@ export const getAllServices = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_ALL_SERVICES_API);
+      console.log("all services api ", response.data);
       return response.data.data;
     } catch (error) {
       console.log(error);

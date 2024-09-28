@@ -80,6 +80,7 @@ export const orderEndpoints = {
   GET_USER_ORDERS_API: BASE_URL + "/getUserOrders",
   GET_ALL_ORDERS_API: BASE_URL + "/getAllOrders",
   GET_REVENUE_API: BASE_URL + "/getRevenue",
+  GET_PENDING_ORDERS_API_COUNT: BASE_URL + "/getPendingOrdersCount",
 };
 
 //  PAYMENT ENDPOINTS
