@@ -116,6 +116,7 @@ const AddressForm = ({ handleAddAddressClick, selectedAddress, height }) => {
             id="pincode"
             name="pincode"
             type="text"
+            maxLength={6}
             value={formData.pincode}
             onChange={handleChange}
             className="peer w-full px-3 pt-5 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500"
