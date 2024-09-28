@@ -31,17 +31,17 @@ const OrdersList = ({ orders }) => {
   const handleDropdownChange = (e) => {
     const status = e.target.value;
     dispatch(updateOrderStatus({ orderId: openDropdownId, status }));
-    setLocalOrders((prevOrders) =>
-      prevOrders.map((order) => {
-        if (order._id === openDropdownId) {
-          return {
-            ...order,
-            status: { ...order.status, status }
-          };
-        }
-        return order;
-      })
-    );
+        setLocalOrders((prevOrders) =>
+          prevOrders.map((order) => {
+            if (order._id === openDropdownId) {
+              return {
+                ...order,
+                status: { ...order.status, status }
+              };
+            }
+            return order;
+          })
+        );
     setOpenDropdownId(null);
   }
   const handleRateAndReviewModal = () => {
@@ -146,7 +146,7 @@ const OrdersList = ({ orders }) => {
         <tbody className="flex flex-col w-full">
           {localOrders.map((order) => {
             const { _id, services, status, createdAt } = order;
-             console.log(order);
+            console.log(order);
             return services.map((item, index) => {
               const userReview =
                 (Array.isArray(ratingAndReviews) &&
