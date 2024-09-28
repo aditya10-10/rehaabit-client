@@ -47,26 +47,20 @@ const Addresses = () => {
       </div>
 
       <div className="mt-6 w-full border rounded-lg">
-        {!filteredDefaultAddress?.length ? (
+        {isNewAddress ? (
+          <AddressForm
+            handleAddAddressClick={handleAddAddressClick}
+            selectedAddress={selectedAddress}
+            height="70vh"
+          />
+        ) : !filteredDefaultAddress?.length ? (
           <NothingToShow text="Addresses" btnText="" />
         ) : (
-          <>
-            {isNewAddress ? (
-              <AddressForm
-                // isNewAddress={isNewAddress}
-                handleAddAddressClick={handleAddAddressClick}
-                selectedAddress={selectedAddress}
-                height="70vh"
-              />
-            ) : (
-              <AddressList
-                // handleSelectedAddress={handleSelectedAddress}
-                filteredDefaultAddress={filteredDefaultAddress}
-                onEditAddressClick={handleEditAddressClick}
-                height="70vh"
-              />
-            )}
-          </>
+          <AddressList
+            filteredDefaultAddress={filteredDefaultAddress}
+            onEditAddressClick={handleEditAddressClick}
+            height="70vh"
+          />
         )}
       </div>
     </div>
