@@ -61,10 +61,8 @@ const AdminDashboard = () => {
   const allOrders = useSelector((state) => state.order.orders);
   const pendingOrdersCount = allOrders?.filter((order)=>order.status.status==="pending").length;
   const refundCompleted= allOrders?.filter((order)=>order.status.status==="refund completed").length;
-  const allServices = useSelector((state) => state.service.allServices);
-  const serviceLoading = useSelector((state) => state.service.isLoading);
-  const completedServicesCount = allServices.filter((service) => service.status === "Published").length;
-  const canceledServicesCount = allServices.filter((service) => service.status === "Draft").length;
+  const completedServicesCount = allOrders?.filter((order)=>order.status.status==="service completed").length;
+  const canceledServicesCount = allOrders?.filter((order)=>order.status.status==="cancelled by customer" || order.status.status==="cancelled by provider").length;
   // const { allOrders } = useSelector((state) => state.orders);
 
   // const pendingServices = allOrders.filter(
@@ -204,7 +202,7 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Completed Services</h3>
             <h2 style={styles.kpiValue}>{
-              serviceLoading ? "Loading..." : completedServicesCount  
+              isOrderLoading ? "Loading..." : completedServicesCount
             }</h2>
           </div>
         </div>
@@ -218,7 +216,7 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Canceled Services</h3>
             <h2 style={styles.kpiValue}>{
-              serviceLoading ? "Loading..." : canceledServicesCount
+              isOrderLoading ? "Loading..." : canceledServicesCount
             }</h2>
           </div>
         </div>

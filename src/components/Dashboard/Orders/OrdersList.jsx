@@ -6,24 +6,44 @@ import RateAndReviewModal from "./RateAndReviewModal";
 import { useState } from "react";
 import { GoStar, GoStarFill } from "react-icons/go";
 import { IoIosClose } from "react-icons/io";
+import { updateOrderStatus } from "../../../slices/orderSlice";
 
 const OrdersList = ({ orders }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [localOrders, setLocalOrders] = useState(orders);
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
   };
-  console.log(orders);
   const { user } = useSelector((state) => state.profile);
   const { ratingAndReviews = [], isLoading } = useSelector(
     (state) => state.ratingAndReviews
   );
-
   const [isRateAndReviewModalOpen, setIsRateAndReviewModalOpen] =
     useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
 
+  const handleDropdownClick = (id) => {
+    setOpenDropdownId(openDropdownId === id ? null : id);
+  };
+  const handleDropdownChange = (e) => {
+    const status = e.target.value;
+    dispatch(updateOrderStatus({ orderId: openDropdownId, status }));
+        setLocalOrders((prevOrders) =>
+          prevOrders.map((order) => {
+            if (order._id === openDropdownId) {
+              return {
+                ...order,
+                status: { ...order.status, status }
+              };
+            }
+            return order;
+          })
+        );
+    setOpenDropdownId(null);
+  }
   const handleRateAndReviewModal = () => {
     setIsRateAndReviewModalOpen(!isRateAndReviewModalOpen);
     setSelectedOrder(null);
@@ -117,16 +137,16 @@ const OrdersList = ({ orders }) => {
             <th className="flex-1 text-left text-sm font-medium uppercase">
               Orders
             </th>
-            <th className="text-left text-sm font-medium uppercase">
+            <th className={`text-left text-sm font-medium uppercase ${user.accountType === "Admin" && 'pr-32'}`}>
               Total Price
             </th>
           </tr>
         </thead>
 
         <tbody className="flex flex-col w-full">
-          {orders.map((order) => {
+          {localOrders.map((order) => {
             const { _id, services, status, createdAt } = order;
-
+            console.log(order);
             return services.map((item, index) => {
               const userReview =
                 (Array.isArray(ratingAndReviews) &&
@@ -212,6 +232,40 @@ const OrdersList = ({ orders }) => {
                   <td className="text-sm font-medium hidden sm:table-cell">
                     ₹ {item.qty * item.price}
                   </td>
+                  {
+                    user.accountType === "Admin" && (
+                      <div className="relative inline-block">
+                        <button
+                          className="bg-slate-400 text-white rounded px-4 py-2"
+                          onClick={() => handleDropdownClick(_id)}
+                        >
+                          Edit Order
+                        </button>
+                        {openDropdownId === _id && (
+                          <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                            <select
+                              className="block w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-sm leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              onChange={handleDropdownChange}
+                            >
+                              <option value="pending">Pending</option>
+                              <option value="confirmed">Confirmed</option>
+                              <option value="professional assigned">Professional Assigned</option>
+                              <option value="on the way">On the Way</option>
+                              <option value="service started">Service Started</option>
+                              <option value="service completed">Service Completed</option>
+                              <option value="payment pending">Payment Pending</option>
+                              <option value="paid">Paid</option>
+                              <option value="cancelled by customer">Cancelled by Customer</option>
+                              <option value="cancelled by provider">Cancelled by Provider</option>
+                              <option value="rescheduled">Rescheduled</option>
+                              <option value="refund initiated">Refund Initiated</option>
+                              <option value="refund completed">Refund Completed</option>
+                            </select>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  }
                 </tr>
               );
             });

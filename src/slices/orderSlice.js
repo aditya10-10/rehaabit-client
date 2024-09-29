@@ -10,7 +10,8 @@ const {
   GET_USER_ORDERS_API,
   GET_ALL_ORDERS_API,
   GET_REVENUE_API,
-  GET_PENDING_ORDERS_API_COUNT
+  GET_PENDING_ORDERS_API_COUNT,
+  UPDATE_ORDER_STATUS_API
 } = orderEndpoints;
 
 const initialState = {
@@ -41,6 +42,22 @@ export const placeOrder = createAsyncThunk(
   }
 );
 
+// UPDATE ORDER STATUS
+export const updateOrderStatus = createAsyncThunk(
+  "order/updateOrderStatus",
+  async ({ orderId, status }, thunkAPI) => {
+    try {
+      const response = await apiConnector("POST", UPDATE_ORDER_STATUS_API, {
+        orderId,
+        status,
+      });
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
 // GET USER ORDERS
 export const getUserOrders = createAsyncThunk(
   "order/getUserOrders",
@@ -96,7 +113,6 @@ export const getRevenue = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_REVENUE_API);
-
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -160,6 +176,20 @@ const orderSlice = createSlice({
         state.error = action;
 
         toast.error("Error in Placing Order");
+      })
+      
+      // UPDATE ORDER STATUS
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        state.isOrderLoading = false;
+        toast.success("Order Status Updated Successfully!");
+      })
+      .addCase(updateOrderStatus.rejected, (state, action) => {
+        state.isOrderLoading = false;
+        state.error = action;
+        toast.error("Error in Updating Order Status");
       })
 
       // GET USER ORDERS
