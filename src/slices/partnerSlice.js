@@ -50,7 +50,6 @@ export const addPartnerInformation = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -64,7 +63,6 @@ export const getAllPartners = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -78,7 +76,6 @@ export const getTotalPartnerCount = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }

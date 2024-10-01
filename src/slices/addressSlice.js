@@ -27,7 +27,6 @@ export const addAddress = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -42,7 +41,6 @@ export const getUserAddresses = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -61,7 +59,6 @@ export const updateAddress = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -78,7 +75,6 @@ export const deleteAddress = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }

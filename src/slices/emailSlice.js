@@ -23,7 +23,6 @@ export const sendEmailOTP = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -41,7 +40,6 @@ export const verifyEmailOTP = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }

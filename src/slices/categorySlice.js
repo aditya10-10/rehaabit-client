@@ -25,7 +25,6 @@ export const showAllCategories = createAsyncThunk(
       const response = await apiConnector("GET", SHOW_ALL_CATEGORIES_API);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -51,7 +50,6 @@ export const createCategory = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -64,10 +62,8 @@ export const deleteCategory = createAsyncThunk(
       const response = await apiConnector("DELETE", DELETE_CATEGORY_API, {
         categoryId,
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -81,10 +77,8 @@ export const updateCategoryName = createAsyncThunk(
         categoryId,
         name,
       });
-      console.log(response.data.data);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -103,10 +97,8 @@ export const updateCategoryIcon = createAsyncThunk(
         },
         { "Content-Type": "multipart/form-data" }
       );
-      console.log(response.data.data);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
