@@ -73,7 +73,8 @@ const OrdersList = ({ orders }) => {
         handleRateAndReviewModal={handleRateAndReviewModal}
         serviceIdToPass={serviceIdToPass}
       />
-
+      
+      {/**Order Details Modal for Mobile phone */}
       {selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md transition-transform transform duration-300 mx-4">
@@ -146,7 +147,6 @@ const OrdersList = ({ orders }) => {
         <tbody className="flex flex-col w-full">
           {localOrders.map((order) => {
             const { _id, services, status, createdAt } = order;
-            console.log(order);
             return services.map((item, index) => {
               const userReview =
                 (Array.isArray(ratingAndReviews) &&
