@@ -53,6 +53,16 @@ const Categories = () => {
   const serviceRefs = useRef({});
 
   useEffect(() => {
+    if (window.innerWidth < 768) {
+      const scrollToTop = () => {
+        window.scrollTo(0, 0);
+      };
+      setTimeout(scrollToTop, 0);
+      return () => clearTimeout(scrollToTop);
+    }
+  }, []);
+  
+  useEffect(() => {
     dispatch(getSubCategoriesByCategory({ categoryId }));
   }, [dispatch, categoryId]);
 

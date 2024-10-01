@@ -62,7 +62,6 @@ export const getAllServices = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_ALL_SERVICES_API);
-      console.log("all services api ", response.data);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -82,7 +81,6 @@ export const getFullServiceDetails = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -97,7 +95,6 @@ export const editService = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -113,7 +110,6 @@ export const deleteService = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -128,7 +124,6 @@ export const createInclude = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -145,7 +140,6 @@ export const updateInclude = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -161,7 +155,6 @@ export const deleteInclude = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -176,7 +169,6 @@ export const createExclude = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -193,7 +185,6 @@ export const updateExclude = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -209,7 +200,6 @@ export const deleteExclude = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -224,7 +214,6 @@ export const createFAQ = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -242,7 +231,6 @@ export const updateFAQ = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -258,7 +246,6 @@ export const deleteFAQ = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -271,7 +258,6 @@ export const getAllFAQs = createAsyncThunk(
       const response = await apiConnector("GET", GET_FAQ_API);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -292,7 +278,6 @@ export const createHowDoesItWorks = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -316,7 +301,6 @@ export const updateHowDoesItWorks = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -333,7 +317,6 @@ export const deleteHowDoesItWorks = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -348,7 +331,6 @@ export const getTotalServicesCount = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -821,7 +803,6 @@ const serviceSlice = createSlice({
       })
       .addCase(getTotalServicesCount.fulfilled, (state, action) => {
         state.totalServicesCount = action.payload.totalServices;
-        console.log("total servies", state.totalServicesCount);
         state.isLoading = false;
       })
       .addCase(getTotalServicesCount.rejected, (state, action) => {

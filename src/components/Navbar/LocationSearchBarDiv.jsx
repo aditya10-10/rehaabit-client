@@ -51,7 +51,6 @@ const LocationSearchBarDiv = () => {
           )
             .then((response) => response.json())
             .then((data) => {
-              console.log("Location data:", data);
               const detectedCity =
                 data.address.city || data.address.town || data.address.village || data.display_name;
               const detectedPincode = data.address.postcode;

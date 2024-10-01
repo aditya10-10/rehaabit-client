@@ -26,7 +26,6 @@ export const showAllSubCategories = createAsyncThunk(
       const response = await apiConnector("GET", SHOW_ALL_SUB_CATEGORIES_API);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -52,7 +51,6 @@ export const addSubCategory = createAsyncThunk(
       // console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -69,7 +67,6 @@ export const deleteSubCategory = createAsyncThunk(
       // console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -87,7 +84,6 @@ export const updateSubCategoryName = createAsyncThunk(
       //   console.log(response.data.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -110,7 +106,6 @@ export const updateSubCategoryIcon = createAsyncThunk(
       // console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -130,7 +125,6 @@ export const getSubCategoriesByCategory = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }

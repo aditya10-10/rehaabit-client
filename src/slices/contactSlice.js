@@ -19,7 +19,6 @@ export const contact = createAsyncThunk(
       const response = await apiConnector("POST", CONTACT_API, formData);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -32,7 +31,6 @@ export const getAllContacts = createAsyncThunk(
       const response = await apiConnector("GET", GET_ALL_CONTACTS_API);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }

@@ -30,7 +30,6 @@ export const getAllUsers = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -45,7 +44,6 @@ export const getUser = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -63,7 +61,6 @@ export const deleteUser = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -84,7 +81,6 @@ export const updateUserDetails = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -105,7 +101,6 @@ export const createNewUser = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -120,7 +115,6 @@ export const getUserCount = createAsyncThunk(
       // console.log("getUSerCount", response.data);
       return response.data; // Ensure this matches the response structure
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }

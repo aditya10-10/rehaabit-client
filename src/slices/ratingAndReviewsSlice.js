@@ -32,7 +32,6 @@ export const createRating = createAsyncThunk(
       toast.success("Review submitted successfully!");
       return response.data.data;
     } catch (error) {
-      console.log("Error submitting review: ", error);
       toast.error("Failed to submit the review.");
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "An unknown error occurred."
@@ -52,7 +51,6 @@ export const getUsersRatingAndReviews = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -67,7 +65,6 @@ export const getAllRatingAndReviews = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -85,7 +82,6 @@ export const getAllRatingAndReviewsWithUserNames = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -104,7 +100,6 @@ export const getAllRatingsAndAverage = createAsyncThunk(
       console.log("rating avg", response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -125,7 +120,7 @@ const ratingAndreviewsSlice = createSlice({
       .addCase(createRating.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        console.log(action.payload);
+        // console.log(action.payload);
 
         state.ratingAndReviews.push(action.payload);
 
