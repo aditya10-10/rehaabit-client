@@ -31,17 +31,17 @@ const OrdersList = ({ orders }) => {
   const handleDropdownChange = (e) => {
     const status = e.target.value;
     dispatch(updateOrderStatus({ orderId: openDropdownId, status }));
-        setLocalOrders((prevOrders) =>
-          prevOrders.map((order) => {
-            if (order._id === openDropdownId) {
-              return {
-                ...order,
-                status: { ...order.status, status }
-              };
-            }
-            return order;
-          })
-        );
+    setLocalOrders((prevOrders) =>
+      prevOrders.map((order) => {
+        if (order._id === openDropdownId) {
+          return {
+            ...order,
+            status: { ...order.status, status }
+          };
+        }
+        return order;
+      })
+    );
     setOpenDropdownId(null);
   }
   const handleRateAndReviewModal = () => {
@@ -73,7 +73,7 @@ const OrdersList = ({ orders }) => {
         handleRateAndReviewModal={handleRateAndReviewModal}
         serviceIdToPass={serviceIdToPass}
       />
-      
+
       {/**Order Details Modal for Mobile phone */}
       {selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -208,24 +208,27 @@ const OrdersList = ({ orders }) => {
                         <FaCheck size={8} />
                         {status.status}
                       </p>
-
-                      {userReview ? (
-                        <div className="flex max-md:hidden items-center gap-1">
-                          {renderStars(rating)}
-                          <span className="text-gray-500 text-sm">
-                            ({rating}/5)
-                          </span>
-                        </div>
-                      ) : (
-                        <button
-                          className="text-blue-500 text-sm max-md:hidden"
-                          onClick={() => {
-                            setServiceIdToPass(item._id);
-                            handleRateAndReviewModal();
-                          }}
-                        >
-                          Rate And Review It
-                        </button>
+                      {status.status === "service completed" && (
+                        <>
+                          {userReview ? (
+                            <div className="flex max-md:hidden items-center gap-1">
+                              {renderStars(rating)}
+                              <span className="text-gray-500 text-sm">
+                                ({rating}/5)
+                              </span>
+                            </div>
+                          ) : (
+                            <button
+                              className="text-blue-500 text-sm max-md:hidden"
+                              onClick={() => {
+                                setServiceIdToPass(item._id);
+                                handleRateAndReviewModal();
+                              }}
+                            >
+                              Rate And Review It
+                            </button>
+                          )}
+                        </>
                       )}
                     </div>
                   </td>
