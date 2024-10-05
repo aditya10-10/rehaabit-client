@@ -143,3 +143,11 @@ body {
   background-repeat: repeat-y;
   background-size: 2px 10px;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.scrollbar-hide {
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}

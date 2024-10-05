@@ -52,7 +52,7 @@ const Testimonials = () => {
       <div className="relative mt-10">
         <div
           ref={sliderRef}
-          className="flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scroll-smooth"
+          className="flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scrollbar-hide"
         >
           {Array.isArray(ratingAndReviews) && ratingAndReviews.length > 0 ? (
             withReviews.slice(0, 5).map((review, index) => {

@@ -84,7 +84,7 @@ const PopularSearches = () => {
           {/* Scrollable Content */}
           <div
             ref={scrollRef}
-            className="flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scroll-smooth"
+            className="flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scrollbar-hide"
           >
             {nonPricedServices.map((service, index) => {
               const { _id, thumbnail, serviceName } = service;
