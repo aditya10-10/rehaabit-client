@@ -11,7 +11,8 @@ const {
   GET_ALL_ORDERS_API,
   GET_REVENUE_API,
   GET_PENDING_ORDERS_API_COUNT,
-  UPDATE_ORDER_STATUS_API
+  UPDATE_ORDER_STATUS_API,
+  CANCEL_ORDER_API
 } = orderEndpoints;
 
 const initialState = {
@@ -126,6 +127,20 @@ export const getPendingOrdersCount = createAsyncThunk(
     }
   }
 );
+
+export const cancelOrder = createAsyncThunk(
+  "order/cancelOrder",
+  async ({ orderId }, thunkAPI) => {
+    try {
+      const response = await apiConnector("POST", CANCEL_ORDER_API, {
+        orderId,
+      });
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+)
 
 const orderSlice = createSlice({
   name: "order",
@@ -253,6 +268,19 @@ const orderSlice = createSlice({
         state.error = action;
 
         toast.error("Error in Getting Pending Orders Count");
+      })
+
+      .addCase(cancelOrder.pending, (state) => {
+        state.isOrderLoading = true;
+      })
+      .addCase(cancelOrder.fulfilled, (state, action) => {
+        state.isOrderLoading = false;
+        toast.success("Order Cancelled Successfully!");
+      })
+      .addCase(cancelOrder.rejected, (state, action) => {
+        state.isOrderLoading = false;
+        state.error = action;
+        toast.error("Error in Cancelling Order");
       });
   },
 });

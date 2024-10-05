@@ -11,13 +11,12 @@ import { getAllOrders, getUserOrders } from "../../../slices/orderSlice";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
-
+  
   const { categories } = useSelector((state) => state.categories);
   const { subcategories } = useSelector((state) => state.subcategories);
   const { orders } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.profile);
 
-  // console.log(orders);
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSubcategory, setSelectedSubcategory] = useState("All");
@@ -73,9 +72,9 @@ const MyOrders = () => {
             My Orders
           </h1>
 
-          <div className="max-sm:flex max-sm:w-full max-sm:justify-center max-sm:flex-col">
+          {/* <div className="max-sm:flex max-sm:w-full max-sm:justify-center max-sm:flex-col"> */}
             {/* Search by Category */}
-            <select
+            {/* <select
               value={selectedCategory}
               onChange={handleCategoryChange}
               className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6 max-sm:ml-0 max-sm:mb-4"
@@ -86,10 +85,10 @@ const MyOrders = () => {
                   {name}
                 </option>
               ))}
-            </select>
+            </select> */}
 
             {/* Search by Subcategory */}
-            <select
+            {/* <select
               value={selectedSubcategory}
               onChange={handleSubcategoryChange}
               className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6 max-sm:ml-0 max-sm:mb-4"
@@ -101,7 +100,7 @@ const MyOrders = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* Search by Contact Number */}
           {user.accountType === "Admin" && (
@@ -122,7 +121,7 @@ const MyOrders = () => {
       {filteredOrders?.length === 0 ? (
         <NothingToShow text="Orders" btnText="shopping" />
       ) : (
-        <div className="w-full border rounded-lg">
+        <div className="w-full rounded-lg">
           <OrdersList orders={filteredOrders} />
         </div>
       )}

@@ -20,7 +20,7 @@ const SubCategory = () => {
   );
   const { isCategoryPage } = useSelector((state) => state.categories);
 
-  console.log(subcategories);
+  // console.log(subcategories);
 
   const handleFilterChange = (e) => {
     setFilterId(e.target.value);

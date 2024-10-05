@@ -12,6 +12,7 @@ module.exports = {
         lexend: ["Lexend", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         inter: ["Inter", "sans-serif"],
+        "arial": ["Arial"],
         "kolker-brush": ['"Kolker Brush"', "cursive"],
         "kolker-brush": ['"Kolker Brush"', "cursive"], // Add this line
       },
