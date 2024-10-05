@@ -15,7 +15,6 @@ const AddressList = ({ height }) => {
   const { addresses, filteredDefaultAddress } = useSelector(
     (state) => state.address
   );
-  console.log(addresses);
   const [editingAddressId, setEditingAddressId] = useState(null);
   const [onDelete, setOnDelete] = useState(null);
 
