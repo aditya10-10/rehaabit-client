@@ -15,10 +15,14 @@ const OrdersList = ({ orders }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [localOrders, setLocalOrders] = useState(orders);
+  const [localOrders, setLocalOrders] = useState(
+    orders.map(order => ({
+      ...order,
+      orderStages: ["Pending", "Confirmed", "Professional Assigned", "On the Way", "Service Completed"], 
+    }))
+  );
   const [trackingVisible, setTrackingVisible] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
-
   const { user } = useSelector((state) => state.profile);
   const { ratingAndReviews = [], isLoading } = useSelector(
     (state) => state.ratingAndReviews
@@ -36,21 +40,31 @@ const OrdersList = ({ orders }) => {
   };
 
   const handleCancelConfirm = () => {
-    // Call the cancel order API
-    dispatch(cancelOrder({ orderId: orderToCancel }));
+    
     setLocalOrders((prevOrders) =>
       prevOrders.map((order) => {
         if (order._id === orderToCancel) {
+          const updatedStages = [
+            ...order.orderStages.slice(0, getStatusStage(order.status.status) + 1),
+            "Cancelled",
+            "Refund Initiated",
+            "Refund Completed"
+          ];
           return {
             ...order,
-            status: { ...order.status, status: "cancelled by customer" }
+            status: { ...order.status, status: "cancelled by customer" },
+            orderStages: updatedStages, 
           };
         }
         return order;
       })
     );
+    dispatch(cancelOrder({ orderId: orderToCancel }));
+    
     setIsCancelModalOpen(false);
   };
+  
+  
   const handleDropdownClick = (id) => {
     setOpenDropdownId(openDropdownId === id ? null : id);
   };
@@ -102,17 +116,13 @@ const OrdersList = ({ orders }) => {
   }
 
   const getStatusStage = (status) => {
-    const stages = {
-      "pending": 0,
-      "confirmed": 1,
-      "professional assigned": 2,
-      "on the way": 3,
-      "service completed": 4,
-    };
-    return stages[status] || 0;
+    const stages = ["Pending", "Confirmed", "Professional Assigned", "On the Way", "Service Completed", "Cancelled"];
+    if (status === "cancelled by customer" || status === "cancelled by provider") {
+      status = "Cancelled";
+    }
+    const stageIndex = stages.findIndex((stage) => stage.toLowerCase() === status.toLowerCase());
+    return stageIndex !== -1 ? stageIndex : 0;
   };
-
-
   return (
     <>
       <RateAndReviewModal
@@ -128,7 +138,7 @@ const OrdersList = ({ orders }) => {
 
       <div className="w-full">
         {localOrders.map((order) => {
-          const { _id, services, status, createdAt, orderId } = order;
+          const { _id, services, status, createdAt,orderStages, orderId } = order;
           return services.map((item) => {
             const currentStage = getStatusStage(status.status);
             const userReview = ratingAndReviews.find(
@@ -136,7 +146,9 @@ const OrdersList = ({ orders }) => {
             );
             const rating = userReview ? userReview.rating : 0;
 
+
             return (
+
               <div
                 key={item._id}
                 className="border font-arial rounded-lg p-4 mb-4 shadow-md bg-white"
@@ -170,8 +182,8 @@ const OrdersList = ({ orders }) => {
                       Scheduled for: {formattedDate(createdAt)}
                     </p>
                     <p className="text-sm md:text-sm">
-                    <span className="font-semibold text-slate-700"> Total Price: </span>
-                       ₹ {item.qty * item.price}
+                      <span className="font-semibold text-slate-700"> Total Price: </span>
+                      ₹ {item.qty * item.price}
                     </p>
                     {status.status === "service completed" && (
                       <div className="mt-2">
@@ -208,8 +220,8 @@ const OrdersList = ({ orders }) => {
                   </button>
                   <button
                     className={`${["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed"].includes(status.status)
-                        ? "bg-gray-400 text-gray-600 cursor-not-allowed" // Disabled styling
-                        : "bg-red-500 hover:bg-red-600 text-white" // Active styling
+                      ? "bg-gray-400 text-gray-600 cursor-not-allowed" // Disabled styling
+                      : "bg-red-500 hover:bg-red-600 text-white" // Active styling
                       } w-full px-1 py-2 rounded shadow-lg transition duration-300`}
                     onClick={() => handleCancelOrderClick(_id)}
                     disabled={["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed"].includes(status.status)} // Disable button for specific statuses
@@ -257,7 +269,7 @@ const OrdersList = ({ orders }) => {
                     <div className="border-b w-full mb-8"></div>
                     {/* For larger screens */}
                     <div className="hidden sm:flex justify-between items-center relative">
-                      {["Pending", "Confirmed", "Professional Assigned", "On the Way", "Service Completed"].map(
+                      {orderStages.map(
                         (stage, index) => (
                           <div
                             key={index}
@@ -297,7 +309,7 @@ const OrdersList = ({ orders }) => {
                       </button>
 
                       <div className="flex flex-col items-start h-full mt-32">
-                        {["Pending", "Confirmed", "Professional Assigned", "On the Way", "Service Completed"].map(
+                        {orderStages.map(
                           (stage, index) => (
                             <div key={index} className="flex w-full items-start mb-0">
                               {/* Stage name on the left */}
