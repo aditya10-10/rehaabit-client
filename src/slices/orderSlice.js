@@ -135,6 +135,13 @@ export const cancelOrder = createAsyncThunk(
       const response = await apiConnector("POST", CANCEL_ORDER_API, {
         orderId,
       });
+      console.log(response.data.data);
+      if(response.data.data.refundAmount>0){
+        toast.success(`Order Cancelled Successfully! ₹${response.data.data.refundAmount} will be refunded to your account soon`);
+      }
+      else if(response.data.data.refundAmount<=0){
+        toast.success(`Order Cancelled Successfully! No Refund Amount is applicable`);
+      }
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -275,7 +282,7 @@ const orderSlice = createSlice({
       })
       .addCase(cancelOrder.fulfilled, (state, action) => {
         state.isOrderLoading = false;
-        toast.success("Order Cancelled Successfully!");
+        // toast.success("Order Cancelled Successfully!");
       })
       .addCase(cancelOrder.rejected, (state, action) => {
         state.isOrderLoading = false;
