@@ -139,7 +139,7 @@ export const cancelOrder = createAsyncThunk(
       if(response.data.data.refundAmount>0){
         toast.success(`Order Cancelled Successfully! ₹${response.data.data.refundAmount} will be refunded to your account soon`);
       }
-      else{
+      else if(response.data.data.refundAmount<=0){
         toast.success(`Order Cancelled Successfully! No Refund Amount is applicable`);
       }
       return response.data.data;
