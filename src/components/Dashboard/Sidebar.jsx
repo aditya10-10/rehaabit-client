@@ -22,6 +22,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { FiSearch } from "react-icons/fi";
 import { set } from "react-hook-form";
 
+
 const SidebarContext = createContext();
 
 const sidebarLinks = [
@@ -103,6 +104,7 @@ const sidebarLinks = [
 
 export default function Sidebar({ children }) {  
   const [isOrderClickedinPhone, setIsOrderClickedinPhone] = useState(false);
+  const isSidebarVisible = useSelector((state) => state.sidebar.isSidebarVisible);
   const [expanded, setExpanded] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate(); // Ensure useNavigate is imported correctly
@@ -193,7 +195,7 @@ export default function Sidebar({ children }) {
 
   return (
     <>
-      {!isOrderClickedinPhone &&(
+      {isSidebarVisible &&(
       <aside className="h-screen" style={{ fontFamily: "Roboto, sans-serif" }}>
         <nav className="h-full flex flex-col bg-white border-r shadow-sm">
           <div className="p-4 pb-2 flex justify-between items-center">
