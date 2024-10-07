@@ -106,8 +106,12 @@ export const partnerEndpoints = {
 
 // CONTACT ENDPOINTS
 export const contactEndpoints = {
-  CONTACT_API: BASE_URL + "/contact",
-  GET_ALL_CONTACTS_API: BASE_URL + "/getAllContacts",
+  CONTACT_API: BASE_URL + "/contact", // For submitting a contact form
+  GET_ALL_CONTACTS_API: BASE_URL + "/getAllContacts", // For admin to get all contact data
+  GET_CONTACT_BY_ID_API: BASE_URL + "/getContactById", // Fetch specific contact by contactId
+  UPDATE_CONTACT_STATUS_API: BASE_URL + "/updateContactStatusAndAssignment", // Admin updates contact status, assignment, priority
+  ADMIN_RESPONSE_API: BASE_URL + "/adminResponse", // Admin adds a response to a contact
+  DELETE_CONTACT_API: BASE_URL + "/deleteContact", // Admin deletes a contact
 };
 
 // CAREERS ENDPOINTS
