@@ -16,6 +16,7 @@ import partnerReducer from "../slices/partnerSlice";
 import usersReducer from "../slices/usersSlice";
 import ratingAndreviewsReducer from "../slices/ratingAndReviewsSlice";
 import enquireReducer from "../slices/enquireSlice";
+import sidebarReducer from "../slices/sidebarSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   users: usersReducer,
   ratingAndReviews: ratingAndreviewsReducer,
   enquire: enquireReducer,
+  sidebar: sidebarReducer,
 });
 
 export default rootReducer;

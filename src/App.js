@@ -56,13 +56,13 @@ import AboutPage from "./pages/AboutUs";
 import Contact from "./components/Contact/ContactUs";
 import PageNotFound from "./pages/PageNotFound";
 import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
+import { toggleSidebarVisibility } from "./slices/sidebarSlice";
 
 export default function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useSelector((state) => state.profile);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
 
@@ -116,6 +116,14 @@ export default function App() {
   useEffect(() => {
     if (!location.pathname.includes("/checkout")) {
       dispatch(clearSingleOrder());
+    }
+  }, [location, dispatch]);
+
+
+  useEffect(() => {
+    if(window.innerWidth < 768) {
+    const isOrderPage = location.pathname === '/dashboard/orders';
+    dispatch(toggleSidebarVisibility(!isOrderPage));
     }
   }, [location, dispatch]);
 

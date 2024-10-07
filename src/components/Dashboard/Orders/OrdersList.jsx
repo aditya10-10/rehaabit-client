@@ -15,12 +15,7 @@ const OrdersList = ({ orders }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [localOrders, setLocalOrders] = useState(
-    orders.map(order => ({
-      ...order,
-      orderStages: ["Pending", "Confirmed", "Professional Assigned", "On the Way", "Service Completed"], 
-    }))
-  );
+  const [localOrders, setLocalOrders] = useState(orders);
   const [trackingVisible, setTrackingVisible] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const { user } = useSelector((state) => state.profile);
@@ -28,6 +23,13 @@ const OrdersList = ({ orders }) => {
     (state) => state.ratingAndReviews
   );
 
+  const defaultStages = [
+    "Pending",
+    "Confirmed",
+    "Professional Assigned",
+    "On the Way",
+    "Service Completed"
+  ];
   const [isRateAndReviewModalOpen, setIsRateAndReviewModalOpen] = useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
   const [openDropdownId, setOpenDropdownId] = useState(null);
@@ -40,27 +42,19 @@ const OrdersList = ({ orders }) => {
   };
 
   const handleCancelConfirm = () => {
-    
+    const cancelText=user.accountType==='Admin'?'cancelled by provider':'cancelled by customer';
+    dispatch(cancelOrder({ orderId: orderToCancel }));
     setLocalOrders((prevOrders) =>
       prevOrders.map((order) => {
         if (order._id === orderToCancel) {
-          const updatedStages = [
-            ...order.orderStages.slice(0, getStatusStage(order.status.status) + 1),
-            "Cancelled",
-            "Refund Initiated",
-            "Refund Completed"
-          ];
           return {
             ...order,
-            status: { ...order.status, status: "cancelled by customer" },
-            orderStages: updatedStages, 
+            status: { statuses: [...order.status.statuses, { status: cancelText, updatedAt: new Date().toISOString() }] }
           };
         }
         return order;
       })
     );
-    dispatch(cancelOrder({ orderId: orderToCancel }));
-    
     setIsCancelModalOpen(false);
   };
   
@@ -70,21 +64,32 @@ const OrdersList = ({ orders }) => {
   };
 
   const handleDropdownChange = (e) => {
-    const status = e.target.value;
-    dispatch(updateOrderStatus({ orderId: openDropdownId, status }));
+    const newStatus = e.target.value;
+
+    // Dispatch action to update the order status in the backend
+    dispatch(updateOrderStatus({ orderId: openDropdownId, status: newStatus }));
+
     setLocalOrders((prevOrders) =>
       prevOrders.map((order) => {
         if (order._id === openDropdownId) {
           return {
             ...order,
-            status: { ...order.status, status }
+            status: {
+              ...order.status,
+              statuses: [
+                ...order.status.statuses,
+                { status: newStatus, updatedAt: new Date().toISOString() }
+              ]
+            }
           };
         }
         return order;
       })
     );
+
     setOpenDropdownId(null);
-  };
+};
+
   const handleRateAndReviewModal = () => {
     setIsRateAndReviewModalOpen(!isRateAndReviewModalOpen);
     setSelectedOrder(null);
@@ -115,14 +120,41 @@ const OrdersList = ({ orders }) => {
     return <div>Loading...</div>;
   }
 
-  const getStatusStage = (status) => {
-    const stages = ["Pending", "Confirmed", "Professional Assigned", "On the Way", "Service Completed", "Cancelled"];
-    if (status === "cancelled by customer" || status === "cancelled by provider") {
-      status = "Cancelled";
+  const getTrackingStages = (order) => {
+    const completedStages = order.status.statuses.map((status) => status.status.toLowerCase());
+    const latestStatusIndex = completedStages.length - 1; // Index of the latest status
+  
+    // Check for cancellation status
+    const isCancelled = completedStages.includes("cancelled by provider") || 
+                        completedStages.includes("cancelled by customer");
+  
+    if (isCancelled) {
+      // Find the index of the first cancellation status
+      const cancellationIndex = Math.max(
+        completedStages.indexOf("cancelled by provider"),
+        completedStages.indexOf("cancelled by customer")
+      );
+  
+      // Return stages up to the cancellation point, then add cancellation stages
+      return {
+        trackingStages: [
+          ...completedStages.slice(0, cancellationIndex).map(s=>s?.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")),
+          "Cancelled",
+          "Refund Initiated",
+          "Refund Completed"
+        ],
+        latestStatusIndex
+      };
     }
-    const stageIndex = stages.findIndex((stage) => stage.toLowerCase() === status.toLowerCase());
-    return stageIndex !== -1 ? stageIndex : 0;
+  
+    // If no cancellation status, return default stages with latest status index
+    return {
+      trackingStages: defaultStages,
+      latestStatusIndex
+    };
   };
+  
+
   return (
     <>
       <RateAndReviewModal
@@ -138,15 +170,15 @@ const OrdersList = ({ orders }) => {
 
       <div className="w-full">
         {localOrders.map((order) => {
-          const { _id, services, status, createdAt,orderStages, orderId } = order;
+          const { _id, services, status, createdAt, orderId } = order;
+          const statuses = status.statuses;
+          const {trackingStages,latestStatusIndex} = getTrackingStages(order);  
           return services.map((item) => {
-            const currentStage = getStatusStage(status.status);
             const userReview = ratingAndReviews.find(
               (review) => review.service === item.serviceId
             );
             const rating = userReview ? userReview.rating : 0;
-
-
+            
             return (
 
               <div
@@ -160,7 +192,7 @@ const OrdersList = ({ orders }) => {
                   </h3>
                   <div className="text-right">
                     <span className="text-gray-500">Status: </span>
-                    <StatusBadge status={status.status} />
+                    <StatusBadge status={statuses[statuses.length - 1].status} />
                   </div>
                 </div>
 
@@ -185,7 +217,7 @@ const OrdersList = ({ orders }) => {
                       <span className="font-semibold text-slate-700"> Total Price: </span>
                       ₹ {item.qty * item.price}
                     </p>
-                    {status.status === "service completed" && (
+                    {statuses[statuses.length - 1].status === "service completed" && (
                       <div className="mt-2">
                         {userReview ? (
                           <div className="flex items-center gap-1">
@@ -211,7 +243,7 @@ const OrdersList = ({ orders }) => {
                 </div>
 
                 {/* Buttons Section */}
-                <div className={`mt-4 mx-10 max-sm:mx-0 max-sm:gap-4 grid w-auto grid-cols-1 sm:grid-cols-2 ${user.accountType === "Admin" ? "gap-4" : "gap-96"}`}>
+                <div className={`mt-4 mx-10 max-sm:mx-0 max-sm:gap-4 max-md:gap-0 grid w-auto grid-cols-1 sm:grid-cols-2 ${user.accountType === "Admin" ? "gap-4" : "max-lg:gap-52 gap-96"}`}>
                   <button
                     className="bg-blue-500 hover:bg-blue-600 text-white w-full px-1 py-2 rounded shadow-lg transition duration-300"
                     onClick={() => handleTrackOrderClick(_id)} // Updated
@@ -219,12 +251,12 @@ const OrdersList = ({ orders }) => {
                     Track Order
                   </button>
                   <button
-                    className={`${["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed"].includes(status.status)
+                    className={`${["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed","service completed"].includes(statuses[statuses.length - 1].status)
                       ? "bg-gray-400 text-gray-600 cursor-not-allowed" // Disabled styling
                       : "bg-red-500 hover:bg-red-600 text-white" // Active styling
                       } w-full px-1 py-2 rounded shadow-lg transition duration-300`}
                     onClick={() => handleCancelOrderClick(_id)}
-                    disabled={["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed"].includes(status.status)} // Disable button for specific statuses
+                    disabled={["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed","service completed"].includes(statuses[statuses.length - 1].status)} // Disable button for specific statuses
                   >
                     Cancel Order
                   </button>
@@ -269,7 +301,7 @@ const OrdersList = ({ orders }) => {
                     <div className="border-b w-full mb-8"></div>
                     {/* For larger screens */}
                     <div className="hidden sm:flex justify-between items-center relative">
-                      {orderStages.map(
+                      {trackingStages?.map(
                         (stage, index) => (
                           <div
                             key={index}
@@ -277,19 +309,19 @@ const OrdersList = ({ orders }) => {
                             style={{ flex: 1, textAlign: "center" }}
                           >
                             <div
-                              className={`h-2 w-full ${index < currentStage + 1 ? "bg-green-500" : "bg-gray-300"}`}
+                              className={`h-2 w-full ${index <= latestStatusIndex ? "bg-green-500" : "bg-gray-300"}`}
                               style={{
                                 marginTop: "10px",
                                 ...(index === 0
                                   ? { width: "50%", marginLeft: "50%" }
-                                  : index === 4
+                                  : index === trackingStages.length - 1
                                     ? { width: "50%", marginRight: "50%" }
                                     : {}),
                               }}
                             ></div>
 
                             <div
-                              className={`h-6 w-6 rounded-full ${index <= currentStage ? "bg-green-500" : "bg-gray-300"
+                              className={`h-6 w-6 rounded-full ${index <= latestStatusIndex ? "bg-green-500" : "bg-gray-300"
                                 }`}
                               style={{ position: "relative", top: "-15px" }}
                             />
@@ -309,7 +341,7 @@ const OrdersList = ({ orders }) => {
                       </button>
 
                       <div className="flex flex-col items-start h-full mt-32">
-                        {orderStages.map(
+                        {trackingStages?.map(
                           (stage, index) => (
                             <div key={index} className="flex w-full items-start mb-0">
                               {/* Stage name on the left */}
@@ -318,12 +350,12 @@ const OrdersList = ({ orders }) => {
                               <div className="flex flex-col items-center w-1/2">
                                 {/* Dot for stages */}
                                 <div
-                                  className={`h-6 w-6 rounded-full ${index <= currentStage ? "bg-green-500" : "bg-gray-300"} mb-0`}
+                                  className={`h-6 w-6 rounded-full ${index <= latestStatusIndex ? "bg-green-500" : "bg-gray-300"} mb-0`}
                                 />
                                 {/* Line section */}
                                 {index < 4 && (
                                   <div
-                                    className={`h-full w-1 ${index < currentStage ? "bg-green-500" : "bg-gray-300"}`}
+                                    className={`h-full w-1 ${index < latestStatusIndex ? "bg-green-500" : "bg-gray-300"}`}
                                     style={{ minHeight: "90px" }} // Ensures the line covers the entire space
                                   />
                                 )}
