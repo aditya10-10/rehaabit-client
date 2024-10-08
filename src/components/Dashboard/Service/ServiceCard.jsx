@@ -44,8 +44,8 @@ const ServiceCard = ({
         )}
 
         <span className="text-sm text-gray-500">
-          {isExpanded ? serviceDescription : `${serviceDescription.substring(0, 160)}`}
-          {serviceDescription.length > 160 && (
+          {isExpanded ? serviceDescription : `${serviceDescription?.substring(0, 160)}`}
+          {serviceDescription?.length > 160 && (
             <button
             onClick={handleReadMore}
             className="text-blue-500 ml-1"
