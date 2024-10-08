@@ -24,6 +24,7 @@ const Cart = () => {
   const { cartServices, isLoading, totalQty } = useSelector(
     (state) => state.cart
   );
+  const reversedCartServices = [...cartServices].reverse();
   const { filteredDefaultAddress } = useSelector((state) => state.address);
   const { user } = useSelector((state) => state.profile);
 
@@ -144,7 +145,7 @@ const Cart = () => {
             ) : (
               <div className="w-full shadow-custom-shadow rounded-lg">
                 <CartServices
-                  cartServices={cartServices}
+                  cartServices={reversedCartServices}
                   isLoading={isLoading}
                 />
 

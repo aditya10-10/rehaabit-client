@@ -1,4 +1,5 @@
 import { GoStarFill } from "react-icons/go";
+import { useState } from "react";
 
 const ServiceCard = ({
   _id,
@@ -11,6 +12,12 @@ const ServiceCard = ({
   avgRating,
   priceStatus,
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleReadMore = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div className="flex flex-col sm:flex-row bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300 w-full max-w-2xl mx-auto mt-4">
       <img
@@ -36,7 +43,17 @@ const ServiceCard = ({
           </div>
         )}
 
-        <span className="text-sm mb-1 text-gray-500">{serviceDescription}</span>
+        <span className="text-sm text-gray-500">
+          {isExpanded ? serviceDescription : `${serviceDescription.substring(0, 160)}`}
+          {serviceDescription.length > 160 && (
+            <button
+            onClick={handleReadMore}
+            className="text-blue-500 ml-1"
+          >
+            {isExpanded ? "Show Less" : "Read More"}
+          </button>
+          )}
+        </span>
       </div>
     </div>
   );
