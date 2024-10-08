@@ -14,7 +14,6 @@ import ConfirmationModal from "../ConfirmationModal";
 const CartServices = ({ cartServices, isLoading }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { user } = useSelector((state) => state.profile);
 
   const [onRemove, setOnRemove] = useState(null);

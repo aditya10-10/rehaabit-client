@@ -37,7 +37,6 @@ const ServiceDetailsModal = ({
 
   const [activeId, setActiveId] = useState(null);
   const [onRemove, setOnRemove] = useState(null);
-
   useEffect(() => {
     dispatch(getFullServiceDetails({ serviceId }));
   }, [dispatch, serviceId]);
@@ -211,7 +210,7 @@ const ServiceDetailsModal = ({
                 {/* BUTTONS */}
                 <div className="flex gap-2 justify-end w-full my-4">
                   {service.price === 0 ||
-                  service.priceStatus === "non-priced" ? (
+                    service.priceStatus === "non-priced" ? (
                     <button
                       className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
                       onClick={() => {
@@ -385,9 +384,8 @@ const ServiceDetailsModal = ({
                                   </div>
 
                                   <div
-                                    className={`overflow-hidden transition-max-height duration-300 ease-in-out text-start w-full ${
-                                      isActive ? "max-h-96" : "max-h-0"
-                                    }`}
+                                    className={`overflow-hidden transition-max-height duration-300 ease-in-out text-start w-full ${isActive ? "max-h-96" : "max-h-0"
+                                      }`}
                                   >
                                     <span className="text-start mt-4 text-gray-600">
                                       {answer}
@@ -410,7 +408,7 @@ const ServiceDetailsModal = ({
                     </h1>
                     <div className="">
                       {Array.isArray(service.ratingAndReviews) &&
-                      service.ratingAndReviews.length > 0 ? (
+                        service.ratingAndReviews.length > 0 ? (
                         service.ratingAndReviews.map((review, index) => {
                           const {
                             user = {}, // Default to an empty object if user is null or undefined

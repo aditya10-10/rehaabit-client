@@ -9,6 +9,7 @@ import StatusBadge from "../../../utils/StatusBadge";
 import { updateOrderStatus } from "../../../slices/orderSlice";
 import { cancelOrder } from "../../../slices/orderSlice";
 import { IoMdClose } from "react-icons/io";
+import EditOrderModal from "./EditOrderModal";
 import CancelOrderModal from "./CancelOrderModal";
 
 const OrdersList = ({ orders }) => {
@@ -18,6 +19,8 @@ const OrdersList = ({ orders }) => {
   const [localOrders, setLocalOrders] = useState(orders);
   const [trackingVisible, setTrackingVisible] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [newStatus, setNewStatus] = useState(null);
   const { user } = useSelector((state) => state.profile);
   const { ratingAndReviews = [], isLoading } = useSelector(
     (state) => state.ratingAndReviews
@@ -64,9 +67,12 @@ const OrdersList = ({ orders }) => {
   };
 
   const handleDropdownChange = (e) => {
-    const newStatus = e.target.value;
+    setNewStatus(e.target.value);
+    setIsEditModalOpen(true); 
+  };
+  const handleEditConfirm = () => {
+    setIsEditModalOpen(false);
 
-    // Dispatch action to update the order status in the backend
     dispatch(updateOrderStatus({ orderId: openDropdownId, status: newStatus }));
 
     setLocalOrders((prevOrders) =>
@@ -86,10 +92,9 @@ const OrdersList = ({ orders }) => {
         return order;
       })
     );
-
-    setOpenDropdownId(null);
-};
-
+    
+    setOpenDropdownId(null); 
+  };
   const handleRateAndReviewModal = () => {
     setIsRateAndReviewModalOpen(!isRateAndReviewModalOpen);
     setSelectedOrder(null);
@@ -167,7 +172,12 @@ const OrdersList = ({ orders }) => {
         onClose={() => setIsCancelModalOpen(false)}
         onConfirm={handleCancelConfirm}
       />
-
+      <EditOrderModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onConfirm={handleEditConfirm}
+        status={newStatus}
+      />
       <div className="w-full">
         {localOrders.map((order) => {
           const { _id, services, status, createdAt, orderId } = order;

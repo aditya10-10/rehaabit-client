@@ -77,7 +77,6 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
           })}
         </div>
       )}
-
       {searchQuery !== "" && results.length === 0 && (
         <div className="absolute z-50 top-full left-0 w-full mt-1 bg-white rounded-md shadow-custom-shadow p-2">
           No results found.

@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 // import { configure } from "@testing-library/react";
 import { Provider } from "react-redux";
 import rootReducer from "./reducer/index.js";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit"; 
 // import { Toaster } from "react-hot-toast";
 import { Toaster } from "sonner";
 

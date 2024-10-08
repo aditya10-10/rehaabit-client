@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { GoStarFill } from "react-icons/go";
 
 const ServicesDetailsRatingCard = ({
@@ -29,7 +29,11 @@ const ServicesDetailsRatingCard = ({
       day: "numeric",
     });
   };
+  const [isExpanded, setIsExpanded] = useState(false);
 
+  const handleReadMore = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <div className="bg-white shadow-md rounded-lg p-4 mb-4 w-full max-w-xl mx-auto">
       {/* User Info */}
@@ -52,7 +56,16 @@ const ServicesDetailsRatingCard = ({
       <div className="flex justify-between items-center">
         {/* Review Text */}
         <p className="text-base text-gray-700 flex-1">
-          {quote || "No testimonial available."}
+          {!quote && "No testimonial available."}
+          {isExpanded ? quote : `${quote.substring(0, 110)}`}
+          {quote.length > 110 && (
+            <button
+            onClick={handleReadMore}
+            className="text-blue-500 ml-1"
+          >
+            {isExpanded ? "Show Less" : "Read More"}
+          </button>
+          )}
         </p>
 
         {/* Star Rating */}
