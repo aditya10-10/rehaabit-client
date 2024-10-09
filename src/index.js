@@ -9,7 +9,6 @@ import rootReducer from "./reducer/index.js";
 import { configureStore } from "@reduxjs/toolkit"; 
 // import { Toaster } from "react-hot-toast";
 import { Toaster } from "sonner";
-
 // REACT QUERY
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";

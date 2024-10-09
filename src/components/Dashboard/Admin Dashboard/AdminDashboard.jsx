@@ -29,6 +29,7 @@ import { getTotalServicesCount } from "../../../slices/serviceSlice";
 import { getRevenue } from "../../../slices/orderSlice";
 import { getAllServices } from "../../../slices/serviceSlice";
 import { getAllOrders } from "../../../slices/orderSlice";
+import { ThreeDots } from "react-loader-spinner";
 
 // Register Chart.js components
 ChartJS.register(
@@ -59,10 +60,10 @@ const AdminDashboard = () => {
   const totalRevenue = useSelector((state) => state.order.totalRevenue);
   const isOrderLoading = useSelector((state) => state.order.isOrderLoading);
   const allOrders = useSelector((state) => state.order.orders);
-  const pendingOrdersCount = allOrders?.filter((order)=>order.status.status==="pending").length;
-  const refundCompleted= allOrders?.filter((order)=>order.status.status==="refund completed").length;
-  const completedServicesCount = allOrders?.filter((order)=>order.status.status==="service completed").length;
-  const canceledServicesCount = allOrders?.filter((order)=>order.status.status==="cancelled by customer" || order.status.status==="cancelled by provider").length;
+  const pendingOrdersCount = allOrders?.filter((order) => order.status.status === "pending").length;
+  const refundCompleted = allOrders?.filter((order) => order.status.status === "refund completed").length;
+  const completedServicesCount = allOrders?.filter((order) => order.status.status === "service completed").length;
+  const canceledServicesCount = allOrders?.filter((order) => order.status.status === "cancelled by customer" || order.status.status === "cancelled by provider").length;
   // const { allOrders } = useSelector((state) => state.orders);
 
   // const pendingServices = allOrders.filter(
@@ -134,7 +135,16 @@ const AdminDashboard = () => {
             <h3 style={styles.kpiTitle}>Total Users</h3>
             <h2 style={styles.kpiValue}>
               {isLoadingUsers
-                ? "Loading..."
+                ? <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
                 : userCount?.totalUsers?.toLocaleString()}
             </h2>
           </div>
@@ -149,7 +159,16 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Total Services</h3>
             <h2 style={styles.kpiValue}>
-              {isLoadingServices ? "Loading..." : totalServicesCount}
+              {isLoadingServices ? <ThreeDots
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              /> : totalServicesCount}
             </h2>
           </div>
         </div>
@@ -161,7 +180,16 @@ const AdminDashboard = () => {
             <h3 style={styles.kpiTitle}>Total Revenue</h3>
             <h2 style={styles.kpiValue}>
               {isOrderLoading
-                ? "Loading..."
+                ? <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
                 : `₹${totalRevenue.toLocaleString()}`}
             </h2>{" "}
           </div>
@@ -174,7 +202,16 @@ const AdminDashboard = () => {
             <h3 style={styles.kpiTitle}>Active Providers</h3>
             <h2 style={styles.kpiValue}>
               {isLoadingPartners
-                ? "Loading..."
+                ? <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
                 : totalPartnerCount.totalPartners}
             </h2>
           </div>
@@ -188,7 +225,16 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Pending Bookings</h3>
             <h2 style={styles.kpiValue}>
-              {isOrderLoading ? "Loading..." : pendingOrdersCount}
+              {isOrderLoading ? <ThreeDots
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              /> : pendingOrdersCount}
             </h2>
           </div>
         </div>
@@ -202,7 +248,16 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Completed Services</h3>
             <h2 style={styles.kpiValue}>{
-              isOrderLoading ? "Loading..." : completedServicesCount
+              isOrderLoading ? <ThreeDots
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              /> : completedServicesCount
             }</h2>
           </div>
         </div>
@@ -216,7 +271,16 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Canceled Services</h3>
             <h2 style={styles.kpiValue}>{
-              isOrderLoading ? "Loading..." : canceledServicesCount
+              isOrderLoading ? <ThreeDots
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              /> : canceledServicesCount
             }</h2>
           </div>
         </div>
@@ -230,7 +294,16 @@ const AdminDashboard = () => {
           <div>
             <h3 style={styles.kpiTitle}>Refund Completed</h3>
             <h2 style={styles.kpiValue}>{
-              isOrderLoading ? "Loading..." : refundCompleted
+              isOrderLoading ? <ThreeDots
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              /> : refundCompleted
             }</h2>
           </div>
         </div>
@@ -244,11 +317,20 @@ const AdminDashboard = () => {
             <h3 style={styles.kpiTitle}>Satisfaction Score</h3>
             <h2 style={styles.kpiValue}>
               {isLoadingRatings
-                ? "Loading..."
+                ? <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
                 : ratingAndReviews &&
                   ratingAndReviews.averageRating !== undefined
-                ? ratingAndReviews.averageRating.toFixed(2)
-                : "N/A"}{" "}
+                  ? ratingAndReviews.averageRating.toFixed(2)
+                  : "N/A"}{" "}
               / 5
             </h2>
           </div>

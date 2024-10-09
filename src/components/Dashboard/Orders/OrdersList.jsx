@@ -11,6 +11,7 @@ import { cancelOrder } from "../../../slices/orderSlice";
 import { IoMdClose } from "react-icons/io";
 import EditOrderModal from "./EditOrderModal";
 import CancelOrderModal from "./CancelOrderModal";
+import { BallTriangle } from "react-loader-spinner";
 
 const OrdersList = ({ orders }) => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const OrdersList = ({ orders }) => {
   };
 
   const handleCancelConfirm = () => {
-    const cancelText=user.accountType==='Admin'?'cancelled by provider':'cancelled by customer';
+    const cancelText = user.accountType === 'Admin' ? 'cancelled by provider' : 'cancelled by customer';
     dispatch(cancelOrder({ orderId: orderToCancel }));
     setLocalOrders((prevOrders) =>
       prevOrders.map((order) => {
@@ -60,15 +61,15 @@ const OrdersList = ({ orders }) => {
     );
     setIsCancelModalOpen(false);
   };
-  
-  
+
+
   const handleDropdownClick = (id) => {
     setOpenDropdownId(openDropdownId === id ? null : id);
   };
 
   const handleDropdownChange = (e) => {
     setNewStatus(e.target.value);
-    setIsEditModalOpen(true); 
+    setIsEditModalOpen(true);
   };
   const handleEditConfirm = () => {
     setIsEditModalOpen(false);
@@ -92,8 +93,8 @@ const OrdersList = ({ orders }) => {
         return order;
       })
     );
-    
-    setOpenDropdownId(null); 
+
+    setOpenDropdownId(null);
   };
   const handleRateAndReviewModal = () => {
     setIsRateAndReviewModalOpen(!isRateAndReviewModalOpen);
@@ -122,28 +123,39 @@ const OrdersList = ({ orders }) => {
   };
 
   if (isLoading || !Array.isArray(ratingAndReviews)) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center w-100% h-100% bg-white">
+    <BallTriangle
+      height={100}
+      width={100}
+      radius={5}  
+      color="#4fa94d"
+      ariaLabel="ball-triangle-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+    />
+  </div>
   }
 
   const getTrackingStages = (order) => {
     const completedStages = order.status.statuses.map((status) => status.status.toLowerCase());
     const latestStatusIndex = completedStages.length - 1; // Index of the latest status
-  
+
     // Check for cancellation status
-    const isCancelled = completedStages.includes("cancelled by provider") || 
-                        completedStages.includes("cancelled by customer");
-  
+    const isCancelled = completedStages.includes("cancelled by provider") ||
+      completedStages.includes("cancelled by customer");
+
     if (isCancelled) {
       // Find the index of the first cancellation status
       const cancellationIndex = Math.max(
         completedStages.indexOf("cancelled by provider"),
         completedStages.indexOf("cancelled by customer")
       );
-  
+
       // Return stages up to the cancellation point, then add cancellation stages
       return {
         trackingStages: [
-          ...completedStages.slice(0, cancellationIndex).map(s=>s?.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")),
+          ...completedStages.slice(0, cancellationIndex).map(s => s?.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")),
           "Cancelled",
           "Refund Initiated",
           "Refund Completed"
@@ -151,14 +163,14 @@ const OrdersList = ({ orders }) => {
         latestStatusIndex
       };
     }
-  
+
     // If no cancellation status, return default stages with latest status index
     return {
       trackingStages: defaultStages,
       latestStatusIndex
     };
   };
-  
+
 
   return (
     <>
@@ -182,13 +194,13 @@ const OrdersList = ({ orders }) => {
         {localOrders.map((order) => {
           const { _id, services, status, createdAt, orderId } = order;
           const statuses = status.statuses;
-          const {trackingStages,latestStatusIndex} = getTrackingStages(order);  
+          const { trackingStages, latestStatusIndex } = getTrackingStages(order);
           return services.map((item) => {
             const userReview = ratingAndReviews.find(
               (review) => review.service === item.serviceId
             );
             const rating = userReview ? userReview.rating : 0;
-            
+
             return (
 
               <div
@@ -261,12 +273,12 @@ const OrdersList = ({ orders }) => {
                     Track Order
                   </button>
                   <button
-                    className={`${["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed","service completed"].includes(statuses[statuses.length - 1].status)
+                    className={`${["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed", "service completed"].includes(statuses[statuses.length - 1].status)
                       ? "bg-gray-400 text-gray-600 cursor-not-allowed" // Disabled styling
                       : "bg-red-500 hover:bg-red-600 text-white" // Active styling
                       } w-full px-1 py-2 rounded shadow-lg transition duration-300`}
                     onClick={() => handleCancelOrderClick(_id)}
-                    disabled={["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed","service completed"].includes(statuses[statuses.length - 1].status)} // Disable button for specific statuses
+                    disabled={["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed", "service completed"].includes(statuses[statuses.length - 1].status)} // Disable button for specific statuses
                   >
                     Cancel Order
                   </button>
