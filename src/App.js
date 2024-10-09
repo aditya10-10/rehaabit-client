@@ -126,11 +126,10 @@ export default function App() {
     }
   }, [location, dispatch]);
 
-
   useEffect(() => {
-    if(window.innerWidth < 768) {
-    const isOrderPage = location.pathname === '/dashboard/orders';
-    dispatch(toggleSidebarVisibility(!isOrderPage));
+    if (window.innerWidth < 768) {
+      const isOrderPage = location.pathname === "/dashboard/orders";
+      dispatch(toggleSidebarVisibility(!isOrderPage));
     }
   }, [location, dispatch]);
 
