@@ -1,5 +1,6 @@
 import Hero from "../../assets/partner/Hero.svg";
 import { useLocation, useNavigate } from "react-router-dom";
+import carrers from "../../assets/carrers/carrers.svg";
 
 const JoinRehaabitFamily = ({ JoinRehaabitFamilyText }) => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const JoinRehaabitFamily = ({ JoinRehaabitFamilyText }) => {
           </div>
 
           <div className="relative z-10">
-            <img src={Hero} alt="hero" className="relative z-10 w-[113rem]" />
+            <img src={carrers} alt="hero" className="relative z-10 w-[113rem] -top-20" />
           </div>
         </div>
       </div>
