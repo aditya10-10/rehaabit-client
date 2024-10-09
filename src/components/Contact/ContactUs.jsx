@@ -7,6 +7,7 @@ import Pagination from "./Pagination";
 import ViewContactModal from "./ViewContactModal";
 import UpdateContactModal from "./UpdateContactModal";
 import PreviousResponsesModal from "./PreviousResponsesModal";
+import { BallTriangle } from "react-loader-spinner";
 
 const Contact = () => {
   const dispatch = useDispatch();
@@ -123,7 +124,18 @@ const Contact = () => {
       />
 
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="flex justify-center items-center w-100% h-100% bg-white">
+          <BallTriangle
+            height={100}
+            width={100}
+            radius={5}
+            color="#4fa94d"
+            ariaLabel="ball-triangle-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
       ) : error ? (
         <p>Error fetching contacts: {error}</p>
       ) : (
