@@ -1,6 +1,6 @@
 import { GoStarFill } from "react-icons/go";
 import { useState } from "react";
-
+import { useLocation } from "react-router-dom";
 const ServiceCard = ({
   _id,
   serviceName,
@@ -13,13 +13,14 @@ const ServiceCard = ({
   priceStatus,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
+   const {pathname} = useLocation();
+   console.log(pathname);
   const handleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className="flex flex-col sm:flex-row bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300 w-full max-w-2xl mx-auto mt-4">
+    <div className={`flex flex-col sm:flex-row bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300 w-full mx-auto mt-4 ${pathname === "/cart" ? "" : "max-w-2xl"}`}>
       <img
         src={thumbnail}
         alt="Service Thumbnail"

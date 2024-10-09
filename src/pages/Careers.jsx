@@ -10,7 +10,6 @@ import {
   ResumeSubmissionForm,
   WhyChooseRehaabit,
 } from "../components/Partner";
-
 const Careers = () => {
   useEffect(() => {
     window.scrollTo(0, 0);

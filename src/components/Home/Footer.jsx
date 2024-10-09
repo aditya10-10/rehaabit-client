@@ -9,7 +9,7 @@ import PlayStore from "../../assets/partner/playstore.svg";
 
 const FooterColumn = ({ title, items, links }) => {
   return (
-    <div className="flex flex-col w-3/12 max-md:w-full max-md:text-center mb-6">
+    <div className="flex flex-col max-md:w-full max-md:text-center">
       <nav className="flex flex-col grow text-sm leading-6 text-black-500 whitespace-nowrap">
         <h3 className="font-bold text-lg text-black">{title}</h3>
         {items.map((item, index) => (
@@ -18,7 +18,7 @@ const FooterColumn = ({ title, items, links }) => {
             key={index}
             className="mt-4 text-black underline max-md:flex max-md:justify-center max-md:items-center"
           >
-            {!item.includes("/") ? item : <img src={item} alt="icon" />}
+            {!item.includes("/") ? item : <img src={item} alt="icon" className="" />}
           </Link>
         ))}
       </nav>
@@ -136,7 +136,7 @@ const Footer = () => {
               {footerData.map((column, index) => (
                 <div
                   key={index}
-                  className="flex flex-col w-3/12 max-md:w-full max-md:text-center mb-6"
+                  className="flex flex-col w-3/12 max-md:w-full max-md:text-center"
                 >
                   <FooterColumn
                     title={column.title}
