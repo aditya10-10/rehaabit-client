@@ -68,8 +68,8 @@ export default function App() {
     setTimeout(() => {
       setIsLoading(false);
     }, 2500);
-  })
-  const { user } = useSelector((state) => state.profile); 
+  });
+  const { user } = useSelector((state) => state.profile);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
 
@@ -126,11 +126,10 @@ export default function App() {
     }
   }, [location, dispatch]);
 
-
   useEffect(() => {
-    if(window.innerWidth < 768) {
-    const isOrderPage = location.pathname === '/dashboard/orders';
-    dispatch(toggleSidebarVisibility(!isOrderPage));
+    if (window.innerWidth < 768) {
+      const isOrderPage = location.pathname === "/dashboard/orders";
+      dispatch(toggleSidebarVisibility(!isOrderPage));
     }
   }, [location, dispatch]);
 
@@ -165,19 +164,21 @@ export default function App() {
       setIsModalOpen(false);
     }, 300);
   };
-  if(isLoading) {
-    return <div className="flex justify-center items-center w-full h-screen bg-white">
-    <BallTriangle
-      height={100}
-      width={100}
-      radius={5}
-      color="#4fa94d"
-      ariaLabel="ball-triangle-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-      visible={true}
-    />
-  </div>
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center w-full h-screen bg-white">
+        <BallTriangle
+          height={100}
+          width={100}
+          radius={5}
+          color="#4fa94d"
+          ariaLabel="ball-triangle-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    );
   }
   return (
     <>
