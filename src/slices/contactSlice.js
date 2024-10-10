@@ -15,6 +15,7 @@ const {
 const initialState = {
   contacts: [],
   contact: null,
+  selectedContact: null,
   isLoading: false,
   error: null,
 };
@@ -135,6 +136,9 @@ const contactSlice = createSlice({
       state.contact = null;
       state.error = null;
     },
+    setSelectedContact(state, action) {
+      state.selectedContact = action.payload; // Update selectedContact
+    },
   },
 
   extraReducers: (builder) => {
@@ -192,6 +196,8 @@ const contactSlice = createSlice({
           state.contacts[index] = updatedContact;
         }
         state.contact = updatedContact;
+        
+        console.log("Updated contact:", updatedContact);
       })
       .addCase(adminResponse.rejected, (state, action) => {
         state.isLoading = false;
@@ -212,6 +218,8 @@ const contactSlice = createSlice({
           state.contacts[index] = updatedContact;
         }
         state.contact = updatedContact;
+        setSelectedContact(updatedContact);
+        console.log("Updated contact:", updatedContact);
       })
       .addCase(updateContactStatusAndAssignment.rejected, (state, action) => {
         state.isLoading = false;
@@ -235,6 +243,6 @@ const contactSlice = createSlice({
   },
 });
 
-export const { resetContact } = contactSlice.actions;
+export const { resetContact,setSelectedContact } = contactSlice.actions;
 
 export default contactSlice.reducer;

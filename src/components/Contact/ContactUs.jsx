@@ -8,10 +8,11 @@ import ViewContactModal from "./ViewContactModal";
 import UpdateContactModal from "./UpdateContactModal";
 import PreviousResponsesModal from "./PreviousResponsesModal";
 import { BallTriangle } from "react-loader-spinner";
+import { setSelectedContact } from "../../slices/contactSlice";
 
 const Contact = () => {
   const dispatch = useDispatch();
-  const { contacts, isLoading, error } = useSelector((state) => state.contact);
+  const { contacts, isLoading, error,selectedContact } = useSelector((state) => state.contact);
 
   // State for Search, Filters, and Pagination
   const [searchContact, setSearchContact] = useState("");
@@ -21,9 +22,8 @@ const Contact = () => {
   const contactsPerPage = 5;
 
   // State for modal
-  const [selectedContact, setSelectedContact] = useState(null);
+  // const [selectedContact, setSelectedContact] = useState(null);
   const [modalType, setModalType] = useState("");
-
   useEffect(() => {
     dispatch(getAllContacts());
   }, [dispatch]);
@@ -60,17 +60,17 @@ const Contact = () => {
   };
 
   const handleViewDetails = (contact) => {
-    setSelectedContact(contact);
+    dispatch(setSelectedContact(contact));
     setModalType("view");
   };
 
   const handleUpdateDetails = (contact) => {
-    setSelectedContact(contact);
+    dispatch(setSelectedContact(contact));
     setModalType("update");
   };
 
   const handlePreviousResponses = (contact) => {
-    setSelectedContact(contact);
+    dispatch(setSelectedContact(contact));
     setModalType("responses");
   };
 

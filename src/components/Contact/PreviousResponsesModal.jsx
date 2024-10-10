@@ -2,14 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { formattedDate } from "../../utils/dateFormatter";
 import { adminResponse } from "../../slices/contactSlice";
-
+import { setSelectedContact } from "../../slices/contactSlice";
 const PreviousResponsesModal = ({ contact, onClose }) => {
   const dispatch = useDispatch();
   const [newResponse, setNewResponse] = useState("");
   const [newStatus, setNewStatus] = useState(contact.status);
   const [newPriority, setNewPriority] = useState(contact.priority);
   const responsesEndRef = useRef(null); // Ref to scroll to the end
-
   useEffect(() => {
     setNewStatus(contact.status);
     setNewPriority(contact.priority);
@@ -22,7 +21,7 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
     scrollToBottom();
   }, [newResponse]);
 
-  const handleSubmitResponse = () => {
+  const handleSubmitResponse = async() => {
     if (!newResponse) return;
 
     const payload = {
@@ -33,13 +32,11 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
       newPriority,
     };
 
-    dispatch(adminResponse({ payload }))
-      .then(() => {
-        setNewResponse("");
-      })
-      .catch((error) => {
-        console.error("Error responding to contact:", error);
-      });
+    const response = await dispatch(adminResponse({payload}));
+    setNewResponse(""); // Clear the response field after submission
+      if (adminResponse.fulfilled.match(response)) {
+        dispatch(setSelectedContact(response.payload)); // Update the selected contact in Redux
+      }
   };
 
   const scrollToBottom = () => {
@@ -61,7 +58,7 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
         <div className="max-h-64 overflow-y-auto mb-4 bg-gray-100 p-4 rounded-lg shadow-inner">
           {contact.responseLog && contact.responseLog.length > 0 ? (
             <ul className="space-y-4">
-              {[...contact.responseLog].reverse().map(
+              {[...contact.responseLog].map(
                 (
                   response,
                   index // Reverse the order of responses
@@ -122,16 +119,16 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
 
         <div className="mt-4 flex justify-between">
           <button
-            className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600"
-            onClick={handleSubmitResponse}
-          >
-            Send
-          </button>
-          <button
             className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600"
             onClick={onClose}
           >
             Close
+          </button>
+          <button
+            className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600"
+            onClick={handleSubmitResponse}
+          >
+            Send
           </button>
         </div>
       </div>
