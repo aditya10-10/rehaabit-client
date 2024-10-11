@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Footer from "../components/Home/Footer";
+import { Helmet } from "react-helmet-async";
 
 const AboutUs = () => {
   useEffect(() => {
@@ -8,6 +9,14 @@ const AboutUs = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>About Us | Rehaabit</title>
+        <meta
+          name="description"
+          content="Discover the best home solutions at Rehaabit"
+        />
+        <link rel="canonical" href="/about-us" />
+      </Helmet>
       <div className="max-w-screen-lg mx-auto p-4 font-inter">
         {/* Header Section */}
         <div className="text-center mb-10">
