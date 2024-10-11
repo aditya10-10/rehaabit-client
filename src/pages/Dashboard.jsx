@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { showAllCategories } from "../slices/categorySlice";
 import { showAllSubCategories } from "../slices/subCategorySlice";
 import { getAllServices } from "../slices/serviceSlice";
+import { BallTriangle } from "react-loader-spinner";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -21,7 +22,11 @@ function Dashboard() {
   if (authLoading) {
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-        <div className="spinner"></div>
+        <BallTriangle
+          height={100}
+          width={100}
+          color="#3b82f6"
+        />
       </div>
     );
   }
@@ -37,7 +42,7 @@ function Dashboard() {
         <Sidebar />
 
         {/* Main content area, takes the rest of the screen width */}
-        <div className="flex-grow overflow-y-auto p-4">
+        <div className="flex-grow p-4 scrollbar-hide">
           <Outlet />
         </div>
       </div>
