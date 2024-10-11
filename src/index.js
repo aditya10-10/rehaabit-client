@@ -6,12 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 // import { configure } from "@testing-library/react";
 import { Provider } from "react-redux";
 import rootReducer from "./reducer/index.js";
-import { configureStore } from "@reduxjs/toolkit"; 
+import { configureStore } from "@reduxjs/toolkit";
 // import { Toaster } from "react-hot-toast";
 import { Toaster } from "sonner";
 // REACT QUERY
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,11 +31,18 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <App />
-          <Toaster position="top-right" expand={false} richColors closeButton />
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-        </BrowserRouter>
+        <HelmetProvider>
+          <BrowserRouter>
+            <App />
+            <Toaster
+              position="top-right"
+              expand={false}
+              richColors
+              closeButton
+            />
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          </BrowserRouter>
+        </HelmetProvider>
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>
