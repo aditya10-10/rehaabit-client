@@ -2,8 +2,8 @@ import React from "react";
 import { FaSearch } from "react-icons/fa"; // Importing an icon for the search input
 
 const SearchFilters = ({
-  searchContact,
-  handleContactSearch,
+  searchEnquiry,
+  handleEnquirySearch,
   statusFilter,
   handleStatusFilter,
   priorityFilter,
@@ -16,9 +16,9 @@ const SearchFilters = ({
         <FaSearch className="absolute left-3 top-2.5 text-gray-400" />
         <input
           type="text"
-          value={searchContact}
-          onChange={handleContactSearch}
-          placeholder="Search by Case ID or Phone Number..."
+          value={searchEnquiry}
+          onChange={handleEnquirySearch}
+          placeholder="Search by Enquiry ID or Phone Number..."
           className="shadow-md border rounded-md py-2 pl-10 pr-3 w-2/5 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition duration-200 ease-in-out"
         />
       </div>

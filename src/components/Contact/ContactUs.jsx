@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllContacts, deleteContact } from "../../slices/contactSlice";
 import SearchFilters from "./SearchFilters";
 import ContactTable from "./ContactTable";
-import Pagination from "./Pagination";
+import Pagination from "../../utils/Pagination";
 import ViewContactModal from "./ViewContactModal";
 import UpdateContactModal from "./UpdateContactModal";
 import PreviousResponsesModal from "./PreviousResponsesModal";
@@ -13,7 +13,6 @@ import { setSelectedContact } from "../../slices/contactSlice";
 const Contact = () => {
   const dispatch = useDispatch();
   const { contacts, isLoading, error,selectedContact } = useSelector((state) => state.contact);
-
   // State for Search, Filters, and Pagination
   const [searchContact, setSearchContact] = useState("");
   const [statusFilter, setStatusFilter] = useState("");

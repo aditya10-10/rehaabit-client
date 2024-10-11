@@ -337,11 +337,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Line Chart for Sales */}
-      <div style={styles.chartContainer}>
-        <h3 style={styles.chartTitle}>Sales Details</h3>
-        <Line data={lineData} options={lineOptions} />
-      </div>
     </div>
   );
 };

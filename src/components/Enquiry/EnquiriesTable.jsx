@@ -1,12 +1,13 @@
 import React from "react";
-import ContactRow from "./ContactRow";
+import EnquiryRow from "./EnquiryRow";
 
-const ContactTable = ({
-  contacts,
+const EnquiriesTable = ({
+  enquiries,
   handleViewDetails,
   handleUpdateDetails,
   handlePreviousResponses,
 }) => {
+  console.log(enquiries);
   return (
     <div
       className="overflow-x-auto"
@@ -16,11 +17,11 @@ const ContactTable = ({
         <thead>
           <tr className="bg-indigo-600 text-white">
             <th className="border-b-2 border-indigo-400 p-4 text-left">
-              Case ID
+              Enquiry ID
             </th>
             <th className="border-b-2 border-indigo-400 p-4 text-left">Name</th>
             <th className="border-b-2 border-indigo-400 p-4 text-left">
-              Contact Info
+              Enquiry Info
             </th>
             <th className="border-b-2 border-indigo-400 p-4 text-left">
               Status
@@ -38,11 +39,11 @@ const ContactTable = ({
           </tr>
         </thead>
         <tbody>
-          {contacts.map((contact,index) => (
-            <ContactRow
-              key={contact._id}
+          {enquiries.map((enquiry,index) => (
+            <EnquiryRow
+              key={enquiry._id}
               index={index}
-              contact={contact}
+              enquiry={enquiry}
               handleViewDetails={handleViewDetails}
               handleUpdateDetails={handleUpdateDetails}
               handlePreviousResponses={handlePreviousResponses}
@@ -54,4 +55,4 @@ const ContactTable = ({
   );
 };
 
-export default ContactTable;
+export default EnquiriesTable;
