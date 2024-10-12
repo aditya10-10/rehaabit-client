@@ -1,23 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { formattedDate } from "../../utils/dateFormatter";
-import { adminResponse } from "../../slices/contactSlice";
+import { adminResponse,setSelectedEnquiry } from "../../slices/enquireSlice";
 import { toast } from "sonner";
-import { setSelectedContact } from "../../slices/contactSlice";
-const PreviousResponsesModal = ({ contact, onClose }) => {
+const PreviousResponsesModal = ({ enquiry, onClose }) => {
   const dispatch = useDispatch();
   const [newResponse, setNewResponse] = useState("");
-  const [newStatus, setNewStatus] = useState(contact.status);
-  const [newPriority, setNewPriority] = useState(contact.priority);
+  const [newStatus, setNewStatus] = useState(enquiry.status);
+  const [newPriority, setNewPriority] = useState(enquiry.priority);
   const responsesEndRef = useRef(null); // Ref to scroll to the end
   const {user} = useSelector((state) => state.profile);
   console.log("userrrr",user);
   useEffect(() => {
-    setNewStatus(contact.status);
-    setNewPriority(contact.priority);
-    // Scroll to the bottom whenever contact changes
+    setNewStatus(enquiry.status);
+    setNewPriority(enquiry.priority);
+    // Scroll to the bottom whenever enquiry changes
     scrollToBottom();
-  }, [contact]);
+  }, [enquiry]);
 
   useEffect(() => {
     // Scroll to the bottom whenever new response is added
@@ -26,26 +25,24 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
 
   const handleSubmitResponse = async() => {
     if (!newResponse) return;
-    if(!contact?.assignedAdmin?.additionalDetails?._id){
-      toast.error("No admin assigned to this contact");
+    if(!enquiry?.assignedAdmin?.additionalDetails?._id){
+      toast.error("No admin assigned to this enquiry");
       return;
     }
-    let adminId = contact?.assignedAdmin?.additionalDetails?._id;
-    if(contact?.assignedAdmin?.additionalDetails?._id!==user?.additionalDetails?._id){
+    let adminId = enquiry?.assignedAdmin?.additionalDetails?._id;
+    if(user?.additionalDetails?._id!==adminId){
       adminId = user?.additionalDetails?._id;
     }
     const payload = {
-      id: contact._id,
+      id: enquiry._id,
       adminId,
       response: newResponse,
-      newStatus,
-      newPriority,
     };
-
+   
     const response = await dispatch(adminResponse({payload}));
     setNewResponse(""); // Clear the response field after submission
       if (adminResponse.fulfilled.match(response)) {
-        dispatch(setSelectedContact(response.payload)); // Update the selected contact in Redux
+        dispatch(setSelectedEnquiry(response.payload)); // Update the selected enquiry in Redux
       }
   };
 
@@ -66,9 +63,9 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
         </h2>
 
         <div className="max-h-64 overflow-y-auto mb-4 bg-gray-100 p-4 rounded-lg shadow-inner">
-          {contact.responseLog && contact.responseLog.length > 0 ? (
+          {enquiry.responseLog && enquiry.responseLog.length > 0 ? (
             <ul className="space-y-4">
-              {[...contact.responseLog].map(
+              {[...enquiry.responseLog].map(
                 (
                   response,
                   index // Reverse the order of responses
@@ -77,7 +74,7 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
                     key={index}
                     className={`flex ${
                       response.adminId ===
-                      contact.assignedAdmin?.additionalDetails?._id
+                      enquiry.assignedAdmin?.additionalDetails?._id
                         ? "justify-end"
                         : "justify-start"
                     }`}
@@ -85,7 +82,7 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
                     <div
                       className={`p-3 rounded-3xl shadow-md max-w-xs text-sm ${
                         response.adminId ===
-                        contact.assignedAdmin?.additionalDetails?._id
+                        enquiry.assignedAdmin?.additionalDetails?._id
                           ? "bg-green-500 text-white"
                           : "bg-gray-300 text-gray-800"
                       }`}

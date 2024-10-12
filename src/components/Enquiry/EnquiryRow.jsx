@@ -3,13 +3,13 @@ import { formattedDate } from "../../utils/dateFormatter";
 import { FaEllipsisV, FaEye, FaEdit, FaComments, FaRegDotCircle } from "react-icons/fa";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { getAllUsers } from "../../slices/usersSlice";
-import { updateContactStatusAndAssignment } from "../../slices/contactSlice";
+import { updateEnquiryAndStatusAssignment } from "../../slices/enquireSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
 
-const ContactRow = ({
+const EnquiryRow = ({
   index,
-  contact,
+  enquiry,
   handleViewDetails,
   handleUpdateDetails,
   handlePreviousResponses,
@@ -21,6 +21,19 @@ const ContactRow = ({
   const [priorityDropdownOpen, setPriorityDropdownOpen] = useState(false);
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { enquiries, isLoading, error} = useSelector((state) => state.enquire);
+  console.log(enquiry);
+  const enquiryLength = enquiries?.length;
+  const n=Math.floor(enquiryLength/5);
+  let isLastEnquiryofPage=0;
+  for(let i=0;i<n;i++){
+    isLastEnquiryofPage=index===((i+1)*5)-1;
+    if(isLastEnquiryofPage) break;
+  }
+  // if(enquiryLength%5!==0){
+  //   isLastEnquiryofPage=index===enquiryLength-1;
+  // }
+//  console.log(index,isLastEnquiryofPage);
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
@@ -46,26 +59,24 @@ const ContactRow = ({
     ? users.filter((user) => user.accountType === "Admin" || user.accountType === "Caller")
     : [];
 
-  const handleUpdate = async (contact, updateType, newValue) => {
+  const handleUpdate = async (enquiry, updateType, newValue) => {
     const payload = {
-      caseId: contact?.caseId,
+      enquiryId: enquiry.enquiryId,
       formData: {
-        id: contact._id,
-        newStatus: updateType === "status" ? newValue : contact.status,
-        newPriority: updateType === "priority" ? newValue : contact.priority,
-        assignedAdmin: updateType === "admin" ? newValue : contact.assignedAdmin,
-        adminNotes: contact.adminNotes,
+        id: enquiry._id,
+        newStatus: updateType === "status" ? newValue : enquiry.status,
+        newPriority: updateType === "priority" ? newValue : enquiry.priority,
+        assignedAdmin: updateType === "admin" ? newValue : enquiry.assignedAdmin,
       },
     };
-    if(!contact?.caseId){
-      toast.error("Case ID is required");
+    if(!enquiry?.enquiryId){
+      toast.error("Enquiry ID is required");
       return;
     }
-    console.log("payload",payload);
     try {
-      await dispatch(updateContactStatusAndAssignment(payload)).unwrap();
+      await dispatch(updateEnquiryAndStatusAssignment(payload)).unwrap();
     } catch (error) {
-      console.error(`Failed to update contact ${updateType}:`, error);
+      console.error(`Failed to update enquiry ${updateType}:`, error);
     }
   };
 
@@ -78,13 +89,14 @@ const ContactRow = ({
 
   return (
     <tr ref={dropdownRef} className="hover:bg-gray-50 transition-colors duration-200" style={{ fontFamily: "Roboto, sans-serif" }}>
-      <td className="border-b border-gray-200 p-4 text-gray-800">{contact.caseId}</td>
+      <td className="border-b border-gray-200 p-4 text-gray-800">{enquiry?.enquiryId}</td>
       <td className="border-b border-gray-200 p-4 text-gray-800">
-        {contact.firstName} {contact.lastName}
+        {enquiry?.firstName} {enquiry?.lastName}
       </td>
       <td className="border-b border-gray-200 p-4 text-gray-800">
-        <div>{contact.phoneNumber}</div>
-        <div>{contact.email}</div>
+        <div>{enquiry?.serviceId?.serviceName}</div>
+        <div>{enquiry?.contactNumber}</div>
+        <div>{enquiry?.email}</div>
       </td>
 
       {/* Status Cell */}
@@ -92,22 +104,22 @@ const ContactRow = ({
         <span className="flex gap-2 items-center">
           <FaRegDotCircle onClick={() => toggleDropdown('statusDropdownOpen')} className="cursor-pointer" />
           <span className={`px-2 py-1 rounded-full text-sm font-semibold ${
-              contact.status === "pending" ? "bg-yellow-100 text-yellow-700"
-              : contact.status === "in progress" ? "bg-blue-100 text-blue-700"
-              : contact.status === "resolved" ? "bg-green-100 text-green-700"
+              enquiry.status === "pending" ? "bg-yellow-100 text-yellow-700"
+              : enquiry.status === "in progress" ? "bg-blue-100 text-blue-700"
+              : enquiry.status === "resolved" ? "bg-green-100 text-green-700"
               : "bg-red-100 text-red-700"
             }`}
           >
-            {contact.status}
+            {enquiry?.status}
           </span>
           {statusDropdownOpen && (
-            <div className={`absolute bg-white border rounded-lg shadow-lg mt-14 ml-5 z-10 w-32 `}>
-              {["pending", "in progress", "resolved", "closed"].map((status) => (
+            <div className={`absolute bg-white border rounded-lg shadow-lg mt-14 ml-5 z-10 w-32 ${isLastEnquiryofPage?"-mt-20":""}`}>
+              {["new", "in-progress", "closed"].map((status) => (
                 <button
                   key={status}
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left"
                   onClick={() => {
-                    handleUpdate(contact, "status", status);
+                        handleUpdate(enquiry, "status", status);
                     setStatusDropdownOpen(false);
                   }}
                 >
@@ -124,22 +136,22 @@ const ContactRow = ({
         <span className="flex gap-2 items-center">
           <FaRegDotCircle onClick={() => toggleDropdown('priorityDropdownOpen')}  className="cursor-pointer" />
           <span className={`px-2 py-1 rounded-full text-sm font-semibold ${
-              contact.priority === "low" ? "bg-green-100 text-green-700"
-              : contact.priority === "medium" ? "bg-yellow-100 text-yellow-700"
-              : contact.priority === "high" ? "bg-orange-100 text-orange-700"
+              enquiry?.priority === "low" ? "bg-green-100 text-green-700"
+              : enquiry?.priority === "medium" ? "bg-yellow-100 text-yellow-700"
+              : enquiry?.priority === "high" ? "bg-orange-100 text-orange-700"
               : "bg-red-100 text-red-700"
             }`}
           >
-            {contact.priority}
+            {enquiry?.priority}
           </span>
           {priorityDropdownOpen && (
-            <div className={`absolute bg-white border rounded-lg shadow-lg mt-2 ml-8 z-10 w-32 `}>
+            <div className={`absolute bg-white border rounded-lg shadow-lg mt-2 ml-8 z-10 w-32 ${isLastEnquiryofPage?"mb-96":""}`}>
               {["low", "medium", "high", "urgent"].map((priority) => (
                 <button
                   key={priority}
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left"
                   onClick={() => {
-                    handleUpdate(contact, "priority", priority);
+                    handleUpdate(enquiry, "priority", priority);
                     setPriorityDropdownOpen(false);
                   }}
                 >
@@ -154,33 +166,33 @@ const ContactRow = ({
       {/* Assigned Admin Cell */}
       <td className="border-b border-gray-200 p-4 text-gray-800">
       <div className="flex gap-2 items-center"  >
-      {contact.assignedAdmin && contact.assignedAdmin.additionalDetails && 
+      {enquiry?.assignedAdmin && enquiry?.assignedAdmin?.additionalDetails && 
       <FaRegDotCircle onClick={() => toggleDropdown('adminDropdownOpen')} className="cursor-pointer" />}
-        {contact.assignedAdmin && contact.assignedAdmin.additionalDetails
-          ? `${contact.assignedAdmin.additionalDetails.firstName} ${contact.assignedAdmin.additionalDetails.lastName}`
+        {enquiry?.assignedAdmin && enquiry?.assignedAdmin?.additionalDetails
+          ? `${enquiry?.assignedAdmin?.additionalDetails?.firstName} ${enquiry?.assignedAdmin?.additionalDetails?.lastName}`
           : <IoPersonAddSharp 
               onClick={() => toggleDropdown('adminDropdownOpen')}
               className="cursor-pointer text-gray-500 hover:text-gray-700"
             />}
         {adminDropdownOpen && (
-          <div className={`absolute bg-white border rounded-lg shadow-lg mt-2 ml-8 z-10 w-32 `}>
-            {adminUsers.map((admin) => (
+          <div className={`absolute bg-white border rounded-lg shadow-lg mt-2 ml-8 z-10 w-32 ${isLastEnquiryofPage?"-mt-2":""}`}>
+            {adminUsers?.map((admin) => (
               <button
-                key={admin._id}
+                key={admin?._id}
                 className="block px-4 py-2 text-gray-700 hover:bg-gray-200 w-full text-left"
                 onClick={() => {
-                  handleUpdate(contact, "admin", admin);
+                    handleUpdate(enquiry, "admin", admin);
                   setAdminDropdownOpen(false);
                 }}
               >
-                {`${admin.additionalDetails.firstName} ${admin.additionalDetails.lastName}`}
+                {`${admin?.additionalDetails?.firstName} ${admin?.additionalDetails?.lastName}`}
               </button>
             ))}
           </div>
         )}
         </div>
       </td>
-      <td className="border-b border-gray-200 p-4 text-gray-800">{formattedDate(contact.createdAt)}</td>
+      <td className="border-b border-gray-200 p-4 text-gray-800">{formattedDate(enquiry?.createdAt)}</td>
 
       {/* Action Menu */}
       <td className="border-b border-gray-200 p-4 text-gray-800">
@@ -188,21 +200,30 @@ const ContactRow = ({
           <FaEllipsisV className="text-gray-500 hover:text-gray-700" />
         </button>
         {isDropdownOpen && (
-          <div className={`absolute right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-1 z-10 `}>
+          <div className={`absolute right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-1 z-10 ${isLastEnquiryofPage?"mt-20":""} `}>
             <div className="py-1">
               <button
                 className="flex items-center px-4 py-2 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 w-full text-left"
                 onClick={() => {
-                  handleViewDetails(contact);
+                  handleViewDetails(enquiry);
                   setIsDropdownOpen(false);
                 }}
               >
                 <FaEye className="mr-2" /> View
               </button>
+              {/* <button
+                className="flex items-center px-4 py-2 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 w-full text-left"
+                onClick={() => {
+                  handleUpdateDetails(contact);
+                  setIsDropdownOpen(false);
+                }}
+              >
+                <FaEdit className="mr-2" /> Update
+              </button> */}
               <button
                 className="flex items-center px-4 py-2 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 w-full text-left"
                 onClick={() => {
-                  handlePreviousResponses(contact);
+                  handlePreviousResponses(enquiry);
                   setIsDropdownOpen(false);
                 }}
               >
@@ -216,4 +237,4 @@ const ContactRow = ({
   );
 };
 
-export default ContactRow;
+export default EnquiryRow;
