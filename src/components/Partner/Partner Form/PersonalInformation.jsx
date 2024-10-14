@@ -236,6 +236,9 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               <option value="Passport">Passport</option>
               <option value="Driving License">Driving License</option>
               <option value="National ID">National ID</option>
+              <option value="Birth Certificate">Birth Certificate</option>
+              <option value="Aadhaar Card">Aadhaar Card</option>
+              <option value="VoterID">VoterID</option>
               <option value="Other">Other</option>
             </select>
           </div>
