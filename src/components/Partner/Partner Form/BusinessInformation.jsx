@@ -108,6 +108,7 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
             >
               <option value="">Select</option>
               <option value="Individual">Individual</option>
+              <option value="Contractor">Contractor</option>
               <option value="Corporation">Corporation</option>
               <option value="Partnership">Partnership</option>
               <option value="Other">Other</option>

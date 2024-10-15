@@ -61,6 +61,30 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
     }
   };
 
+  const handleDropdownChange = (e) => {
+    const selectedService = e.target.value;
+    if (
+      selectedService &&
+      !formData.servicesOffered.includes(selectedService)
+    ) {
+      setFormData({
+        ...formData,
+        servicesOffered: [...formData.servicesOffered, selectedService],
+      });
+    }
+  };
+
+  // Function to handle dropdown selection for service areas
+  const handleAreaDropdownChange = (e) => {
+    const selectedArea = e.target.value;
+    if (selectedArea && !formData.serviceAreas.includes(selectedArea)) {
+      setFormData({
+        ...formData,
+        serviceAreas: [...formData.serviceAreas, selectedArea],
+      });
+    }
+  };
+
   return (
     <>
       <form className="w-1/2 max-2xl:w-3/4 max-lg:w-11/12 mx-auto mt-4 p-6 max-sm:p-4">
@@ -115,6 +139,8 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
             >
               Services Offered*
             </label>
+
+            {/* Text input for custom services */}
             <input
               id="servicesOffered"
               name="servicesOffered"
@@ -125,9 +151,23 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
               placeholder="Enter Services Offered (comma-separated)"
               required
             />
+
+            {/* Dropdown for selecting predefined services */}
+            <select
+              id="selectServices"
+              name="selectServices"
+              onChange={handleDropdownChange}
+              className="w-full mt-3 px-3 py-2 border border-purple-100 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-md"
+            >
+              <option value="">Select a service</option>
+              <option value="Plumbing Services">Plumbing Services</option>
+              <option value="Electrical Services">Electrical Services</option>
+              <option value="Appliances Repair">Appliances Repair</option>
+              <option value="Home Improvement">Home Improvement</option>
+              <option value="Carpentry Services">Carpentry Services</option>
+            </select>
           </div>
 
-          {/* SERVICE AREAS */}
           <div className="mb-4 w-full">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -135,6 +175,8 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
             >
               Service Areas
             </label>
+
+            {/* Text input for custom service areas */}
             <input
               id="serviceAreas"
               name="serviceAreas"
@@ -144,6 +186,21 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
               className="w-full px-3 py-2 border border-purple-100 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-md"
               placeholder="Enter Service Areas (comma-separated)"
             />
+
+            {/* Dropdown for selecting predefined service areas */}
+            <select
+              id="selectServiceAreas"
+              name="selectServiceAreas"
+              onChange={handleAreaDropdownChange}
+              className="w-full mt-3 px-3 py-2 border border-purple-100 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-md"
+            >
+              <option value="">Select a service area</option>
+              <option value="Downtown">Downtown</option>
+              <option value="Uptown">Uptown</option>
+              <option value="Suburbs">Suburbs</option>
+              <option value="Industrial Area">Industrial Area</option>
+              <option value="Rural">Rural</option>
+            </select>
           </div>
         </div>
 
