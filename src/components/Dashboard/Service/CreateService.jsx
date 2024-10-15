@@ -28,8 +28,8 @@ const CreateService = () => {
     thumbnail: null,
     warranty: "",
   });
-
-  formData.thumbnail = thumbnail;
+   
+  // formData.thumbnail = thumbnail;
 
   useEffect(() => {
     if (service && serviceId) {
@@ -59,20 +59,23 @@ const CreateService = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
+        // Update formData with the new thumbnail
+        setFormData(prevData => ({...prevData, thumbnail}));
       };
       reader.readAsDataURL(thumbnail);
     } else {
       setPreview(formData.thumbnail);
     }
-  }, [thumbnail, formData.thumbnail]);
+  }, [thumbnail]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
     if (name === "thumbnail") {
-      setFormData({ ...formData, [name]: files[0] });
+      setThumbnail(files[0]);
+      // The formData update for thumbnail is now handled in the useEffect
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData(prevData => ({ ...prevData, [name]: value }));
     }
   };
 
