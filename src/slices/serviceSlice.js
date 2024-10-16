@@ -51,8 +51,7 @@ export const createService = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.message.data);
+      return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );
@@ -108,6 +107,7 @@ export const deleteService = createAsyncThunk(
         serviceId,
         subCategoryId,
       });
+      console.log(response.data);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -379,7 +379,6 @@ const serviceSlice = createSlice({
       .addCase(createService.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-
         Swal.fire({
           title: "Error in Creating Service!",
           icon: "error",

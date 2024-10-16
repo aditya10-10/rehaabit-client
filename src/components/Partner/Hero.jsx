@@ -1,9 +1,11 @@
 import Navbar from "./Navbar";
 import carrers from "../../assets/carrers/carrers.svg";
+import HeroImage from "../../assets/partner/Hero.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Hero = ({ HeroSectionText }) => {
   const location = useLocation();
+  const { pathname } = location;
   const navigate = useNavigate();
 
   return (
@@ -75,8 +77,8 @@ const Hero = ({ HeroSectionText }) => {
           </div>
         </div>
         {/* Hero Image: Hidden on Mobile, Visible on Larger Screens */}
-        <div className="absolute z-10 right-0 -top-20 translate-x-40 -translate-y-10 hidden lg:block">
-          <img className="w-[110rem]" src={carrers} alt="HeroImage" />
+        <div className={`absolute z-10 right-0 translate-x-40 -translate-y-10 hidden lg:block ${pathname==='/partner'?'top-24':'-top-20'}`}>
+          <img className="w-[110rem]" src={pathname==='/partner'?HeroImage:carrers} alt="HeroImage" />
         </div>
         {/* Decorative Elements */}
         <div className="absolute z-15 right-[260px] -rotate-[15deg] bg-[#ffe7e2] h-16 w-16"></div>
