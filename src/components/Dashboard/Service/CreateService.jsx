@@ -4,6 +4,7 @@ import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
 import { createService, editService } from "../../../slices/serviceSlice";
 import ImageDropzone from "../../ImageDropzone";
 import { IoIosClose } from "react-icons/io";
+import { toast } from "sonner";
 
 const CreateService = () => {
   const dispatch = useDispatch();
@@ -72,8 +73,12 @@ const CreateService = () => {
     const { name, value, files } = e.target;
 
     if (name === "thumbnail") {
-      setThumbnail(files[0]);
-      // The formData update for thumbnail is now handled in the useEffect
+      const file = files[0];
+      if (file && file.size > 80 * 1024) { // 80 KB in bytes
+        toast.error("File size should not exceed 80 KB");
+        return;
+      }
+      setThumbnail(file);
     } else {
       setFormData(prevData => ({ ...prevData, [name]: value }));
     }
@@ -81,7 +86,13 @@ const CreateService = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const file=formData.thumbnail;
+    if(file){
+      if (file.size > 80 * 1024) { // 80 KB in bytes
+        toast.error("File size should not exceed 80 KB");
+        return;
+      }
+    }
     if (serviceId) {
       dispatch(editService({ formData }));
     } else {
