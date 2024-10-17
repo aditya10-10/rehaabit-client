@@ -13,14 +13,18 @@ const ServiceCard = ({
   priceStatus,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-   const {pathname} = useLocation();
-   console.log(pathname);
+  const { pathname } = useLocation();
+  console.log(pathname);
   const handleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className={`flex flex-col sm:flex-row bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300 w-full mx-auto mt-4 ${pathname === "/cart" ? "" : "max-w-2xl"}`}>
+    <div
+      className={`flex flex-col sm:flex-row bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300 w-full mx-auto mt-4 ${
+        pathname === "/cart" ? "" : "max-w-2xl"
+      }`}
+    >
       <img
         src={thumbnail}
         alt="Service Thumbnail"
@@ -45,14 +49,13 @@ const ServiceCard = ({
         )}
 
         <span className="text-sm text-gray-500">
-          {isExpanded ? serviceDescription : `${serviceDescription?.substring(0, 160)}`}
+          {isExpanded
+            ? serviceDescription
+            : `${serviceDescription?.substring(0, 160)}`}
           {serviceDescription?.length > 160 && (
-            <button
-            onClick={handleReadMore}
-            className="text-blue-500 ml-1"
-          >
-            {isExpanded ? "Show Less" : "Read More"}
-          </button>
+            <button onClick={handleReadMore} className="text-blue-500 ml-1">
+              {isExpanded ? "Show Less" : "Read More"}
+            </button>
           )}
         </span>
       </div>

@@ -1,7 +1,7 @@
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { IoMailSharp } from "react-icons/io5";
 import {
-  FaDiscord,
+  FaLinkedin,
   FaInstagram,
   FaLocationDot,
   FaTwitter,
@@ -54,15 +54,35 @@ const ContactUs = () => {
 
           <div className="flex mt-20">
             <div className="flex gap-5 text-white absolute bottom-10 max-xs:-translate-x-16">
-              <button className="bg-[#FF6F61] rounded-full p-2">
-                <FaTwitter />
-              </button>
-              <button className="text-purple-500 bg-white rounded-full p-2">
-                <FaInstagram />
-              </button>
-              <button className="bg-[#FF6F61] rounded-full p-2">
-                <FaDiscord />
-              </button>
+              <a
+                href="https://x.com/rehaabit"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="bg-[#FF6F61] rounded-full p-2">
+                  <FaTwitter />
+                </button>
+              </a>
+
+              <a
+                href="https://instagram.com/rehaabit"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="text-purple-500 bg-white rounded-full p-2">
+                  <FaInstagram />
+                </button>
+              </a>
+
+              <a
+                href="https://linkedin.com/company/rehaabit"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="bg-[#FF6F61] rounded-full p-2">
+                  <FaLinkedin />
+                </button>
+              </a>
             </div>
           </div>
 

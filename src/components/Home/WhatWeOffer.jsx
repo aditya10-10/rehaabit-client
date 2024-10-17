@@ -1,11 +1,11 @@
 import React from "react";
-import ElectricBoard from "../../assets/homepage/EletricBoard.svg";
-import Plumber from "../../assets/homepage/Plumber.svg";
-import Cleaning from "../../assets/homepage/cleaning1.svg";
-import Carpentry from "../../assets/homepage/Carpentar.svg";
-import Painter from "../../assets/homepage/painter.svg";
-import HVAC from "../../assets/homepage/HVAC Services.svg";
-import Security from "../../assets/homepage/Sercirty.svg";
+import ElectricBoard from "../../assets/homepage/EletricBoard.webp";
+import Plumber from "../../assets/homepage/Plumber.webp";
+import Cleaning from "../../assets/homepage/cleaning1.webp";
+import Carpentry from "../../assets/homepage/Carpentar.webp";
+import Painter from "../../assets/homepage/painter.webp";
+import HVAC from "../../assets/homepage/HVACServices.webp";
+import Security from "../../assets/homepage/Sercirty.webp";
 
 const WhatWeOffer = () => {
   return (

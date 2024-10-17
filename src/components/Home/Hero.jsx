@@ -1,10 +1,10 @@
 import React from "react";
-import AcRepair from "../../assets/homepage/ACrepair.svg";
-import Electrian from "../../assets/homepage/electrian.svg";
-import Factory from "../../assets/homepage/factory.svg";
-import Painting from "../../assets/homepage/painting.svg";
-import Carpentry from "../../assets/homepage/carpentry.svg";
-import Cleaning from "../../assets/homepage/cleaning.svg";
+import AcRepair from "../../assets/homepage/ACrepair.webp";
+import Electrian from "../../assets/homepage/electrian.webp";
+import Factory from "../../assets/homepage/factory.webp";
+import Painting from "../../assets/homepage/painting.webp";
+import Carpentry from "../../assets/homepage/carpentry.webp";
+import Cleaning from "../../assets/homepage/cleaning.webp";
 
 const Hero = () => {
   return (
