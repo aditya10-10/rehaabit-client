@@ -94,7 +94,7 @@ const EnquiryRow = ({
         {enquiry?.firstName} {enquiry?.lastName}
       </td>
       <td className="border-b border-gray-200 p-4 text-gray-800">
-        <div>{enquiry?.serviceId?.serviceName}</div>
+        <div>{enquiry?.serviceName}</div>
         <div>{enquiry?.contactNumber}</div>
         <div>{enquiry?.email}</div>
       </td>

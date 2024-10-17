@@ -14,7 +14,7 @@ const CreateService = () => {
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
-
+  console.log(subCategoriesByCategory)
   const [preview, setPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
 
@@ -48,10 +48,12 @@ const CreateService = () => {
       setPreview(service.thumbnail || null);
     }
   }, [service, serviceId]);
-
+  const createSlug = (name) => {
+    return name.toLowerCase().replace(/\s+/g, '-');
+  };
   useEffect(() => {
     if (formData.categoryId) {
-      dispatch(getSubCategoriesByCategory({ categoryId: formData.categoryId }));
+      dispatch(getSubCategoriesByCategory({ categoryId: createSlug(formData.categoryId) }));
     }
   }, [dispatch, formData.categoryId]);
 
@@ -84,21 +86,41 @@ const CreateService = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const file=formData.thumbnail;
-    if(file){
+    const file = formData.thumbnail;
+    if (file) {
       if (file.size > 80 * 1024) { // 80 KB in bytes
         toast.error("File size should not exceed 80 KB");
         return;
       }
-    }
-    if (serviceId) {
-      dispatch(editService({ formData }));
+      // Convert file to base64
+      // const base64Thumbnail = await fileToBase64(file);
+      const updatedFormData = { ...formData, thumbnail: file };
+      
+      if (serviceId) {
+        dispatch(editService({ formData: updatedFormData }));
+      } else {
+        dispatch(createService({ formData: updatedFormData }));
+      }
     } else {
-      dispatch(createService({ formData }));
+      if (serviceId) {
+        dispatch(editService({ formData }));
+      } else {
+        dispatch(createService({ formData }));
+      }
     }
   };
+
+  // Add this helper function to convert File to base64
+  // const fileToBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
+  // };
 
   const handleClose = () => {
     setPreview(null);
@@ -187,7 +209,7 @@ const CreateService = () => {
             const { _id, name } = category;
 
             return (
-              <option key={_id} value={_id}>
+              <option key={_id} value={name}>
                 {name}
               </option>
             );
