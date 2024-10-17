@@ -11,7 +11,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import ShowSubCategoriesModal from "./ShowSubCategoriesModal";
 import { MdCategory } from "react-icons/md";
-
+import { toast } from "sonner";
 const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
   // console.log(categories)
   const indexOfLastCard = currentPage * cardsPerPage;
@@ -42,6 +42,10 @@ const CategoriesCards = ({ categories, currentPage, cardsPerPage }) => {
   };
 
   const handleEditIcon = (categoryId, file) => {
+    if (file.size > 80000) {
+      toast.error("Image size should be less than 80kb");
+      return;
+    }
     setNewImage(file);
 
     dispatch(updateCategoryIcon({ categoryId, icon: file }));

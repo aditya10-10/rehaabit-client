@@ -3,11 +3,12 @@ import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { enquire } from "../../slices/enquireSlice";
+import { toast } from "sonner";
 
 const EnquireNowModal = ({
   isEnquireNowModalOpen,
   handleEnquireNowModal,
-  serviceIdToPass,
+  serviceNameToPass,
 }) => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.enquire);
@@ -26,9 +27,11 @@ const EnquireNowModal = ({
       lastName,
       email,
       contactNumber,
-      serviceId: serviceIdToPass,
+      serviceName: serviceNameToPass,
       query,
     };
+
+    console.log(data);
 
     dispatch(enquire({ formData: data }));
     setFirstName("");

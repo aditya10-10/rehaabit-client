@@ -45,7 +45,7 @@ const ServiceDetailsModal = ({
     window.scrollTo(0, 0);
   }, []);
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
-  const [serviceIdToPass, setServiceIdToPass] = useState(null);
+  const [serviceNameToPass, setServiceNameToPass] = useState(null);
   const { service } = useSelector((state) => state.service);
   const { categories } = useSelector((state) => state.categories);
   const { cartServices, isLoading } = useSelector((state) => state.cart);
@@ -178,7 +178,7 @@ const ServiceDetailsModal = ({
       <EnquireNowModal
         isEnquireNowModalOpen={isEnquireNowModalOpen}
         handleEnquireNowModal={handleEnquireNowModal}
-        serviceIdToPass={serviceIdToPass}
+        serviceNameToPass={serviceNameToPass}
       />
 
       <AnimatePresence>
@@ -214,7 +214,7 @@ const ServiceDetailsModal = ({
                     <button
                       className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
                       onClick={() => {
-                        setServiceIdToPass(service._id);
+                        setServiceNameToPass(service?.serviceName);
                         handleServiceModal();
                         handleEnquireNowModal();
                       }}

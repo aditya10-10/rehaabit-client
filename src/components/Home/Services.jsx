@@ -50,7 +50,7 @@ const ServiceCard = ({
 
 const Services = () => {
   const { allServices } = useSelector((state) => state.service);
-  const [serviceIdToPass, setServiceIdToPass] = useState(null);
+  const [serviceId, setServiceId] = useState(null);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
 
   const handleServiceModal = () => {
@@ -66,7 +66,7 @@ const Services = () => {
       <ServiceDetailsModal
         isServiceModalOpen={isServiceModalOpen}
         handleServiceModal={handleServiceModal}
-        serviceId={serviceIdToPass}
+        serviceId={serviceId}
       />
 
       <section className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2">
@@ -90,7 +90,7 @@ const Services = () => {
                   className="w-full cursor-pointer"
                   onClick={() => {
                     setIsServiceModalOpen(!isServiceModalOpen);
-                    setServiceIdToPass(service._id);
+                    setServiceId(service?._id);
                   }}
                 >
                   <ServiceCard {...service} />

@@ -23,7 +23,6 @@ const Navbar = ({ onLoginClick }) => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalQty } = useSelector((state) => state.cart);
-
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
   const handleProfileClick = () => {

@@ -32,7 +32,7 @@ const ViewEnquiryModal = ({ enquiry, onClose }) => {
             <span className="text-gray-600">{enquiry?.contactNumber}</span>
           </p>
           <p>
-            <strong className="text-lg text-gray-700">Subject:</strong>{" "}
+            <strong className="text-lg text-gray-700">Service Name:</strong>{" "}
             <span className="text-gray-600">{enquiry?.serviceName}</span>
           </p>
         </div>
@@ -40,7 +40,7 @@ const ViewEnquiryModal = ({ enquiry, onClose }) => {
         {/* Full width message */}
         <div className="mb-6">
           <p className="text-lg text-gray-700">
-            <strong>Message:</strong>
+            <strong>Query:</strong>
           </p>
           <p className="whitespace-pre-line bg-gray-100 p-4 rounded-lg border border-gray-300 mt-2">
             {enquiry?.query}

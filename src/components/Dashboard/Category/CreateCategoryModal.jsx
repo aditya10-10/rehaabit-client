@@ -4,6 +4,7 @@ import { createCategory } from "../../../slices/categorySlice";
 import ProgressBar from "../../ProgressBar";
 import { IoIosClose } from "react-icons/io";
 import ImageDropzone from "../../ImageDropzone"; 
+import { toast } from "sonner";
 
 const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,18 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
 
   const handleSave = (e) => {
     e.preventDefault();
+    if (categoryName === "") {
+      toast.error("Please enter a category name");
+      return;
+    }
+    if (image === null) {
+      toast.error("Please upload an image");
+      return;
+    }
+    if(image.size > 80000) {
+      toast.error("Image size should be less than 80kb");
+      return;
+    }
     dispatch(createCategory({ name: categoryName, icon: image, setProgress }));
     setIsOpen(!isOpen)
   };

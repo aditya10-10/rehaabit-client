@@ -10,7 +10,7 @@ const PopularSearches = () => {
   // State management for modals and the selected service ID
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
-  const [serviceIdToPass, setServiceIdToPass] = useState(null);
+  const [serviceNameToPass, setServiceNameToPass] = useState(null);
 
   const nonPricedServices = allServices.filter(
     (service) =>
@@ -30,8 +30,8 @@ const PopularSearches = () => {
   };
 
   // Function to open the Service Details Modal
-  const handleServiceModalOpen = (serviceId) => {
-    setServiceIdToPass(serviceId); // Pass the selected service ID
+  const handleServiceModalOpen = (serviceName) => {
+    setServiceNameToPass(serviceName); // Pass the selected service ID
     setIsServiceModalOpen(true); // Open the Service Details Modal
   };
 
@@ -41,8 +41,8 @@ const PopularSearches = () => {
   };
 
   // Function to open the Enquire Now Modal
-  const handleEnquireNowModalOpen = (serviceId) => {
-    setServiceIdToPass(serviceId); // Pass the selected service ID
+  const handleEnquireNowModalOpen = (serviceName) => {
+    setServiceNameToPass(serviceName); // Pass the selected service ID
     setIsEnquireNowModalOpen(true); // Open the Enquire Now Modal
   };
 
@@ -57,14 +57,14 @@ const PopularSearches = () => {
       <EnquireNowModal
         isEnquireNowModalOpen={isEnquireNowModalOpen}
         handleEnquireNowModal={handleEnquireNowModalClose}
-        serviceIdToPass={serviceIdToPass}
+        serviceNameToPass={serviceNameToPass}
       />
 
       {/* Service Details Modal */}
       <ServiceDetailsModal
         isServiceModalOpen={isServiceModalOpen}
         handleServiceModal={handleServiceModalClose}
-        serviceId={serviceIdToPass}
+        serviceName={serviceNameToPass}
       />
 
       <section className="relative flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
@@ -114,7 +114,7 @@ const PopularSearches = () => {
                     </button>
                     <button
                       className="text-purple-600 bg-white px-6 py-2 rounded-full transition-all duration-300 hover:bg-purple-600 hover:text-white shadow-lg border border-purple-600"
-                      onClick={() => handleEnquireNowModalOpen(_id)} // Open Enquire Now Modal
+                      onClick={() => handleEnquireNowModalOpen(serviceName)} // Open Enquire Now Modal
                     >
                       Enquire Now
                     </button>

@@ -4,6 +4,7 @@ import { addSubCategory, showAllSubCategories } from "../../../slices/subCategor
 import ProgressBar from "../../ProgressBar";
 import { IoIosClose } from "react-icons/io";
 import ImageDropzone from "../../ImageDropzone";
+import { toast } from "sonner";
 
 const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
@@ -20,7 +21,18 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
 
   const handleSave = (e) => {
     e.preventDefault();
-    
+    if (subCategoryName === "") {
+      toast.error("Please enter a sub-category name");
+      return;
+    }
+    if (image === null) {
+      toast.error("Please upload an image");
+      return;
+    }
+    if(image.size > 80000) {
+      toast.error("Image size should be less than 80kb");
+      return;
+    }
     dispatch(
       addSubCategory({ categoryId, subCategoryName, icon: image, setProgress })
     );

@@ -26,7 +26,7 @@ export const enquire = createAsyncThunk(
   async ({ formData }, thunkAPI) => {
     try {
       const response = await apiConnector("POST", ENQUIRE_API, formData);
-
+      toast.success("Enquiry submitted successfully");
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
