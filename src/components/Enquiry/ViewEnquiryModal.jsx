@@ -2,6 +2,7 @@ import React from "react";
 import { formattedDate } from "../../utils/dateFormatter";
 
 const ViewEnquiryModal = ({ enquiry, onClose }) => {
+  // console.log(enquiry)
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300"
@@ -31,15 +32,15 @@ const ViewEnquiryModal = ({ enquiry, onClose }) => {
             <span className="text-gray-600">{enquiry?.contactNumber}</span>
           </p>
           <p>
-            <strong className="text-lg text-gray-700">Subject:</strong>{" "}
-            <span className="text-gray-600">{enquiry?.serviceId?.serviceName}</span>
+            <strong className="text-lg text-gray-700">Service Name:</strong>{" "}
+            <span className="text-gray-600">{enquiry?.serviceName}</span>
           </p>
         </div>
 
         {/* Full width message */}
         <div className="mb-6">
           <p className="text-lg text-gray-700">
-            <strong>Message:</strong>
+            <strong>Query:</strong>
           </p>
           <p className="whitespace-pre-line bg-gray-100 p-4 rounded-lg border border-gray-300 mt-2">
             {enquiry?.query}

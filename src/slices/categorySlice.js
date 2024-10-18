@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { endpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
 import Swal from "sweetalert2";
-
 const {
   SHOW_ALL_CATEGORIES_API,
   CREATE_CATEGORY_API,
@@ -47,7 +46,7 @@ export const createCategory = createAsyncThunk(
           setProgress(percentCompleted);
         }
       );
-
+      
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
