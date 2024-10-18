@@ -1,16 +1,16 @@
 import React from "react";
-import AcRepair from "../../assets/homepage/ACrepair.svg";
-import Electrian from "../../assets/homepage/electrian.svg";
-import Factory from "../../assets/homepage/factory.svg";
-import Painting from "../../assets/homepage/painting.svg";
-import Carpentry from "../../assets/homepage/carpentry.svg";
-import Cleaning from "../../assets/homepage/cleaning.svg";
+import AcRepair from "../../assets/homepage/ACrepair.webp";
+import Electrian from "../../assets/homepage/electrian.webp";
+import Factory from "../../assets/homepage/factory.webp";
+import Painting from "../../assets/homepage/painting.webp";
+import Carpentry from "../../assets/homepage/carpentry.webp";
+import Cleaning from "../../assets/homepage/cleaning.webp";
 
 const Hero = () => {
   return (
-    <section className="self-center mt-0 w-full max-w-[1339px] max-md:mt-0 px-10 max-md:px-6 max-sm:px-4">
+    <section className="self-center  mt-0 w-full max-w-[1339px] max-md:mt-0 px-10 max-md:px-6 max-sm:px-4">
       <div className="flex gap-5 max-md:gap-0">
-        <div className="flex flex-col">
+        <div className="flex w-[800px] flex-col">
           <div className="w-full">
             <div className="flex gap-5 max-md:gap-0">
               <div className="flex flex-col">

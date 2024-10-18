@@ -19,6 +19,10 @@ const FeatureItem = ({ icon, name, description }) => (
 const Features = () => {
   const { categories } = useSelector((state) => state.categories);
 
+  const createSlug = (name) => {
+    return name.toLowerCase().replace(/\s+/g, '-');
+  };
+
   return (
     <div className="relative flex items-center justify-center px-20 max-md:px-10 max-sm:px-4">
       <div className="absolute w-48 h-48 bg-[#009F78] text-white font-bold text-xl rounded-[30px] rotate-12 top-[96px] max-md:top-[40px]"></div>
@@ -32,7 +36,7 @@ const Features = () => {
         </h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 mt-6 max-w-full w-[676px]">
           {categories.map((feature) => (
-            <Link key={feature._id} to={`${feature._id}`}>
+            <Link key={feature._id} to={`${createSlug(feature.name)}`}>
               <FeatureItem {...feature} />
             </Link>
           ))}

@@ -111,6 +111,7 @@ const NewUserModal = ({ isNewUserModalOpen, handleNewUserModal }) => {
                   onChange={(e) => setAccountType(e.target.value)}
                   className="w-full border border-gray-300 p-2 rounded-md"
                 >
+                  <option value="">Select Account Type</option>
                   <option value="User">User</option>
                   <option value="Admin">Admin</option>
                   <option value="Partner">Partner</option>

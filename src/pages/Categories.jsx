@@ -44,9 +44,11 @@ const Categories = () => {
   const { cartServices, isLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
-
+  
+  console.log(categories);
+  console.log(categoryId);
   const categoryName = categories.find(
-    (category) => category._id === categoryId
+    (category) => category.slugName === categoryId
   );
 
   const categoryRefs = useRef({});
@@ -201,9 +203,9 @@ const Categories = () => {
           </h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
-            <h1 className="text-4xl text-center max-lg:text-2xl mb-10">
+            <h2 className="text-4xl text-center max-lg:text-2xl mb-10">
               Select Sub-Category
-            </h1>
+            </h2>
 
             <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-20 max-2xl:gap-x-14">
               {subCategoriesByCategory.map((category) => {
@@ -244,7 +246,7 @@ const Categories = () => {
                 ref={(e) => (categoryRefs.current[_id] = e)}
                 className="mb-8"
               >
-                <h1 className="text-2xl mb-4 ml-6">{subCategoryName}</h1>
+                <h3 className="text-2xl mb-4 ml-6">{subCategoryName}</h3>
 
                 <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
                   {services.map((service) => {
