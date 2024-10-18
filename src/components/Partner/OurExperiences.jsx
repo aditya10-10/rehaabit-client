@@ -48,15 +48,16 @@ const OurExperiences = () => {
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 2
+      prevIndex === 0 ? testimonials.length - 2 : prevIndex - 2
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 2
+      prevIndex === testimonials.length - 2 ? 0 : prevIndex + 2
     );
   };
+
   useEffect(() => {
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
@@ -67,13 +68,14 @@ const OurExperiences = () => {
   }, [currentIndex]);
 
   return (
-    <div className="flex flex-col py-40 px-60 gap-20 h-[901px]">
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-bold w-[20%] capitalize">
-          Our Experiences customers satisfaction
+    <div className="flex flex-col py-10 px-4 sm:px-10 md:px-20 lg:px-40 gap-10">
+      {/* Header and Navigation */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-lg sm:text-2xl font-bold w-full md:w-[40%] capitalize">
+          Our Experiences - Customer Satisfaction
         </h1>
 
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-2 items-center">
           <button
             className="border rounded-full p-2 text-gray-500"
             onClick={handlePrev}
@@ -90,13 +92,14 @@ const OurExperiences = () => {
         </div>
       </div>
 
+      {/* Testimonials */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {testimonials
           .slice(currentIndex, currentIndex + 2)
           .map((testimonial, index) => (
             <div
               key={index}
-              className="p-6 border border-purple-500 rounded-3xl shadow-custom-shadow max-w-lg w-full"
+              className="p-6 border border-purple-500 rounded-3xl shadow-lg max-w-full w-full"
             >
               <p className="text-center">{testimonial.text}</p>
 
@@ -119,6 +122,7 @@ const OurExperiences = () => {
           ))}
       </div>
 
+      {/* Navigation Dots */}
       <div className="flex items-center justify-center w-full gap-2">
         {Array.from({ length: Math.ceil(testimonials.length / 2) }).map(
           (_, index) => (
@@ -138,4 +142,4 @@ const OurExperiences = () => {
   );
 };
 
-export default OurExperiences;
+export default OurExperiences;

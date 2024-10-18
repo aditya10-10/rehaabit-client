@@ -22,7 +22,6 @@ const ResumeSubmissionForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., send the formData to the backend or API
     console.log("Form submitted:", formData);
 
     dispatch(addCandidateInformation({ formData }));
@@ -30,16 +29,15 @@ const ResumeSubmissionForm = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center px-20 py-10 h-[1023px]"
+      className="flex flex-col items-center justify-center px-5 md:px-20 py-10 h-[auto] md:h-[1023px]"
       style={{
-        backgroundImage: `
-  linear-gradient(to right, rgba(253, 96, 55, 0.12),rgba(117, 45, 220, 0.06),rgba(255, 255, 255, 0.06),rgba(117, 45, 220, 0.06),rgba(253, 96, 55, 0.06))`,
+        backgroundImage: `linear-gradient(to right, rgba(253, 96, 55, 0.12), rgba(117, 45, 220, 0.06), rgba(255, 255, 255, 0.06), rgba(117, 45, 220, 0.06), rgba(253, 96, 55, 0.06))`,
       }}
     >
-      <h1 className="text-4xl capitalize font-bold mb-4">
+      <h1 className="text-2xl md:text-4xl capitalize font-bold mb-4">
         Contact Hiring Team
       </h1>
-      <p className="text-2xl text-gray-500 text-center w-[45%] mb-10">
+      <p className="text-lg md:text-2xl text-gray-500 text-center w-full md:w-[45%] mb-10">
         Ideally, we expect you to apply through our open job listings on
         LinkedIn. Please use this form if you want to reach out to the hiring
         team directly.
@@ -47,7 +45,7 @@ const ResumeSubmissionForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 shadow-custom-shadow rounded-lg w-[25%] p-6"
+        className="space-y-4 shadow-custom-shadow rounded-lg w-full md:w-[25%] p-6"
       >
         <div>
           <label
