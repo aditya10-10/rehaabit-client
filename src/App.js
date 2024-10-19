@@ -58,6 +58,7 @@ import PageNotFound from "./pages/PageNotFound";
 import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
 import { BallTriangle } from "react-loader-spinner";
+import ContentEditor from "./components/blogs/ContentEditor";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -266,6 +267,7 @@ export default function App() {
           />
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/content" element={<ContentEditor />} />
         </Routes>
       </div>
     </>
