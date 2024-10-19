@@ -8,9 +8,9 @@ import Cleaning from "../../assets/homepage/cleaning.webp";
 
 const Hero = () => {
   return (
-    <section className="self-center mt-0 w-full max-w-[1339px] max-md:mt-0 px-10 max-md:px-6 max-sm:px-4">
+    <section className="self-center  mt-0 w-full max-w-[1339px] max-md:mt-0 px-10 max-md:px-6 max-sm:px-4">
       <div className="flex gap-5 max-md:gap-0">
-        <div className="flex flex-col">
+        <div className="flex w-[800px] flex-col">
           <div className="w-full">
             <div className="flex gap-5 max-md:gap-0">
               <div className="flex flex-col">
