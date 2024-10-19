@@ -9,6 +9,7 @@ import { RiDeleteBin6Line, RiFileEditLine } from "react-icons/ri";
 import { IoIosClose } from "react-icons/io";
 import HIWCard from "../../HIWCard";
 import ImageDropzone from "../../ImageDropzone";
+import { toast } from "sonner";
 
 const HowDoesItWorks = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,18 @@ const HowDoesItWorks = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (formData.point === "" || formData.description === "") {
+      toast.error("Please fill all the fields");
+      return;
+    }
+    if (formData.icon === null) {
+      toast.error("Please upload an image");
+      return;
+    }
+    if (formData.icon.size > 80000) {
+      toast.error("Image size should be less than 80kb");
+      return;
+    }
     if (editId) {
       dispatch(updateHowDoesItWorks({ ...formData, id: editId }));
     } else {

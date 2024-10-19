@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useCallback } from "react";
 
 const FeatureItem = ({ icon, name, description }) => (
   <div className="flex flex-col justify-center items-center text-center">
@@ -19,9 +20,16 @@ const FeatureItem = ({ icon, name, description }) => (
 const Features = () => {
   const { categories } = useSelector((state) => state.categories);
 
-  const createSlug = (name) => {
-    return name.toLowerCase().replace(/\s+/g, '-');
-  };
+  const createSlug = useCallback((value) => {
+    if (value && typeof value === "string")
+    return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-zA-Z\d\s]+/g, "-")
+    .replace(/\s/g, "-");
+   
+    return "";
+    }, []);   
 
   return (
     <div className="relative flex items-center justify-center px-20 max-md:px-10 max-sm:px-4">

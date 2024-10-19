@@ -8,6 +8,7 @@ import {
   updateSubCategoryName,
 } from "../../../slices/subCategorySlice";
 import { useState } from "react";
+import { toast } from "sonner";
 import Swal from "sweetalert2";
 
 const SubCategoriesCards = ({ subcategories, currentPage, cardsPerPage }) => {
@@ -16,7 +17,7 @@ const SubCategoriesCards = ({ subcategories, currentPage, cardsPerPage }) => {
   const currentCategories = subcategories.slice(
     indexOfFirstCard,
     indexOfLastCard
-  );
+  );  
 
   const [editedSubCategoryId, setEditedSubCategoryId] = useState(null);
   const [newName, setNewName] = useState("");
@@ -45,6 +46,10 @@ const SubCategoriesCards = ({ subcategories, currentPage, cardsPerPage }) => {
   };
 
   const handleEditIcon = (subCategoryId, categoryId, file) => {
+    if (file.size > 80000) {
+      toast.error("Image size should be less than 80kb");
+      return;
+    }
     dispatch(updateSubCategoryIcon({ subCategoryId, categoryId, icon: file }));
   };
 

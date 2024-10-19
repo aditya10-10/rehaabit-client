@@ -7,72 +7,76 @@ import { MdArrowOutward } from "react-icons/md";
 const Benefits = ({BenefitsText}) => {
   return (
     <div
-      className="flex flex-col p-20 h-[1058px]"
+      className="flex flex-col p-20 h-fit"
       style={{
         backgroundImage: `
         linear-gradient(to right, rgba(253, 96, 55, 0.12),rgba(117, 45, 220, 0.06),rgba(255, 255, 255, 0.06),rgba(117, 45, 220, 0.06),rgba(253, 96, 55, 0.06))`,
       }}
     >
-      <div className="w-full flex justify-between">
-        <h1 className="text-4xl font-bold w-[30%]">
-          {BenefitsText.text1}
-        </h1>
-        <span className="text-lg text-gray-800 w-[40%]">
-        {BenefitsText.text2}
-        </span>
-      </div>
+      <div className="w-full flex flex-col lg:flex-row justify-between items-center lg:items-start">
+  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold w-full lg:w-[30%] text-center lg:text-left mb-4 lg:mb-0">
+    {BenefitsText.text1}
+  </h1>
+  <span className="text-base md:text-lg lg:text-xl text-gray-800 w-full lg:w-[40%] text-center lg:text-left">
+    {BenefitsText.text2}
+  </span>
+</div>
 
-      <div className="flex gap-10 items-center justify-center">
-        <div>
-          <img src={png1} alt="Expert Network png" />
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-row gap-4 items-center justify-center">
+  {/* {div1} */}
+  <div className="lg:mt-0 mt-8 w-auto ml-5">
+  <img src={png1} alt="Expert Network png" />
+  <div className="flex items-center w-full gap-20 py-4">
+    <span className="text-xl md:text-2xl font-[500] capitalize">
+      {BenefitsText.text3}
+    </span>
+    <span className="bg-orange-500 rounded-full p-1 text-white">
+      <MdArrowOutward size={20} />
+    </span>
+  </div>
+</div>
 
-          <div className="flex items-center w-full justify-between py-4">
-            <span className="text-2xl font-[500] capitalize">
-            {BenefitsText.text3}
-            </span>
-            <span className="bg-orange-500 rounded-full p-1 text-white">
-              <MdArrowOutward size={20} />
-            </span>
-          </div>
-        </div>
 
-        <div className="mt-64">
-          <img src={png2} alt="job flexibility png" />
+  {/* {div2} */}
+  <div className="lg:mt-64 mt-8 ml-5">
+    <img src={png2} alt="Job Flexibility png" />
+    <div className="flex items-center w-full gap-20 py-4">
+      <span className="text-xl md:text-2xl font-[500] capitalize">
+        {BenefitsText.text4}
+      </span>
+      <span className="bg-orange-500 rounded-full p-1 text-white">
+        <MdArrowOutward size={20} />
+      </span>
+    </div>
+  </div>
 
-          <div className="flex items-center w-full justify-between py-4">
-            <span className="text-2xl font-[500] capitalize">
-            {BenefitsText.text4}
-            </span>
-            <span className="bg-orange-500 rounded-full p-1 text-white">
-              <MdArrowOutward size={20} />
-            </span>
-          </div>
-        </div>
+  {/* {div3} */}
+  <div className="lg:mt-44 mt-8 ml-5">
+    <img src={png3} alt="Skill Growth png" />
+    <div className="flex items-center w-full gap-20  py-4">
+      <span className="text-xl md:text-2xl font-[500] capitalize">
+        {BenefitsText.text5}
+      </span>
+      <span className="bg-orange-500 rounded-full p-1 text-white">
+        <MdArrowOutward size={20} />
+      </span>
+    </div>
+  </div>
 
-        <div className="mt-44">
-          <img src={png3} alt="skill growth png" />
-
-          <div className="flex items-center w-full justify-between py-4">
-            <span className="text-2xl font-[500] capitalize">{BenefitsText.text5}</span>
-            <span className="bg-orange-500 rounded-full p-1 text-white">
-              <MdArrowOutward size={20} />
-            </span>
-          </div>
-        </div>
-
-        <div className="mt-10">
-          <img src={png4} alt="reliable earnings png" />
-
-          <div className="flex items-center w-full justify-between py-4">
-            <span className="text-2xl font-[500] capitalize">
-            {BenefitsText.text6}
-            </span>
-            <span className="bg-orange-500 rounded-full p-1 text-white">
-              <MdArrowOutward size={20} />
-            </span>
-          </div>
-        </div>
-      </div>
+  {/* {div4} */}
+  <div className="lg:mt-10 mt-8 ml-5">
+    <img src={png4} alt="Reliable Earnings png" />
+    <div className="flex items-center w-full gap-20 py-4">
+      <span className="text-xl md:text-2xl font-[500] capitalize">
+        {BenefitsText.text6}
+      </span>
+      <span className="bg-orange-500 rounded-full p-1 text-white">
+        <MdArrowOutward size={20} />
+      </span>
+    </div>
+  </div>
+</div>
+{/* <div className="bg-zinc-600 w-full h-[200px]"></div> */}
     </div>
   );
 };

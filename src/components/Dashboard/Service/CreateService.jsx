@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubCategoriesByCategory } from "../../../slices/subCategorySlice";
 import { createService, editService } from "../../../slices/serviceSlice";
@@ -48,9 +48,17 @@ const CreateService = () => {
       setPreview(service.thumbnail || null);
     }
   }, [service, serviceId]);
-  const createSlug = (name) => {
-    return name.toLowerCase().replace(/\s+/g, '-');
-  };
+
+  const createSlug = useCallback((value) => {
+    if (value && typeof value === "string")
+    return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-zA-Z\d\s]+/g, "-")
+    .replace(/\s/g, "-");
+   
+    return "";
+    }, []);   
   useEffect(() => {
     if (formData.categoryId) {
       dispatch(getSubCategoriesByCategory({ categoryId: createSlug(formData.categoryId) }));
