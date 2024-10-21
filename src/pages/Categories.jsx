@@ -14,6 +14,7 @@ import {
   removeServiceFromLocalStorage,
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
+import { Helmet } from "react-helmet-async";
 import { openModal } from "../slices/modalSlice";
 import { setSingleOrder } from "../slices/orderSlice";
 import EnquireNowModal from "../components/Home/EnquireNowModal";
@@ -27,7 +28,7 @@ const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
+ 
   const params = useParams();
   const categoryId = params.id;
   const { scrollTo, subCategoryId, serviceId } = location.state || {};
@@ -44,7 +45,13 @@ const Categories = () => {
   const { cartServices, isLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
-
+  console.log(categories);
+  console.log(subCategoriesByCategory)
+  // <Helmet>
+  //   <title>{categoryName?.name} | Rehaabit</title>
+  //   <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
+  //   <link rel="canonical" href={`/${categoryId}`} />
+  // </Helmet>
   console.log(categories);
   console.log(categoryId);
   const categoryName = categories.find(
@@ -53,6 +60,11 @@ const Categories = () => {
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
+
+  // Function to update URL without page reload
+  const updateUrl = (newPath, state = {}) => {
+    navigate(newPath, { replace: true, state });
+  };
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -79,8 +91,12 @@ const Categories = () => {
     }
   }, [scrollTo, subCategoryId, serviceId, allServices]);
 
-  const handleCategoryClick = (subCategoryId) => {
+  const handleCategoryClick = (subCategoryId, subCategoryName) => {
     categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
+    
+    // Update URL when clicking on a subcategory
+    const newUrl = `/${categoryId}?subCategory=${subCategoryName}`;
+    updateUrl(newUrl);
   };
 
   const handleAddToCart = (service) => {
@@ -155,26 +171,41 @@ const Categories = () => {
   };
 
   // Function to open the Service Details Modal
-  const handleServiceModalOpen = (serviceId) => {
-    setServiceIdToPass(serviceId); // Pass the selected service ID
-    setIsServiceModalOpen(true); // Open the Service Details Modal
+  const handleServiceModalOpen = (serviceId, serviceName) => {
+    setServiceIdToPass(serviceId);
+    setIsServiceModalOpen(true);
+    
+    // Update URL when opening service modal
+    const newUrl = `/${categoryId}?service=${serviceName}`;
+    updateUrl(newUrl);
   };
 
   // Function to close the Service Details Modal
   const handleServiceModalClose = () => {
-    setIsServiceModalOpen(false); // Close the Service Details Modal
+    setIsServiceModalOpen(false);
+    
+    // Revert URL when closing service modal
+    updateUrl(`/${categoryId}`);
   };
 
   // Function to open the Enquire Now Modal
-  const handleEnquireNowModalOpen = (serviceId) => {
-    setServiceIdToPass(serviceId); // Pass the selected service ID
-    setIsEnquireNowModalOpen(true); // Open the Enquire Now Modal
+  const handleEnquireNowModalOpen = (service) => {
+    setServiceIdToPass(service._id);
+    setIsEnquireNowModalOpen(true);
+    
+    // Update URL when opening Enquire Now modal
+    const newUrl = `/${categoryId}?service=${service.serviceName}`;
+    updateUrl(newUrl);
   };
 
   // Function to close the Enquire Now Modal
   const handleEnquireNowModalClose = () => {
-    setIsEnquireNowModalOpen(false); // Close the Enquire Now Modal
+    setIsEnquireNowModalOpen(false);
+    
+    // Revert URL when closing Enquire Now modal
+    updateUrl(`/${categoryId}`);
   };
+
 
   return (
     <>
@@ -215,7 +246,7 @@ const Categories = () => {
                   <div
                     key={_id}
                     className="flex flex-col items-center justify-center text-center hover:shadow-custom-shadow p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
-                    onClick={() => handleCategoryClick(_id)}
+                    onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
                     <img
