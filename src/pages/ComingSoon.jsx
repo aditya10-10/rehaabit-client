@@ -20,7 +20,7 @@ const ComingSoon = () => {
           <div className="w-32 h-32 lg:w-48 lg:h-48 mb-6">
             <img
               src={rocket}
-              alt="Rocket"
+              alt="Lunching Soon"
               className="w-full h-full object-contain"
             />
           </div>

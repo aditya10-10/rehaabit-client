@@ -101,12 +101,6 @@ const ContactUs = () => {
         <div className="flex justify-center w-3/5 max-md:w-full">
           <ContactForm />
         </div>
-
-        {/* <img
-          src={LetterSend}
-          alt="letter send svg"
-          className="absolute -bottom-10 right-20 w-80 z-0 max-xs:hidden"
-        /> */}
       </div>
     </div>
   );

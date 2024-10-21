@@ -220,7 +220,7 @@ const Categories = () => {
                   >
                     <img
                       src={icon}
-                      alt="Icon"
+                      alt={subCategoryName}
                       className="h-20 w-20 rounded-full"
                     />
                     <span>{subCategoryName}</span>

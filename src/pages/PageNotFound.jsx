@@ -27,7 +27,7 @@ const PageNotFound = () => {
             <img
               className="mx-auto w-72 md:w-96"
               src={Error}
-              alt="Page not found illustration"
+              alt="Page not found image"
             />
           </div>
 
