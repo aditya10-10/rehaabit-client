@@ -1,10 +1,10 @@
-import png1 from "../../assets/partner/6x6WjgFVmDgU0TTEAt1Z39AOE.png.svg";
-import png2 from "../../assets/partner/7RK4uNLdlULQ5W0ozQvljqeaw.png.svg";
-import png3 from "../../assets/partner/sNkB7IB6mi9wAYmmOmDEpVRQ.png.svg";
-import png4 from "../../assets/partner/gGRPNWntCuxJyX5rQbpX5dERMTM.png.svg";
+import png1 from "../../assets/partner/6x6WjgFVmDgU0TTEAt1Z39AOE.webp";
+import png2 from "../../assets/partner/7RK4uNLdlULQ5W0ozQvljqeaw.webp";
+import png3 from "../../assets/partner/sNkB7IB6mi9wAYmmOmDEpVRQ.webp";
+import png4 from "../../assets/partner/gGRPNWntCuxJyX5rQbpX5dERMTM.webp";
 import { MdArrowOutward } from "react-icons/md";
 
-const Benefits = ({BenefitsText}) => {
+const Benefits = ({ BenefitsText }) => {
   return (
     <div
       className="flex flex-col p-20 h-fit"
@@ -14,69 +14,68 @@ const Benefits = ({BenefitsText}) => {
       }}
     >
       <div className="w-full flex flex-col lg:flex-row justify-between items-center lg:items-start">
-  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold w-full lg:w-[30%] text-center lg:text-left mb-4 lg:mb-0">
-    {BenefitsText.text1}
-  </h1>
-  <span className="text-base md:text-lg lg:text-xl text-gray-800 w-full lg:w-[40%] text-center lg:text-left">
-    {BenefitsText.text2}
-  </span>
-</div>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold w-full lg:w-[30%] text-center lg:text-left mb-4 lg:mb-0">
+          {BenefitsText.text1}
+        </h1>
+        <span className="text-base md:text-lg lg:text-xl text-gray-800 w-full lg:w-[40%] text-center lg:text-left">
+          {BenefitsText.text2}
+        </span>
+      </div>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-row gap-4 items-center justify-center">
-  {/* {div1} */}
-  <div className="lg:mt-0 mt-8 w-auto ml-5">
-  <img src={png1} alt="Expert Network png" />
-  <div className="flex items-center w-full gap-20 py-4">
-    <span className="text-xl md:text-2xl font-[500] capitalize">
-      {BenefitsText.text3}
-    </span>
-    <span className="bg-orange-500 rounded-full p-1 text-white">
-      <MdArrowOutward size={20} />
-    </span>
-  </div>
-</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-row gap-4 items-center justify-center">
+        {/* {div1} */}
+        <div className="lg:mt-0 mt-8 w-auto ml-5">
+          <img src={png1} alt="Expert Network png" />
+          <div className="flex items-center w-full gap-20 py-4">
+            <span className="text-xl md:text-2xl font-[500] capitalize">
+              {BenefitsText.text3}
+            </span>
+            <span className="bg-orange-500 rounded-full p-1 text-white">
+              <MdArrowOutward size={20} />
+            </span>
+          </div>
+        </div>
 
+        {/* {div2} */}
+        <div className="lg:mt-64 mt-8 ml-5">
+          <img src={png2} alt="Job Flexibility png" />
+          <div className="flex items-center w-full gap-20 py-4">
+            <span className="text-xl md:text-2xl font-[500] capitalize">
+              {BenefitsText.text4}
+            </span>
+            <span className="bg-orange-500 rounded-full p-1 text-white">
+              <MdArrowOutward size={20} />
+            </span>
+          </div>
+        </div>
 
-  {/* {div2} */}
-  <div className="lg:mt-64 mt-8 ml-5">
-    <img src={png2} alt="Job Flexibility png" />
-    <div className="flex items-center w-full gap-20 py-4">
-      <span className="text-xl md:text-2xl font-[500] capitalize">
-        {BenefitsText.text4}
-      </span>
-      <span className="bg-orange-500 rounded-full p-1 text-white">
-        <MdArrowOutward size={20} />
-      </span>
-    </div>
-  </div>
+        {/* {div3} */}
+        <div className="lg:mt-44 mt-8 ml-5">
+          <img src={png3} alt="Skill Growth png" />
+          <div className="flex items-center w-full gap-20  py-4">
+            <span className="text-xl md:text-2xl font-[500] capitalize">
+              {BenefitsText.text5}
+            </span>
+            <span className="bg-orange-500 rounded-full p-1 text-white">
+              <MdArrowOutward size={20} />
+            </span>
+          </div>
+        </div>
 
-  {/* {div3} */}
-  <div className="lg:mt-44 mt-8 ml-5">
-    <img src={png3} alt="Skill Growth png" />
-    <div className="flex items-center w-full gap-20  py-4">
-      <span className="text-xl md:text-2xl font-[500] capitalize">
-        {BenefitsText.text5}
-      </span>
-      <span className="bg-orange-500 rounded-full p-1 text-white">
-        <MdArrowOutward size={20} />
-      </span>
-    </div>
-  </div>
-
-  {/* {div4} */}
-  <div className="lg:mt-10 mt-8 ml-5">
-    <img src={png4} alt="Reliable Earnings png" />
-    <div className="flex items-center w-full gap-20 py-4">
-      <span className="text-xl md:text-2xl font-[500] capitalize">
-        {BenefitsText.text6}
-      </span>
-      <span className="bg-orange-500 rounded-full p-1 text-white">
-        <MdArrowOutward size={20} />
-      </span>
-    </div>
-  </div>
-</div>
-{/* <div className="bg-zinc-600 w-full h-[200px]"></div> */}
+        {/* {div4} */}
+        <div className="lg:mt-10 mt-8 ml-5">
+          <img src={png4} alt="Reliable Earnings png" />
+          <div className="flex items-center w-full gap-20 py-4">
+            <span className="text-xl md:text-2xl font-[500] capitalize">
+              {BenefitsText.text6}
+            </span>
+            <span className="bg-orange-500 rounded-full p-1 text-white">
+              <MdArrowOutward size={20} />
+            </span>
+          </div>
+        </div>
+      </div>
+      {/* <div className="bg-zinc-600 w-full h-[200px]"></div> */}
     </div>
   );
 };

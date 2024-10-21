@@ -75,7 +75,7 @@ const Categories = () => {
       return () => clearTimeout(scrollToTop);
     }
   }, []);
-  
+
   useEffect(() => {
     dispatch(getSubCategoriesByCategory({ categoryId }));
   }, [dispatch, categoryId]);
@@ -234,9 +234,9 @@ const Categories = () => {
           </h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
-            <h2 className="text-4xl text-center max-lg:text-2xl mb-10">
+            <p className="text-4xl text-center max-lg:text-2xl mb-10">
               Select Sub-Category
-            </h2>
+            </p>
 
             <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-20 max-2xl:gap-x-14">
               {subCategoriesByCategory.map((category) => {
@@ -251,7 +251,7 @@ const Categories = () => {
                   >
                     <img
                       src={icon}
-                      alt="Icon"
+                      alt={subCategoryName}
                       className="h-20 w-20 rounded-full"
                     />
                     <span>{subCategoryName}</span>

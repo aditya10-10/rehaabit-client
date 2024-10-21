@@ -74,7 +74,10 @@ const LocationSearchBarDiv = () => {
             .then((response) => response.json())
             .then((data) => {
               const detectedCity =
-                data.address.city || data.address.town || data.address.village || data.display_name;
+                data.address.city ||
+                data.address.town ||
+                data.address.village ||
+                data.display_name;
               const detectedPincode = data.address.postcode;
               setCity(detectedCity);
               setPincode(detectedPincode);
@@ -93,7 +96,7 @@ const LocationSearchBarDiv = () => {
   };
 
   const addToRecentLocations = (location) => {
-    const updatedLocations = [location, ...recentLocations.filter(loc => loc !== location)].slice(0, 5);
+    const updatedLocations = [location, ...recentLocations].slice(0, 5);
     setRecentLocations(updatedLocations);
     localStorage.setItem('recentLocations', JSON.stringify(updatedLocations));
   };
@@ -114,7 +117,6 @@ const LocationSearchBarDiv = () => {
       setIsLocationDropdownOpen(false);
     }
   };
-
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
     return () => {
@@ -200,7 +202,7 @@ const LocationSearchBarDiv = () => {
                 fontFamily: "Montserrat, sans-serif",
                 fontWeight: "500",
                 fontSize: "16px",
-                color: "#4CB4F9", 
+                color: "#4CB4F9",
                 backgroundColor: "#fff",
               }}
             >
@@ -262,8 +264,6 @@ const LocationSearchBarDiv = () => {
             ) : null}
           </div>
         )}
-
-
       </div>
 
       {/* Search Bar */}

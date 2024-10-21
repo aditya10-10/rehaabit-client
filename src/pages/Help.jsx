@@ -33,7 +33,10 @@ const Help = () => {
     : faqs.map((faq) => ({ item: faq }));
 
   return (
-    <div className="flex flex-col items-center justify-center w-full mb-10 px-2 font-poppins">
+    <div
+      className="flex flex-col items-center justify-center w-full mb-10 px-2 font-poppins"
+      style={{ fontFamily: "Roboto, sans-serif" }}
+    >
       <img src={LOGO} alt="Rehaabit" className="w-48" />
       <h1 className="text-6xl max-md:text-4xl max-sm:text-2xl">
         How can we help you?
@@ -63,7 +66,10 @@ const Help = () => {
       </div>
 
       {/* FAQ */}
-      <div className="flex flex-col w-1/2 max-lg:w-4/5 max-sm:w-[90%]">
+      <div
+        className="flex flex-col w-1/2 max-lg:w-4/5 max-sm:w-[90%]"
+        style={{ fontFamily: "Roboto, sans-serif" }}
+      >
         {results.length > 0 && (
           <div className="flex flex-col gap-5 w-full p-6 max-sm:p-4 mt-4">
             {results.map((faq) => {
