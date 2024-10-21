@@ -129,10 +129,10 @@ const categorySlice = createSlice({
         state.error = action;
         // Swal.hideLoading()
 
-        Swal.fire({
-          title: "Error in Loading Categories!",
-          icon: "error",
-        });
+        // Swal.fire({
+        //   title: "Error in Loading Categories!",
+        //   icon: "error",
+        // });
       })
       .addCase(createCategory.pending, (state) => {
         state.isLoading = true;
