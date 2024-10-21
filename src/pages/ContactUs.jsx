@@ -9,6 +9,7 @@ import {
 import ContactForm from "../components/Contact/ContactForm";
 import LetterSend from "../assets/letter_send.svg";
 import { useEffect } from "react";
+import { Footer } from "../components/Partner";
 
 const ContactUs = () => {
   useEffect(() => {

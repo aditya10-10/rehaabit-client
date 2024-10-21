@@ -52,14 +52,15 @@ const LocationSearchBarDiv = () => {
             .then((response) => response.json())
             .then((data) => {
               const detectedCity =
-                data.address.city || data.address.town || data.address.village || data.display_name;
+                data.address.city ||
+                data.address.town ||
+                data.address.village ||
+                data.display_name;
               const detectedPincode = data.address.postcode;
               setCity(detectedCity);
               setPincode(detectedPincode);
               setIsLocationDropdownOpen(false);
-              setLocationSuggestions([
-                `${detectedCity}`
-              ]);
+              setLocationSuggestions([`${detectedCity}`]);
             })
             .catch((error) =>
               console.error("Error fetching location data:", error)
@@ -84,7 +85,7 @@ const LocationSearchBarDiv = () => {
     setLocationSuggestions([]);
     setCity("");
     setPincode("");
-  }
+  };
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
     return () => {
@@ -101,7 +102,7 @@ const LocationSearchBarDiv = () => {
       }
     });
   }, []);
-  
+
   return (
     <>
       <div className="relative" ref={locationDropdownRef}>
@@ -160,7 +161,7 @@ const LocationSearchBarDiv = () => {
                 fontFamily: "Montserrat, sans-serif",
                 fontWeight: "500",
                 fontSize: "16px",
-                color: "#4CB4F9", 
+                color: "#4CB4F9",
                 backgroundColor: "#fff",
               }}
             >
@@ -172,8 +173,8 @@ const LocationSearchBarDiv = () => {
               style={{
                 fontFamily: "Montserrat, sans-serif",
                 fontWeight: "bold",
-                color: "#888", 
-                fontSize: "10px", 
+                color: "#888",
+                fontSize: "10px",
               }}
             >
               <span>RECENT LOCATIONS</span>
@@ -182,7 +183,7 @@ const LocationSearchBarDiv = () => {
                 style={{
                   fontFamily: "Open Sans, sans-serif",
                   fontWeight: "bold",
-                  color: "#4CB4F9", 
+                  color: "#4CB4F9",
                   fontSize: "12px",
                 }}
                 onClick={handleClearlocation}
@@ -216,8 +217,6 @@ const LocationSearchBarDiv = () => {
             )}
           </div>
         )}
-
-
       </div>
 
       {/* Search Bar */}
