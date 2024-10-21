@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
-import carrers from "../../assets/carrers/carrers.svg";
-import HeroImage from "../../assets/partner/Hero.svg";
+import carrers from "../../assets/carrers/carrers.webp";
+import HeroImage from "../../assets/partner/Hero.webp";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Hero = ({ HeroSectionText }) => {

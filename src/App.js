@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 
-import { Thankyou } from "./pages/Thankyou";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserDetails } from "./services/operations/profileAPI";
@@ -200,9 +199,7 @@ export default function App() {
       <div className="">
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/thank-you" element={<Thankyou />} />
           <Route path="/:id" element={<Categories />} />
-          {/* <Route path="/service-details/:id" element={<ServiceDetailsPage />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route
@@ -266,7 +263,7 @@ export default function App() {
             element={<PartnerTermsAndConditions />}
           />
           <Route path="/coming-soon" element={<ComingSoon />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="/not" element={<PageNotFound />} />
           <Route path="/content" element={<ContentEditor />} />
         </Routes>
       </div>

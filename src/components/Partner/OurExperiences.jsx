@@ -1,7 +1,6 @@
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import Quote from "../../assets/partner/quote.svg";
 import React, { useState, useRef, useEffect } from "react";
-import png1 from "../../assets/partner/X94yM6Vbr2CAwfsQFuA0SX7awg.png.svg";
 
 const OurExperiences = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -142,4 +141,4 @@ const OurExperiences = () => {
   );
 };
 
-export default OurExperiences;
+export default OurExperiences;
