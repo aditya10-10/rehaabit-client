@@ -14,7 +14,7 @@ const CreateService = () => {
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
-  console.log(subCategoriesByCategory)
+  // console.log(subCategoriesByCategory)
   const [preview, setPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
 

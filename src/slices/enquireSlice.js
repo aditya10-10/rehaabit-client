@@ -64,7 +64,7 @@ export const updateEnquiryAndStatusAssignment = createAsyncThunk(
   async ({enquiryId, formData}, thunkAPI) => {
     try{
       const response = await apiConnector("PATCH", UPDATE_ENQUIRY_AND_STATUS_ASSIGNMENT_API, {enquiryId, ...formData});
-      console.log(response);  
+      // console.log(response);  
       toast.success("Enquiry updated successfully!");
       return response.data.data;
     }catch(error){

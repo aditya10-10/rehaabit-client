@@ -8,6 +8,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdContacts } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Home/Footer";
 
 const Help = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Help = () => {
     : faqs.map((faq) => ({ item: faq }));
 
   return (
+    <>
     <div
       className="flex flex-col items-center justify-center w-full mb-10 px-2 font-poppins"
       style={{ fontFamily: "Roboto, sans-serif" }}
@@ -131,6 +133,8 @@ const Help = () => {
         </button>
       </div>
     </div>
+      <Footer/>
+      </>
   );
 };
 

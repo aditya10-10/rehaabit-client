@@ -11,7 +11,7 @@ const PreviousResponsesModal = ({ contact, onClose }) => {
   const [newPriority, setNewPriority] = useState(contact.priority);
   const responsesEndRef = useRef(null); // Ref to scroll to the end
   const {user} = useSelector((state) => state.profile);
-  console.log("userrrr",user);
+  // console.log("userrrr",user);
   useEffect(() => {
     setNewStatus(contact.status);
     setNewPriority(contact.priority);

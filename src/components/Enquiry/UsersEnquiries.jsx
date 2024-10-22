@@ -12,7 +12,7 @@ import PreviousResponsesModal from "./PreviousResponsesModal";
 const UsersEnquiries = () => {
   const dispatch = useDispatch();
   const { enquiries, isLoading, error,selectedEnquiry } = useSelector((state) => state.enquire);
-  console.log(enquiries);
+  // console.log(enquiries);
   // State for Search, Filters, and Pagination
   const [searchEnquiry, setSearchEnquiry] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -47,7 +47,7 @@ const UsersEnquiries = () => {
     indexOfFirstEnquiry,
     indexOfLastEnquiry
   );
-console.log(currentEnquiries);
+// console.log(currentEnquiries);
   const totalPages = Math.ceil(filteredEnquiries.length / enquiriesPerPage);
 
   const handleNextPage = () => {

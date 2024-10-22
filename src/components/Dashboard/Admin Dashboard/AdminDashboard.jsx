@@ -46,7 +46,7 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const userCount = useSelector((state) => state.users.userCount);
   const isLoadingUsers = useSelector((state) => state.users.isLoading);
-  const { ratingAndReviews, isLoadingRatings, error } = useSelector(
+  const { ratingAndReviews, isLoadingRatings } = useSelector(
     (state) => state.ratingAndReviews
   );
   const totalServicesCount = useSelector(
@@ -60,17 +60,20 @@ const AdminDashboard = () => {
   const totalRevenue = useSelector((state) => state.order.totalRevenue);
   const isOrderLoading = useSelector((state) => state.order.isOrderLoading);
   const allOrders = useSelector((state) => state.order.orders);
-  const pendingOrdersCount = allOrders?.filter((order) => order.status.status === "pending").length;
-  const refundCompleted = allOrders?.filter((order) => order.status.status === "refund completed").length;
-  const completedServicesCount = allOrders?.filter((order) => order.status.status === "service completed").length;
-  const canceledServicesCount = allOrders?.filter((order) => order.status.status === "cancelled by customer" || order.status.status === "cancelled by provider").length;
-  // const { allOrders } = useSelector((state) => state.orders);
-
-  // const pendingServices = allOrders.filter(
-  //   (service) => service.stat === "priced" && service.status !== "Draft"
-  // );
-
-  // const placedOrders = allOrders.filter((order) => order.status === "Placed");
+  const pendingOrdersCount = allOrders?.filter(
+    (order) => order.status.status === "pending"
+  ).length;
+  const refundCompleted = allOrders?.filter(
+    (order) => order.status.status === "refund completed"
+  ).length;
+  const completedServicesCount = allOrders?.filter(
+    (order) => order.status.status === "service completed"
+  ).length;
+  const canceledServicesCount = allOrders?.filter(
+    (order) =>
+      order.status.status === "cancelled by customer" ||
+      order.status.status === "cancelled by provider"
+  ).length;
 
   useEffect(() => {
     dispatch(getUserCount());
@@ -126,16 +129,16 @@ const AdminDashboard = () => {
 
   return (
     <div style={styles.container}>
-      {/* Top KPI Cards */}
+      {/* One single container for all KPI Cards */}
       <div style={styles.kpiContainer}>
-        {/* Total Users */}
+        {/* Row 1 */}
         <div style={styles.kpiCard}>
           <FaUsers size={35} style={{ ...styles.icon, color: "#34D399" }} />
           <div>
             <h3 style={styles.kpiTitle}>Total Users</h3>
             <h2 style={styles.kpiValue}>
-              {isLoadingUsers
-                ? <ThreeDots
+              {isLoadingUsers ? (
+                <ThreeDots
                   visible={true}
                   height="80"
                   width="80"
@@ -145,42 +148,43 @@ const AdminDashboard = () => {
                   wrapperStyle={{}}
                   wrapperClass=""
                 />
-                : userCount?.totalUsers?.toLocaleString()}
+              ) : (
+                userCount?.totalUsers?.toLocaleString()
+              )}
             </h2>
           </div>
         </div>
 
-        {/* Total Services Provided */}
         <div style={styles.kpiCard}>
-          <FaConciergeBell
-            size={35}
-            style={{ ...styles.icon, color: "#F59E0B" }}
-          />
+          <FaConciergeBell size={35} style={{ ...styles.icon, color: "#F59E0B" }} />
           <div>
             <h3 style={styles.kpiTitle}>Total Services</h3>
             <h2 style={styles.kpiValue}>
-              {isLoadingServices ? <ThreeDots
-                visible={true}
-                height="80"
-                width="80"
-                color="#4fa94d"
-                radius="9"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              /> : totalServicesCount}
+              {isLoadingServices ? (
+                <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              ) : (
+                totalServicesCount
+              )}
             </h2>
           </div>
         </div>
 
-        {/* Total Revenue */}
         <div style={styles.kpiCard}>
           <FaRupeeSign size={35} style={{ ...styles.icon, color: "#F472B6" }} />
           <div>
             <h3 style={styles.kpiTitle}>Total Revenue</h3>
             <h2 style={styles.kpiValue}>
-              {isOrderLoading
-                ? <ThreeDots
+              {isOrderLoading ? (
+                <ThreeDots
                   visible={true}
                   height="80"
                   width="80"
@@ -190,19 +194,21 @@ const AdminDashboard = () => {
                   wrapperStyle={{}}
                   wrapperClass=""
                 />
-                : `₹${totalRevenue.toLocaleString()}`}
-            </h2>{" "}
+              ) : (
+                `₹${totalRevenue.toLocaleString()}`
+              )}
+            </h2>
           </div>
         </div>
 
-        {/* Active Service Providers */}
+        {/* Row 2 */}
         <div style={styles.kpiCard}>
           <FaTasks size={35} style={{ ...styles.icon, color: "#3B82F6" }} />
           <div>
             <h3 style={styles.kpiTitle}>Active Providers</h3>
             <h2 style={styles.kpiValue}>
-              {isLoadingPartners
-                ? <ThreeDots
+              {isLoadingPartners ? (
+                <ThreeDots
                   visible={true}
                   height="80"
                   width="80"
@@ -212,112 +218,20 @@ const AdminDashboard = () => {
                   wrapperStyle={{}}
                   wrapperClass=""
                 />
-                : totalPartnerCount.totalPartners}
+              ) : (
+                totalPartnerCount.totalPartners
+              )}
             </h2>
           </div>
         </div>
-      </div>
 
-      <div style={styles.kpiContainer}>
-        {/* Pending Bookings */}
         <div style={styles.kpiCard}>
           <FaClock size={35} style={{ ...styles.icon, color: "#8B5CF6" }} />
           <div>
             <h3 style={styles.kpiTitle}>Pending Bookings</h3>
             <h2 style={styles.kpiValue}>
-              {isOrderLoading ? <ThreeDots
-                visible={true}
-                height="80"
-                width="80"
-                color="#4fa94d"
-                radius="9"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              /> : pendingOrdersCount}
-            </h2>
-          </div>
-        </div>
-
-        {/* Completed Services */}
-        <div style={styles.kpiCard}>
-          <FaCheckCircle
-            size={35}
-            style={{ ...styles.icon, color: "#10B981" }}
-          />
-          <div>
-            <h3 style={styles.kpiTitle}>Completed Services</h3>
-            <h2 style={styles.kpiValue}>{
-              isOrderLoading ? <ThreeDots
-                visible={true}
-                height="80"
-                width="80"
-                color="#4fa94d"
-                radius="9"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              /> : completedServicesCount
-            }</h2>
-          </div>
-        </div>
-
-        {/* Canceled Services */}
-        <div style={styles.kpiCard}>
-          <FaTimesCircle
-            size={35}
-            style={{ ...styles.icon, color: "#EF4444" }}
-          />
-          <div>
-            <h3 style={styles.kpiTitle}>Canceled Services</h3>
-            <h2 style={styles.kpiValue}>{
-              isOrderLoading ? <ThreeDots
-                visible={true}
-                height="80"
-                width="80"
-                color="#4fa94d"
-                radius="9"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              /> : canceledServicesCount
-            }</h2>
-          </div>
-        </div>
-
-        {/* New Service Requests */}
-        <div style={styles.kpiCard}>
-          <FaClipboardCheck
-            size={35}
-            style={{ ...styles.icon, color: "#F97316" }}
-          />
-          <div>
-            <h3 style={styles.kpiTitle}>Refund Completed</h3>
-            <h2 style={styles.kpiValue}>{
-              isOrderLoading ? <ThreeDots
-                visible={true}
-                height="80"
-                width="80"
-                color="#4fa94d"
-                radius="9"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              /> : refundCompleted
-            }</h2>
-          </div>
-        </div>
-      </div>
-
-      <div style={styles.kpiContainer}>
-        {/* Service Satisfaction Score */}
-        <div style={styles.kpiCard}>
-          <FaSmile size={35} style={{ ...styles.icon, color: "#FFD700" }} />
-          <div>
-            <h3 style={styles.kpiTitle}>Satisfaction Score</h3>
-            <h2 style={styles.kpiValue}>
-              {isLoadingRatings
-                ? <ThreeDots
+              {isOrderLoading ? (
+                <ThreeDots
                   visible={true}
                   height="80"
                   width="80"
@@ -327,16 +241,110 @@ const AdminDashboard = () => {
                   wrapperStyle={{}}
                   wrapperClass=""
                 />
-                : ratingAndReviews &&
-                  ratingAndReviews.averageRating !== undefined
-                  ? ratingAndReviews.averageRating.toFixed(2)
-                  : "N/A"}{" "}
+              ) : (
+                pendingOrdersCount
+              )}
+            </h2>
+          </div>
+        </div>
+
+        <div style={styles.kpiCard}>
+          <FaCheckCircle size={35} style={{ ...styles.icon, color: "#10B981" }} />
+          <div>
+            <h3 style={styles.kpiTitle}>Completed Services</h3>
+            <h2 style={styles.kpiValue}>
+              {isOrderLoading ? (
+                <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              ) : (
+                completedServicesCount
+              )}
+            </h2>
+          </div>
+        </div>
+
+        {/* Row 3 */}
+        <div style={styles.kpiCard}>
+          <FaTimesCircle size={35} style={{ ...styles.icon, color: "#EF4444" }} />
+          <div>
+            <h3 style={styles.kpiTitle}>Canceled Services</h3>
+            <h2 style={styles.kpiValue}>
+              {isOrderLoading ? (
+                <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              ) : (
+                canceledServicesCount
+              )}
+            </h2>
+          </div>
+        </div>
+
+        <div style={styles.kpiCard}>
+          <FaClipboardCheck size={35} style={{ ...styles.icon, color: "#F97316" }} />
+          <div>
+            <h3 style={styles.kpiTitle}>Refund Completed</h3>
+            <h2 style={styles.kpiValue}>
+              {isOrderLoading ? (
+                <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              ) : (
+                refundCompleted
+              )}
+            </h2>
+          </div>
+        </div>
+
+        <div style={styles.kpiCard}>
+          <FaSmile size={35} style={{ ...styles.icon, color: "#FFD700" }} />
+          <div>
+            <h3 style={styles.kpiTitle}>Satisfaction Score</h3>
+            <h2 style={styles.kpiValue}>
+              {isLoadingRatings ? (
+                <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              ) : ratingAndReviews &&
+                ratingAndReviews.averageRating !== undefined ? (
+                ratingAndReviews.averageRating.toFixed(2)
+              ) : (
+                "N/A"
+              )}{" "}
               / 5
             </h2>
           </div>
         </div>
       </div>
-
     </div>
   );
 };
@@ -344,48 +352,95 @@ const AdminDashboard = () => {
 const styles = {
   container: {
     padding: "20px",
-    fontFamily: "Open Sans, sans-serif",
+    height: "100vh", // Full viewport height
   },
   kpiContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "20px",
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)", // 3 columns by default (large screens)
+    gap: "20px",
+    marginBottom: "40px",
+    width: "100%", // Full width
+    maxWidth: "1400px", // Maximum width for large screens
+    marginLeft: "225px", // Center horizontally
+    marginRight: "auto", // Center horizontally
+
   },
   kpiCard: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "23%",
     padding: "20px",
     borderRadius: "10px",
     backgroundColor: "#fff",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+  },
+  kpiTitle: {
+    fontSize: "16px",
+    fontWeight: "600",
+    marginBottom: "10px",
+  },
+  kpiValue: {
+    fontSize: "24px",
+    fontWeight: "700",
   },
   icon: {
     marginRight: "10px",
   },
-  kpiTitle: {
-    margin: 0,
-    fontSize: "16px",
-    color: "#6b7280",
+
+  // Media Queries for responsiveness
+  "@media (max-width: 1200px)": {
+    kpiContainer: {
+      gridTemplateColumns: "repeat(2, 1fr)", // 2 columns on medium-large screens
+    },
   },
-  kpiValue: {
-    margin: "5px 0",
-    fontSize: "28px",
-    fontWeight: "bold",
+  "@media (max-width: 1024px)": {
+    kpiContainer: {
+      gridTemplateColumns: "1fr", // 1 column on medium screens
+    },
+    container: {
+      height: "auto", // Increase height for medium screens
+    },
   },
-  chartContainer: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+  "@media (max-width: 768px)": {
+    kpiContainer: {
+      gridTemplateColumns: "1fr", // 1 column for small screens
+      gap: "30px", // Increase gap between cards for better spacing
+    },
+    container: {
+      height: "auto", // Increase height for small screens
+    },
+    kpiCard: {
+      padding: "25px", // Adjust padding for better spacing on small screens
+    },
+    kpiTitle: {
+      fontSize: "14px", // Adjust title size for smaller screens
+    },
+    kpiValue: {
+      fontSize: "22px", // Adjust value size
+    },
+    icon: {
+      marginRight: "8px", // Adjust icon margin
+    },
   },
-  chartTitle: {
-    marginBottom: "20px",
-    fontSize: "18px",
-    fontWeight: "bold",
-    color: "#374151",
+  "@media (max-width: 480px)": {
+    kpiCard: {
+      padding: "15px", // Further adjust padding for smaller mobile screens
+    },
+    kpiTitle: {
+      fontSize: "12px", // Further adjust title size
+    },
+    kpiValue: {
+      fontSize: "20px", // Further adjust value size
+    },
+    icon: {
+      marginRight: "5px", // Further adjust icon margin
+    },
   },
 };
+
+
+
+
+
 
 export default AdminDashboard;

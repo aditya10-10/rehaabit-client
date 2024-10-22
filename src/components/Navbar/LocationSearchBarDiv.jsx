@@ -84,12 +84,10 @@ const LocationSearchBarDiv = () => {
               setLocationsuggestions([detectedCity]);
               addToRecentLocations(detectedCity);
             })
-            .catch((error) =>
-              console.error("Error fetching location data:", error)
-            );
+            
         },
         (error) => {
-          console.error("Error getting geolocation:", error);
+          // console.error("Error getting geolocation:", error);
         }
       );
     }

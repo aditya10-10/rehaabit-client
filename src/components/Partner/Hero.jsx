@@ -76,7 +76,6 @@ const Hero = ({ HeroSectionText }) => {
 
       {/* Decorative Elements */}
       <div className="absolute z-10 right-10 lg:right-[200px] bottom-[50px] lg:bottom-[100px] rotate-[15deg] bg-[#ffe7e2] h-12 w-12 lg:h-16 lg:w-16"></div>
-      <div className="absolute z-10 right-[150px] top-[150px] lg:top-[200px] rotate-[30deg] bg-[#ffe7e2] h-4 w-4 lg:h-6 lg:w-6"></div>
       <div className="absolute z-10 left-[100px] top-[50px] lg:top-[100px] rotate-[30deg] bg-[#8937FF] h-4 w-4 lg:h-6 lg:w-6"></div>
     </div>
   );

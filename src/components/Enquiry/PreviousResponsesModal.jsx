@@ -10,7 +10,7 @@ const PreviousResponsesModal = ({ enquiry, onClose }) => {
   const [newPriority, setNewPriority] = useState(enquiry.priority);
   const responsesEndRef = useRef(null); // Ref to scroll to the end
   const {user} = useSelector((state) => state.profile);
-  console.log("userrrr",user);
+  // console.log("userrrr",user);
   useEffect(() => {
     setNewStatus(enquiry.status);
     setNewPriority(enquiry.priority);

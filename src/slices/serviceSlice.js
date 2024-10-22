@@ -63,7 +63,7 @@ export const getAllServices = createAsyncThunk(
       const response = await apiConnector("GET", GET_ALL_SERVICES_API);
       return response.data.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return thunkAPI.rejectWithValue(error.message.data);
     }
   }
@@ -107,7 +107,7 @@ export const deleteService = createAsyncThunk(
         serviceId,
         subCategoryId,
       });
-      console.log(response.data);
+      // console.log(response.data);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -121,7 +121,7 @@ export const createInclude = createAsyncThunk(
   async ({ formData }, thunkAPI) => {
     try {
       const response = await apiConnector("POST", CREATE_INCLUDE_API, formData);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -166,7 +166,7 @@ export const createExclude = createAsyncThunk(
   async ({ formData }, thunkAPI) => {
     try {
       const response = await apiConnector("POST", CREATE_EXCLUDE_API, formData);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -211,7 +211,7 @@ export const createFAQ = createAsyncThunk(
   async ({ formData }, thunkAPI) => {
     try {
       const response = await apiConnector("POST", CREATE_FAQ_API, formData);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -327,7 +327,7 @@ export const getTotalServicesCount = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_TOTAL_SERVICES_COUNT_API);
-      console.log("total servies api ", response.data);
+      // console.log("total servies api ", response.data);
 
       return response.data;
     } catch (error) {

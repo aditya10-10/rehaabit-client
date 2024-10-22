@@ -135,7 +135,7 @@ const partnerSlice = createSlice({
       .addCase(getTotalPartnerCount.fulfilled, (state, action) => {
         state.isLoading = false;
         state.totalPartnerCount = action.payload;
-        console.log("partner", state.totalPartnerCount);
+        // console.log("partner", state.totalPartnerCount);
 
         // toast.success("Partner information added successfully");
       })

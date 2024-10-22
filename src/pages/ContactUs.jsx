@@ -1,4 +1,6 @@
 import { BiSolidPhoneCall } from "react-icons/bi";
+import Footer from "../components/Home/Footer";
+
 import { IoMailSharp } from "react-icons/io5";
 import {
   FaLinkedin,
@@ -16,7 +18,8 @@ const ContactUs = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center text-center w-full font-poppins">
+    <>
+    <div className="flex flex-col  items-center justify-center text-center w-full font-poppins">
       <h1 className="text-[40px] font-bold text-[#FFDA54] mb-2">Contact Us</h1>
       <span className="text-lg font-[500] text-gray-500 mb-10 px-2">
         Any question or remarks? Just write us a message!
@@ -103,6 +106,8 @@ const ContactUs = () => {
         </div>
       </div>
     </div>
+      <Footer />
+</>
   );
 };
 

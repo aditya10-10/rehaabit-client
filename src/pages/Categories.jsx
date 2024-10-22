@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
 import { ConfirmationModal } from "../components";
+import Footer from "../components/Home/Footer";
+
 import {
   addToCart,
   addCartToLocalStorage,
@@ -403,6 +405,7 @@ const Categories = () => {
           })}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

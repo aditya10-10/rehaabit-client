@@ -14,7 +14,7 @@ const ServiceCard = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { pathname } = useLocation();
-  console.log(pathname);
+  // console.log(pathname);
   const handleReadMore = () => {
     setIsExpanded(!isExpanded);
   };

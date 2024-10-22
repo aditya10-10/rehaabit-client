@@ -30,7 +30,7 @@ export default function ContentEditor() {
       await axios.post("/api/content", payload); // Adjust this API endpoint as needed
       alert("Content saved successfully!");
     } catch (error) {
-      console.error("Error saving content:", error);
+      // console.error("Error saving content:", error);
     }
   };
 

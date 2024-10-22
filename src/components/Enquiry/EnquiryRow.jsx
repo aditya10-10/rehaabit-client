@@ -22,7 +22,7 @@ const EnquiryRow = ({
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { enquiries, isLoading, error} = useSelector((state) => state.enquire);
-  console.log(enquiry);
+  // console.log(enquiry);
   const enquiryLength = enquiries?.length;
   const n=Math.floor(enquiryLength/5);
   let isLastEnquiryofPage=0;
@@ -76,7 +76,7 @@ const EnquiryRow = ({
     try {
       await dispatch(updateEnquiryAndStatusAssignment(payload)).unwrap();
     } catch (error) {
-      console.error(`Failed to update enquiry ${updateType}:`, error);
+      // console.error(`Failed to update enquiry ${updateType}:`, error);
     }
   };
 

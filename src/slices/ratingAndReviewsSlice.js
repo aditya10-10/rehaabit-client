@@ -97,7 +97,7 @@ export const getAllRatingsAndAverage = createAsyncThunk(
         GET_ALL_RATING_AND_AVERAGE_API
       );
 
-      console.log("rating avg", response.data);
+      // console.log("rating avg", response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -196,7 +196,7 @@ const ratingAndreviewsSlice = createSlice({
       .addCase(getAllRatingsAndAverage.fulfilled, (state, action) => {
         state.isLoading = false;
         state.ratingAndReviews = action.payload;
-        console.log("rating avg dgdg", action.payload);
+        // console.log("rating avg dgdg", action.payload);
 
         // toast.success("OTP Send Successfully!");
       })

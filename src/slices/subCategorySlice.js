@@ -123,7 +123,7 @@ export const getSubCategoriesByCategory = createAsyncThunk(
           categoryId,
         }
       );
-      console.log(response.data.data);
+      // console.log(response.data.data);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);

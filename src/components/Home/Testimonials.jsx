@@ -21,6 +21,7 @@ const Testimonials = () => {
       <h2 className="text-6xl text-center text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
         Client Testimonials
       </h2>
+      <h1 className=" text-gray-600 max-sm:text-[22px] text-2xl text-center leading-[67.2px] max-md:max-w-full max-md:text-4xl">See What Client Say</h1>
       <div className="relative mt-10">
         <div
           ref={sliderRef}

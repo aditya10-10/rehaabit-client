@@ -51,7 +51,7 @@ export async function placeOrder(
       }
     );
 
-    console.log("Order Response:", orderResponse);
+    // console.log("Order Response:", orderResponse);
 
     if (!orderResponse.data.success) {
       throw new Error(orderResponse.data.message);
@@ -80,19 +80,19 @@ export async function placeOrder(
       },
     };
 
-    console.log(options);
+    // console.log(options);
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
 
-    console.log(paymentObject);
+    // console.log(paymentObject);
 
     paymentObject.on("payment.failed", function (response) {
       toast.error("Oops, payment failed");
-      console.log("Payment Failed Details:", response.error);
+      // console.log("Payment Failed Details:", response.error);
     });
   } catch (error) {
-    console.error("PAYMENT API ERROR:", error);
+    // console.error("PAYMENT API ERROR:", error);
     toast.error("Could not make Payment");
   } finally {
     toast.dismiss(toastId);
@@ -113,7 +113,7 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
     toast.success("Payment Successful! You are added to the service.");
     navigate("/"); // Navigate to a success page or dashboard
   } catch (error) {
-    console.error("PAYMENT VERIFY ERROR:", error);
+    // console.error("PAYMENT VERIFY ERROR:", error);
     toast.error("Could not verify Payment");
   } finally {
     toast.dismiss(toastId);

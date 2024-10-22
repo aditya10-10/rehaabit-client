@@ -7,7 +7,7 @@ const EnquiriesTable = ({
   handleUpdateDetails,
   handlePreviousResponses,
 }) => {
-  console.log(enquiries);
+  // console.log(enquiries);
   return (
     <div
       className="overflow-x-auto"

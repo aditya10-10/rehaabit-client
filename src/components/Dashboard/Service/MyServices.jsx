@@ -39,7 +39,7 @@ const MyService = () => {
   });
 
   return (
-    <div className="flex flex-col items-center w-full p-10">
+    <div className="flex lg:pl-64 md:pl-64 sm:pl-20 max-sm:pl-16 flex-col items-center w-full p-10">
       <nav className="flex w-full justify-between">
         <div className="flex items-center">
           <h1 className="text-4xl font-semibold">My Services</h1>
@@ -73,7 +73,7 @@ const MyService = () => {
 
         <NavLink
           to="/dashboard/service/create-service"
-          className="bg-[#0C7FDA] text-white rounded-md px-4 py-2 font-semibold"
+          className="bg-[#0C7FDA] text-white sm:w-14 sm:ml-4 sm:h-12 sm:mt-4 max-sm:ml-2 max-sm:h-11 max-sm:mt-4 rounded-md px-4 py-2 font-semibold"
         >
           New
         </NavLink>

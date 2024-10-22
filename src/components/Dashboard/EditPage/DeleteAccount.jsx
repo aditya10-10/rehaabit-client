@@ -17,7 +17,7 @@ function DeleteAccount() {
       try {
         dispatch(deleteProfile(token, navigate));
       } catch (error) {
-        console.log("ERROR MESSAGE - ", error.message);
+        // console.log("ERROR MESSAGE - ", error.message);
       }
     };
 
@@ -29,7 +29,7 @@ function DeleteAccount() {
     <>
       <ConfirmationModal text="Delete Account" onDelete={onDelete} />
 
-      <div className="flex gap-5 p-6 mt-6 bg-rose-200 rounded-lg max-md:flex-wrap max-md:px-5 max-md:mt-10 max-md:max-w-full max-xs:flex-col max-xs:justify-center max-xs:w-full">
+      <div className="flex gap-5 p-6 mt-6 bg-rose-200 max-sm:pl-14 rounded-lg max-md:flex-wrap max-md:px-5 max-md:mt-10 max-md:max-w-full max-xs:flex-col max-xs:justify-center max-xs:w-full">
         <div className="flex flex-col justify-center items-start self-start p-3.5 bg-rose-50 rounded-full max-md:pr-5 max-xs:self-center max-xs:w-full max-xs:rounded-lg">
           <img
             loading="lazy"

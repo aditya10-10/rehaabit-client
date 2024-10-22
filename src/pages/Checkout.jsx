@@ -125,7 +125,7 @@ const Checkout = () => {
   };
 
   const handlePlaceOrder = () => {
-    console.log("Placing order");
+    // console.log("Placing order");
 
     // Extract the service IDs from the cartServices array
     // Extract the service details from the cartServices array
