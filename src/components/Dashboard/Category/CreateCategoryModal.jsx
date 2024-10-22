@@ -12,6 +12,7 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const [image, setImage] = useState(null);
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
+  const [metaKeywords, setMetaKeywords] = useState([]);
   const { isLoading } = useSelector((state) => state.categories);
   const [progress, setProgress] = useState(0);
 
@@ -121,6 +122,24 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
                   placeholder="Enter Meta Description"
                   required
                 />
+              </div>
+
+              {/* Meta Keywords */}
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="metaKeywords"
+                >
+                  Meta Keywords*
+                </label>
+                <input
+                  id="metaKeywords"
+                  name="metaKeywords"
+                  type="text"
+                  value={metaKeywords}
+                  onChange={(e) => setMetaKeywords(e.target.value)}
+                />
+                <button type="button" className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-medium px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">Add</button>
               </div>
               {/* {isLoading && <ProgressBar progress={progress} />} */}
 
