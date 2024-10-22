@@ -11,6 +11,8 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
   const [subCategoryName, setSubCategoryName] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [image, setImage] = useState(null);
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
   const { categories } = useSelector((state) => state.categories);
   const { isLoading } = useSelector((state) => state.subcategories);
   const [progress, setProgress] = useState(0);
@@ -80,6 +82,43 @@ const AddSubCategoryModal = ({ isOpen, setIsOpen }) => {
                 ))}
               </select>
             </div>
+
+            {/* Meta Title */}
+            <div className="mb-4">
+              <label
+                htmlFor="metaTitle"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Meta Title*
+              </label>
+            </div>
+            <input
+              type="text"
+              id="metaTitle"
+              value={metaTitle}
+              onChange={(e) => setMetaTitle(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Meta Title"
+              required
+            />  
+
+            {/* Meta Description */}
+            <div className="mb-4">
+              <label
+                htmlFor="metaDescription"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Meta Description*
+              </label>
+            </div>
+            <textarea
+              id="metaDescription"
+              value={metaDescription}
+              onChange={(e) => setMetaDescription(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Meta Description"
+              required
+            />
 
             {/* Sub Category Name */}
             <div className="mb-4">

@@ -47,16 +47,17 @@ const Categories = () => {
   const { categories } = useSelector((state) => state.categories);
   console.log(categories);
   console.log(subCategoriesByCategory)
-  // <Helmet>
-  //   <title>{categoryName?.name} | Rehaabit</title>
-  //   <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
-  //   <link rel="canonical" href={`/${categoryId}`} />
-  // </Helmet>
   console.log(categories);
   console.log(categoryId);
   const categoryName = categories.find(
     (category) => category.slugName === categoryId
   );
+  console.log(categoryName);
+  <Helmet>
+    <title>{categoryName?.name} | Rehaabit</title>
+    <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
+    <link rel="canonical" href={`/${categoryId}`} />
+  </Helmet>
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
