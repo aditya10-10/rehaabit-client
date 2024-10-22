@@ -13,6 +13,7 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [metaKeywords, setMetaKeywords] = useState([]);
+  const [currentKeyword, setCurrentKeyword] = useState("");
   const { isLoading } = useSelector((state) => state.categories);
   const [progress, setProgress] = useState(0);
 
@@ -34,7 +35,8 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
       toast.error("Image size should be less than 80kb");
       return;
     }
-    dispatch(createCategory({ name: categoryName, icon: image, setProgress, metaTitle, metaDescription }));
+    // console.log({ categoryName,image, metaTitle, metaDescription, metaKeywords });
+    dispatch(createCategory({ name: categoryName, icon: image, setProgress, metaTitle, metaDescription, metaKeywords }));
     setIsOpen(!isOpen)
   };
 
@@ -42,6 +44,17 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
     setCategoryName("");
     setImage(null);
     setIsOpen(false);
+  };
+
+  const handleAddKeyword = () => {
+    if (currentKeyword.trim() !== "") {
+      setMetaKeywords([...metaKeywords, currentKeyword.trim()]);
+      setCurrentKeyword("");
+    }
+  };
+
+  const handleRemoveKeyword = (index) => {
+    setMetaKeywords(metaKeywords.filter((_, i) => i !== index));
   };
 
   return (
@@ -130,16 +143,40 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="metaKeywords"
                 >
-                  Meta Keywords*
+                  Meta Keywords
                 </label>
-                <input
-                  id="metaKeywords"
-                  name="metaKeywords"
-                  type="text"
-                  value={metaKeywords}
-                  onChange={(e) => setMetaKeywords(e.target.value)}
-                />
-                <button type="button" className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-medium px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">Add</button>
+                <div className="flex mb-2">
+                  <input
+                    id="metaKeywords"
+                    name="metaKeywords"
+                    type="text"
+                    value={currentKeyword}
+                    onChange={(e) => setCurrentKeyword(e.target.value)}
+                    className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter Meta Keyword"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddKeyword}
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-medium px-6 py-2 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    Add
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {metaKeywords.map((keyword, index) => (
+                    <div key={index} className="bg-gray-200 px-3 py-1 rounded-full flex items-center">
+                      <span>{keyword}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveKeyword(index)}
+                        className="ml-2 text-red-600 font-bold"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
               {/* {isLoading && <ProgressBar progress={progress} />} */}
 

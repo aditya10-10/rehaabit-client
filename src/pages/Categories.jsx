@@ -41,15 +41,15 @@ const Categories = () => {
   const { cartServices, isLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
-  console.log(categories);
-  console.log(subCategoriesByCategory);
+  // console.log(categories);
+  // console.log(subCategoriesByCategory);
   // <Helmet>
   //   <title>{categoryName?.name} | Rehaabit</title>
   //   <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
   //   <link rel="canonical" href={`/${categoryId}`} />
   // </Helmet>
-  console.log(categories);
-  console.log(categoryId);
+  // console.log(categories);
+  // console.log(categoryId);
   const categoryName = categories.find(
     (category) => category.slugName === categoryId
   );
