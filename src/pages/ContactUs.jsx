@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa6";
 import ContactForm from "../components/Contact/ContactForm";
 import { useEffect } from "react";
-import { Footer } from "../components/Partner";
+// import { Footer } from "../components/Partner";
 
 const ContactUs = () => {
   useEffect(() => {
