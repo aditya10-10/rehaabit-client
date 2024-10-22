@@ -1,5 +1,5 @@
 import { BiSolidPhoneCall } from "react-icons/bi";
-import Footer from "../components/Home/Footer";
+// import Footer from "../components/Home/Footer";
 
 import { IoMailSharp } from "react-icons/io5";
 import {
