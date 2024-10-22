@@ -45,7 +45,6 @@ import { OtpModal } from "./components";
 import PartnerPageAdmin from "./components/Dashboard/Partner/PartnerPageAdmin";
 import { useQuery } from "@tanstack/react-query";
 import Users from "./components/Dashboard/Users/Users";
-import UserDetails from "./components/Dashboard/Users/UserDetailsModal";
 import UsersEnquiries from "./components/Enquiry/UsersEnquiries";
 import ComingSoon from "./pages/ComingSoon";
 import PartnerPolicy from "./pages/Partnerpolicy";
@@ -56,8 +55,8 @@ import Contact from "./components/Contact/ContactUs";
 import PageNotFound from "./pages/PageNotFound";
 import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
-import { BallTriangle } from "react-loader-spinner";
 import ContentEditor from "./components/blogs/ContentEditor";
+import Spinner from "./Spinner";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -167,16 +166,7 @@ export default function App() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center w-full h-screen bg-white">
-        <BallTriangle
-          height={100}
-          width={100}
-          radius={5}
-          color="#4fa94d"
-          ariaLabel="ball-triangle-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
+        <Spinner />
       </div>
     );
   }
