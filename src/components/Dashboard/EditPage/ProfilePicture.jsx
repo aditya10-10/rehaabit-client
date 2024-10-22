@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiUpload } from "react-icons/fi";
 import { updateDisplayPicture } from "../../../services/operations/SettingsAPI";
 import { CgProfile } from "react-icons/cg";
+import { toast, Toaster } from "sonner"; // Import toast and Toaster from sonner
 
 const IconBtn = ({
   text,
@@ -44,6 +45,7 @@ const ProfilePicture = () => {
   const [previewSource, setPreviewSource] = useState(null);
 
   const fileInputRef = useRef(null);
+  const MAX_SIZE = 50 * 1024; // 50 KB in bytes
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -51,8 +53,13 @@ const ProfilePicture = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (file) {
+      if (file.size > MAX_SIZE) {
+        toast.error("File size exceeds 50 KB. Please upload a smaller image.");
+        setImageFile(null);
+        setPreviewSource(null);
+        return;
+      }
       setImageFile(file);
       previewFile(file);
     }
@@ -67,17 +74,21 @@ const ProfilePicture = () => {
   };
 
   const handleFileUpload = () => {
+    if (!imageFile) {
+      toast.error("No file selected for upload.");
+      return;
+    }
     try {
       console.log("Uploading...");
       setLoading(true);
       const formData = new FormData();
       formData.append("displayPicture", imageFile);
-      console.log("formdata", formData);
       dispatch(updateDisplayPicture(token, formData)).then(() => {
         setLoading(false);
+        toast.success("File uploaded successfully!");
       });
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message);
+      toast.error("An error occurred during upload.");
       setLoading(false);
     }
   };
@@ -128,6 +139,8 @@ const ProfilePicture = () => {
           </IconBtn>
         </div>
       </div>
+      {/* Sonner Toaster */}
+      <Toaster richColors />
     </div>
   );
 };
