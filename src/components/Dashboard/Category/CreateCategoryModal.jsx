@@ -10,6 +10,8 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   const [categoryName, setCategoryName] = useState("");
   const [image, setImage] = useState(null);
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
   const { isLoading } = useSelector((state) => state.categories);
   const [progress, setProgress] = useState(0);
 
@@ -31,7 +33,7 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
       toast.error("Image size should be less than 80kb");
       return;
     }
-    dispatch(createCategory({ name: categoryName, icon: image, setProgress }));
+    dispatch(createCategory({ name: categoryName, icon: image, setProgress, metaTitle, metaDescription }));
     setIsOpen(!isOpen)
   };
 
@@ -82,6 +84,44 @@ const CreateCategoryModal = ({ isOpen, setIsOpen }) => {
                 <ImageDropzone onDrop={setImage} image={image} />
               </div>
 
+              {/* Meta Title */}
+              <div className="mb-4">  
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="metaTitle"
+                >
+                  Meta Title*
+                </label>
+                <input
+                  id="metaTitle"
+                  name="metaTitle"
+                  type="text"
+                  value={metaTitle}
+                  onChange={(e) => setMetaTitle(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter Meta Title"
+                  required
+                />
+              </div>
+
+              {/* Meta Description */}
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="metaDescription"
+                >
+                  Meta Description*
+                </label>
+                <textarea
+                  id="metaDescription"
+                  name="metaDescription"
+                  value={metaDescription}
+                  onChange={(e) => setMetaDescription(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter Meta Description"
+                  required
+                />
+              </div>
               {/* {isLoading && <ProgressBar progress={progress} />} */}
 
               <div className="flex justify-center space-x-6 mt-8">

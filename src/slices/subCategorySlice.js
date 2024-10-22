@@ -33,12 +33,12 @@ export const showAllSubCategories = createAsyncThunk(
 
 export const addSubCategory = createAsyncThunk(
   "subcategories/addSubCategory",
-  async ({ categoryId, subCategoryName, icon, setProgress }, thunkAPI) => {
+  async ({ categoryId, subCategoryName, icon, setProgress, metaTitle, metaDescription }, thunkAPI) => {
     try {
       const response = await apiConnector(
         "POST",
         ADD_SUB_CATEGORY_API,
-        { categoryId, subCategoryName, icon },
+        { categoryId, subCategoryName, icon, metaTitle, metaDescription },
         { "Content-Type": "multipart/form-data" },
         null,
         (progressEvent) => {

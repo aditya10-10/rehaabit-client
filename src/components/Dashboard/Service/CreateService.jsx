@@ -44,6 +44,8 @@ const CreateService = () => {
         subCategoryId: service.subCategoryId || "",
         thumbnail: service.thumbnail || null,
         warranty: service.warranty || "",
+        metaTitle: service.metaTitle || "",
+        metaDescription: service.metaDescription || "",
       });
       setPreview(service.thumbnail || null);
     }
@@ -322,6 +324,43 @@ const CreateService = () => {
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded-md shadow-sm"
           placeholder=""
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="metaTitle"
+        >
+          Meta Title*
+        </label>
+        <input
+          id="metaTitle"
+          name="metaTitle"
+          type="text"
+          value={formData.metaTitle}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter Meta Title"
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="metaDescription"
+        >
+          Meta Description*
+        </label>
+        <textarea
+          id="metaDescription"
+          name="metaDescription"
+          value={formData.metaDescription}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border rounded-md shadow-sm"
+          placeholder="Enter Meta Description"
           required
         />
       </div>

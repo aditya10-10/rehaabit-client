@@ -31,12 +31,12 @@ export const showAllCategories = createAsyncThunk(
 
 export const createCategory = createAsyncThunk(
   "categories/createCategory",
-  async ({ name, icon, setProgress }, thunkAPI) => {
+  async ({ name, icon, setProgress, metaTitle, metaDescription }, thunkAPI) => {
     try {
       const response = await apiConnector(
         "POST",
         CREATE_CATEGORY_API,
-        { name, icon },
+        { name, icon, metaTitle, metaDescription },
         { "Content-Type": "multipart/form-data" },
         null,
         (progressEvent) => {
@@ -129,10 +129,10 @@ const categorySlice = createSlice({
         state.error = action;
         // Swal.hideLoading()
 
-        Swal.fire({
-          title: "Error in Loading Categories!",
-          icon: "error",
-        });
+        // Swal.fire({
+        //   title: "Error in Loading Categories!",
+        //   icon: "error",
+        // });
       })
       .addCase(createCategory.pending, (state) => {
         state.isLoading = true;

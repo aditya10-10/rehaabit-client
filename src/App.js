@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 
-import { Thankyou } from "./pages/Thankyou";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserDetails } from "./services/operations/profileAPI";
@@ -46,7 +45,6 @@ import { OtpModal } from "./components";
 import PartnerPageAdmin from "./components/Dashboard/Partner/PartnerPageAdmin";
 import { useQuery } from "@tanstack/react-query";
 import Users from "./components/Dashboard/Users/Users";
-import UserDetails from "./components/Dashboard/Users/UserDetailsModal";
 import UsersEnquiries from "./components/Enquiry/UsersEnquiries";
 import ComingSoon from "./pages/ComingSoon";
 import PartnerPolicy from "./pages/Partnerpolicy";
@@ -57,8 +55,8 @@ import Contact from "./components/Contact/ContactUs";
 import PageNotFound from "./pages/PageNotFound";
 import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
-import { BallTriangle } from "react-loader-spinner";
 import ContentEditor from "./components/blogs/ContentEditor";
+import Spinner from "./Spinner";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -168,16 +166,7 @@ export default function App() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center w-full h-screen bg-white">
-        <BallTriangle
-          height={100}
-          width={100}
-          radius={5}
-          color="#4fa94d"
-          ariaLabel="ball-triangle-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
+        <Spinner />
       </div>
     );
   }
@@ -200,9 +189,7 @@ export default function App() {
       <div className="">
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/thank-you" element={<Thankyou />} />
           <Route path="/:id" element={<Categories />} />
-          {/* <Route path="/service-details/:id" element={<ServiceDetailsPage />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route
@@ -266,7 +253,7 @@ export default function App() {
             element={<PartnerTermsAndConditions />}
           />
           <Route path="/coming-soon" element={<ComingSoon />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="/not" element={<PageNotFound />} />
           <Route path="/content" element={<ContentEditor />} />
         </Routes>
       </div>

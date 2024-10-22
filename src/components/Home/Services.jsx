@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import serviceImage from "../../assets/images/Services.webp";
 import ServiceDetailsModal from "../ServiceDetailsModal";
 import { GoStar, GoStarFill } from "react-icons/go";
 
@@ -74,7 +75,7 @@ const Services = () => {
           <div className="flex flex-col w-6/12 max-md:hidden">
             <img
               loading="lazy"
-              src="https://res.cloudinary.com/dn9wcfwr4/image/upload/v1721041453/Demo/Services_d3vxax.png"
+              src={serviceImage}
               alt="Service illustration"
               className="mt-3 w-full aspect-[0.65]"
             />

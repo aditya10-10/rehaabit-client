@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showAllCategories } from "../slices/categorySlice";
-import { getAllServices } from "../slices/serviceSlice";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
 import { ConfirmationModal } from "../components";
@@ -10,20 +8,17 @@ import Footer from "../components/Home/Footer";
 import {
   addToCart,
   addCartToLocalStorage,
-  getAllCartServices,
   removeFromCart,
   updateCart,
   removeServiceFromLocalStorage,
   updateCartInLocalStorage,
 } from "../slices/cartSlice";
+import { Helmet } from "react-helmet-async";
 import { openModal } from "../slices/modalSlice";
 import { setSingleOrder } from "../slices/orderSlice";
 import EnquireNowModal from "../components/Home/EnquireNowModal";
 import { ServiceCard } from "../components/Dashboard/Service";
 import ServiceDetailsModal from "../components/ServiceDetailsModal";
-
-// REACT QUERY
-import { useQuery } from "@tanstack/react-query";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -46,15 +41,32 @@ const Categories = () => {
   const { cartServices, isLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
-  
-  // console.log(categories);
-  // console.log(categoryId);
+  console.log(categories);
+  console.log(subCategoriesByCategory);
+  // <Helmet>
+  //   <title>{categoryName?.name} | Rehaabit</title>
+  //   <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
+  //   <link rel="canonical" href={`/${categoryId}`} />
+  // </Helmet>
+  console.log(categories);
+  console.log(categoryId);
   const categoryName = categories.find(
     (category) => category.slugName === categoryId
   );
+  console.log(categoryName);
+  <Helmet>
+    <title>{categoryName?.name} | Rehaabit</title>
+    <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
+    <link rel="canonical" href={`/${categoryId}`} />
+  </Helmet>
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
+
+  // Function to update URL without page reload
+  const updateUrl = (newPath, state = {}) => {
+    navigate(newPath, { replace: true, state });
+  };
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -65,7 +77,7 @@ const Categories = () => {
       return () => clearTimeout(scrollToTop);
     }
   }, []);
-  
+
   useEffect(() => {
     dispatch(getSubCategoriesByCategory({ categoryId }));
   }, [dispatch, categoryId]);
@@ -81,8 +93,12 @@ const Categories = () => {
     }
   }, [scrollTo, subCategoryId, serviceId, allServices]);
 
-  const handleCategoryClick = (subCategoryId) => {
+  const handleCategoryClick = (subCategoryId, subCategoryName) => {
     categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
+
+    // Update URL when clicking on a subcategory
+    const newUrl = `/${categoryId}?subCategory=${subCategoryName}`;
+    updateUrl(newUrl);
   };
 
   const handleAddToCart = (service) => {
@@ -157,25 +173,39 @@ const Categories = () => {
   };
 
   // Function to open the Service Details Modal
-  const handleServiceModalOpen = (serviceId) => {
-    setServiceIdToPass(serviceId); // Pass the selected service ID
-    setIsServiceModalOpen(true); // Open the Service Details Modal
+  const handleServiceModalOpen = (serviceId, serviceName) => {
+    setServiceIdToPass(serviceId);
+    setIsServiceModalOpen(true);
+
+    // Update URL when opening service modal
+    const newUrl = `/${categoryId}?service=${serviceName}`;
+    updateUrl(newUrl);
   };
 
   // Function to close the Service Details Modal
   const handleServiceModalClose = () => {
-    setIsServiceModalOpen(false); // Close the Service Details Modal
+    setIsServiceModalOpen(false);
+
+    // Revert URL when closing service modal
+    updateUrl(`/${categoryId}`);
   };
 
   // Function to open the Enquire Now Modal
-  const handleEnquireNowModalOpen = (serviceId) => {
-    setServiceIdToPass(serviceId); // Pass the selected service ID
-    setIsEnquireNowModalOpen(true); // Open the Enquire Now Modal
+  const handleEnquireNowModalOpen = (service) => {
+    setServiceIdToPass(service._id);
+    setIsEnquireNowModalOpen(true);
+
+    // Update URL when opening Enquire Now modal
+    const newUrl = `/${categoryId}?service=${service.serviceName}`;
+    updateUrl(newUrl);
   };
 
   // Function to close the Enquire Now Modal
   const handleEnquireNowModalClose = () => {
-    setIsEnquireNowModalOpen(false); // Close the Enquire Now Modal
+    setIsEnquireNowModalOpen(false);
+
+    // Revert URL when closing Enquire Now modal
+    updateUrl(`/${categoryId}`);
   };
 
   return (
@@ -199,15 +229,22 @@ const Categories = () => {
       />
 
       <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
+        <Helmet>
+          <title>{categoryName?.name} | Rehaabit</title>
+          <meta
+            name="description"
+            content={`Explore ${categoryName?.name} services at Rehaabit`}
+          />
+        </Helmet>
         <div className="w-[40%] max-md:w-full">
           <h1 className="text-5xl mb-10 max-sm:text-4xl">
             {categoryName?.name}
           </h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
-            <h2 className="text-4xl text-center max-lg:text-2xl mb-10">
+            <p className="text-4xl text-center max-lg:text-2xl mb-10">
               Select Sub-Category
-            </h2>
+            </p>
 
             <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-20 max-2xl:gap-x-14">
               {subCategoriesByCategory.map((category) => {
@@ -217,12 +254,12 @@ const Categories = () => {
                   <div
                     key={_id}
                     className="flex flex-col items-center justify-center text-center hover:shadow-custom-shadow p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
-                    onClick={() => handleCategoryClick(_id)}
+                    onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
                     <img
                       src={icon}
-                      alt="Icon"
+                      alt={subCategoryName}
                       className="h-20 w-20 rounded-full"
                     />
                     <span>{subCategoryName}</span>

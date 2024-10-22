@@ -149,3 +149,8 @@ export const enquireEndpoints = {
   ADMIN_RESPONSE_API: BASE_URL + "/adminResponseEnquiry",
   DELETE_ENQUIRY_API: BASE_URL + "/deleteEnquiry",
 };
+
+// LOCATION ENDPOINTS
+export const locationEndpoints = {
+  GET_LOCATION_SUGGESTIONS_API: BASE_URL + "/getLocationSuggestions",
+};

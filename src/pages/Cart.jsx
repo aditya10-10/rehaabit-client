@@ -89,7 +89,10 @@ const Cart = () => {
         </div>
       )}
 
-      <div className="px-20 max-md:px-10 max-sm:px-4">
+      <div
+        className="px-20 max-md:px-10 max-sm:px-4"
+        style={{ fontFamily: "Roboto, sans-serif" }}
+      >
         <div className="gap-10 flex max-lg:flex-col">
           <div className="flex flex-col gap-5 w-full">
             <div className="flex w-full items-center justify-between p-2 shadow-custom-shadow rounded-lg">
