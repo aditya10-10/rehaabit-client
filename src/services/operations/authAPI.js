@@ -30,7 +30,7 @@ export function sendOtp(contactNumber, isSignup) {
 
       toast.success("OTP Sent Successfully");
     } catch (error) {
-      console.log("SENDOTP API ERROR............", error);
+      // console.log("SENDOTP API ERROR............", error);
       toast.error("Could Not Send OTP");
       dispatch(setError(error.response.data));
       throw error;
@@ -53,7 +53,7 @@ export function signUp(firstName, lastName, contactNumber, otp, navigate) {
         otp,
       });
 
-      console.log("SIGNUP API RESPONSE............", response);
+      // console.log("SIGNUP API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -61,7 +61,7 @@ export function signUp(firstName, lastName, contactNumber, otp, navigate) {
       toast.success("Signup Successful");
       navigate("/");
     } catch (error) {
-      console.log("SIGNUP API ERROR............", error);
+      // console.log("SIGNUP API ERROR............", error);
       toast.error("Could Not Verify OTP");
       dispatch(setError(error.response.data));
       navigate("/");
@@ -82,7 +82,7 @@ export function login(contactNumber, otp, navigate) {
         otp,
       });
 
-      console.log("LOGIN API RESPONSE............", response);
+      // console.log("LOGIN API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -104,7 +104,7 @@ export function login(contactNumber, otp, navigate) {
       // navigate("/");
       if (response.data.token) dispatch(getUserDetails(response.data.token));
     } catch (error) {
-      console.log("LOGIN API ERROR............", error);
+      // console.log("LOGIN API ERROR............", error);
       toast.error("Could Not Verify OTP");
       dispatch(setError(error.response.data));
       throw error;

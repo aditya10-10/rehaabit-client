@@ -22,7 +22,7 @@ const UpdateContactModal = ({ contact, onClose }) => {
     : [];
 
   // Log for debugging
-  console.log("Admin Users:", adminUsers);
+  // console.log("Admin Users:", adminUsers);
 
   const handleUpdate = async () => {
     try {
@@ -37,19 +37,19 @@ const UpdateContactModal = ({ contact, onClose }) => {
         },
       };
 
-      console.log("Payload being sent to backend:", payload);
+      // console.log("Payload being sent to backend:", payload);
 
       const response = await dispatch(
         updateContactStatusAndAssignment(payload)
       ).unwrap();
 
-      console.log("Backend response:", response);
+      // console.log("Backend response:", response);
 
       onClose(); // Close the modal after successful update
     } catch (error) {
       // Log more details for better debugging
-      console.error("Error details:", error);
-      console.error("Failed to update contact:", error.message || error);
+      // console.error("Error details:", error);
+      // console.error("Failed to update contact:", error.message || error);
     }
   };
 

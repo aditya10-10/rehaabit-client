@@ -42,7 +42,7 @@ const SubCategory = () => {
       : subCategoriesByCategory;
 
   return (
-    <div className="p-10 w-full">
+    <div className="p-10 w-full md:pl-20 sm:pl-16 max-sm:pl-16 lg:pl-64">
       <h1 className="text-4xl font-semibold">Sub Category</h1>
 
       <div className="flex justify-between w-full items-center mt-4">

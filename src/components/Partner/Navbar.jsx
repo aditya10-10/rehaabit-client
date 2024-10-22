@@ -5,20 +5,20 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="flex justify-between items-center px-16 w-full max-lg:px-8 max-md:px-5 gap-2 bg-transparent absolute top-0 left-0 right-0 z-50">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-4 bg-white bg-opacity-90 shadow-md max-lg:px-6 max-md:px-4 max-sm:px-2 max-sm:py-3">
       {/* Logo Section */}
       <img
-        loading="engar"
+        loading="lazy"
         src={Logo}
         alt="Company logo"
-        className="h-20 max-lg:h-16 max-md:h-14 max-sm:h-12 cursor-pointer"
+        className="h-16 max-lg:h-14 max-md:h-12 max-sm:h-10 cursor-pointer"
         onClick={() => navigate("/")} // Navigate to homepage on logo click
       />
 
       {/* Navigation Links Section */}
       <div className="ml-auto">
         <button
-          className="bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition-colors duration-300 ease-in-out text-sm max-sm:text-xs max-sm:px-2 max-sm:py-1"
+          className="bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition-colors duration-300 ease-in-out text-sm max-sm:text-xs max-sm:px-4 max-sm:py-2"
           onClick={() => navigate("/partner-form/personal-information")}
         >
           Register Now

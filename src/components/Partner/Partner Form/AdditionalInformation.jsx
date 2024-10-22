@@ -42,7 +42,7 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
     }
   };
 
-  console.log(partnerFormData.personalInformation.photo);
+  // console.log(partnerFormData.personalInformation.photo);
 
   const handleSubmit = () => {
     const isValid = onSave(formData);

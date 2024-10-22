@@ -57,7 +57,7 @@ function ProfileInformation() {
       navigate("/dashboard/my-profile"); // navigate after profile update
       dispatch(clearEmailVerificationStatus());
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message);
+      // console.log("ERROR MESSAGE - ", error.message);
     }
   };
 
@@ -67,18 +67,18 @@ function ProfileInformation() {
     if (!otpSent) {
       dispatch(sendEmailOTP({ email }))
         .then(() => setOtpSent(true))
-        .catch((error) => console.log("Error sending OTP", error));
+        // .catch((error) => console.log("Error sending OTP", error));
     } else {
       dispatch(verifyEmailOTP({ email, otp }))
-        .then(() => console.log("OTP Verified"))
-        .catch((error) => console.log("OTP Verification failed", error));
+        // .then(() => console.log("OTP Verified"))
+        // .catch((error) => console.log("OTP Verification failed", error));
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit(submitProfileForm)}
-      className="flex flex-col justify-center"
+      className="flex md:pl-24 flex-col max-sm:pl-7 justify-center"
     >
       <div className="flex flex-col justify-center p-6 mt-6 bg-amber-50 rounded-lg border border-amber-50 border-solid shadow-sm max-md:px-5 max-md:max-w-full max-sm:text-sm">
         <h2 className="text-lg font-semibold leading-6 text-violet-900 max-md:max-w-full">

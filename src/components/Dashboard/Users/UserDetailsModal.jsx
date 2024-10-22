@@ -15,7 +15,7 @@ const UserDetailsModal = ({
 
   const { userDetails } = useSelector((state) => state.users);
 
-  console.log(userDetails);
+  // console.log(userDetails);
 
   const [firstName, setFirstName] = useState(
     userDetails?.additionalDetails?.firstName || ""

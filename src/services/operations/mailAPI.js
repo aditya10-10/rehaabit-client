@@ -11,7 +11,7 @@ export function sendMail(email, navigate) {
       const response = await apiConnector("POST", SENDMAIL_API, {
         email,
       });
-      console.log("SENDOTP API RESPONSE............", response);
+      // console.log("SENDOTP API RESPONSE............", response);
 
       console.log(response.data.success);
 
@@ -22,7 +22,7 @@ export function sendMail(email, navigate) {
 
       navigate("/thank-you");
     } catch (error) {
-      console.log("SENDOTP API ERROR............", error);
+      // console.log("SENDOTP API ERROR............", error);
       toast.error("Could Not Send OTP");
     }
     toast.dismiss(toastId);

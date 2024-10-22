@@ -197,7 +197,7 @@ const contactSlice = createSlice({
         }
         state.contact = updatedContact;
         
-        console.log("Updated contact:", updatedContact);
+        // console.log("Updated contact:", updatedContact);
       })
       .addCase(adminResponse.rejected, (state, action) => {
         state.isLoading = false;
@@ -219,7 +219,7 @@ const contactSlice = createSlice({
         }
         state.contact = updatedContact;
         setSelectedContact(updatedContact);
-        console.log("Updated contact:", updatedContact);
+        // console.log("Updated contact:", updatedContact);
       })
       .addCase(updateContactStatusAndAssignment.rejected, (state, action) => {
         state.isLoading = false;

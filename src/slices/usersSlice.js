@@ -172,7 +172,7 @@ const usersSlice = createSlice({
       })
       .addCase(updateUserDetails.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
+        // console.log(action.payload);
         state.users = state.users.map((user) =>
           user._id === action.payload._id ? action.payload : user
         );
@@ -202,7 +202,7 @@ const usersSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
+        // console.log(action.payload);
         state.users = state.users.filter((user) => user._id !== action.payload);
 
         state.userDetails = action.payload;
@@ -230,7 +230,7 @@ const usersSlice = createSlice({
       })
       .addCase(createNewUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
+        // console.log(action.payload);
         state.users.push(action.payload);
 
         Swal.fire({
@@ -254,7 +254,7 @@ const usersSlice = createSlice({
       .addCase(getUserCount.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userCount = action.payload;
-        console.log("get user count ", state.userCount);
+        // console.log("get user count ", state.userCount);
       })
       .addCase(getUserCount.rejected, (state, action) => {
         state.isLoading = false;

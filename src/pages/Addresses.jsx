@@ -10,9 +10,9 @@ const Addresses = () => {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isNewAddress, setIsNewAddress] = useState(false);
-  console.log(useSelector((state) => state.address));
-  console.log(useSelector((state) => state.address.filteredDefaultAddress));
-  console.log(selectedAddress);
+  // console.log(useSelector((state) => state.address));
+  // console.log(useSelector((state) => state.address.filteredDefaultAddress));
+  // console.log(selectedAddress);
   const { filteredDefaultAddress } = useSelector((state) => state.address);
 
   const handleAddAddressClick = () => {
@@ -29,10 +29,10 @@ const Addresses = () => {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col items-center w-full p-10 max-sm:p-4">
+    <div className="flex  lg:pl-72  md:pl-64 max-sm:ml-3 max-sm:pl-12  sm:pl-16 flex-col items-center w-full p-10 max-sm:p-4">
       <nav className="flex w-full justify-between">
         <div className="flex items-center">
-          <h1 className="text-4xl max-sm:text-2xl font-semibold">My Addresses</h1>
+          <h1 className="text-4xl max-sm:text-2xl  max-sm:ml-3 font-semibold">My Addresses</h1>
         </div>
       </nav>
 

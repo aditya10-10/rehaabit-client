@@ -135,7 +135,7 @@ export const cancelOrder = createAsyncThunk(
       const response = await apiConnector("POST", CANCEL_ORDER_API, {
         orderId,
       });
-      console.log(response.data.data);
+      // console.log(response.data.data);
       if(response.data.data.refundAmount>0){
         toast.success(`Order Cancelled Successfully! ₹${response.data.data.refundAmount} will be refunded to your account soon`);
       }

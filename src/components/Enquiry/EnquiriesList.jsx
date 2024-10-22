@@ -3,7 +3,7 @@ import { formattedDate } from "../../utils/dateFormatter";
 import { ServiceCard } from "../Dashboard/Service";
 
 const EnquiriesList = ({ enquiries }) => {
-  console.log(enquiries);
+  // console.log(enquiries);
 
   return (
     <table className="w-full">

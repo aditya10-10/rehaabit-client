@@ -5,6 +5,8 @@ import { getAllServices } from "../slices/serviceSlice";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
 import { ConfirmationModal } from "../components";
+import Footer from "../components/Home/Footer";
+
 import {
   addToCart,
   addCartToLocalStorage,
@@ -45,8 +47,8 @@ const Categories = () => {
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
   
-  console.log(categories);
-  console.log(categoryId);
+  // console.log(categories);
+  // console.log(categoryId);
   const categoryName = categories.find(
     (category) => category.slugName === categoryId
   );
@@ -366,6 +368,7 @@ const Categories = () => {
           })}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

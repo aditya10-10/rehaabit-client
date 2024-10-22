@@ -12,7 +12,7 @@ const PartnerPageAdmin = () => {
   const { partners } = useSelector((state) => state.partner);
   const { user } = useSelector((state) => state.profile);
 
-  console.log(partners);
+  // console.log(partners);
 
   useEffect(() => {
     dispatch(getAllPartners());
