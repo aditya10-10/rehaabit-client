@@ -33,7 +33,7 @@ const ServiceCard = ({
         <img src={thumbnail} alt="Thumbnail" className="w-20 h-20 rounded-xl" />
         <div className="flex flex-col">
           <h3>
-            <span className="text-lg font-semibold font-medium text-black">
+            <span className="text-lg font-semibold text-black">
               {serviceName}
             </span>
           </h3>
