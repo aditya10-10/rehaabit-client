@@ -32,7 +32,7 @@ const ServiceCard = ({
       />
 
       <div className="flex flex-col">
-        <span className="text-2xl mb-2 text-purple-600">{serviceName}</span>
+        <h3 className="text-2xl mb-2 text-purple-600">{serviceName}</h3>
 
         {priceStatus === "priced" && (
           <div className="flex items-center mb-2 gap-2 text-xl">

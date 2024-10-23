@@ -9,10 +9,7 @@ import Security from "../../assets/homepage/Sercirty.webp";
 
 const WhatWeOffer = () => {
   return (
-    <div
-      className="bg-slate-100 mt-10"
-      style={{ fontFamily: "Roboto, sans-serif" }}
-    >
+    <div className="bg-slate-100 mt-10">
       <div className="container mx-auto px-4 py-8">
         {/* Our Home Services Section */}
         <h2 className="text-3xl font-bold text-center mb-6">What we offer</h2>

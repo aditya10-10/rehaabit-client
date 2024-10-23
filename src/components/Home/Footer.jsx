@@ -18,7 +18,11 @@ const FooterColumn = ({ title, items, links }) => {
             key={index}
             className="mt-4 text-black underline max-md:flex max-md:justify-center max-md:items-center"
           >
-            {!item.includes("/") ? item : <img src={item} alt="icon" className="" />}
+            {!item.includes("/") ? (
+              item
+            ) : (
+              <img src={item} alt="icon" className="" />
+            )}
           </Link>
         ))}
       </nav>
@@ -47,8 +51,8 @@ const Footer = () => {
     },
     {
       title: "For Customers",
-      items: ["Blogs", "Contact Us"],
-      links: ["/coming-soon", "/contact-us"],
+      items: ["Blogs", "Contact Us", "Help Center"],
+      links: ["/coming-soon", "/contact-us", "/help"],
     },
     {
       title: "For Partners",
@@ -107,7 +111,7 @@ const Footer = () => {
                 <div className="flex gap-2 items-center justify-start max-md:justify-center">
                   <img
                     src={LogoDark}
-                    alt="Rehaabit"
+                    alt="Rehaabit Logo for light background"
                     className="aspect-auto object-cover max-md:w-2/3"
                   />
                 </div>

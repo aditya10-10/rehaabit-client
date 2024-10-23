@@ -35,9 +35,9 @@ const ReviewCards = ({ quote, name, imageSrc, rating }) => {
           )}
           <div className="flex flex-col justify-center">
             {/* User Name */}
-            <h3 className="text-lg font-semibold leading-7 text-black">
+            <p className="text-lg font-semibold leading-7 text-black">
               {name || "Anonymous"}
-            </h3>
+            </p>
 
             {/* Star Ratings */}
             <div className="flex items-center gap-1 mt-1">
@@ -51,7 +51,7 @@ const ReviewCards = ({ quote, name, imageSrc, rating }) => {
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/3e4be5f92c9bfdd4409bbb5059fd1e560d251670f9cb2a103320b52747845964?apiKey=14bc5a83475145d8890ac8c4aa074f6f&"
-            alt=""
+            alt="comma in reviews"
             className="w-10 h-10 md:w-12 md:h-12"
           />
         </div>

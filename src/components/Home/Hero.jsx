@@ -76,19 +76,15 @@ const Hero = () => {
         </div>
         <div className="flex flex-col ml-5 w-[32%] max-md:ml-0 max-sm:w-full">
           <div className="flex flex-col self-stretch px-5 my-auto font-semibold max-md:mt-10 max-sm:mt-0">
-            <h1 className="text-5xl tracking-tighter text-emerald-500 leading-[70px] text-ellipsis max-md:text-5xl max-md:leading-10 max-sm:text-3xl font-serif">
+            <h1 className="text-4xl tracking-tighter text-emerald-500 leading-[70px] text-ellipsis max-md:text-5xl max-md:leading-10 max-sm:text-3xl font-roboto">
               <span className="font-bold text-emerald-500">
-                Your Trusted Partner
+                Your Trusted Partner{" "}
               </span>
-              <br />
               <span className="font-light text-black">
                 for All Home Services
               </span>
             </h1>
-            <p
-              className="text-gray-600 text-sm mt-4 leading-relaxed max-md:text-base max-sm:text-sm hidden md:block"
-              style={{ fontFamily: "Calibri, sans-serif" }}
-            >
+            <p className="text-gray-600 text-sm mt-4 leading-relaxed max-md:text-base max-sm:text-sm hidden md:block">
               <span className="text-purple-700 font-medium">
                 From quick repairs to complete renovations,
               </span>{" "}

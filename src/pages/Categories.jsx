@@ -41,24 +41,9 @@ const Categories = () => {
   const { cartServices, isLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
-  // console.log(categories);
-  // console.log(subCategoriesByCategory);
-  // <Helmet>
-  //   <title>{categoryName?.name} | Rehaabit</title>
-  //   <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
-  //   <link rel="canonical" href={`/${categoryId}`} />
-  // </Helmet>
-  // console.log(categories);
-  // console.log(categoryId);
   const categoryName = categories.find(
     (category) => category.slugName === categoryId
   );
-  console.log(categoryName);
-  <Helmet>
-    <title>{categoryName?.name} | Rehaabit</title>
-    <meta name="description" content={`Explore ${categoryName?.name} services at Rehaabit`} />
-    <link rel="canonical" href={`/${categoryId}`} />
-  </Helmet>
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
@@ -242,7 +227,7 @@ const Categories = () => {
           </h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
-            <p className="text-4xl text-center max-lg:text-2xl mb-10">
+            <p className="text-sm text-center max-lg:text-sm">
               Select Sub-Category
             </p>
 
@@ -262,7 +247,9 @@ const Categories = () => {
                       alt={subCategoryName}
                       className="h-20 w-20 rounded-full"
                     />
-                    <span>{subCategoryName}</span>
+                    <h2>
+                      <span>{subCategoryName}</span>
+                    </h2>
                   </div>
                 );
               })}
@@ -285,7 +272,7 @@ const Categories = () => {
                 ref={(e) => (categoryRefs.current[_id] = e)}
                 className="mb-8"
               >
-                <h3 className="text-2xl mb-4 ml-6">{subCategoryName}</h3>
+                <h2 className="text-2xl mb-4 ml-6">{subCategoryName}</h2>
 
                 <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
                   {services.map((service) => {
