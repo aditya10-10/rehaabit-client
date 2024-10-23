@@ -222,32 +222,32 @@ const Categories = () => {
           />
         </Helmet>
         <div className="w-[40%] max-md:w-full">
-          <h1 className="text-5xl mb-10 max-sm:text-4xl">
+          <h1 className="text-3xl mb-2 font-bold underline max-sm:text-4xl">
             {categoryName?.name}
           </h1>
 
           <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
-            <p className="text-sm text-center max-lg:text-sm">
-              Select Sub-Category
+            <p className="text-sm text-center font-semibold max-lg:text-sm">
+              Select a service
             </p>
 
-            <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-20 max-2xl:gap-x-14">
+            <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10">
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
                 return (
                   <div
                     key={_id}
-                    className="flex flex-col items-center justify-center text-center hover:shadow-custom-shadow p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
+                    className="flex flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
                     onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
                     <img
                       src={icon}
                       alt={subCategoryName}
-                      className="h-20 w-20 rounded-full"
+                      className="h-20 w-20 rounded-full mb-2"
                     />
-                    <h2>
+                    <h2 className="text-sm font-medium">
                       <span>{subCategoryName}</span>
                     </h2>
                   </div>
@@ -272,7 +272,9 @@ const Categories = () => {
                 ref={(e) => (categoryRefs.current[_id] = e)}
                 className="mb-8"
               >
-                <h2 className="text-2xl mb-4 ml-6">{subCategoryName}</h2>
+                <h2 className="text-2xl font-bold mb-4 ml-6">
+                  {subCategoryName}
+                </h2>
 
                 <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
                   {services.map((service) => {

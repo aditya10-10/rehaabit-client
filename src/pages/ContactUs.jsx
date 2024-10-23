@@ -10,7 +10,6 @@ import {
 } from "react-icons/fa6";
 import ContactForm from "../components/Contact/ContactForm";
 import { useEffect } from "react";
-import Footer from "../components/Home/Footer";
 
 const ContactUs = () => {
   useEffect(() => {
@@ -30,9 +29,9 @@ const ContactUs = () => {
         <div className="flex max-md:flex-col shadow-custom-shadow max-xs:shadow-none max-xs:p-0 rounded-xl p-2 w-2/3 max-2xl:w-3/4 max-xl:w-11/12 max-md:h-screen relative">
           <div className="flex flex-col bg-purple-800 p-6 rounded-lg gap-10 w-2/5 max-md:w-full relative max-xs:items-center max-sm:justify-center">
             <div className="flex flex-col max-xs:items-center max-sm:justify-center max-xs:w-full mb-10 max-xs:mb-4">
-              <h1 className="text-3xl font-semibold text-white">
+              <h2 className="text-3xl font-semibold text-white">
                 Contact Information
-              </h1>
+              </h2>
               <span className="text-lg text-[#C9C9C9]">
                 We are here to help you!
               </span>
@@ -108,7 +107,6 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
