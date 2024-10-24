@@ -118,6 +118,9 @@ export const contactEndpoints = {
 // CAREERS ENDPOINTS
 export const careersEndpoints = {
   ADD_CANDIDATE_INFORMATION_API: BASE_URL + "/addCandidateInformation",
+  GET_ALL_CAREERS_API: BASE_URL + "/all",
+  GET_CAREER_BY_ID_API: BASE_URL + "/:id",
+  DELETE_CAREER_API: BASE_URL + "/:id",
 };
 
 // USERS ENDPOINTS
@@ -146,7 +149,8 @@ export const enquireEndpoints = {
   ENQUIRE_API: BASE_URL + "/enquire",
   GET_ALL_ENQUIRIES_API: BASE_URL + "/getAllEnquiries",
   GET_ENQUIRY_BY_ID_API: BASE_URL + "/getEnquiryById",
-  UPDATE_ENQUIRY_AND_STATUS_ASSIGNMENT_API: BASE_URL + "/updateEnquiryAndStatusAssignment",
+  UPDATE_ENQUIRY_AND_STATUS_ASSIGNMENT_API:
+    BASE_URL + "/updateEnquiryAndStatusAssignment",
   ADMIN_RESPONSE_API: BASE_URL + "/adminResponseEnquiry",
   DELETE_ENQUIRY_API: BASE_URL + "/deleteEnquiry",
 };

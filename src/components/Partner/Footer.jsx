@@ -88,7 +88,7 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
       <JoinRehaabitFamily JoinRehaabitFamilyText={JoinRehaabitFamilyText} />
 
       <footer className="w-full flex flex-col items-center py-10">
-      <section className="flex flex-col  max-sm:mt-[350px] md:flex-row lg:mt-[200px] sm:mt-[500px] xs:mt-[400px] justify-center md:justify-between items-center md:items-start px-7 py-14 w-full max-w-[1200px] space-y-10 md:space-y-0">
+        <section className="flex flex-col  max-sm:mt-[350px] md:flex-row lg:mt-[200px] sm:mt-[500px] xs:mt-[400px] justify-center md:justify-between items-center md:items-start px-7 py-14 w-full max-w-[1200px] space-y-10 md:space-y-0">
           {/* Logo and Social Links */}
           <div className="flex flex-col items-center md:items-start md:w-4/12 space-y-6">
             <img
@@ -120,8 +120,9 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
 
         {/* Copyright Section */}
         <div className="text-center text-gray-400 mt-6">
-          © {new Date().getFullYear()} <span className="text-emerald-800">Rehaabit</span> is a
-          registered trademark. All Rights Reserved.
+          © {new Date().getFullYear()}{" "}
+          <span className="text-emerald-800">Rehaabit</span> is a registered
+          trademark. All Rights Reserved.
         </div>
       </footer>
     </div>
