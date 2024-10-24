@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { serviceEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
 import Swal from "sweetalert2";
+import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const {
   CREATE_SERVICE_API,
@@ -22,12 +25,14 @@ const {
   CREATE_HOW_DOES_IT_WORKS_API,
   DELETE_HOW_DOES_IT_WORKS_API,
   UPDATE_HOW_DOES_IT_WORKS_API,
+  GET_SERVICE_RATING_AND_REVIEWS_API,
   GET_TOTAL_SERVICES_COUNT_API,
 } = serviceEndpoints;
 
 const initialState = {
   service: [],
   serviceDetails: [],
+  serviceRatingAndReviews: [],
   allServices: [],
   faqs: [],
   serviceId: null,
@@ -79,6 +84,21 @@ export const getFullServiceDetails = createAsyncThunk(
         { serviceId }
       );
       return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const getServiceRatingAndReviews = createAsyncThunk(
+  "service/getServiceRatingAndReviews",
+  async ({ serviceId, page }, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/getServiceRatingAndReviews?serviceId=${serviceId}&page=${page}`
+      );
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
     }
@@ -354,6 +374,11 @@ const serviceSlice = createSlice({
     setServiceEditing: (state) => {
       state.isMyServiceEditing = true;
     },
+    clearService: (state) => {
+      state.service = [];
+      state.serviceId = null;
+      state.currentStep = 0;
+    },
   },
 
   extraReducers: (builder) => {
@@ -434,6 +459,32 @@ const serviceSlice = createSlice({
         //   title: "Error in Creating Service!",
         //   icon: "error",
         // });
+      })
+
+      // GET SERVICE RATING AND REVIEWS
+      .addCase(getServiceRatingAndReviews.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getServiceRatingAndReviews.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (Array.isArray(action.payload)) {
+          state.serviceRatingAndReviews = [
+            ...state.serviceRatingAndReviews,
+            ...action.payload,
+          ];
+        } else if (action.payload) {
+          state.serviceRatingAndReviews = [
+            ...state.serviceRatingAndReviews,
+            action.payload,
+          ];
+        } else {
+          console.error('Received unexpected data format:', action.payload);
+        }
+        console.log(state.serviceRatingAndReviews);
+      })
+      .addCase(getServiceRatingAndReviews.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
       })
 
       // Edit Service
@@ -811,7 +862,7 @@ const serviceSlice = createSlice({
   },
 });
 
-export const { nextStep, previousStep, clearServiceForm, setServiceEditing } =
+export const { nextStep, previousStep, clearServiceForm, setServiceEditing, clearService } =
   serviceSlice.actions;
 
 export default serviceSlice.reducer;

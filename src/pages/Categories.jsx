@@ -24,7 +24,9 @@ const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const params = useParams();
   const categoryId = params.id;
   const { scrollTo, subCategoryId, serviceId } = location.state || {};

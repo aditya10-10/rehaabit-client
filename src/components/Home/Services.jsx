@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import serviceImage from "../../assets/images/Services.webp";
 import ServiceDetailsModal from "../ServiceDetailsModal";
 import { GoStar, GoStarFill } from "react-icons/go";
@@ -61,6 +61,18 @@ const Services = () => {
   const { allServices } = useSelector((state) => state.service);
   const [serviceId, setServiceId] = useState(null);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const location = useLocation();
+  const servicesRef = useRef(null);
+
+  useEffect(() => {
+    if (location.state?.scrollTo === "services") {
+      servicesRef.current?.scrollIntoView({ behavior: "smooth" });
+      if (location.state.serviceId) {
+        setServiceId(location.state.serviceId);
+        setIsServiceModalOpen(true);
+      }
+    }
+  }, [location]);
 
   const handleServiceModal = () => {
     setIsServiceModalOpen(!isServiceModalOpen);
@@ -78,7 +90,7 @@ const Services = () => {
         serviceId={serviceId}
       />
 
-      <section className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2">
+      <section ref={servicesRef} className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <div className="flex flex-col w-6/12 max-md:hidden">
             <img

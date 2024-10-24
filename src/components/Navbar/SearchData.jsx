@@ -24,7 +24,7 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
     description: service.serviceDescription,
   }));
 
-  const Data = [...categories, ...subcategoryData, ...allServicesData];
+  const Data = [...categories, ...allServicesData];
 
   // console.log(Data);
 
@@ -38,18 +38,17 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
   const results = fuse.search(searchQuery);
   // console.log(results); 
   const handleSearchClick = (data) => {
-    // console.log(data);
     const { _id, name, categoryId, subCategoryId, slugName } = data.item;
 
     if (data.item.subCategoryName) {
       // If subcategory
-      navigate(`/${categoryId}`, {
-        state: { scrollTo: "subcategory", subCategoryId: _id },
+      navigate({
+        // state: { scrollTo: "subcategory", subCategoryId: _id },
       });
     } else if (data.item.serviceName) {
       // If service
-      navigate(`/${categoryId}`, {
-        state: { scrollTo: "service", serviceId: _id },
+      navigate("/", {
+        state: { scrollTo: "services", serviceId: _id },
       });
     } else {
       // If category
