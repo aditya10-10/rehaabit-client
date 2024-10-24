@@ -18,10 +18,12 @@ const Testimonials = () => {
 
   return (
     <section className="flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
-      <h2 className="text-6xl text-center text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
+      <h2 className="text-6xl font-bold text-center text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
         Client Testimonials
       </h2>
-      <h1 className=" text-gray-600 max-sm:text-[22px] text-2xl text-center leading-[67.2px] max-md:max-w-full max-md:text-4xl">See What Client Say</h1>
+      <p className=" text-violet-300 max-sm:text-[22px] text-2xl text-center leading-[67.2px] max-md:max-w-full max-md:text-4xl">
+        What Our Clients Say
+      </p>
       <div className="relative mt-10">
         <div
           ref={sliderRef}

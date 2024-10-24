@@ -2,10 +2,10 @@ import React from "react";
 
 const StepItem = ({ title, description }) => (
   <div className="flex flex-col grow text-2xl font-semibold leading-8 text-violet-900 max-md:mt-10">
-    <div className="text-ellipsis">{title}</div>
-    <div className="mt-1 text-sm leading-6 text-emerald-900 text-ellipsis">
+    <h3 className="text-ellipsis">{title}</h3>
+    <p className="mt-1 text-sm leading-6 text-emerald-900 text-ellipsis">
       {description}
-    </div>
+    </p>
   </div>
 );
 
@@ -38,7 +38,7 @@ const HowDoesItWorks = () => {
                 className="self-center max-w-full aspect-[1.25] w-[153px]"
               />
               <h2 className="mt-1.5 text-4xl font-black leading-10 text-violet-900 text-ellipsis max-md:max-w-full">
-                How Rehaabit Works
+                How Rehaabit Works?
               </h2>
               <p className="mt-1.5 text-lg leading-7 text-emerald-900 max-md:max-w-full">
                 Simple steps to get started.

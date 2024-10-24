@@ -7,12 +7,12 @@ module.exports = {
         "custom-shadow": "0px 3px 36px 0px rgba(0, 0, 0, 0.08)",
       },
       fontFamily: {
-        amaranth: ["Amaranth", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
         lato: ["Lato", "sans-serif"],
         lexend: ["Lexend", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         inter: ["Inter", "sans-serif"],
-        "arial": ["Arial"],
+        arial: ["Arial"],
         "kolker-brush": ['"Kolker Brush"', "cursive"],
         "kolker-brush": ['"Kolker Brush"', "cursive"], // Add this line
       },

@@ -20,7 +20,7 @@ const HomepageBanner = () => {
         />
       </div>
       <EnquireNowModal
-         isEnquireNowModalOpen={isModalOpen}
+        isEnquireNowModalOpen={isModalOpen}
         handleEnquireNowModal={() => setIsModalOpen(false)}
         serviceNameToPass="From Banner"
       />

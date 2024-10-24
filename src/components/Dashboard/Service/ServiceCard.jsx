@@ -32,18 +32,22 @@ const ServiceCard = ({
       />
 
       <div className="flex flex-col">
-        <span className="text-2xl mb-2 text-purple-600">{serviceName}</span>
+        <h3 className="text-2xl font-bold mb-2 text-purple-600">
+          {serviceName}
+        </h3>
 
         {priceStatus === "priced" && (
           <div className="flex items-center mb-2 gap-2 text-xl">
-            {avgRating && <GoStarFill className="text-yellow-400" />}
-            <span>{avgRating}</span>
-            <span>({ratingAndReviews?.length} reviews)</span>
+            {avgRating && <GoStarFill className="text-yellow-400 w-4 h-4" />}
+            <span className="text-sm ">{avgRating}</span>
+            <span className="text-sm ">
+              ({ratingAndReviews?.length} reviews)
+            </span>
           </div>
         )}
         {priceStatus === "priced" && (
           <div className="flex items-center mb-2">
-            <span className="mr-2 text-emerald-600 text-2xl">₹{price}</span>
+            <span className="mr-2 text-black text-xl">₹{price}</span>
             <span className="text-gray-500">• {timeToComplete} min</span>
           </div>
         )}

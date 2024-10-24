@@ -23,10 +23,7 @@ const MainPage = () => {
   }, [dispatch]);
 
   return (
-    <div
-      className="flex w-screen min-h-screen flex-col mb-10 bg-white overflow-x-hidden"
-      style={{ fontFamily: "Roboto, sans-serif" }}
-    >
+    <div className="flex w-screen min-h-screen flex-col mb-10 bg-white overflow-x-hidden">
       <Hero />
       <Features />
       <PopularSearches />

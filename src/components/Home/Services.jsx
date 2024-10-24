@@ -32,13 +32,21 @@ const ServiceCard = ({
       <div className="flex gap-5">
         <img src={thumbnail} alt="Thumbnail" className="w-20 h-20 rounded-xl" />
         <div className="flex flex-col">
-          <span className="text-lg font-medium text-black">{serviceName}</span>
-          <span className="text-sm text-zinc-700">
-            {serviceDescription.length > 30
-              ? `${serviceDescription.slice(0, 30)}...`
-              : serviceDescription}
-          </span>
-          <span className="text-sm text-zinc-700">₹ {price}</span>
+          <h3>
+            <span className="text-lg font-semibold text-black">
+              {serviceName}
+            </span>
+          </h3>
+          <p>
+            <span className="text-sm text-zinc-700">
+              {serviceDescription.length > 30
+                ? `${serviceDescription.slice(0, 30)}...`
+                : serviceDescription}
+            </span>
+          </p>
+          <p>
+            <span className="text-sm text-zinc-700">₹ {price}</span>
+          </p>
           <div className="flex items-center gap-1">
             {renderStars(rating)}
             <span className="text-gray-500 text-sm">({rating}/5)</span>
