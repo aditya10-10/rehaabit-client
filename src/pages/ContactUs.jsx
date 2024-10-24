@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa6";
 import ContactForm from "../components/Contact/ContactForm";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const ContactUs = () => {
   useEffect(() => {
@@ -19,6 +20,17 @@ const ContactUs = () => {
   return (
     <>
       <div className="flex flex-col  items-center justify-center text-center w-full font-poppins">
+        <Helmet>
+          <title>Contact Rehaabit - Get in Touch with Our Support Team </title>
+          <meta
+            name="description"
+            content="Have questions or need support? Contact Rehaabit today for assistance with home services, partnerships, or career inquiries. We're here to help you every step of the way."
+          />
+          <meta
+            name="keywords"
+            content="Contact Rehaabit, home service support, customer service, get in touch, Rehaabit contact, home service inquiries, contact Rehaabit team, customer assistance, partnership inquiries"
+          />
+        </Helmet>
         <h1 className="text-[40px] font-bold text-[#FFDA54] mb-2">
           Contact Us
         </h1>
