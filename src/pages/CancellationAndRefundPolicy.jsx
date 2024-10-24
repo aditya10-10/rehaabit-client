@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Footer from "../components/Home/Footer";
+import { Helmet } from "react-helmet-async";
 
 const CancellationRefundPolicy = () => {
   useEffect(() => {
@@ -8,6 +9,19 @@ const CancellationRefundPolicy = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          Rehaabit Cancellation & Refund Policy - Easy and Transparent{" "}
+        </title>
+        <meta
+          name="description"
+          content="Understand Rehaabit's cancellation and refund policy. We believe in transparency and strive to make your experience seamless, even when plans change."
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit cancellation policy, refund policy, service cancellation, refund guidelines, change of service, Rehaabit refund process, policy on cancellations"
+        />
+      </Helmet>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="p-6 max-w-5xl bg-white shadow-md rounded-md my-10">
           <h1

@@ -3,10 +3,22 @@ import { Link } from "react-router-dom";
 import Error from "../assets/404.webp";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Home/Footer";
+import { Helmet } from "react-helmet-async";
 
 const PageNotFound = () => {
   return (
     <>
+      <Helmet>
+        <title>Oops! Page Not Found - Rehaabit Home Services</title>
+        <meta
+          name="description"
+          content="Sorry, the page you're looking for doesn't exist. Head back to Rehaabit's homepage to find the home services or information you need. We're here to help!"
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit 404 error, page not found, missing page, error page, Rehaabit homepage, broken link, find home services"
+        />
+      </Helmet>
       <div
         className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4"
         style={{ fontFamily: "Roboto, sans-serif" }}

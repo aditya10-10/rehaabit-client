@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const PartnerTermsAndConditions = () => {
   useEffect(() => {
@@ -7,6 +8,19 @@ const PartnerTermsAndConditions = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <Helmet>
+        <title>
+          Rehaabit Partner Terms & Conditions - Guidelines for Our Partnership{" "}
+        </title>
+        <meta
+          name="description"
+          content="Understand the guidelines, responsibilities, and expectations for a successful partnership with us in delivering home services."
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit partner terms, partner guidelines, partnership terms, Rehaabit partnership agreement, partner responsibilities, terms of service for partners, partnership policies"
+        />
+      </Helmet>
       <div className="p-6 max-w-5xl bg-white shadow-md rounded-md my-10">
         <h1
           className="text-3xl font-bold mb-4 text-center"
