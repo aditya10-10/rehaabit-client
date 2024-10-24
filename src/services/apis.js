@@ -42,6 +42,7 @@ export const serviceEndpoints = {
   DELETE_HOW_DOES_IT_WORKS_API: BASE_URL + "/deleteHowDoesItWorks",
   UPDATE_HOW_DOES_IT_WORKS_API: BASE_URL + "/updateHowDoesItWorks",
   GET_TOTAL_SERVICES_COUNT_API: BASE_URL + "/getTotalServicesCount",
+  GET_SERVICE_RATING_AND_REVIEWS_API: BASE_URL + "/getServiceRatingAndReviews",
 };
 
 // PROFILE ENDPOINTS
