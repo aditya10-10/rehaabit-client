@@ -12,7 +12,7 @@ const FeatureItem = ({ icon, name, description }) => (
       className="h-[100px] w-[100px] rounded-full max-md:h-[80px] max-md:w-[80px]"
     />
     <div className="mt-1 text-base leading-5 text-purple-950">
-      {name} <br /> {description}
+      <h3>{name}</h3>
     </div>
   </div>
 );
@@ -22,14 +22,14 @@ const Features = () => {
 
   const createSlug = useCallback((value) => {
     if (value && typeof value === "string")
-    return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-zA-Z\d\s]+/g, "-")
-    .replace(/\s/g, "-");
-   
+      return value
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-zA-Z\d\s]+/g, "-")
+        .replace(/\s/g, "-");
+
     return "";
-    }, []);   
+  }, []);
 
   return (
     <div className="relative flex items-center justify-center px-20 max-md:px-10 max-sm:px-4">
@@ -39,8 +39,8 @@ const Features = () => {
       <div className="absolute w-24 h-48 bg-[#E86558] text-white font-bold text-xl rounded-[30px] -rotate-[70deg] top-[510px] max-md:top-[384px]"></div>
 
       <section className="relative z-30 flex flex-col items-center justify-center self-center px-5 py-16 mt-40 bg-amber-100 rounded-3xl shadow-lg max-w-full md:px-20 md:w-[938px] max-md:mt-20">
-        <h2 className="text-4xl font-bold text-center text-purple-950">
-          Categories
+        <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
+          Our Services
         </h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 mt-6 max-w-full w-[676px]">
           {categories.map((feature) => (

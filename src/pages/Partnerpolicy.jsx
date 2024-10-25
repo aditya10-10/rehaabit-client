@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const PartnerPolicy = () => {
   useEffect(() => {
@@ -7,6 +8,19 @@ const PartnerPolicy = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <Helmet>
+        <title>
+          Rehaabit Partner Privacy Policy - How We Protect Partner Data{" "}
+        </title>
+        <meta
+          name="description"
+          content="Learn how Rehaabit protects and uses your business data as a partner. Our Partner Privacy Policy ensures your information is secure while collaborating with us."
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit partner privacy policy, partner data protection, business data privacy, how we use partner data, Rehaabit data security for partners, privacy practices for partners"
+        />
+      </Helmet>
       <div className="p-6 max-w-5xl bg-white shadow-md rounded-md my-10">
         <h1
           className="text-3xl font-bold mb-4 text-center"

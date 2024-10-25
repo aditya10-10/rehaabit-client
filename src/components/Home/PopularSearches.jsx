@@ -68,8 +68,8 @@ const PopularSearches = () => {
       />
 
       <section className="relative flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
-        <h2 className="text-6xl text-center text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
-          Popular Searches
+        <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
+          For Contract Enquiry{" "}
         </h2>
 
         <div className="flex items-center justify-between mt-12 max-md:mt-10 w-full relative">
@@ -103,7 +103,9 @@ const PopularSearches = () => {
                   />
 
                   <div className="bg-blue-500 px-6 py-4 rounded-bl-xl rounded-br-xl">
-                    <h1 className="text-white text-2xl mb-4">{serviceName}</h1>
+                    <h3 className="text-white font-semibold text-2xl mb-4">
+                      {serviceName}
+                    </h3>
 
                     {/* Redesigned Button */}
                     <button

@@ -14,13 +14,13 @@ const HomepageBanner = () => {
       <div className="homepage-banner mt-10">
         <img
           src={Banner}
-          alt="Homepage Banner"
+          alt="Enquire Now Banner to take enquiries from customers"
           className="w-full cursor-pointer"
           onClick={handleBannerClick}
         />
       </div>
       <EnquireNowModal
-         isEnquireNowModalOpen={isModalOpen}
+        isEnquireNowModalOpen={isModalOpen}
         handleEnquireNowModal={() => setIsModalOpen(false)}
         serviceNameToPass="From Banner"
       />

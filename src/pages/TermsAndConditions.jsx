@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Footer from "../components/Home/Footer";
+import { Helmet } from "react-helmet-async";
 
 const TermsAndConditions = () => {
   useEffect(() => {
@@ -8,6 +9,19 @@ const TermsAndConditions = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          Rehaabit Terms & Conditions - Guidelines for Using Our Services{" "}
+        </title>
+        <meta
+          name="description"
+          content="Review Rehaabit's terms and conditions. These guidelines cover the use of our platform and services to ensure transparency and a safe experience for all users."
+        />
+        <meta
+          name="keywords"
+          content="About Rehaabit, Rehaabit mission, home service company, our story, Rehaabit values, who we are, home service solutions"
+        />
+      </Helmet>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="p-6 max-w-5xl bg-white shadow-md rounded-md mt-10">
           {" "}

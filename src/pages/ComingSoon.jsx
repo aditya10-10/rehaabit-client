@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import rocket from "../assets/rocket_launch_flatline.webp";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Home/Footer";
+import { Helmet } from "react-helmet-async";
 
 const ComingSoon = () => {
   useEffect(() => {
@@ -9,6 +10,17 @@ const ComingSoon = () => {
   }, []);
   return (
     <>
+      <Helmet>
+        <title> Coming Soon - Exciting Updates from Rehaabit </title>
+        <meta
+          name="description"
+          content="Stay tuned! We're working on something exciting at Rehaabit. Check back soon for new features and updates that will enhance your home service experience."
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit coming soon, new features, upcoming updates, home service improvements, Rehaabit updates, stay tuned, new services launch"
+        />
+      </Helmet>
       <Navbar />
       <div
         className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 via-white to-orange-50 p-4"

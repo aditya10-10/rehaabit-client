@@ -17,7 +17,7 @@ const EnquireNowModal = ({
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [query, setQuery] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false); // State to control popup visibility
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,10 +34,7 @@ const EnquireNowModal = ({
     dispatch(enquire({ formData: data }))
       .unwrap()
       .then(() => {
-        // Set popup to visible
         setIsSubmitted(true);
-
-        // Hide the popup after 3 seconds
         setTimeout(() => {
           setIsSubmitted(false);
         }, 3000);
@@ -46,7 +43,6 @@ const EnquireNowModal = ({
         // Handle error if submission fails
       });
 
-    // Reset form and close modal
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -59,73 +55,81 @@ const EnquireNowModal = ({
     <AnimatePresence>
       {isEnquireNowModalOpen && (
         <motion.div
-          className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+          className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative bg-white bg-gradient-to-b from-indigo-50 to-white p-8 rounded-3xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+            className="relative bg-gradient-to-br from-purple-100 via-blue-100 to-white p-10 rounded-xl shadow-2xl w-full max-w-xl"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.8 }}
           >
+            {/* Close Button */}
             <button
               onClick={handleEnquireNowModal}
-              className="absolute top-4 right-4 p-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-110 transition-transform"
+              className="absolute top-4 right-4 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-transform"
             >
               <IoIosClose size={28} />
             </button>
 
-            <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-700 text-center mb-8">
               Enquire Now
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="flex flex-col">
-                <label className="block text-sm font-medium text-gray-800 mb-2">
-                  First Name*
-                </label>
-                <input
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 placeholder-gray-400 bg-gradient-to-r from-white to-indigo-50 hover:shadow-lg"
-                  placeholder="John"
-                  required
-                />
+            {/* Form Section */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* First Name */}
+                <div className="flex flex-col">
+                  <label className="text-sm font-medium text-gray-700">
+                    First Name*
+                  </label>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+
+                {/* Last Name */}
+                <div className="flex flex-col">
+                  <label className="text-sm font-medium text-gray-700">
+                    Last Name*
+                  </label>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                    placeholder="Doe"
+                    required
+                  />
+                </div>
               </div>
 
+              {/* Email */}
               <div className="flex flex-col">
-                <label className="block text-sm font-medium text-gray-800 mb-2">
-                  Last Name*
-                </label>
-                <input
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 placeholder-gray-400 bg-gradient-to-r from-white to-indigo-50 hover:shadow-lg"
-                  placeholder="Doe"
-                  required
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label className="block text-sm font-medium text-gray-800 mb-2">
+                <label className="text-sm font-medium text-gray-700">
                   Email*
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 placeholder-gray-400 bg-gradient-to-r from-white to-indigo-50 hover:shadow-lg"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
                   placeholder="john.doe@example.com"
                   required
                 />
               </div>
 
+              {/* Contact Number */}
               <div className="flex flex-col">
-                <label className="block text-sm font-medium text-gray-800 mb-2">
+                <label className="text-sm font-medium text-gray-700">
                   Contact Number*
                 </label>
                 <input
@@ -133,30 +137,34 @@ const EnquireNowModal = ({
                   maxLength={10}
                   value={contactNumber}
                   onChange={(e) => setContactNumber(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 placeholder-gray-400 bg-gradient-to-r from-white to-indigo-50 hover:shadow-lg"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
                   placeholder="1234567890"
                   required
                 />
               </div>
 
+              {/* Query */}
               <div className="flex flex-col">
-                <label className="block text-sm font-medium text-gray-800 mb-2">
+                <label className="text-sm font-medium text-gray-700">
                   Your Query*
                 </label>
                 <textarea
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 placeholder-gray-400 bg-gradient-to-r from-white to-indigo-50 hover:shadow-lg"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
                   placeholder="Type your query here"
                   required
                 />
               </div>
 
+              {/* Submit Button */}
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className={`px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg transform transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-gradient-to-l hover:from-purple-600 hover:to-blue-600 ${
-                    isLoading ? "opacity-60 cursor-not-allowed" : ""
+                  className={`px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg shadow-md transition-transform duration-300 ${
+                    isLoading
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-teal-700 hover:scale-105"
                   }`}
                   disabled={isLoading}
                 >
@@ -167,24 +175,52 @@ const EnquireNowModal = ({
           </motion.div>
         </motion.div>
       )}
-{/* Custom popup for successful submission */}
-{isSubmitted && (
- <div className="fixed inset-0 flex items-center justify-center z-50">
-{/* Dark overlay */}
-    <div className="absolute inset-0 bg-black bg-opacity-50 z-40"></div>
-    {/* Popup */}
-    <motion.div
-      className="relative z-50 bg-lime-200 text-gray-800 p-6 rounded-2xl shadow-lg max-w-sm w-full h-60 text-center"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      exit={{ scale: 0 }}
-    >
-      <h3 className="text-xl font-semibold mb-2 mt-9">Thank You!</h3>
-      <p>Your enquiry has been submitted successfully.</p>
-    </motion.div>
-  </div>
-)}
 
+      {/* Popup on successful submission */}
+      {isSubmitted && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+          <motion.div
+            className="relative z-50 bg-teal-50 text-gray-900 p-8 rounded-xl shadow-xl w-full max-w-xs text-center"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+          >
+            {/* Success Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="bg-green-100 text-green-600 p-3 rounded-full shadow-lg">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Success Message */}
+            <h3 className="text-xl font-semibold text-green-700 mb-2">
+              Thank You for Your Enquiry!
+            </h3>
+            <p className="mb-4 text-gray-800">
+              We've received your request and will get back to you as soon as
+              possible. Our team is already on it!
+            </p>
+            <p className="text-sm text-gray-600">
+              You should hear from us shortly. Feel free to check your inbox for
+              confirmation.
+            </p>
+          </motion.div>
+        </div>
+      )}
     </AnimatePresence>
   );
 };

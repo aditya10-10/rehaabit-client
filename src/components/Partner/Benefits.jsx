@@ -14,12 +14,12 @@ const Benefits = ({ BenefitsText }) => {
       }}
     >
       <div className="w-full flex flex-col lg:flex-row justify-between items-center lg:items-start">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold w-full lg:w-[30%] text-center lg:text-left mb-4 lg:mb-0">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold w-full lg:w-[30%] text-center lg:text-left mb-4 lg:mb-0">
           {BenefitsText.text1}
-        </h1>
-        <span className="text-base md:text-lg lg:text-xl text-gray-800 w-full lg:w-[40%] text-center lg:text-left">
+        </h2>
+        <p className="text-base md:text-lg lg:text-xl text-gray-800 w-full lg:w-[40%] text-center lg:text-left">
           {BenefitsText.text2}
-        </span>
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-row gap-4 items-center justify-center">
@@ -27,9 +27,9 @@ const Benefits = ({ BenefitsText }) => {
         <div className="lg:mt-0 mt-8 w-auto ml-5">
           <img src={png1} alt="Expert Network png" />
           <div className="flex items-center w-full gap-20 py-4">
-            <span className="text-xl md:text-2xl font-[500] capitalize">
+            <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text3}
-            </span>
+            </h3>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />
             </span>
@@ -40,9 +40,9 @@ const Benefits = ({ BenefitsText }) => {
         <div className="lg:mt-64 mt-8 ml-5">
           <img src={png2} alt="Job Flexibility png" />
           <div className="flex items-center w-full gap-20 py-4">
-            <span className="text-xl md:text-2xl font-[500] capitalize">
+            <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text4}
-            </span>
+            </h3>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />
             </span>
@@ -53,9 +53,9 @@ const Benefits = ({ BenefitsText }) => {
         <div className="lg:mt-44 mt-8 ml-5">
           <img src={png3} alt="Skill Growth png" />
           <div className="flex items-center w-full gap-20  py-4">
-            <span className="text-xl md:text-2xl font-[500] capitalize">
+            <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text5}
-            </span>
+            </h3>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />
             </span>
@@ -66,9 +66,9 @@ const Benefits = ({ BenefitsText }) => {
         <div className="lg:mt-10 mt-8 ml-5">
           <img src={png4} alt="Reliable Earnings png" />
           <div className="flex items-center w-full gap-20 py-4">
-            <span className="text-xl md:text-2xl font-[500] capitalize">
+            <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text6}
-            </span>
+            </h3>
             <span className="bg-orange-500 rounded-full p-1 text-white">
               <MdArrowOutward size={20} />
             </span>

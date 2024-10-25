@@ -9,9 +9,9 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
   const { subcategories } = useSelector((state) => state.subcategories);
   const { allServices } = useSelector((state) => state.service);
 
-  console.log(categories)
-  console.log(subcategories)
-  console.log(allServices)
+  // console.log(categories)
+  // console.log(subcategories)
+  // console.log(allServices)
 
   const subcategoryData = subcategories.map((subcategory) => ({
     ...subcategory,
@@ -24,9 +24,9 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
     description: service.serviceDescription,
   }));
 
-  const Data = [...categories, ...subcategoryData, ...allServicesData];
+  const Data = [...categories, ...allServicesData];
 
-  console.log(Data);
+  // console.log(Data);
 
   const options = {
     keys: ["name", "description"],
@@ -36,20 +36,19 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
   const fuse = new Fuse(Data, options);
 
   const results = fuse.search(searchQuery);
-  console.log(results); 
+  // console.log(results); 
   const handleSearchClick = (data) => {
-    console.log(data);
     const { _id, name, categoryId, subCategoryId, slugName } = data.item;
 
     if (data.item.subCategoryName) {
       // If subcategory
-      navigate(`/${categoryId}`, {
-        state: { scrollTo: "subcategory", subCategoryId: _id },
+      navigate({
+        // state: { scrollTo: "subcategory", subCategoryId: _id },
       });
     } else if (data.item.serviceName) {
       // If service
-      navigate(`/${categoryId}`, {
-        state: { scrollTo: "service", serviceId: _id },
+      navigate("/", {
+        state: { scrollTo: "services", serviceId: _id },
       });
     } else {
       // If category

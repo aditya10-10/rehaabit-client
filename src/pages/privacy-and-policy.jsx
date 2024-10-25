@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Footer from "../components/Home/Footer";
+import { Helmet } from "react-helmet-async";
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -8,6 +9,17 @@ const PrivacyPolicy = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Rehaabit Privacy Policy - How We Protect Your Data </title>
+        <meta
+          name="description"
+          content="Your privacy matters to us. Read Rehaabit's Privacy Policy to understand how we collect, protect, and use your personal data while delivering home service solutions."
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit privacy policy, data protection, user privacy, personal data, how we use your data, privacy practices, Rehaabit data security"
+        />
+      </Helmet>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="p-6 max-w-5xl bg-white shadow-md rounded-md my-10">
           <h1
@@ -57,7 +69,7 @@ const PrivacyPolicy = () => {
                 className="text-blue-500 underline"
               >
                 {" "}
-                https://www.rehaabit.com/terms
+                https://www.rehaabit.com/terms-and-conditions
               </a>{" "}
               ("Terms"). Please read this Policy in consonance with the Terms.
             </p>

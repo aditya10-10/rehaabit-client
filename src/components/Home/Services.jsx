@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import serviceImage from "../../assets/images/Services.webp";
 import ServiceDetailsModal from "../ServiceDetailsModal";
 import { GoStar, GoStarFill } from "react-icons/go";
@@ -32,13 +32,21 @@ const ServiceCard = ({
       <div className="flex gap-5">
         <img src={thumbnail} alt="Thumbnail" className="w-20 h-20 rounded-xl" />
         <div className="flex flex-col">
-          <span className="text-lg font-medium text-black">{serviceName}</span>
-          <span className="text-sm text-zinc-700">
-            {serviceDescription.length > 30
-              ? `${serviceDescription.slice(0, 30)}...`
-              : serviceDescription}
-          </span>
-          <span className="text-sm text-zinc-700">₹ {price}</span>
+          <h3>
+            <span className="text-lg font-semibold text-black">
+              {serviceName}
+            </span>
+          </h3>
+          <p>
+            <span className="text-sm text-zinc-700">
+              {serviceDescription.length > 30
+                ? `${serviceDescription.slice(0, 30)}...`
+                : serviceDescription}
+            </span>
+          </p>
+          <p>
+            <span className="text-sm text-zinc-700">₹ {price}</span>
+          </p>
           <div className="flex items-center gap-1">
             {renderStars(rating)}
             <span className="text-gray-500 text-sm">({rating}/5)</span>
@@ -53,6 +61,18 @@ const Services = () => {
   const { allServices } = useSelector((state) => state.service);
   const [serviceId, setServiceId] = useState(null);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const location = useLocation();
+  const servicesRef = useRef(null);
+
+  useEffect(() => {
+    if (location.state?.scrollTo === "services") {
+      servicesRef.current?.scrollIntoView({ behavior: "smooth" });
+      if (location.state.serviceId) {
+        setServiceId(location.state.serviceId);
+        setIsServiceModalOpen(true);
+      }
+    }
+  }, [location]);
 
   const handleServiceModal = () => {
     setIsServiceModalOpen(!isServiceModalOpen);
@@ -70,13 +90,16 @@ const Services = () => {
         serviceId={serviceId}
       />
 
-      <section className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2">
+      <section
+        ref={servicesRef}
+        className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2"
+      >
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <div className="flex flex-col w-6/12 max-md:hidden">
             <img
               loading="lazy"
               src={serviceImage}
-              alt="Service illustration"
+              alt="All Types of Home Service in Mumbai"
               className="mt-3 w-full aspect-[0.65]"
             />
           </div>

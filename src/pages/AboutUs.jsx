@@ -10,12 +10,17 @@ const AboutUs = () => {
   return (
     <div>
       <Helmet>
-        <title>About Us | Rehaabit</title>
+        <title>
+          About Rehaabit - Our Mission in Transforming Home Services
+        </title>
         <meta
           name="description"
-          content="Discover the best home solutions at Rehaabit"
+          content="Learn more about us, our mission, and the values that drive us to deliver high-quality home services. We're committed to making home service solutions simple and reliable"
         />
-        <link rel="canonical" href="/about-us" />
+        <meta
+          name="keywords"
+          content="Rehaabit terms and conditions, service guidelines, platform terms, user agreement, service policies, Rehaabit usage terms, legal guidelines"
+        />
       </Helmet>
       <div className="max-w-screen-lg mx-auto p-4 font-inter">
         {/* Header Section */}

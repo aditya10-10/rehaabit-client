@@ -57,6 +57,7 @@ import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboar
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
 import ContentEditor from "./components/blogs/ContentEditor";
 import Spinner from "./Spinner";
+import PrivateRoute from "./utils/PrivateRoute";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -170,11 +171,12 @@ export default function App() {
       </div>
     );
   }
+  
   return (
     <>
       {!location.pathname.includes("/partner") &&
       !location.pathname.includes("/careers") &&
-      location.pathname !== "/coming-soon" ? ( // Exclude Navbar from MainPage
+      location.pathname !== "/coming-soon" ? (
         <Navbar onLoginClick={handleLoginClick} />
       ) : null}
 
@@ -206,16 +208,16 @@ export default function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/careers" element={<Careers />} />
 
-          {user?.accountType === "User" && (
-            <>
-              <Route path="/dashboard/*" element={<Dashboard />}>
-                <Route path="my-profile" element={<MyProfile />} />
-                <Route path="edit-profile" element={<EditProfile />} />
-                <Route path="orders" element={<MyOrders />} />
-                <Route path="addresses" element={<Addresses />} />
-              </Route>
-            </>
-          )}
+          <Route path="/dashboard/*" element={
+            <PrivateRoute showLoginModal={handleLoginClick}>
+              <Dashboard />
+            </PrivateRoute>
+          }>
+            <Route path="my-profile" element={<MyProfile />} />
+            <Route path="edit-profile" element={<EditProfile />} />
+            <Route path="orders" element={<MyOrders />} />
+            <Route path="addresses" element={<Addresses />} />
+          </Route>
 
           {user?.accountType === "Admin" && (
             <>

@@ -7,11 +7,6 @@ import { CgProfile } from "react-icons/cg";
 import { RiDashboardLine } from "react-icons/ri";
 import { IoCartOutline, IoLogOutOutline } from "react-icons/io5";
 import { IoIosHelpCircleOutline } from "react-icons/io";
-import { getAllCartServices } from "../../slices/cartSlice";
-import { getAllServices } from "../../slices/serviceSlice";
-import { showAllCategories } from "../../slices/categorySlice";
-import { showAllSubCategories } from "../../slices/subCategorySlice";
-import { getUserAddresses } from "../../slices/addressSlice";
 import LocationSearchBarDiv from "./LocationSearchBarDiv";
 
 const Navbar = ({ onLoginClick }) => {
@@ -88,7 +83,7 @@ const Navbar = ({ onLoginClick }) => {
             <span>Login</span>
           </button>
         ) : (
-          <div className="relative" >
+          <div className="relative">
             <button
               type="button"
               className="flex justify-center items-center h-[50px] rounded-full w-[50px] max-md:h-[40px] max-md:w-[40px]"

@@ -13,9 +13,9 @@ const JoinRehaabitFamily = ({ JoinRehaabitFamilyText, type }) => {
       <div className="flex rounded-3xl h-[368px] w-[1144px] bg-[#8937FF] max-xl:w-[900px] max-lg:w-[700px] max-md:w-[600px] max-sm:w-[90%] max-md:flex-col max-md:h-auto max-md:gap-6 max-md:p-4">
         {/* Text Section */}
         <div className="flex flex-col gap-10 p-10 max-md:gap-6 max-md:p-6 max-sm:p-4 max-xs:p-3">
-          <h1 className="text-white font-bold text-4xl capitalize max-xl:text-3xl max-md:text-2xl max-sm:text-xl">
+          <h2 className="text-white font-bold text-4xl capitalize max-xl:text-3xl max-md:text-2xl max-sm:text-xl">
             Join the Rehaabit Family
-          </h1>
+          </h2>
 
           <p className="text-lg text-white max-xl:text-base max-md:text-sm max-sm:text-xs">
             {JoinRehaabitFamilyText.text1}
@@ -23,7 +23,7 @@ const JoinRehaabitFamily = ({ JoinRehaabitFamilyText, type }) => {
 
           <div>
             <button
-              className="bg-orange-700 capitalize rounded-lg py-2 px-6 max-md:py-2 max-md:px-5 max-sm:py-1 max-sm:px-4 text-base max-md:text-sm max-sm:text-xs"
+              className="bg-white capitalize text-black font-semibold rounded-lg py-2 px-6 max-md:py-2 max-md:px-5 max-sm:py-1 max-sm:px-4 text-base max-md:text-sm max-sm:text-xs"
               onClick={() => navigate("/partner-form/personal-information")}
             >
               Join Now
