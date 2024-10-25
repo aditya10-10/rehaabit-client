@@ -22,17 +22,20 @@ const LocationSearchBarDiv = () => {
   const [pincode, setPincode] = useState("");
   const [recentLocations, setRecentLocations] = useState([]);
   const [showRecent, setShowRecent] = useState(true);
-  const { locationSuggestions, isLoading } = useSelector((state) => state.location);
-  console.log(locationSuggestions)
-  console.log(locationsuggestions)
+  const { locationSuggestions, isLoading } = useSelector(
+    (state) => state.location
+  );
+  console.log(locationSuggestions);
+  console.log(locationsuggestions);
   useEffect(() => {
     // Load recent locations from localStorage
-    const storedLocations = JSON.parse(localStorage.getItem('recentLocations')) || [];
+    const storedLocations =
+      JSON.parse(localStorage.getItem("recentLocations")) || [];
     setRecentLocations(storedLocations);
   }, []);
- useEffect(()=>{
-  setLocationsuggestions(locationSuggestions.suggestedLocations)
- },[locationSuggestions])
+  useEffect(() => {
+    setLocationsuggestions(locationSuggestions.suggestedLocations);
+  }, [locationSuggestions]);
   const handleSearchQuery = () => {
     setSearchQuery("");
   };
@@ -83,8 +86,7 @@ const LocationSearchBarDiv = () => {
               setPincode(detectedPincode);
               setLocationsuggestions([detectedCity]);
               addToRecentLocations(detectedCity);
-            })
-            
+            });
         },
         (error) => {
           // console.error("Error getting geolocation:", error);
@@ -96,7 +98,7 @@ const LocationSearchBarDiv = () => {
   const addToRecentLocations = (location) => {
     const updatedLocations = [location, ...recentLocations].slice(0, 5);
     setRecentLocations(updatedLocations);
-    localStorage.setItem('recentLocations', JSON.stringify(updatedLocations));
+    localStorage.setItem("recentLocations", JSON.stringify(updatedLocations));
   };
 
   const handleClearLocation = () => {
@@ -104,7 +106,7 @@ const LocationSearchBarDiv = () => {
     setCity("");
     setPincode("");
     setRecentLocations([]);
-    localStorage.removeItem('recentLocations');
+    localStorage.removeItem("recentLocations");
   };
 
   const handleOutsideClick = (e) => {
@@ -131,7 +133,7 @@ const LocationSearchBarDiv = () => {
       }
     });
   }, []);
-  
+
   useEffect(() => {
     setLocationsuggestions(locationSuggestions.suggestedLocations);
   }, [locationSuggestions]);
@@ -161,7 +163,7 @@ const LocationSearchBarDiv = () => {
             }}
           >
             <input
-              className='border-none outline-none'
+              className="border-none outline-none"
               type="text"
               value={city}
               placeholder="Search for a location..."
@@ -212,7 +214,9 @@ const LocationSearchBarDiv = () => {
               recentLocations.length > 0 ? (
                 <>
                   <div className="flex justify-between items-center px-4 py-2">
-                    <span className="text-sm text-gray-600">RECENT LOCATIONS</span>
+                    <span className="text-sm text-gray-600">
+                      RECENT LOCATIONS
+                    </span>
                     <button
                       className="text-sm text-blue-500"
                       onClick={handleClearLocation}

@@ -1,13 +1,12 @@
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import EnquireNowModal from "./EnquireNowModal";
-import { useState, useRef } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ServiceDetailsModal from "../ServiceDetailsModal";
 
 const PopularSearches = () => {
   const { allServices } = useSelector((state) => state.service);
 
-  // State management for modals and the selected service ID
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [serviceNameToPass, setServiceNameToPass] = useState(null);
@@ -17,7 +16,6 @@ const PopularSearches = () => {
       service.priceStatus === "non-priced" && service.status !== "Draft"
   );
 
-  // Scroll reference and scroll logic
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
@@ -29,38 +27,26 @@ const PopularSearches = () => {
     }
   };
 
-  // Function to open the Service Details Modal
   const handleServiceModalOpen = (serviceName) => {
-    setServiceNameToPass(serviceName); // Pass the selected service ID
-    setIsServiceModalOpen(true); // Open the Service Details Modal
+    setServiceNameToPass(serviceName);
+    setIsServiceModalOpen(true);
   };
 
-  // Function to close the Service Details Modal
-  const handleServiceModalClose = () => {
-    setIsServiceModalOpen(false); // Close the Service Details Modal
-  };
-
-  // Function to open the Enquire Now Modal
+  const handleServiceModalClose = () => setIsServiceModalOpen(false);
   const handleEnquireNowModalOpen = (serviceName) => {
-    setServiceNameToPass(serviceName); // Pass the selected service ID
-    setIsEnquireNowModalOpen(true); // Open the Enquire Now Modal
+    setServiceNameToPass(serviceName);
+    setIsEnquireNowModalOpen(true);
   };
 
-  // Function to close the Enquire Now Modal
-  const handleEnquireNowModalClose = () => {
-    setIsEnquireNowModalOpen(false); // Close the Enquire Now Modal
-  };
+  const handleEnquireNowModalClose = () => setIsEnquireNowModalOpen(false);
 
   return (
     <>
-      {/* Enquire Now Modal */}
       <EnquireNowModal
         isEnquireNowModalOpen={isEnquireNowModalOpen}
         handleEnquireNowModal={handleEnquireNowModalClose}
         serviceNameToPass={serviceNameToPass}
       />
-
-      {/* Service Details Modal */}
       <ServiceDetailsModal
         isServiceModalOpen={isServiceModalOpen}
         handleServiceModal={handleServiceModalClose}
@@ -73,7 +59,6 @@ const PopularSearches = () => {
         </h2>
 
         <div className="flex items-center justify-between mt-12 max-md:mt-10 w-full relative">
-          {/* Left Arrow */}
           <button
             className="absolute left-0 z-10 p-2 bg-white rounded-full shadow-md"
             onClick={() => scroll("left")}
@@ -81,10 +66,10 @@ const PopularSearches = () => {
             <FaArrowLeft size={24} />
           </button>
 
-          {/* Scrollable Content */}
           <div
             ref={scrollRef}
-            className="scrollable-container flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scrollbar-hide"
+            className="scrollable-container flex gap-4 justify-start self-center w-full overflow-x-auto overflow-y-hidden px-4 
+              scrollbar-hide -webkit-overflow-scrolling: touch"
           >
             {nonPricedServices.map((service, index) => {
               const { _id, thumbnail, serviceName } = service;
@@ -92,9 +77,10 @@ const PopularSearches = () => {
               return (
                 <div
                   key={_id}
-                  className={`min-w-[20rem] flex-shrink-0 snap-start ${
-                    index === 0 ? "ml-4" : ""
-                  } ${index === nonPricedServices.length - 1 ? "mr-4" : ""} flex-shrink-0`}
+                  className={`min-w-[300px] max-w-[300px] sm:min-w-[340px] md:min-w-[355px] md:max-w-[355px] 
+                    flex-shrink-0 snap-center ${index === 0 ? "ml-4" : ""} ${
+                    index === nonPricedServices.length - 1 ? "mr-4" : ""
+                  }`}
                 >
                   <img
                     src={thumbnail}
@@ -107,26 +93,27 @@ const PopularSearches = () => {
                       {serviceName}
                     </h3>
 
-                    {/* Redesigned Button */}
-                    <button
-                      className="text-green-600 bg-white px-6 py-2 rounded-full mr-4 transition-all duration-300 hover:bg-green-600 hover:text-white shadow-lg border border-green-600"
-                      onClick={() => handleServiceModalOpen(_id)} // Open Service Modal
-                    >
-                      More Details
-                    </button>
-                    <button
-                      className="text-purple-600 bg-white px-6 py-2 rounded-full transition-all duration-300 hover:bg-purple-600 hover:text-white shadow-lg border border-purple-600"
-                      onClick={() => handleEnquireNowModalOpen(serviceName)} // Open Enquire Now Modal
-                    >
-                      Enquire Now
-                    </button>
+                    {/* Flex container for buttons */}
+                    <div className="flex justify-between items-center">
+                      <button
+                        className="text-green-600 bg-white px-4 py-2 rounded-full transition-all duration-300 hover:bg-green-600 hover:text-white shadow-lg border border-green-600"
+                        onClick={() => handleServiceModalOpen(_id)}
+                      >
+                        More Details
+                      </button>
+                      <button
+                        className="text-purple-600 bg-white px-4 py-2 rounded-full transition-all duration-300 hover:bg-purple-600 hover:text-white shadow-lg border border-purple-600"
+                        onClick={() => handleEnquireNowModalOpen(serviceName)}
+                      >
+                        Enquire Now
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Right Arrow */}
           <button
             className="absolute right-0 z-10 p-2 bg-white rounded-full shadow-md"
             onClick={() => scroll("right")}
