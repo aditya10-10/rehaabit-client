@@ -1,5 +1,5 @@
 import { MdArrowOutward } from "react-icons/md";
-import png1 from "../../assets/partner/eOym8ocxAKRkqB2LZGE4Inari8.webp";
+import png1 from "../../assets/partner/Screenshot 2024-10-24 202625.png";
 
 const OurPartnerBenefits = ({ OurBenefitsText }) => {
   return (
@@ -50,21 +50,23 @@ const OurPartnerBenefits = ({ OurBenefitsText }) => {
 
           {/* Image and Partner Stats */}
           <div className="relative flex justify-center items-center">
-            <img
-              src={png1}
-              alt="png1"
-              className="w-full max-w-[464px] h-auto"
-            />
-            <div className="absolute bottom-0 right-0 border border-purple-100 rounded-3xl p-6 h-44 w-56">
-              <h4 className="font-bold text-3xl">1219+</h4>
+
+  <img
+    src={png1}
+    alt="png1"
+    className="w-full max-w-[464px] h-auto object-contain"
+  />
+
+            {/* Ensure the parent container is relative and inner div is absolute */}
+            {/* <div className="absolute bottom-4 right-0 lg:right-[19%]  sm:right-[5%] md:right-[11%] max-sm:right-[4%] max-sm:h-[160px]    border border-purple-100 rounded-3xl p-6 h-auto w-[220px] md:w-[220px] lg:w-[220px] lg:h-[160px]">
+              <h1 className="font-bold text-3xl">1219+</h1>
               <span className="capitalize text-2xl text-gray-500">
                 Partner joined
               </span>
-            </div>
-
-            <span className="absolute bottom-4 right-4 bg-purple-500 rounded-full p-1 text-white">
-              <MdArrowOutward size={20} />
-            </span>
+              <span className="absolute bottom-4 right-4 bg-purple-500 rounded-full p-1 text-white">
+                <MdArrowOutward size={20} />
+              </span>
+            </div> */}
           </div>
         </div>
       </div>

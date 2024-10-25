@@ -66,7 +66,7 @@ const MyOrders = () => {
   });
 
   return (
-    <div className="flex flex-col items-center w-full p-10 max-md:p-4 max-sm:p-2 overflow-hidden overflow-y-auto ">
+    <div className="flex flex-col  md:pl-15  sm:pl-16 max-sm:pl-12 lg:pl-64 items-center w-full p-10 max-md:p-4 max-sm:p-2 overflow-hidden overflow-y-auto ">
       <nav className="flex w-full justify-between">
         <div className="flex w-full items-center max-sm:flex-col max-sm:justify-center">
           <h1 className="text-4xl max-md:text-2xl font-semibold mb-6 max-sm:mb-4">

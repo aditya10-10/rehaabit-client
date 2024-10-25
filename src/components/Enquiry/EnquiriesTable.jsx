@@ -10,7 +10,7 @@ const EnquiriesTable = ({
   // console.log(enquiries);
   return (
     <div
-      className="overflow-x-auto"
+      className="overflow-x-auto "
       style={{ fontFamily: "Roboto, sans-serif" }}
     >
       <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">

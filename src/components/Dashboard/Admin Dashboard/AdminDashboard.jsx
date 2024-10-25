@@ -130,7 +130,8 @@ const AdminDashboard = () => {
   return (
     <div style={styles.container}>
       {/* One single container for all KPI Cards */}
-      <div style={styles.kpiContainer}>
+      <div style={styles.kpiContainer} >
+
         {/* Row 1 */}
         <div style={styles.kpiCard}>
           <FaUsers size={35} style={{ ...styles.icon, color: "#34D399" }} />
@@ -352,20 +353,23 @@ const AdminDashboard = () => {
 const styles = {
   container: {
     padding: "20px",
-    height: "100vh", // Full viewport height
+    height: "100vh",
+    paddingLeft:"240px"
+   // Full viewport height
   },
   kpiContainer: {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)", // 3 columns by default (large screens)
-    gap: "20px",
+    gap: "10px",
     marginBottom: "40px",
     width: "100%", // Full width
     maxWidth: "1400px", // Maximum width for large screens
-    marginLeft: "225px", // Center horizontally
+    marginLeft: "22px", // Center horizontally
     marginRight: "auto", // Center horizontally
 
   },
   kpiCard: {
+    width:"345px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
