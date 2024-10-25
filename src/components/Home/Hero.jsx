@@ -5,8 +5,9 @@ import Factory from "../../assets/homepage/factory.webp";
 import Painting from "../../assets/homepage/painting.webp";
 import Carpentry from "../../assets/homepage/carpentry.webp";
 import Cleaning from "../../assets/homepage/cleaning.webp";
+import { Button } from "@material-tailwind/react";
 
-const Hero = () => {
+const Hero = ({ scrollToFeatures }) => {
   return (
     <section className="self-center  mt-0 w-full max-w-[1339px] max-md:mt-0 px-10 max-md:px-6 max-sm:px-4">
       <div className="flex gap-5 max-md:gap-0">
@@ -20,7 +21,7 @@ const Hero = () => {
                       <img
                         loading="lazy"
                         src={AcRepair}
-                        alt="HeroImage 1"
+                        alt="Technician servicing an air conditioner unit on a wall"
                         className="grow"
                       />
                     </div>
@@ -28,7 +29,7 @@ const Hero = () => {
                       <img
                         loading="lazy"
                         src={Factory}
-                        alt="HeroImage 2"
+                        alt="Smiling engineer in a hard hat and blue uniform with arms crossed"
                         className="grow"
                       />
                     </div>
@@ -40,7 +41,7 @@ const Hero = () => {
                       <img
                         loading="lazy"
                         src={Painting}
-                        alt="HeroImage 3"
+                        alt="Painter applying white paint to a wall with a roller"
                         className="grow"
                       />
                     </div>
@@ -48,7 +49,7 @@ const Hero = () => {
                       <img
                         loading="lazy"
                         src={Electrian}
-                        alt="HeroImage 4"
+                        alt="Electrician adjusting wires in an electrical panel"
                         className="grow"
                       />
                     </div>
@@ -60,13 +61,13 @@ const Hero = () => {
                   <img
                     loading="lazy"
                     src={Carpentry}
-                    alt="HeroImage 5"
+                    alt="Carpenter working on a wooden board in a workshop"
                     className="grow"
                   />
                   <img
                     loading="lazy"
                     src={Cleaning}
-                    alt="HeroImage 6"
+                    alt="Cleaner mopping a wooden floor in a living room"
                     className="grow mt-4"
                   />
                 </div>
@@ -74,31 +75,26 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col ml-5 w-[32%] max-md:ml-0 max-sm:w-full">
-          <div className="flex flex-col self-stretch px-5 my-auto font-semibold max-md:mt-10 max-sm:mt-0">
-            <h1 className="text-4xl tracking-tighter text-emerald-500 leading-[70px] text-ellipsis max-md:text-5xl max-md:leading-10 max-sm:text-3xl font-roboto">
-              <span className="font-bold text-emerald-500">
-                Your Trusted Partner{" "}
-              </span>
-              <span className="font-light text-black">
-                for All Home Services
+        <div className="flex flex-col ml-5 w-[32%] max-md:ml-0 max-sm:w-full bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 p-8 max-sm:p-4 rounded-lg shadow-lg">
+          <div className="flex flex-col items-start px-5 font-semibold max-md:mt-10 max-sm:mt-0">
+            <h1 className="text-5xl tracking-tight text-emerald-600 leading-[65px] max-md:text-4xl max-sm:text-lg font-bold font-roboto">
+              <span className="bg-gradient-to-r from-emerald-500 to-green-400 bg-clip-text text-transparent">
+                Your Trusted Home Service Experts
               </span>
             </h1>
-            <p className="text-gray-600 text-sm mt-4 leading-relaxed max-md:text-base max-sm:text-sm hidden md:block">
-              <span className="text-purple-700 font-medium">
-                From quick repairs to complete renovations,
-              </span>{" "}
-              we've got you covered with skilled professionals and reliable
-              service. Experience
-              <span className="font-semibold text-red-500">
-                {" "}
-                quality
-              </span> and{" "}
-              <span className="font-semibold text-red-500">
-                peace of mind
-              </span>{" "}
-              for your home!
+
+            {/* Responsive Paragraph: Hidden on small screens (phones), shown on medium and above */}
+            <p className="text-gray-700 text-base mt-6 leading-relaxed max-md:text-sm max-sm:hidden">
+              From small repairs to major renovations, our skilled professionals
+              deliver reliable, high-quality services. Transform your home with
+              peace of mind and excellence every time!
             </p>
+
+            <div className="mt-8 max-sm:mt-1">
+              <Button color="green" onClick={scrollToFeatures}>
+                Book a Service
+              </Button>
+            </div>
           </div>
         </div>
       </div>

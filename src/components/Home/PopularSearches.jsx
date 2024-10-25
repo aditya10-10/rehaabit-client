@@ -68,8 +68,8 @@ const PopularSearches = () => {
       />
 
       <section className="relative flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
-        <h2 className="text-6xl text-center  font-bold text-violet-900 leading-[67.2px] max-md:max-w-full max-md:text-4xl">
-          For Contract Enquiry
+        <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
+          For Contract Enquiry{" "}
         </h2>
 
         <div className="flex items-center justify-between mt-12 max-md:mt-10 w-full relative">
