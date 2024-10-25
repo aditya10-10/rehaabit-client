@@ -84,7 +84,7 @@ const PopularSearches = () => {
           {/* Scrollable Content */}
           <div
             ref={scrollRef}
-            className="flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scrollbar-hide"
+            className="scrollable-container flex gap-4 justify-start self-center w-full flex-nowrap overflow-x-auto px-4 scrollbar-hide"
           >
             {nonPricedServices.map((service, index) => {
               const { _id, thumbnail, serviceName } = service;
@@ -94,12 +94,12 @@ const PopularSearches = () => {
                   key={_id}
                   className={`min-w-[20rem] flex-shrink-0 snap-start ${
                     index === 0 ? "ml-4" : ""
-                  } ${index === nonPricedServices.length - 1 ? "mr-4" : ""}`}
+                  } ${index === nonPricedServices.length - 1 ? "mr-4" : ""} flex-shrink-0`}
                 >
                   <img
                     src={thumbnail}
                     alt={serviceName}
-                    className="w-full h-56 rounded-tl-xl rounded-tr-xl object-cover"
+                    className="w-full h-56 max-w-full rounded-tl-xl rounded-tr-xl object-cover"
                   />
 
                   <div className="bg-blue-500 px-6 py-4 rounded-bl-xl rounded-br-xl">

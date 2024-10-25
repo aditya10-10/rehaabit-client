@@ -185,7 +185,7 @@ const ServiceDetailsModal = ({
       <AnimatePresence>
         {isServiceModalOpen && (
           <motion.div
-            className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50 modal-overlay"
+            className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50 w-full modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -197,7 +197,7 @@ const ServiceDetailsModal = ({
               onClick={handleServiceModal}
             />
             <motion.div
-              className="bg-white p-6 max-xs:p-4 rounded-lg shadow-lg w-1/3 max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[70vh] overflow-y-auto relative"
+              className="bg-white p-6 max-xs:p-4 rounded-lg shadow-lg  max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[80vh] w-[150vh] overflow-y-auto relative"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
@@ -279,6 +279,7 @@ const ServiceDetailsModal = ({
                     </>
                   )}
                 </div>
+
                 {/* SERVICE INCLUDES */}
                 {service?.includes?.length > 0 && (
                   <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
@@ -412,7 +413,7 @@ const ServiceDetailsModal = ({
                     <h1 className="text-2xl max-xs:text-xl text-purple-600">
                       Reviews
                     </h1>
-                    <div className="">
+                    <div className="w-full">
                       {Array.isArray(service.ratingAndReviews) &&
                       service.ratingAndReviews.length > 0 ? (
                         service.ratingAndReviews.map((review, index) => {

@@ -6,10 +6,10 @@ const EnquiriesList = ({ enquiries }) => {
   // console.log(enquiries);
 
   return (
-    <table className="w-full">
+    <table className="w-full bg-black">
       <thead>
-        <tr className="flex gap-x-10 rounded-t-md border-b px-6 py-2">
-          <th className="flex-1 text-left text-sm font-medium uppercase">
+        <tr className=" flex gap-x-10 rounded-t-md border-b px-6 py-2">
+          <th className="flex-1 text-left text-sm font-medium uppercase ">
             Enquiries
           </th>
           {/* <th className="text-left text-sm font-medium uppercase">

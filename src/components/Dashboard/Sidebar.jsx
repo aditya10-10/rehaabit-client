@@ -100,7 +100,7 @@ export default function Sidebar() {
           {/* Sidebar */}
           <aside
             className={`h-[calc(100vh-64px)] fixed top-[64px]  left-0 z-50 transition-all duration-300 ${
-              expanded ? 'w-64 bg-slate-100  ' : 'w-16 bg-white'
+              expanded ? 'w-64 bg-white  ' : 'w-16 bg-white'
             } border-r shadow-sm`}
             style={{ fontFamily: "Roboto, sans-serif", zIndex: 50 }} // Higher z-index to keep it above the overlay
           >

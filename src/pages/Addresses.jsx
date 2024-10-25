@@ -30,7 +30,7 @@ const Addresses = () => {
 
   return (
     <div
-      className="flex flex-col items-center w-full p-10 max-sm:p-4"
+      className="flex flex-col items-center w-full  md:pl-16 sm:pl-14 max-sm:pl-14 lg:pl-64 p-10 max-sm:p-4"
       style={{ fontFamily: "Roboto, sans-serif" }}
     >
       <nav className="flex w-full justify-between">
