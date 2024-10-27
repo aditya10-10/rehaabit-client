@@ -29,26 +29,26 @@ const UsersEnquiries = () => {
 
   // Filter contacts
   const filteredEnquiries = enquiries
-    .filter(
+    ?.filter(
       (enquiry) =>
-        enquiry.contactNumber?.includes(searchEnquiry) ||
-        enquiry._id?.includes(searchEnquiry)
+        enquiry?.contactNumber?.includes(searchEnquiry) ||
+        enquiry?._id?.includes(searchEnquiry)
     )
     .filter((enquiry) =>
-      statusFilter ? enquiry.status === statusFilter : true
+      statusFilter ? enquiry?.status === statusFilter : true
     )
     .filter((enquiry) =>
-      priorityFilter ? enquiry.priority === priorityFilter : true
+      priorityFilter ? enquiry?.priority === priorityFilter : true
     );
 
   const indexOfLastEnquiry = currentPage * enquiriesPerPage;
   const indexOfFirstEnquiry = indexOfLastEnquiry - enquiriesPerPage;
-  const currentEnquiries = filteredEnquiries.slice(
+  const currentEnquiries = filteredEnquiries?.slice(
     indexOfFirstEnquiry,
     indexOfLastEnquiry
   );
 // console.log(currentEnquiries);
-  const totalPages = Math.ceil(filteredEnquiries.length / enquiriesPerPage);
+  const totalPages = Math.ceil(filteredEnquiries?.length / enquiriesPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);

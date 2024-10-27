@@ -117,7 +117,7 @@ export const contactEndpoints = {
 
 // CAREERS ENDPOINTS
 export const careersEndpoints = {
-  ADD_CANDIDATE_INFORMATION_API: BASE_URL + "/addCandidateInformation",
+  ADD_CANDIDATE_INFORMATION_API: BASE_URL + "carrer/addCandidateInformation",
 };
 
 // USERS ENDPOINTS

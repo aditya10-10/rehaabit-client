@@ -63,7 +63,7 @@ const Services = () => {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const location = useLocation();
   const servicesRef = useRef(null);
-
+  console.log(servicesRef)
   useEffect(() => {
     if (location.state?.scrollTo === "services") {
       servicesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -72,10 +72,15 @@ const Services = () => {
         setIsServiceModalOpen(true);
       }
     }
+    
   }, [location]);
 
   const handleServiceModal = () => {
     setIsServiceModalOpen(!isServiceModalOpen);
+    // Clear the location state when closing the modal
+    if (isServiceModalOpen && location.state?.serviceId) {
+      window.history.replaceState({}, document.title, location.pathname);
+    }
   };
 
   const pricedServices = allServices.filter(

@@ -37,7 +37,7 @@ const ServiceDetailsModal = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+   console.log(isServiceModalOpen);
   const [activeId, setActiveId] = useState(null);
   const [onRemove, setOnRemove] = useState(null);
   const [page, setPage] = useState(1);

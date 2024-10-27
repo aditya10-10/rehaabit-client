@@ -104,9 +104,9 @@ const EnquiryRow = ({
         <span className="flex gap-2 items-center">
           <FaRegDotCircle onClick={() => toggleDropdown('statusDropdownOpen')} className="cursor-pointer" />
           <span className={`px-2 py-1 rounded-full text-sm font-semibold ${
-              enquiry.status === "pending" ? "bg-yellow-100 text-yellow-700"
-              : enquiry.status === "in progress" ? "bg-blue-100 text-blue-700"
-              : enquiry.status === "resolved" ? "bg-green-100 text-green-700"
+              enquiry?.status === "pending" ? "bg-yellow-100 text-yellow-700"
+              : enquiry?.status === "in progress" ? "bg-blue-100 text-blue-700"
+              : enquiry?.status === "resolved" ? "bg-green-100 text-green-700"
               : "bg-red-100 text-red-700"
             }`}
           >
