@@ -12,6 +12,7 @@ import { showAllCategories } from "../slices/categorySlice";
 import { getAllServices } from "../slices/serviceSlice";
 import { getAllCartServices } from "../slices/cartSlice";
 import PopularSearches from "../components/Home/PopularSearches";
+import { Helmet } from "react-helmet-async";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,32 @@ const MainPage = () => {
 
   return (
     <div className="flex w-screen min-h-screen flex-col mb-10 bg-white overflow-x-hidden">
+      <Helmet>
+        <title>
+          Expert Home Repair, Maintenance & Improvement Services | Plumbing,
+          Electrical, Carpentry & More
+        </title>
+        <meta
+          name="description"
+          content="Get professional home repair and maintenance services at your doorstep. From plumbing and electrical repairs to appliance fixes, painting, carpentry, and flooring—our expert team covers all your home needs. Book trusted professionals for hassle-free, top-quality service."
+        />
+        <meta
+          name="keywords"
+          content="home repair, maintenance services, plumbing services, electrical services, appliance repair, carpentry services, flooring services, painting services, pipe repair, toilet repair, wiring installation, outlet replacement, refrigerator repair, custom cabinets, interior painting, floor installation, expert home improvement"
+        />
+        <meta property="og:title" content="Home Service Experts" />
+        <meta
+          property="og:description"
+          content="Home Service Experts is a trusted and reliable home service company offering personalized and professional home services."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://homeserviceexperts.com" />
+        <meta
+          property="og:image"
+          content="https://homeserviceexperts.com/logo.png"
+        />
+        <meta property="og:site_name" content="Home Service Experts" />
+      </Helmet>
       {/* Pass the ref to the Hero component */}
       <Hero
         scrollToFeatures={() =>
