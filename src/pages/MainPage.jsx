@@ -41,18 +41,6 @@ const MainPage = () => {
           name="keywords"
           content="home repair, maintenance services, plumbing services, electrical services, appliance repair, carpentry services, flooring services, painting services, pipe repair, toilet repair, wiring installation, outlet replacement, refrigerator repair, custom cabinets, interior painting, floor installation, expert home improvement"
         />
-        <meta property="og:title" content="Home Service Experts" />
-        <meta
-          property="og:description"
-          content="Home Service Experts is a trusted and reliable home service company offering personalized and professional home services."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://homeserviceexperts.com" />
-        <meta
-          property="og:image"
-          content="https://homeserviceexperts.com/logo.png"
-        />
-        <meta property="og:site_name" content="Home Service Experts" />
       </Helmet>
       {/* Pass the ref to the Hero component */}
       <Hero
