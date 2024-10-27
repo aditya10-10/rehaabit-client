@@ -154,6 +154,10 @@ const Checkout = () => {
     <>
       <Helmet>
         <title>Checkout</title>
+        <meta
+          name="description"
+          content="Complete your purchase quickly and securely. Enter payment details, choose your delivery option, and review your order for a seamless checkout experience."
+        />
       </Helmet>
       <ConfirmationModal text="Remove" onDelete={onRemove} />
 

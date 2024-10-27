@@ -96,6 +96,10 @@ const Cart = () => {
       >
         <Helmet>
           <title>Cart</title>
+          <meta
+            name="description"
+            content="Review items in your shopping cart and make changes before checkout. Secure your favorite products with a quick and convenient cart overview."
+          />
         </Helmet>
         <div className="gap-10 flex max-lg:flex-col">
           <div className="flex flex-col gap-5 w-full">

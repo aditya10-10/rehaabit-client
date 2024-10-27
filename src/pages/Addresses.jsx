@@ -36,6 +36,10 @@ const Addresses = () => {
     >
       <Helmet>
         <title>Address</title>
+        <meta
+          name="description"
+          content="Enter and save your shipping and billing addresses with ease. Manage multiple addresses for faster, hassle-free checkouts every time you shop with us."
+        />
       </Helmet>
       <nav className="flex w-full justify-between">
         <div className="flex items-center">
