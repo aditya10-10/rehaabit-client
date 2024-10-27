@@ -95,13 +95,16 @@ const Services = () => {
         serviceId={serviceId}
       />
 
-      <section ref={servicesRef} className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2">
+      <section
+        ref={servicesRef}
+        className="self-center mt-44 w-full px-20 max-w-[1064px] max-md:mt-10 max-md:max-w-full max-md:px-10 max-sm:px-2"
+      >
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <div className="flex flex-col w-6/12 max-md:hidden">
             <img
               loading="lazy"
               src={serviceImage}
-              alt="Service illustration"
+              alt="All Types of Home Service in Mumbai"
               className="mt-3 w-full aspect-[0.65]"
             />
           </div>

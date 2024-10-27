@@ -83,8 +83,7 @@ const LocationSearchBarDiv = () => {
               setPincode(detectedPincode);
               // setLocationsuggestions([detectedCity]);
               addToRecentLocations(detectedCity);
-            })
-            
+            });
         },
         (error) => {
           // console.error("Error getting geolocation:", error);
@@ -96,7 +95,7 @@ const LocationSearchBarDiv = () => {
   const addToRecentLocations = (location) => {
     const updatedLocations = [location, ...recentLocations.filter(loc => loc !== location)].slice(0, 5);
     setRecentLocations(updatedLocations);
-    localStorage.setItem('recentLocations', JSON.stringify(updatedLocations));
+    localStorage.setItem("recentLocations", JSON.stringify(updatedLocations));
   };
 
   const handleClearLocation = () => {
@@ -104,7 +103,7 @@ const LocationSearchBarDiv = () => {
     setCity("");
     setPincode("");
     setRecentLocations([]);
-    localStorage.removeItem('recentLocations');
+    localStorage.removeItem("recentLocations");
   };
 
   const handleOutsideClick = (e) => {
@@ -213,7 +212,9 @@ const LocationSearchBarDiv = () => {
               recentLocations.length > 0 ? (
                 <>
                   <div className="flex justify-between items-center px-4 py-2">
-                    <span className="text-sm text-gray-600">RECENT LOCATIONS</span>
+                    <span className="text-sm text-gray-600">
+                      RECENT LOCATIONS
+                    </span>
                     <button
                       className="text-sm text-blue-500"
                       onClick={handleClearLocation}

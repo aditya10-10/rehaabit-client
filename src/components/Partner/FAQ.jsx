@@ -2,10 +2,16 @@ import { useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaCircleMinus } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FAQ = ({ faqs }) => {
   const location = useLocation();
   const [activeId, setActiveId] = useState(null);
+  const navigate = useNavigate();
+
+  const handleContactUs = () => {
+    navigate("/contact-us"); // Navigate to the contact-us page
+  };
 
   return (
     <div
@@ -17,18 +23,23 @@ const FAQ = ({ faqs }) => {
     >
       {location.pathname === "/partner" && (
         <div className="flex flex-col w-full md:w-[40%] lg:w-[30%] space-y-10">
-          <h1 className="text-3xl font-bold">Frequently Asked Questions</h1>
+          <h2 className="text-3xl font-bold">Frequently Asked Questions</h2>
 
           {/* Contact Card */}
           <div className="border border-purple-100 bg-white p-4 rounded-2xl shadow-md">
             <div className="flex gap-2"></div>
-            <h1 className="text-xl font-bold my-2">Still have a question?</h1>
+            <h3 className="text-xl font-bold my-2">Still have a question?</h3>
             <span className="text-gray-500 text-md">
               We're ready to help you with your questions.
             </span>
             <div className="flex text-md mt-2">
               <span className="text-gray-500 mr-1">Please</span>
-              <button className="text-purple-500 underline">Contact Us</button>
+              <button
+                onClick={handleContactUs}
+                className="text-purple-500 underline"
+              >
+                Contact Us
+              </button>
             </div>
           </div>
         </div>

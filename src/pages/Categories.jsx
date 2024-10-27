@@ -266,7 +266,7 @@ const Categories = () => {
         serviceIdToPass={serviceIdToPass}
       />
 
-      <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
+      <div className="flex  px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <Helmet>
           <title>{categoryName?.name} | Rehaabit</title>
           <meta

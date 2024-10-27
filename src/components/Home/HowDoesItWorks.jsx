@@ -34,7 +34,7 @@ const HowDoesItWorks = () => {
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/8a076d3b863a18df35e42f72c3af0d96f1aea7f7923578c2f50c360ed3239eda?apiKey=4aa4f4b9f3a34924a64c875e602547ca&"
-                alt="How it works illustration"
+                alt="Rehaabit Logo for How it Works"
                 className="self-center max-w-full aspect-[1.25] w-[153px]"
               />
               <h2 className="mt-1.5 text-4xl font-black leading-10 text-violet-900 text-ellipsis max-md:max-w-full">

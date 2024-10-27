@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { GoStarFill } from "react-icons/go";
 
 const ServicesDetailsRatingCard = ({
@@ -29,13 +29,15 @@ const ServicesDetailsRatingCard = ({
       day: "numeric",
     });
   };
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
+
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 mb-4 w-full max-w-xl mx-auto">
+    <div className="bg-slate-200 shadow-md rounded-lg p-4 mb-4 w-full mx-auto">
       {/* User Info */}
       <div className="flex justify-between items-center mb-2">
         {/* User Name */}
@@ -53,25 +55,27 @@ const ServicesDetailsRatingCard = ({
       </p>
 
       {/* Review Text and Star Rating in the same row */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col max-sm:flex-col justify-between items-start">
         {/* Review Text */}
-        <p className="text-base text-gray-700 flex-1">
+        <p className="text-base text-gray-700 mb-4 flex-1 max-w-full">
           {!quote && "No testimonial available."}
           {isExpanded ? quote : `${quote.substring(0, 110)}`}
           {quote.length > 110 && (
             <button
-            onClick={handleReadMore}
-            className="text-blue-500 ml-1"
-          >
-            {isExpanded ? "Show Less" : "Read More"}
-          </button>
+              onClick={handleReadMore}
+              className="text-blue-500 ml-1"
+            >
+              {isExpanded ? "Show Less" : "Read More"}
+            </button>
           )}
         </p>
 
         {/* Star Rating */}
-        <div className="flex items-center ml-4">
+        <div className="flex items-center mt-2 max-sm:mt-4 max-sm:justify-start max-sm:w-full">
           <span className="text-lg font-semibold text-green-600">{rating}</span>
-          <div className="ml-2 flex">{renderStars(rating)}</div>
+          <div className="ml-2 flex max-w-full overflow-hidden">
+            {renderStars(rating)}
+          </div>
         </div>
       </div>
     </div>

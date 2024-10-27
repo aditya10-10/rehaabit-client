@@ -7,9 +7,9 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
     <div className="flex flex-col items-center justify-center px-6 lg:px-20 py-12 lg:py-20">
       {/* Heading Section */}
       <div className="flex flex-col items-center justify-center w-full lg:w-[40%] mb-12">
-        <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl capitalize mb-4 text-center">
+        <h2 className="font-bold text-2xl md:text-3xl lg:text-4xl capitalize mb-4 text-center">
           Why choose rehaabit?
-        </h1>
+        </h2>
         <span className="text-base lg:text-lg text-gray-500 text-center mt-4">
           {WhyChooseText.text1}
         </span>
@@ -24,9 +24,9 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
             className="mx-auto h-24 w-24 object-contain"
           />
 
-          <h1 className="text-xl lg:text-2xl font-semibold capitalize my-4">
+          <h3 className="text-xl lg:text-2xl font-semibold capitalize my-4">
             {WhyChooseText.text2}
-          </h1>
+          </h3>
 
           <span className="text-sm lg:text-base text-gray-500">
             {WhyChooseText.text3}
@@ -40,9 +40,9 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
             className="mx-auto h-24 w-24 object-contain"
           />
 
-          <h1 className="text-xl lg:text-2xl font-semibold capitalize my-4">
+          <h3 className="text-xl lg:text-2xl font-semibold capitalize my-4">
             {WhyChooseText.text4}
-          </h1>
+          </h3>
 
           <span className="text-sm lg:text-base text-gray-500">
             {WhyChooseText.text5}
@@ -56,9 +56,9 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
             className="mx-auto h-24 w-24 object-contain"
           />
 
-          <h1 className="text-xl lg:text-2xl font-semibold capitalize my-4">
+          <h3 className="text-xl lg:text-2xl font-semibold capitalize my-4">
             {WhyChooseText.text6}
-          </h1>
+          </h3>
 
           <span className="text-sm lg:text-base text-gray-500">
             {WhyChooseText.text7}

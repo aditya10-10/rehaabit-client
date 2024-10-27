@@ -24,18 +24,20 @@ const Hero = ({ HeroSectionText }) => {
           <h1 className="capitalize text-2xl md:text-3xl lg:text-4xl font-bold mt-4">
             {HeroSectionText.text1}
           </h1>
-          <h3 className="capitalize text-lg md:text-xl lg:text-2xl text-gray-600 mt-3">
+          <h2 className="capitalize text-lg md:text-xl lg:text-2xl text-gray-600 mt-3">
             {HeroSectionText.text2}
-          </h3>
+          </h2>
         </div>
 
-        {/* Join Now Button */}
-        <button
-          className="bg-[#F56944] mt-8 text-white rounded-lg px-4 py-2 lg:px-6 lg:py-3 text-sm lg:text-base"
-          onClick={() => navigate("/partner-form/personal-information")}
-        >
-          Join Now
-        </button>
+        {/* Conditionally render "Join Now" button */}
+        {pathname === "/partner" && (
+          <button
+            className="bg-[#F56944] mt-8 text-white rounded-lg px-4 py-2 lg:px-6 lg:py-3 text-sm lg:text-base"
+            onClick={() => navigate("/partner-form/personal-information")}
+          >
+            Join Now
+          </button>
+        )}
 
         {/* Stats Section */}
         <div className="flex flex-col md:flex-row gap-6 mt-10 text-center lg:text-left">
@@ -70,7 +72,7 @@ const Hero = ({ HeroSectionText }) => {
         <img
           className="w-full h-auto object-contain"
           src={pathname === "/partner" ? HeroImage : carrers}
-          alt="HeroImage"
+          alt="Smiling professional woman with long brown hair and glasses, holding a pen and dressed in a white shirt, representing professionalism and confidence"
         />
       </div>
 

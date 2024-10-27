@@ -4,12 +4,13 @@ import {
   FAQ,
   Footer,
   Hero,
+  Navbar,
   OpenPositions,
-  OurExperiences,
   OurPartnerBenefits,
   ResumeSubmissionForm,
   WhyChooseRehaabit,
 } from "../components/Partner";
+import { Helmet } from "react-helmet-async";
 const Careers = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,50 +61,65 @@ const Careers = () => {
   const faqs = [
     {
       id: 1,
-      question: "Explore open jobs",
+      question: "Upload Your Resume",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "The first step to kickstart your career journey is submitting your resume. Make sure your resume is up-to-date and highlights your skills, experience, and achievements. Submitting a strong resume helps you make a great first impression and showcase why you're the right fit for the role. Our system allows you to upload your resume directly to our platform for faster and more efficient processing.",
     },
     {
       id: 2,
-      question: "submit application",
+      question: "Submit Application",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "Once your resume is ready, the next step is to submit your application for the job role you're interested in. You'll be asked to fill out essential details about your background, experience, and why you're interested in the position. Be sure to tailor your application to the job description to increase your chances of standing out. This step is crucial to letting the employer know more about your professional journey and aspirations.",
     },
     {
       id: 3,
-      question: "application review",
+      question: "Application Review",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "After submitting your application, our recruitment team will carefully review your profile and resume. During this phase, they will assess your skills, qualifications, and experiences against the job requirements. If everything matches, you'll be shortlisted for the next steps. This review process ensures that the right candidate is matched with the right opportunity.",
     },
     {
       id: 4,
-      question: "interview",
+      question: "Interview",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "If your application is shortlisted, you’ll be invited for an interview. Interviews can be held virtually or in-person, depending on the position. This is your opportunity to speak directly with hiring managers, answer questions about your qualifications, and learn more about the role. Prepare thoroughly by researching the company, reviewing common interview questions, and practicing your responses.",
     },
     {
       id: 5,
-      question: "offer",
+      question: "Offer",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "Congratulations! If your interview goes well, you’ll receive a job offer from the company. The offer will include details such as your role, salary, benefits, and start date. Be sure to review everything carefully before accepting. If you have any questions or need clarification, don't hesitate to ask. This is an exciting step toward joining the team!",
     },
     {
       id: 6,
-      question: "pre-onboard",
+      question: "Pre-Onboarding",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "Before your official start date, there may be a pre-onboarding phase where you complete necessary paperwork, such as background checks, and set up any accounts or tools you’ll need for your role. This step ensures that everything is in place for a smooth transition on your first day. It’s also a great time to familiarize yourself with the company’s culture and values.",
     },
     {
       id: 7,
-      question: "hired",
+      question: "Hired",
       answer:
-        "Getting started is easy! Simply sign up, create your professional profile, and start browsing job opportunities. You can showcase your skills, set your availability, and connect with clients looking for your expertise.",
+        "Welcome aboard! You've successfully completed the hiring process and are now an official part of the team. On your first day, you’ll go through the onboarding process where you’ll meet your colleagues, get acquainted with the work environment, and learn more about your role. This is the start of an exciting new chapter in your career!",
     },
   ];
 
   return (
     <div className="flex w-screen min-h-screen font-lato flex-col bg-white overflow-x-hidden">
+      <Helmet>
+        <title>
+          Rehaabit Careers: Join Our Team of Developers, Designers, and
+          Creatives
+        </title>
+        <meta
+          name="description"
+          content="Rehaabit is hiring developers, UI/UX designers, content writers, and more. Join our innovative team. Explore open positions and apply now!"
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit careers, tech jobs at Rehaabit, developer jobs, UI/UX designer careers, content writer jobs, creative jobs at Rehaabit, join the Rehaabit team, career opportunities in tech, job openings for developers, design and content roles at Rehaabit."
+        />
+      </Helmet>
+      <Navbar />
       <Hero HeroSectionText={HeroSectionText} />
       <WhyChooseRehaabit WhyChooseText={WhyChooseText} />
       <Benefits BenefitsText={BenefitsText} />

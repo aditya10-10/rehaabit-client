@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import {
   Benefits,
   FAQ,
@@ -87,6 +88,19 @@ const PartnerPage = () => {
 
   return (
     <div className="flex w-screen min-h-screen font-lato flex-col bg-white overflow-x-hidden">
+      <Helmet>
+        <title>
+          Become a Rehaabit Partner and Grow Your Home Service Business
+        </title>
+        <meta
+          name="description"
+          content="Partner with Rehaabit to grow your home service business. Join our trusted network, collaborate on quality services, and unlock new opportunities to expand your reach."
+        />
+        <meta
+          name="keywords"
+          content="Rehaabit partners, home service company, partnership with Rehaabit, home service professionals, business growth, Rehaabit network membership, service provider partnerships, collaboration with Rehaabit, home services cooperation."
+        />
+      </Helmet>
       <Navbar />
       <Hero HeroSectionText={HeroSectionText} />
       <WhyChooseRehaabit WhyChooseText={WhyChooseText} />

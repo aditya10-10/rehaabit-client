@@ -22,6 +22,7 @@ import { placeOrder } from "../services/operations/serviceOrder";
 import { useLocation, useNavigate } from "react-router-dom";
 import { openModal } from "../slices/modalSlice";
 import { ServiceCard } from "../components/Dashboard/Service";
+import { Helmet } from "react-helmet-async";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -151,6 +152,13 @@ const Checkout = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Checkout</title>
+        <meta
+          name="description"
+          content="Complete your purchase quickly and securely. Enter payment details, choose your delivery option, and review your order for a seamless checkout experience."
+        />
+      </Helmet>
       <ConfirmationModal text="Remove" onDelete={onRemove} />
 
       <div className="px-20 max-md:px-10 max-sm:px-4">

@@ -11,6 +11,7 @@ import { getUserAddresses } from "../slices/addressSlice";
 import { useNavigate } from "react-router-dom";
 import NothingToShow from "../components/NothingToShow";
 import { OtpModal } from "../components";
+import { Helmet } from "react-helmet-async";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -93,6 +94,13 @@ const Cart = () => {
         className="px-20 max-md:px-10 max-sm:px-4"
         style={{ fontFamily: "Roboto, sans-serif" }}
       >
+        <Helmet>
+          <title>Cart</title>
+          <meta
+            name="description"
+            content="Review items in your shopping cart and make changes before checkout. Secure your favorite products with a quick and convenient cart overview."
+          />
+        </Helmet>
         <div className="gap-10 flex max-lg:flex-col">
           <div className="flex flex-col gap-5 w-full">
             <div className="flex w-full items-center justify-between p-2 shadow-custom-shadow rounded-lg">

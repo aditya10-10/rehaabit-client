@@ -70,9 +70,9 @@ const OurExperiences = () => {
     <div className="flex flex-col py-10 px-4 sm:px-10 md:px-20 lg:px-40 gap-10">
       {/* Header and Navigation */}
       <div className="flex justify-between items-center">
-        <h1 className="text-lg sm:text-2xl font-bold w-full md:w-[40%] capitalize">
+        <h2 className="text-lg sm:text-2xl font-bold w-full md:w-[40%] capitalize">
           Our Experiences - Customer Satisfaction
-        </h1>
+        </h2>
 
         <div className="flex gap-2 items-center">
           <button

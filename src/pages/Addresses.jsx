@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import { getUserAddresses } from "../slices/addressSlice";
 import NothingToShow from "../components/NothingToShow";
+import { Helmet } from "react-helmet-async";
 
 const Addresses = () => {
   const dispatch = useDispatch();
@@ -30,9 +31,16 @@ const Addresses = () => {
 
   return (
     <div
-      className="flex flex-col items-center w-full p-10 max-sm:p-4"
+      className="flex flex-col items-center w-full  md:pl-16 sm:pl-14 max-sm:pl-14 lg:pl-64 p-10 max-sm:p-4"
       style={{ fontFamily: "Roboto, sans-serif" }}
     >
+      <Helmet>
+        <title>Address</title>
+        <meta
+          name="description"
+          content="Enter and save your shipping and billing addresses with ease. Manage multiple addresses for faster, hassle-free checkouts every time you shop with us."
+        />
+      </Helmet>
       <nav className="flex w-full justify-between">
         <div className="flex items-center">
           <h1 className="text-4xl max-sm:text-2xl font-semibold">

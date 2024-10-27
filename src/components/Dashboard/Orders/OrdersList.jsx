@@ -205,7 +205,7 @@ const OrdersList = ({ orders }) => {
 
               <div
                 key={item._id}
-                className="border font-arial rounded-lg p-4 mb-4 shadow-md bg-white"
+                className="border font-arial rounded-lg p-4 mb-4 shadow-md  lg:pl-52"
               >
                 {/* Header Section */}
                 <div className="flex justify-between items-center mb-4">
