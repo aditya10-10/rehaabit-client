@@ -4,6 +4,7 @@ import {
   FAQ,
   Footer,
   Hero,
+  Navbar,
   OpenPositions,
   OurPartnerBenefits,
   ResumeSubmissionForm,
@@ -60,7 +61,7 @@ const Careers = () => {
   const faqs = [
     {
       id: 1,
-      question: "Submit Your Resume",
+      question: "Upload Your Resume",
       answer:
         "The first step to kickstart your career journey is submitting your resume. Make sure your resume is up-to-date and highlights your skills, experience, and achievements. Submitting a strong resume helps you make a great first impression and showcase why you're the right fit for the role. Our system allows you to upload your resume directly to our platform for faster and more efficient processing.",
     },
@@ -118,7 +119,7 @@ const Careers = () => {
           content="Rehaabit careers, tech jobs at Rehaabit, developer jobs, UI/UX designer careers, content writer jobs, creative jobs at Rehaabit, join the Rehaabit team, career opportunities in tech, job openings for developers, design and content roles at Rehaabit."
         />
       </Helmet>
-
+      <Navbar />
       <Hero HeroSectionText={HeroSectionText} />
       <WhyChooseRehaabit WhyChooseText={WhyChooseText} />
       <Benefits BenefitsText={BenefitsText} />

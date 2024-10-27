@@ -25,7 +25,10 @@ const Benefits = ({ BenefitsText }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-row gap-4 items-center justify-center">
         {/* {div1} */}
         <div className="lg:mt-0 mt-8 w-auto ml-5">
-          <img src={png1} alt="Expert Network png" />
+          <img
+            src={png1}
+            alt="Smiling woman with glasses working on a laptop with colleagues, representing expert guidance and support"
+          />
           <div className="flex items-center w-full gap-20 py-4">
             <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text3}
@@ -38,7 +41,10 @@ const Benefits = ({ BenefitsText }) => {
 
         {/* {div2} */}
         <div className="lg:mt-64 mt-8 ml-5">
-          <img src={png2} alt="Job Flexibility png" />
+          <img
+            src={png2}
+            alt="Sticky note with 'Flexible Schedule' written on it, illustrating flexible work options"
+          />
           <div className="flex items-center w-full gap-20 py-4">
             <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text4}
@@ -51,7 +57,10 @@ const Benefits = ({ BenefitsText }) => {
 
         {/* {div3} */}
         <div className="lg:mt-44 mt-8 ml-5">
-          <img src={png3} alt="Skill Growth png" />
+          <img
+            src={png3}
+            alt="Diagram with 'Skill' in the center surrounded by terms like experience, training, and knowledge, highlighting skill enhancement opportunities"
+          />
           <div className="flex items-center w-full gap-20  py-4">
             <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text5}
@@ -64,7 +73,10 @@ const Benefits = ({ BenefitsText }) => {
 
         {/* {div4} */}
         <div className="lg:mt-10 mt-8 ml-5">
-          <img src={png4} alt="Reliable Earnings png" />
+          <img
+            src={png4}
+            alt="Close-up of hands stacked on top of each other, symbolizing steady career growth and team support."
+          />
           <div className="flex items-center w-full gap-20 py-4">
             <h3 className="text-xl md:text-2xl font-[500] capitalize">
               {BenefitsText.text6}

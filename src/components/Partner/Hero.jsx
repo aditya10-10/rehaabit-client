@@ -72,7 +72,7 @@ const Hero = ({ HeroSectionText }) => {
         <img
           className="w-full h-auto object-contain"
           src={pathname === "/partner" ? HeroImage : carrers}
-          alt="HeroImage"
+          alt="Smiling professional woman with long brown hair and glasses, holding a pen and dressed in a white shirt, representing professionalism and confidence"
         />
       </div>
 

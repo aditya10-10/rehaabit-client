@@ -50,12 +50,11 @@ const OurPartnerBenefits = ({ OurBenefitsText }) => {
 
           {/* Image and Partner Stats */}
           <div className="relative flex justify-center items-center">
-
-  <img
-    src={png1}
-    alt="png1"
-    className="w-full max-w-[464px] h-auto object-contain"
-  />
+            <img
+              src={png1}
+              alt="Diverse group of people joining hands in a circle, symbolizing unity and teamwork"
+              className="w-full max-w-[464px] h-auto object-contain"
+            />
 
             {/* Ensure the parent container is relative and inner div is absolute */}
             {/* <div className="absolute bottom-4 right-0 lg:right-[19%]  sm:right-[5%] md:right-[11%] max-sm:right-[4%] max-sm:h-[160px]    border border-purple-100 rounded-3xl p-6 h-auto w-[220px] md:w-[220px] lg:w-[220px] lg:h-[160px]">
