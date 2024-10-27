@@ -19,6 +19,7 @@ import { setSingleOrder } from "../slices/orderSlice";
 import EnquireNowModal from "../components/Home/EnquireNowModal";
 import { ServiceCard } from "../components/Dashboard/Service";
 import ServiceDetailsModal from "../components/ServiceDetailsModal";
+import { CategorySkeleton } from "../utils/Skeleton/CategorySkeleton";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -35,12 +36,13 @@ const Categories = () => {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
   const { allServices } = useSelector((state) => state.service);
-  const { cartServices, isLoading } = useSelector((state) => state.cart);
+  const { cartServices, isLoading: cartLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
   const categoryName = categories.find(
@@ -66,19 +68,38 @@ const Categories = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getSubCategoriesByCategory({ categoryId }));
+    const fetchData = async () => {
+      setIsLoading(true);
+      await dispatch(getSubCategoriesByCategory({ categoryId }));
+      setIsLoading(false);
+    };
+    fetchData();
   }, [dispatch, categoryId]);
 
   useEffect(() => {
-    if (scrollTo === "subcategory" && subCategoryId) {
-      categoryRefs.current[subCategoryId]?.scrollIntoView({
-        behavior: "smooth",
-      });
+    const scrollToElement = () => {
+      if (scrollTo === "subcategory" && subCategoryId && categoryRefs.current[subCategoryId]) {
+        setTimeout(() => {
+          categoryRefs.current[subCategoryId]?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }, 500); // Add a delay to ensure content is loaded
+      }
+      if (scrollTo === "service" && serviceId && serviceRefs.current[serviceId]) {
+        setTimeout(() => {
+          serviceRefs.current[serviceId]?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }, 500); // Add a delay to ensure content is loaded
+      }
+    };
+
+    if (!isLoading) {
+      scrollToElement();
     }
-    if (scrollTo === "service" && serviceId && allServices.length > 0) {
-      serviceRefs.current[serviceId]?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [scrollTo, subCategoryId, serviceId, allServices]);
+  }, [scrollTo, subCategoryId, serviceId, isLoading]);
 
   const handleCategoryClick = (subCategoryId, subCategoryName) => {
     categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
@@ -194,6 +215,36 @@ const Categories = () => {
     // Revert URL when closing Enquire Now modal
     updateUrl(`/${categoryId}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
+        <div className="w-[40%] max-md:w-full">
+          <CategorySkeleton className="h-10 w-3/4 mb-2" />
+          <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
+            <CategorySkeleton className="h-6 w-1/2 mx-auto mb-4" />
+            <div className="grid grid-cols-3 p-2 gap-4 max-xl:grid-cols-2 max-lg:grid-cols-1">
+              {[...Array(6)].map((_, index) => (
+                <CategorySkeleton key={index} className="h-32 w-full rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="border-2 rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="mb-8">
+              <CategorySkeleton className="h-8 w-1/3 mb-4" />
+              <div className="grid grid-cols-1 gap-4">
+                {[...Array(3)].map((_, serviceIndex) => (
+                  <CategorySkeleton key={serviceIndex} className="h-40 w-full rounded-lg" />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -326,7 +377,7 @@ const Categories = () => {
                                     <>
                                       <button
                                         className="border px-2 border-gray-400 rounded-full"
-                                        disabled={isLoading}
+                                        disabled={cartLoading}
                                         onClick={() =>
                                           handleDecrease(
                                             cartService._id,
@@ -343,7 +394,7 @@ const Categories = () => {
 
                                       <button
                                         className="border px-2 border-gray-400 rounded-full"
-                                        disabled={isLoading}
+                                        disabled={cartLoading}
                                         onClick={() =>
                                           handleIncrease(
                                             cartService._id,
@@ -356,7 +407,7 @@ const Categories = () => {
 
                                       <button
                                         className="px-2 text-gray-600 hover:text-red-500"
-                                        disabled={isLoading}
+                                        disabled={cartLoading}
                                         onClick={() =>
                                           handleRemove(cartService._id, service)
                                         }
@@ -367,7 +418,7 @@ const Categories = () => {
                                   ) : (
                                     <button
                                       className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
-                                      disabled={isLoading}
+                                      disabled={cartLoading}
                                       onClick={() => handleAddToCart(service)}
                                     >
                                       Add to Cart

@@ -22,49 +22,46 @@ const LocationSearchBarDiv = () => {
   const [pincode, setPincode] = useState("");
   const [recentLocations, setRecentLocations] = useState([]);
   const [showRecent, setShowRecent] = useState(true);
-  const { locationSuggestions, isLoading } = useSelector(
-    (state) => state.location
-  );
-  console.log(locationSuggestions);
-  console.log(locationsuggestions);
-  useEffect(() => {
-    // Load recent locations from localStorage
-    const storedLocations =
-      JSON.parse(localStorage.getItem("recentLocations")) || [];
-    setRecentLocations(storedLocations);
-  }, []);
-  useEffect(() => {
-    setLocationsuggestions(locationSuggestions.suggestedLocations);
-  }, [locationSuggestions]);
+//   const { locationSuggestions, isLoading } = useSelector((state) => state.location);
+//   console.log(locationSuggestions)
+//   console.log(locationsuggestions)
+//   useEffect(() => {
+//     // Load recent locations from localStorage
+//     const storedLocations = JSON.parse(localStorage.getItem('recentLocations')) || [];
+//     setRecentLocations(storedLocations);
+//   }, []);
+//  useEffect(()=>{
+//   setLocationsuggestions(locationSuggestions.suggestedLocations)
+//  },[locationSuggestions])
   const handleSearchQuery = () => {
     setSearchQuery("");
   };
 
-  const debouncedGetLocationSuggestions = useCallback(
-    debounce((value) => {
-      dispatch(getLocationSuggestions(value));
-    }, 1000),
-    [dispatch]
-  );
+  // const debouncedGetLocationSuggestions = useCallback(
+  //   debounce((value) => {
+  //     dispatch(getLocationSuggestions(value));
+  //   }, 1000),
+  //   [dispatch]
+  // );
 
-  const handleLocationSearch = (e) => {
-    const value = e.target.value;
-    setCity(value);
-    setShowRecent(false);
-    if (value.trim()) {
-      debouncedGetLocationSuggestions(value);
-    } else {
-      setLocationsuggestions([]);
-    }
-    // Open the dropdown when user starts typing
-    setIsLocationDropdownOpen(true);
-  };
+  // const handleLocationSearch = (e) => {
+  //   const value = e.target.value;
+  //   setCity(value);
+  //   setShowRecent(false);
+  //   if (value.trim()) {
+  //     debouncedGetLocationSuggestions(value);
+  //   } else {
+  //     setLocationsuggestions([]);
+  //   }
+  //   // Open the dropdown when user starts typing
+  //   setIsLocationDropdownOpen(true);
+  // };
 
-  const handleInputClick = () => {
-    setCity("");
-    setShowRecent(true);
-    setLocationsuggestions([]);
-  };
+  // const handleInputClick = () => {
+  //   setCity("");
+  //   setShowRecent(true);
+  //   setLocationsuggestions([]);
+  // };
 
   const handleDetectLocation = () => {
     if (navigator.geolocation) {
@@ -84,7 +81,7 @@ const LocationSearchBarDiv = () => {
               const detectedPincode = data.address.postcode;
               setCity(detectedCity);
               setPincode(detectedPincode);
-              setLocationsuggestions([detectedCity]);
+              // setLocationsuggestions([detectedCity]);
               addToRecentLocations(detectedCity);
             });
         },
@@ -96,13 +93,13 @@ const LocationSearchBarDiv = () => {
   };
 
   const addToRecentLocations = (location) => {
-    const updatedLocations = [location, ...recentLocations].slice(0, 5);
+    const updatedLocations = [location, ...recentLocations.filter(loc => loc !== location)].slice(0, 5);
     setRecentLocations(updatedLocations);
     localStorage.setItem("recentLocations", JSON.stringify(updatedLocations));
   };
 
   const handleClearLocation = () => {
-    setLocationsuggestions([]);
+    // setLocationsuggestions([]);
     setCity("");
     setPincode("");
     setRecentLocations([]);
@@ -133,10 +130,10 @@ const LocationSearchBarDiv = () => {
       }
     });
   }, []);
-
-  useEffect(() => {
-    setLocationsuggestions(locationSuggestions.suggestedLocations);
-  }, [locationSuggestions]);
+  
+  // useEffect(() => {
+  //   setLocationsuggestions(locationSuggestions.suggestedLocations);
+  // }, [locationSuggestions]);
 
   return (
     <>
@@ -163,12 +160,13 @@ const LocationSearchBarDiv = () => {
             }}
           >
             <input
-              className="border-none outline-none"
+              className='border-none outline-none cursor-pointer'
+              readOnly
               type="text"
               value={city}
               placeholder="Search for a location..."
-              onChange={handleLocationSearch}
-              onClick={handleInputClick}
+              // onChange={handleLocationSearch}
+              // onClick={handleInputClick}
             />
           </span>
         </div>
@@ -242,10 +240,12 @@ const LocationSearchBarDiv = () => {
                   No recent locations
                 </div>
               )
-            ) : !showRecent && locationsuggestions?.length > 0 ? (
+            ) : !showRecent && 
+            locationsuggestions?.length > 0 ? 
+            (
               <>
                 <div className="px-4 py-2">SUGGESTIONS</div>
-                {locationsuggestions.map((suggestion, index) => (
+                {/* {locationsuggestions.map((suggestion, index) => (
                   <button
                     key={index}
                     className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
@@ -257,7 +257,7 @@ const LocationSearchBarDiv = () => {
                   >
                     {suggestion.placeName}
                   </button>
-                ))}
+                ))} */}
               </>
             ) : !showRecent ? (
               <div className="px-4 py-2 text-sm text-gray-700">
