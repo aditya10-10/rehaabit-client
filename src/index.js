@@ -35,7 +35,7 @@ root.render(
           <BrowserRouter>
             <App />
             <Toaster
-              position="top-right"
+              position="top-center"
               expand={false}
               richColors
               closeButton
