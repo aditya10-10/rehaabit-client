@@ -37,7 +37,7 @@ const ServiceDetailsModal = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-   console.log(isServiceModalOpen);
+  //  console.log(isServiceModalOpen);
   const [activeId, setActiveId] = useState(null);
   const [onRemove, setOnRemove] = useState(null);
   const [page, setPage] = useState(1);
@@ -104,10 +104,10 @@ const ServiceDetailsModal = ({
   const { cartServices, isLoading: cartIsLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
 
-  const cartService = cartServices.find(
-    (service) => service.serviceId === serviceId
+  const cartService = cartServices?.find(
+    (service) => service?.serviceId === serviceId
   );
-  const serviceQty = cartService ? cartService.qty : 0;
+  const serviceQty = cartService ? cartService?.qty : 0;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const sliderRef = useRef(null);

@@ -43,8 +43,8 @@ const Features = () => {
           Our Services
         </h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 mt-6 max-w-full w-[676px]">
-          {categories.map((feature) => (
-            <Link key={feature._id} to={`${createSlug(feature.name)}`}>
+          {categories?.map((feature) => (
+            <Link key={feature?._id} to={`${createSlug(feature?.name)}`}>
               <FeatureItem {...feature} />
             </Link>
           ))}

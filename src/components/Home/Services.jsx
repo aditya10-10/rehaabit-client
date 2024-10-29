@@ -16,7 +16,7 @@ const ServiceCard = ({
   const rating = avgRating > 0 ? avgRating : 0;
 
   const renderStars = (rating) => {
-    return [...Array(5)].map((_, index) => (
+    return [...Array(5)]?.map((_, index) => (
       <span key={index}>
         {index + 1 <= rating ? (
           <GoStarFill className="text-yellow-400" />
@@ -39,8 +39,8 @@ const ServiceCard = ({
           </h3>
           <p>
             <span className="text-sm text-zinc-700">
-              {serviceDescription.length > 30
-                ? `${serviceDescription.slice(0, 30)}...`
+              {serviceDescription?.length > 30
+                ? `${serviceDescription?.slice(0, 30)}...`
                 : serviceDescription}
             </span>
           </p>
@@ -63,7 +63,7 @@ const Services = () => {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const location = useLocation();
   const servicesRef = useRef(null);
-  console.log(servicesRef)
+  // console.log(servicesRef)
   useEffect(() => {
     if (location.state?.scrollTo === "services") {
       servicesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -83,8 +83,8 @@ const Services = () => {
     }
   };
 
-  const pricedServices = allServices.filter(
-    (service) => service.priceStatus === "priced" && service.status !== "Draft"
+  const pricedServices = allServices?.filter(
+    (service) => service?.priceStatus === "priced" && service?.status !== "Draft"
   );
 
   return (
@@ -113,9 +113,9 @@ const Services = () => {
               <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
                 Services{" "}
               </h2>
-              {pricedServices.slice(0, 5).map((service) => (
+              {pricedServices?.slice(0, 5)?.map((service) => (
                 <div
-                  key={service._id}
+                  key={service?._id}
                   className="w-full cursor-pointer"
                   onClick={() => {
                     setIsServiceModalOpen(!isServiceModalOpen);

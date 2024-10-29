@@ -136,7 +136,7 @@ const categorySlice = createSlice({
       })
       .addCase(createCategory.pending, (state) => {
         state.isLoading = true;
-
+        Swal.showLoading(); 
         // Swal.showLoading()
       })
       .addCase(createCategory.fulfilled, (state, action) => {

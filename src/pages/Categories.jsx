@@ -48,6 +48,11 @@ const Categories = () => {
   const categoryName = categories.find(
     (category) => category.slugName === categoryId
   );
+  useEffect(() => {
+    if (!categoryName) {
+      navigate('*');
+    }
+  }, [categoryName, navigate]);
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
