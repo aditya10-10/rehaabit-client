@@ -90,15 +90,13 @@ const Hero = ({ scrollToFeatures }) => {
               peace of mind and excellence every time!
             </p>
 
-            
-            <Button 
-  color="green" 
-  className="mt-5 max-sm:mt-4 max-sm:p-1 max-sm:w-[112px] whitespace-nowrap sm:ml-[-8px]" 
-  onClick={scrollToFeatures}
->
-  Book a Service
-</Button>
-
+            <Button
+              color="green"
+              className="mt-5 max-sm:mt-4 max-sm:p-1 max-sm:w-[112px] whitespace-nowrap sm:ml-[-8px]"
+              onClick={scrollToFeatures}
+            >
+              Book a Service
+            </Button>
           </div>
         </div>
       </div>
