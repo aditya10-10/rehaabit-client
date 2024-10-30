@@ -76,6 +76,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.25.9",
     "@tanstack/eslint-plugin-query": "^5.53.0",
     "postcss": "^8.4.40",
     "postcss-preset-mantine": "^1.17.0",
