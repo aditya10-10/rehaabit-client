@@ -18,7 +18,7 @@ const Category = () => {
 // }, [dispatch])
 
   return (
-    <div className="lg:pl-64 md:pl-64 sm:pl-20 max-sm:pl-16  p-10 w-full">
+    <div className="p-10 w-full">
       <h1 className="text-4xl font-semibold">Category</h1>
 
       <div className="flex justify-between w-full items-center mt-4">

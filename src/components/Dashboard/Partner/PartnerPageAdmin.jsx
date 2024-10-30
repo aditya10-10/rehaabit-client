@@ -55,7 +55,7 @@ const PartnerPageAdmin = () => {
   });
 
   return (
-    <div className="flex flex-col items-center w-full p-10 max-md:p-4 max-sm:p-2  lg:pl-64">
+    <div className="flex flex-col items-center w-full p-10 max-md:p-4 max-sm:p-2 ">
       <nav className="flex w-full justify-between">
         <div className="flex w-full items-center max-sm:flex-col max-sm:justify-center">
           <h1 className="text-4xl max-md:text-2xl font-semibold mb-6 max-sm:mb-4">

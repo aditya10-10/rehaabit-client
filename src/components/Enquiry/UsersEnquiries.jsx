@@ -98,7 +98,7 @@ const UsersEnquiries = () => {
 
   return (
     <div
-      className="container mx-auto p-6  lg:pl-48 rounded-lg shadow-lg"
+      className="container mx-auto p-6  rounded-lg shadow-lg"
       style={{ fontFamily: "Roboto, sans-serif" }}
     >
       <h1 className="text-3xl font-bold mb-6 text-gray-700">
