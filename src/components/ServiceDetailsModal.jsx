@@ -255,7 +255,7 @@ const ServiceDetailsModal = ({
               onClick={handleCloseModal}
             />
             <motion.div
-              className="bg-white p-6 max-xs:p-4 rounded-lg shadow-lg w-1/3 max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[70vh] overflow-y-auto relative"
+              className="bg-white p-6 max-xs:p-0 rounded-lg shadow-lg w-1/3 max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[70vh] overflow-y-auto relative"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}

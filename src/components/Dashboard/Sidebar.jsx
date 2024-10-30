@@ -37,17 +37,30 @@ const sidebarLinks = [
   { id: 12, icon: <IoMdSettings />, text: "Settings", to: "edit-profile" }
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ children }) {  
+  const [isOrderClickedinPhone, setIsOrderClickedinPhone] = useState(false);
+  const isSidebarVisible = useSelector((state) => state.sidebar.isSidebarVisible);
   const [expanded, setExpanded] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [confirmationModal, setConfirmationModal] = useState(null);
-  const isSidebarVisible = useSelector((state) => state.sidebar.isSidebarVisible);
-  const { user } = useSelector((state) => state.profile);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Ensure useNavigate is imported correctly
   const location = useLocation();
   const dispatch = useDispatch();
-  
-  // Resize handler for mobile responsiveness
+  const { service, serviceId } = useSelector((state) => state.service);
+  const { user } = useSelector((state) => state.profile);
+  const [isEditing, setIsEditing] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(null);
+  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+  useEffect(() => {
+    if (
+      location.pathname.startsWith("/dashboard/service") &&
+      service &&
+      serviceId
+    ) {
+      setIsEditing(true);
+    } else {
+      setIsEditing(false);
+    }
+  }, [location, service, serviceId]);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -55,13 +68,39 @@ export default function Sidebar() {
       }
     };
     window.addEventListener("resize", handleResize);
+    // Initial check
     handleResize();
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // Filtered Sidebar Links based on user type
+  const handleNavigation = (path) => {
+    if (isEditing) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You have unsaved changes. Do you really want to leave?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#06952c",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, leave",
+        cancelButtonText: "No, stay",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(path);
+          dispatch(clearServiceForm());
+        }
+      });
+    } else {
+      navigate(path);
+    }
+    // Close sidebar in phone mode
+    if (window.innerWidth <= 768) {
+      setExpanded(false);
+    }
+  };
+
   const filteredSidebarLinks = sidebarLinks.filter(
     (link) =>
       (!link.adminOnly || user.accountType === "Admin") &&
@@ -69,124 +108,125 @@ export default function Sidebar() {
       link.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Logout handler
-  const handleLogout = () => {
-    setConfirmationModal({
-      text1: "Are you sure?",
-      text2: "You will be logged out of your account.",
-      btn1Text: "Logout",
-      btn2Text: "Cancel",
-      btn1Handler: () => {
-        dispatch(logout(navigate, location.pathname));
-        navigate("/login");
-      },
-      btn2Handler: () => setConfirmationModal(null),
-    });
-  };
-
+    // Logout handler
+    const handleLogout = () => {
+      setConfirmationModal({
+        text1: "Are you sure?",
+        text2: "You will be logged out of your account.",
+        btn1Text: "Logout",
+        btn2Text: "Cancel",
+        btn1Handler: () => {
+          dispatch(logout(navigate, location.pathname));
+          navigate("/login");
+        },
+        btn2Handler: () => setConfirmationModal(null),
+      });
+    };
   return (
     <>
-      {isSidebarVisible && (
-        <>
-          {/* Sidebar overlay for small screens */}
-          <div
-            className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${
-              expanded ? 'visible opacity-100' : 'invisible opacity-0'
-            } md:hidden`} // Hide on medium and larger screens
-            onClick={() => setExpanded(false)} // Clicking outside collapses the sidebar
-            style={{ zIndex: 40 }}
-          ></div>
-  
-          {/* Sidebar */}
-          <aside
-            className={`h-[calc(100vh-64px)] fixed top-[64px]  left-0 z-50 transition-all duration-300 ${
-              expanded ? 'w-64 bg-white  ' : 'w-16 bg-white'
-            } border-r shadow-sm`}
-            style={{ fontFamily: "Roboto, sans-serif", zIndex: 50 }} // Higher z-index to keep it above the overlay
-          >
-            <nav className="flex flex-col h-full">
-              <SidebarHeader expanded={expanded} setExpanded={setExpanded} />
-  
-              {/* Search Section for Admin */}
-              {user.accountType === "Admin" && (
-                <SearchBar expanded={expanded} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      {isSidebarVisible &&(
+      <aside className="h-screen" style={{ fontFamily: "Roboto, sans-serif" }}>
+        <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+          <div className="p-4 pb-2 flex justify-between items-center">
+            <button
+              onClick={() => setExpanded((curr) => !curr)}
+              className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
+            >
+              {expanded ? <ChevronLeft /> : <ChevronRight />}
+            </button>
+          </div>
+          {user.accountType === "Admin" && (
+            <div className="p-4">
+              {!expanded ? (
+                <button
+                  onClick={() => setIsSearchModalVisible(true)} // Open search modal on icon click
+                  className="p-2 rounded-full bg-gray-50 hover:bg-gray-100"
+                >
+                  <FiSearch className="text-xl" />
+                </button>
+              ) : (
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search..."
+                  className="w-full p-2 border rounded"
+                  style={{ fontFamily: "Roboto, sans-serif" }}
+                />
               )}
-  
-              <SidebarContext.Provider value={{ expanded }}>
-                <ul className="flex-1 px-3 overflow-y-auto">
-                  {filteredSidebarLinks.map((link, index) => (
-                    <SidebarItem key={link.id} icon={link.icon} text={link.text} to={link.to} isFirst={index === 0} />
-                  ))}
-                  <LogoutButton expanded={expanded} handleLogout={handleLogout} />
-                </ul>
-              </SidebarContext.Provider>
-            </nav>
-          </aside>
-        </>
-      )}
-  
+            </div>
+          )}
+          <SidebarContext.Provider value={{ expanded }}>
+            <ul className="flex-1 px-3">
+              {filteredSidebarLinks.map((link, index) => (
+                <SidebarItem
+                  key={link.id}
+                  icon={link.icon}
+                  text={link.text}
+                  to={link.to}
+                  index={link.index}
+                  setIsOrderClickedinPhone={setIsOrderClickedinPhone}
+                  handleNavigation={handleNavigation}
+                  isFirst={index === 0}
+                />
+              ))}
+              <div className="border-t flex p-3">
+                <button
+                  onClick={handleLogout}
+                  className="w-full p-2 bg-red-500 text-white rounded-md hover:bg-red-600 flex items-center justify-center"
+                  style={{ fontFamily: "Roboto, sans-serif" }}
+                >
+                  <VscSignOut className="text-lg" />
+                  {expanded && <span className="ml-2">Logout</span>}
+                </button>
+              </div>
+            </ul>
+          </SidebarContext.Provider>
+        </nav>
+      </aside>
+    )}
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </>
   );
-  
 }
 
-// Sidebar Header Component
-const SidebarHeader = ({ expanded, setExpanded }) => (
-  <div className="p-4 pb-2  flex justify-between items-center">
-    <button
-      onClick={() => setExpanded((curr) => !curr)}
-      className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
-    >
-      {expanded ? <ChevronLeft /> : <ChevronRight />}
-    </button>
-  </div>
-);
-
-// Search Bar Component for Admin
-const SearchBar = ({ expanded, searchTerm, setSearchTerm }) => (
-  <div className="p-4">
-    {!expanded ? (
-      <button
-        className="p-2 rounded-full bg-gray-50 hover:bg-gray-100"
-      >
-        <FiSearch className="text-xl" />
-      </button>
-    ) : (
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search..."
-        className="w-full p-2 border rounded"
-        style={{ fontFamily: "Roboto, sans-serif" }}
-      />
-    )}
-  </div>
-);
-
-// Sidebar Item Component
-function SidebarItem({ icon, text, to }) {
+function SidebarItem({ icon, text, to, index, handleNavigation, isFirst,setIsOrderClickedinPhone }) {
   const { expanded } = useContext(SidebarContext);
   const location = useLocation();
   const isActive = location.pathname === to;
-  const navigate = useNavigate();
+  const handleClick = (e) => {
+    e.preventDefault();
+    
+    if (window.innerWidth <= 768 && text === "Orders") {
+      setIsOrderClickedinPhone(true);  
+    } else {
+      setIsOrderClickedinPhone(false);  
+    }
+  
+    handleNavigation(to);
+  };
 
   return (
     <li
       className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${isActive
-        ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-        : "hover:bg-indigo-50 text-gray-600"
-        }`}
-      onClick={() => navigate(to)}
+          ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
+          : "hover:bg-indigo-50 text-gray-600"
+        } ${isFirst && isActive ? "text-indigo-800" : ""}`}
+      onClick={handleClick}
+      style={{ fontFamily: "Roboto, sans-serif" }}
     >
       {icon}
-      <span className={`overflow-hidden transition-all duration-300 ${expanded ? "w-52 ml-3" : "w-0"}`}>
+      <span
+        className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"
+          }`}
+        style={{ fontFamily: "Roboto, sans-serif" }}
+      >
         {text}
       </span>
       {!expanded && (
         <div
-          className="absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0"
+          className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+          style={{ fontFamily: "Roboto, sans-serif" }}
         >
           {text}
         </div>
@@ -194,16 +234,3 @@ function SidebarItem({ icon, text, to }) {
     </li>
   );
 }
-
-// Logout Button Component
-const LogoutButton = ({ expanded, handleLogout }) => (
-  <div className="border-t flex p-3">
-    <button
-      onClick={handleLogout}
-      className="w-full p-2 bg-red-500 text-white rounded-md hover:bg-red-600 flex items-center justify-center transition-all duration-300"
-    >
-      <VscSignOut className="text-lg" />
-      {expanded && <span className="ml-2">Logout</span>}
-    </button>
-  </div>
-);
