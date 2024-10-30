@@ -292,7 +292,7 @@ const OrdersList = ({ orders }) => {
                         Edit Order
                       </button>
                       {openDropdownId === _id && (
-                        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-40">
                           <select
                             className="block w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-sm leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             onChange={handleDropdownChange}

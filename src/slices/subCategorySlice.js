@@ -152,6 +152,7 @@ const subCategorySlice = createSlice({
       })
       .addCase(addSubCategory.pending, (state) => {
         state.isLoading = true;
+        Swal.showLoading();
       })
       .addCase(addSubCategory.fulfilled, (state, action) => {
         state.subcategories.push(action.payload.newSubCategory);

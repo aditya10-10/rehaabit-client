@@ -11,16 +11,16 @@ const PopularSearches = () => {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [serviceNameToPass, setServiceNameToPass] = useState(null);
 
-  const nonPricedServices = allServices.filter(
+  const nonPricedServices = allServices?.filter(
     (service) =>
-      service.priceStatus === "non-priced" && service.status !== "Draft"
+      service?.priceStatus === "non-priced" && service?.status !== "Draft"
   );
 
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({
+    if (scrollRef?.current) {
+      scrollRef?.current?.scrollBy({
         left: direction === "left" ? -355 : 355,
         behavior: "smooth",
       });
@@ -71,7 +71,7 @@ const PopularSearches = () => {
             className="scrollable-container flex gap-4 justify-start self-center w-full overflow-x-auto overflow-y-hidden px-4 
               scrollbar-hide -webkit-overflow-scrolling: touch"
           >
-            {nonPricedServices.map((service, index) => {
+            {nonPricedServices?.map((service, index) => {
               const { _id, thumbnail, serviceName } = service;
 
               return (
@@ -79,7 +79,7 @@ const PopularSearches = () => {
                   key={_id}
                   className={`min-w-[300px] max-w-[300px] sm:min-w-[340px] md:min-w-[355px] md:max-w-[355px] 
                     flex-shrink-0 snap-center ${index === 0 ? "ml-4" : ""} ${
-                    index === nonPricedServices.length - 1 ? "mr-4" : ""
+                    index === nonPricedServices?.length - 1 ? "mr-4" : ""
                   }`}
                 >
                   <img
