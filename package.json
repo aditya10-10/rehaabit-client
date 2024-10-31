@@ -45,7 +45,6 @@
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "sonner": "^1.5.0",
-    "start": "^5.1.0",
     "sweetalert2": "^11.12.3",
     "web-vitals": "^2.1.4"
   },
@@ -53,9 +52,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "cd server && npm run dev",
-    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm start\" \"npm run server\""
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -82,5 +79,8 @@
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "tailwindcss": "^3.4.3"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
