@@ -1,7 +1,6 @@
-const BASE_URL =
-  process.env.REACT_APP_BASE_URL ||
-  "https://rehaabit-server-production.up.railway.app/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+console.log("Base url", BASE_URL);
 // AUTH ENDPOINTS
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/sendOTP",
