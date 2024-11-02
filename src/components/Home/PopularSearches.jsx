@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import EnquireNowModal from "./EnquireNowModal";
@@ -9,6 +9,7 @@ const PopularSearches = () => {
 
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [serviceId, setServiceId] = useState(null); // Track service ID directly
   const [serviceNameToPass, setServiceNameToPass] = useState(null);
 
   const nonPricedServices = allServices?.filter(
@@ -19,25 +20,33 @@ const PopularSearches = () => {
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
-    if (scrollRef?.current) {
-      scrollRef?.current?.scrollBy({
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
         left: direction === "left" ? -355 : 355,
         behavior: "smooth",
       });
     }
   };
 
-  const handleServiceModalOpen = (serviceName) => {
-    setServiceNameToPass(serviceName);
+  // Opens the Service Modal and sets the service ID
+  const handleServiceModalOpen = (service) => {
+    setServiceId(service?._id); // Ensure service ID is set properly
     setIsServiceModalOpen(true);
   };
 
-  const handleServiceModalClose = () => setIsServiceModalOpen(false);
+  // Closes the Service Modal
+  const handleServiceModalClose = () => {
+    setIsServiceModalOpen(false);
+    setServiceId(null); // Clear service ID when modal closes
+  };
+
+  // Opens the Enquire Modal
   const handleEnquireNowModalOpen = (serviceName) => {
     setServiceNameToPass(serviceName);
     setIsEnquireNowModalOpen(true);
   };
 
+  // Closes the Enquire Modal
   const handleEnquireNowModalClose = () => setIsEnquireNowModalOpen(false);
 
   return (
@@ -47,15 +56,17 @@ const PopularSearches = () => {
         handleEnquireNowModal={handleEnquireNowModalClose}
         serviceNameToPass={serviceNameToPass}
       />
+
+      {/* Pass the correct serviceId to ServiceDetailsModal */}
       <ServiceDetailsModal
         isServiceModalOpen={isServiceModalOpen}
         handleServiceModal={handleServiceModalClose}
-        serviceName={serviceNameToPass}
+        serviceId={serviceId} // Pass service ID directly
       />
 
       <section className="relative flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
         <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
-          For Contract Enquiry{" "}
+          For Contract Enquiry
         </h2>
 
         <div className="flex items-center justify-between mt-12 max-md:mt-10 w-full relative">
@@ -97,7 +108,7 @@ const PopularSearches = () => {
                     <div className="flex justify-between items-center">
                       <button
                         className="text-green-600 bg-white px-4 py-2 rounded-full transition-all duration-300 hover:bg-green-600 hover:text-white shadow-lg border border-green-600"
-                        onClick={() => handleServiceModalOpen(_id)}
+                        onClick={() => handleServiceModalOpen(service)}
                       >
                         More Details
                       </button>
