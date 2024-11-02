@@ -17,6 +17,13 @@ const FeatureItem = ({ icon, name, description }) => (
   </div>
 );
 
+const SkeletonItem = () => (
+  <div className="flex flex-col justify-center items-center text-center animate-pulse">
+    <div className="h-[100px] w-[100px] rounded-full bg-gray-200 max-md:h-[80px] max-md:w-[80px]" />
+    <div className="mt-1 h-4 w-20 bg-gray-200 rounded" />
+  </div>
+);
+
 const Features = () => {
   const { categories } = useSelector((state) => state.categories);
 
@@ -43,11 +50,17 @@ const Features = () => {
           Our Services
         </h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 mt-6 max-w-full w-[676px]">
-          {categories?.map((feature) => (
-            <Link key={feature?._id} to={`${createSlug(feature?.name)}`}>
-              <FeatureItem {...feature} />
-            </Link>
-          ))}
+          {categories ? (
+            categories.map((feature) => (
+              <Link key={feature?._id} to={`${createSlug(feature?.name)}`}>
+                <FeatureItem {...feature} />
+              </Link>
+            ))
+          ) : (
+            [...Array(12)].map((_, index) => (
+              <SkeletonItem key={index} />
+            ))
+          )}
         </div>
       </section>
     </div>
