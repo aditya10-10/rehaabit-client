@@ -15,7 +15,6 @@ export const getLocationSuggestions = createAsyncThunk(
   async (query, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_LOCATION_SUGGESTIONS_API, null, null, { query });
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

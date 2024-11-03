@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "sonner";
 import Swal from "sweetalert2";
 
 import { apiConnector } from "../services/apiConnector";

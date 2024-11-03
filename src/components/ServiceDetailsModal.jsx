@@ -11,7 +11,10 @@ import {
 } from "react-icons/io";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import ServicesDetailsRatingCard from "./Reviews/ServicesDetailsRatingCard";
-import { getFullServiceDetails ,getServiceRatingAndReviews} from "../slices/serviceSlice";
+import {
+  getFullServiceDetails,
+  getServiceRatingAndReviews,
+} from "../slices/serviceSlice";
 import {
   addCartToLocalStorage,
   addToCart,
@@ -28,7 +31,9 @@ import ReviewCards from "../components/Reviews/ReviewCards";
 import { setSingleOrder } from "../slices/orderSlice";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import ShimmerEffect from './ShimmerEffect';
+import ShimmerEffect from "./ShimmerEffect";
+import { FaCheck } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 
 const ServiceDetailsModal = ({
   isServiceModalOpen,
@@ -37,7 +42,7 @@ const ServiceDetailsModal = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  //  console.log(isServiceModalOpen);
   const [activeId, setActiveId] = useState(null);
   const [onRemove, setOnRemove] = useState(null);
   const [page, setPage] = useState(1);
@@ -63,7 +68,7 @@ const ServiceDetailsModal = ({
   //     const result = await dispatch(getServiceRatingAndReviews({ serviceId, page: pageNum })).unwrap();
   //     const newReviews = result[0]?.data || [];
   //     const totalReviews = result[0]?.totalRatingAndReviews || 0;
-      
+
   //     setRatingsAndReviews(prev => [...prev, ...newReviews]);
   //     setHasMore(ratingsAndReviews.length + newReviews.length < totalReviews);
   //   } catch (error) {
@@ -84,7 +89,9 @@ const ServiceDetailsModal = ({
   }, []);
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
   const [serviceNameToPass, setServiceNameToPass] = useState(null);
-  const { service, isLoading: serviceIsLoading } = useSelector((state) => state.service);
+  const { service, isLoading: serviceIsLoading } = useSelector(
+    (state) => state.service
+  );
   // console.log(service);
   // const { serviceRatingAndReviews } = useSelector((state) => state.service);
   // console.log(serviceRatingAndReviews);
@@ -101,13 +108,15 @@ const ServiceDetailsModal = ({
   // console.log(totalRatingAndReviews);
   // console.log(ratingsAndReviews.length);
   const { categories } = useSelector((state) => state.categories);
-  const { cartServices, isLoading: cartIsLoading } = useSelector((state) => state.cart);
+  const { cartServices, isLoading: cartIsLoading } = useSelector(
+    (state) => state.cart
+  );
   const { user } = useSelector((state) => state.profile);
 
-  const cartService = cartServices.find(
-    (service) => service.serviceId === serviceId
+  const cartService = cartServices?.find(
+    (service) => service?.serviceId === serviceId
   );
-  const serviceQty = cartService ? cartService.qty : 0;
+  const serviceQty = cartService ? cartService?.qty : 0;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const sliderRef = useRef(null);
@@ -255,7 +264,7 @@ const ServiceDetailsModal = ({
               onClick={handleCloseModal}
             />
             <motion.div
-              className="bg-white p-6 max-xs:p-4 rounded-lg shadow-lg w-1/3 max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[70vh] overflow-y-auto relative"
+              className="bg-white p-6 max-xs:p-0 rounded-lg shadow-lg w-1/3 max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[70vh] overflow-y-auto relative"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
@@ -267,7 +276,10 @@ const ServiceDetailsModal = ({
                 <>
                   <Helmet>
                     <title>{service.serviceName}</title>
-                    <meta name="description" content={service.serviceDescription} />
+                    <meta
+                      name="description"
+                      content={service.serviceDescription}
+                    />
                   </Helmet>
                   <div className="flex flex-col items-center justify-center w-full px-10 max-lg:px-4">
                     {/* SERVICE OVERVIEW */}
@@ -354,7 +366,16 @@ const ServiceDetailsModal = ({
                             service?.includes.map((include) => {
                               const { _id, content } = include;
 
-                              return <span key={_id}>{content}</span>;
+                              return (
+                                <span
+                                  key={_id}
+                                  className="flex items-center space-x-2"
+                                >
+                                  <FaCheck className="text-green-500" />{" "}
+                                  {/* Checkmark icon */}
+                                  <span>{content}</span>
+                                </span>
+                              );
                             })}
                         </div>
                       </div>
@@ -373,7 +394,16 @@ const ServiceDetailsModal = ({
                             service?.excludes.map((exclude) => {
                               const { _id, content } = exclude;
 
-                              return <span key={_id}>{content}</span>;
+                              return (
+                                <span
+                                  key={_id}
+                                  className="flex items-center space-x-2"
+                                >
+                                  <FaTimes className="text-red-500" />{" "}
+                                  {/* Cross icon */}
+                                  <span>{content}</span>
+                                </span>
+                              );
                             })}
                         </div>
                       </div>
@@ -398,14 +428,15 @@ const ServiceDetailsModal = ({
 
                     {/* WARRANTY DETAILS */}
 
-                    {service?.warranty && service?.priceStatus !== "non-priced" && (
-                      <div className="bg-[#E6F7F3] border-2 border-[#009F78] rounded-lg w-full mt-10 p-4">
-                        <h1 className="text-[#006049] text-2xl max-xs:text-xl">
-                          Warranty Details
-                        </h1>
-                        <span>{service.warranty}</span>
-                      </div>
-                    )}
+                    {service?.warranty &&
+                      service?.priceStatus !== "non-priced" && (
+                        <div className="bg-[#E6F7F3] border-2 border-[#009F78] rounded-lg w-full mt-10 p-4">
+                          <h1 className="text-[#006049] text-2xl max-xs:text-xl">
+                            Warranty Details
+                          </h1>
+                          <span>{service.warranty}</span>
+                        </div>
+                      )}
 
                     {/* FAQ */}
                     {service?.faqs?.length > 0 && (
@@ -472,26 +503,36 @@ const ServiceDetailsModal = ({
 
                     {Array.isArray(service?.ratingAndReviews) &&
                       service?.ratingAndReviews?.length > 0 && (
-                      <>
-                        <div className="w-full mt-10">
-                          <h1 className="text-2xl max-xs:text-xl text-purple-600">
-                            Reviews
-                          </h1>
-                          <div className="">
-                            {service?.ratingAndReviews?.map((review, index) => (
-                              <ServicesDetailsRatingCard
-                                key={index}
-                                quote={review.review || "No review provided."}
-                                name={`${review.user?.additionalDetails?.firstName || 'Anonymous'} ${review.user?.additionalDetails?.lastName || ''}`}
-                                rating={review.rating || 0}
-                                imageSrc={review.user?.image || ""}
-                                date={review.date || "N/A"}
-                                services={service.serviceName}
-                              />
-                            ))}
+                        <>
+                          <div className="w-full mt-10">
+                            <h1 className="text-2xl max-xs:text-xl text-purple-600">
+                              Reviews
+                            </h1>
+                            <div className="">
+                              {service?.ratingAndReviews?.map(
+                                (review, index) => (
+                                  <ServicesDetailsRatingCard
+                                    key={index}
+                                    quote={
+                                      review.review || "No review provided."
+                                    }
+                                    name={`${
+                                      review.user?.additionalDetails
+                                        ?.firstName || "Anonymous"
+                                    } ${
+                                      review.user?.additionalDetails
+                                        ?.lastName || ""
+                                    }`}
+                                    rating={review.rating || 0}
+                                    imageSrc={review.user?.image || ""}
+                                    date={review.date || "N/A"}
+                                    services={service.serviceName}
+                                  />
+                                )
+                              )}
+                            </div>
                           </div>
-                        </div>
-                        {/* {hasMore && (
+                          {/* {hasMore && (
                           <div className="flex justify-center items-center w-full mt-6">
                             <button 
                               // onClick={handleLoadMore}
@@ -502,8 +543,8 @@ const ServiceDetailsModal = ({
                             </button>
                           </div>
                         )} */}
-                      </>
-                    )}
+                        </>
+                      )}
                   </div>
                 </>
               )}

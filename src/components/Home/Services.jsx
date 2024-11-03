@@ -16,7 +16,7 @@ const ServiceCard = ({
   const rating = avgRating > 0 ? avgRating : 0;
 
   const renderStars = (rating) => {
-    return [...Array(5)].map((_, index) => (
+    return [...Array(5)]?.map((_, index) => (
       <span key={index}>
         {index + 1 <= rating ? (
           <GoStarFill className="text-yellow-400" />
@@ -39,8 +39,8 @@ const ServiceCard = ({
           </h3>
           <p>
             <span className="text-sm text-zinc-700">
-              {serviceDescription.length > 30
-                ? `${serviceDescription.slice(0, 30)}...`
+              {serviceDescription?.length > 30
+                ? `${serviceDescription?.slice(0, 30)}...`
                 : serviceDescription}
             </span>
           </p>
@@ -57,12 +57,41 @@ const ServiceCard = ({
   );
 };
 
+const ServiceCardSkeleton = () => {
+  return (
+    <div className="flex flex-col justify-center items-start px-4 py-2 mt-4 bg-amber-50 rounded-xl shadow-sm max-md:px-5 max-md:max-w-full animate-pulse">
+      <div className="flex gap-5">
+        <div className="w-20 h-20 bg-gray-200 rounded-xl"></div>
+        <div className="flex flex-col gap-2 w-full">
+          <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-full"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, index) => (
+              <div key={index} className="w-4 h-4 bg-gray-200 rounded-full"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Services = () => {
   const { allServices } = useSelector((state) => state.service);
   const [serviceId, setServiceId] = useState(null);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const location = useLocation();
   const servicesRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (location.state?.scrollTo === "services") {
@@ -72,14 +101,19 @@ const Services = () => {
         setIsServiceModalOpen(true);
       }
     }
+    
   }, [location]);
 
   const handleServiceModal = () => {
     setIsServiceModalOpen(!isServiceModalOpen);
+    // Clear the location state when closing the modal
+    if (isServiceModalOpen && location.state?.serviceId) {
+      window.history.replaceState({}, document.title, location.pathname);
+    }
   };
 
-  const pricedServices = allServices.filter(
-    (service) => service.priceStatus === "priced" && service.status !== "Draft"
+  const pricedServices = allServices?.filter(
+    (service) => service?.priceStatus === "priced" && service?.status !== "Draft"
   );
 
   return (
@@ -108,18 +142,24 @@ const Services = () => {
               <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
                 Services{" "}
               </h2>
-              {pricedServices.slice(0, 5).map((service) => (
-                <div
-                  key={service._id}
-                  className="w-full cursor-pointer"
-                  onClick={() => {
-                    setIsServiceModalOpen(!isServiceModalOpen);
-                    setServiceId(service?._id);
-                  }}
-                >
-                  <ServiceCard {...service} />
-                </div>
-              ))}
+              {!allServices ? (
+                [...Array(5)].map((_, index) => (
+                  <ServiceCardSkeleton key={index} />
+                ))
+              ) : (
+                pricedServices?.slice(0, 5)?.map((service) => (
+                  <div
+                    key={service?._id}
+                    className="w-full cursor-pointer"
+                    onClick={() => {
+                      setIsServiceModalOpen(!isServiceModalOpen);
+                      setServiceId(service?._id);
+                    }}
+                  >
+                    <ServiceCard {...service} />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

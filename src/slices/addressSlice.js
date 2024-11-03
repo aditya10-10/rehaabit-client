@@ -27,7 +27,7 @@ export const addAddress = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -41,7 +41,7 @@ export const getUserAddresses = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -59,7 +59,7 @@ export const updateAddress = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -75,7 +75,7 @@ export const deleteAddress = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -110,8 +110,7 @@ const addressSlice = createSlice({
       .addCase(addAddress.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
-
-        toast.error("Error in Adding Address!");
+        toast.error((action.payload)?.message||"Error in Adding Address!");
       })
 
       // GET USER ADDRESS
@@ -150,7 +149,7 @@ const addressSlice = createSlice({
         state.isLoading = false;
         state.error = action;
 
-        toast.error("Error in Updating Address!");
+        toast.error((action.payload)?.message||"Error in Updating Address!");
       })
 
       // DELETE ADDRESS
@@ -173,7 +172,7 @@ const addressSlice = createSlice({
         state.isLoading = false;
         state.error = action;
 
-        toast.error("Error in Deleting Address!");
+        toast.error((action.payload)?.message||"Error in Deleting Address!");
       });
   },
 });

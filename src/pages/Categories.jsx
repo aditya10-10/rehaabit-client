@@ -19,6 +19,7 @@ import { setSingleOrder } from "../slices/orderSlice";
 import EnquireNowModal from "../components/Home/EnquireNowModal";
 import { ServiceCard } from "../components/Dashboard/Service";
 import ServiceDetailsModal from "../components/ServiceDetailsModal";
+import { CategorySkeleton } from "../utils/Skeleton/CategorySkeleton";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -35,17 +36,23 @@ const Categories = () => {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
   const { allServices } = useSelector((state) => state.service);
-  const { cartServices, isLoading } = useSelector((state) => state.cart);
+  const { cartServices, isLoading: cartLoading } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
   const categoryName = categories.find(
     (category) => category.slugName === categoryId
   );
+  useEffect(() => {
+    if (!categoryName) {
+      navigate('*');
+    }
+  }, [categoryName, navigate]);
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
@@ -66,19 +73,38 @@ const Categories = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getSubCategoriesByCategory({ categoryId }));
+    const fetchData = async () => {
+      setIsLoading(true);
+      await dispatch(getSubCategoriesByCategory({ categoryId }));
+      setIsLoading(false);
+    };
+    fetchData();
   }, [dispatch, categoryId]);
 
   useEffect(() => {
-    if (scrollTo === "subcategory" && subCategoryId) {
-      categoryRefs.current[subCategoryId]?.scrollIntoView({
-        behavior: "smooth",
-      });
+    const scrollToElement = () => {
+      if (scrollTo === "subcategory" && subCategoryId && categoryRefs.current[subCategoryId]) {
+        setTimeout(() => {
+          categoryRefs.current[subCategoryId]?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }, 500); // Add a delay to ensure content is loaded
+      }
+      if (scrollTo === "service" && serviceId && serviceRefs.current[serviceId]) {
+        setTimeout(() => {
+          serviceRefs.current[serviceId]?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }, 500); // Add a delay to ensure content is loaded
+      }
+    };
+
+    if (!isLoading) {
+      scrollToElement();
     }
-    if (scrollTo === "service" && serviceId && allServices.length > 0) {
-      serviceRefs.current[serviceId]?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [scrollTo, subCategoryId, serviceId, allServices]);
+  }, [scrollTo, subCategoryId, serviceId, isLoading]);
 
   const handleCategoryClick = (subCategoryId, subCategoryName) => {
     categoryRefs.current[subCategoryId]?.scrollIntoView({ behavior: "smooth" });
@@ -195,6 +221,36 @@ const Categories = () => {
     updateUrl(`/${categoryId}`);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
+        <div className="w-[40%] max-md:w-full">
+          <CategorySkeleton className="h-10 w-3/4 mb-2" />
+          <div className="border-2 rounded-lg bg-gray-50 p-4 h-fit w-full">
+            <CategorySkeleton className="h-6 w-1/2 mx-auto mb-4" />
+            <div className="grid grid-cols-3 p-2 gap-4 max-xl:grid-cols-2 max-lg:grid-cols-1">
+              {[...Array(6)].map((_, index) => (
+                <CategorySkeleton key={index} className="h-32 w-full rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="border-2 rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="mb-8">
+              <CategorySkeleton className="h-8 w-1/3 mb-4" />
+              <div className="grid grid-cols-1 gap-4">
+                {[...Array(3)].map((_, serviceIndex) => (
+                  <CategorySkeleton key={serviceIndex} className="h-40 w-full rounded-lg" />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {isServiceModalOpen && (
@@ -259,142 +315,149 @@ const Categories = () => {
           </div>
         </div>
 
-        <div className="border-2 rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto">
-          {subCategoriesByCategory.map((category) => {
-            const { _id, subCategoryName } = category;
+        <div
+  className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto"
+  style={{
+    scrollbarWidth: 'none', // For Firefox
+    msOverflowStyle: 'none', // For Internet Explorer and Edge
+  }}
+>
+  <style jsx>{`
+    /* For Chrome, Safari, and Opera */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  `}</style>
+  {subCategoriesByCategory.map((category) => {
+    const { _id, subCategoryName } = category;
 
-            const services = allServices.filter(
-              (service) =>
-                service.subCategoryId === _id && service.status !== "Draft"
+    const services = allServices.filter(
+      (service) =>
+        service.subCategoryId === _id && service.status !== "Draft"
+    );
+
+    return services.length > 0 ? (
+      <div
+        key={_id}
+        ref={(e) => (categoryRefs.current[_id] = e)}
+        className="mb-8"
+      >
+        <h2 className="text-2xl font-bold mb-4 ml-6">
+          {subCategoryName}
+        </h2>
+
+        <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
+          {services.map((service) => {
+            const {
+              _id,
+              serviceName,
+              thumbnail,
+              serviceDescription,
+              priceStatus,
+              status,
+            } = service;
+
+            const cartService = cartServices.find(
+              (service) => service.serviceId === _id
             );
+            const serviceQty = cartService ? cartService.qty : 0;
 
-            return services.length > 0 ? (
-              <div
-                key={_id}
-                ref={(e) => (categoryRefs.current[_id] = e)}
-                className="mb-8"
-              >
-                <h2 className="text-2xl font-bold mb-4 ml-6">
-                  {subCategoryName}
-                </h2>
+            return (
+              status !== "Draft" && (
+                <div
+                  key={_id}
+                  ref={(e) => (serviceRefs.current[_id] = e)}
+                  className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
+                >
+                  <div
+                    className="w-full cursor-pointer"
+                    onClick={() => {
+                      setIsServiceModalOpen(!isServiceModalOpen);
+                      setServiceIdToPass(_id);
+                    }}
+                  >
+                    <ServiceCard {...service} />
+                  </div>
 
-                <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
-                  {services.map((service) => {
-                    const {
-                      _id,
-                      serviceName,
-                      thumbnail,
-                      serviceDescription,
-                      priceStatus,
-                      status,
-                    } = service;
-
-                    const cartService = cartServices.find(
-                      (service) => service.serviceId === _id
-                    );
-                    const serviceQty = cartService ? cartService.qty : 0;
-
-                    return (
-                      status !== "Draft" && (
-                        <div
-                          key={_id}
-                          ref={(e) => (serviceRefs.current[_id] = e)}
-                          className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
+                  <div className="flex gap-2 justify-end w-full mt-4">
+                    {priceStatus === "priced" ? (
+                      <>
+                        <button
+                          className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
+                          onClick={() => handleBuyNow(service)}
                         >
-                          <div
-                            className="w-full cursor-pointer"
-                            onClick={() => {
-                              setIsServiceModalOpen(!isServiceModalOpen);
-                              setServiceIdToPass(_id);
-                            }}
-                          >
-                            <ServiceCard {...service} />
-                          </div>
+                          Buy Now
+                        </button>
 
-                          <div className="flex gap-2 justify-end w-full mt-4">
-                            {priceStatus === "priced" ? (
-                              <>
-                                <button
-                                  className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
-                                  onClick={() => handleBuyNow(service)}
-                                >
-                                  Buy Now
-                                </button>
-
-                                <div className="flex items-center">
-                                  {serviceQty > 0 ? (
-                                    <>
-                                      <button
-                                        className="border px-2 border-gray-400 rounded-full"
-                                        disabled={isLoading}
-                                        onClick={() =>
-                                          handleDecrease(
-                                            cartService._id,
-                                            service
-                                          )
-                                        }
-                                      >
-                                        -
-                                      </button>
-
-                                      <span className="mx-2 text-gray-500">
-                                        {serviceQty}
-                                      </span>
-
-                                      <button
-                                        className="border px-2 border-gray-400 rounded-full"
-                                        disabled={isLoading}
-                                        onClick={() =>
-                                          handleIncrease(
-                                            cartService._id,
-                                            service
-                                          )
-                                        }
-                                      >
-                                        +
-                                      </button>
-
-                                      <button
-                                        className="px-2 text-gray-600 hover:text-red-500"
-                                        disabled={isLoading}
-                                        onClick={() =>
-                                          handleRemove(cartService._id, service)
-                                        }
-                                      >
-                                        REMOVE
-                                      </button>
-                                    </>
-                                  ) : (
-                                    <button
-                                      className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
-                                      disabled={isLoading}
-                                      onClick={() => handleAddToCart(service)}
-                                    >
-                                      Add to Cart
-                                    </button>
-                                  )}
-                                </div>
-                              </>
-                            ) : (
+                        <div className="flex items-center">
+                          {serviceQty > 0 ? (
+                            <>
                               <button
-                                className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
+                                className="border px-2 border-gray-400 rounded-full"
+                                disabled={cartLoading}
                                 onClick={() =>
-                                  handleEnquireNowModalOpen(service)
-                                } // Open Enquire Now Modal
+                                  handleDecrease(cartService._id, service)
+                                }
                               >
-                                Enquire Now
+                                -
                               </button>
-                            )}
-                          </div>
+
+                              <span className="mx-2 text-gray-500">
+                                {serviceQty}
+                              </span>
+
+                              <button
+                                className="border px-2 border-gray-400 rounded-full"
+                                disabled={cartLoading}
+                                onClick={() =>
+                                  handleIncrease(cartService._id, service)
+                                }
+                              >
+                                +
+                              </button>
+
+                              <button
+                                className="px-2 text-gray-600 hover:text-red-500"
+                                disabled={cartLoading}
+                                onClick={() =>
+                                  handleRemove(cartService._id, service)
+                                }
+                              >
+                                REMOVE
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
+                              disabled={cartLoading}
+                              onClick={() => handleAddToCart(service)}
+                            >
+                              Add to Cart
+                            </button>
+                          )}
                         </div>
-                      )
-                    );
-                  })}
+                      </>
+                    ) : (
+                      <button
+                        className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
+                        onClick={() =>
+                          handleEnquireNowModalOpen(service)
+                        }
+                      >
+                        Enquire Now
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ) : null;
+              )
+            );
           })}
         </div>
+      </div>
+    ) : null;
+  })}
+</div>
+
       </div>
       <Footer />
     </>

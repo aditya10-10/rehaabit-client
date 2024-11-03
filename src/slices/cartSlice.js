@@ -208,9 +208,9 @@ const cartSlice = createSlice({
       })
       .addCase(getAllCartServices.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartServices = action.payload.services;
-        state.totalQty = action.payload.totalQty;
-        state.totalCost = action.payload.totalCost;
+        state.cartServices = action.payload?.services;
+        state.totalQty = action.payload?.totalQty;
+        state.totalCost = action.payload?.totalCost;
       })
       .addCase(getAllCartServices.rejected, (state, action) => {
         state.isLoading = false;

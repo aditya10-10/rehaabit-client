@@ -51,8 +51,8 @@ const Footer = () => {
     },
     {
       title: "For Customers",
-      items: ["Blogs", "Contact Us", "Help Center"],
-      links: ["/coming-soon", "/contact-us", "/help"],
+      items: ["Contact Us", "Help Center"],
+      links: ["/contact-us", "/help"],
     },
     {
       title: "For Partners",
@@ -62,7 +62,7 @@ const Footer = () => {
     {
       title: "Download App", // App section
       items: [AppStore, PlayStore],
-      links: ["/coming-soon", "/coming-soon"],
+      links: [],
     },
     // {
     //   title: "Contact Us",
