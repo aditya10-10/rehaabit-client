@@ -264,7 +264,9 @@ const ServiceDetailsModal = ({
               onClick={handleCloseModal}
             />
             <motion.div
-              className="bg-white p-6 max-xs:p-0 rounded-lg shadow-lg w-1/3 max-2xl:w-1/2 max-xl:w-3/4 max-xs:w-11/12 max-h-[70vh] overflow-y-auto relative"
+              className="bg-white p-4 xs:p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 rounded-lg shadow-lg
+w-full xs:w-11/12 sm:w-10/12 md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-1/3
+max-h-[70vh] overflow-y-auto relative"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
@@ -281,7 +283,7 @@ const ServiceDetailsModal = ({
                       content={service.serviceDescription}
                     />
                   </Helmet>
-                  <div className="flex flex-col items-center justify-center w-full px-10 max-lg:px-4">
+                  <div className="flex flex-col items-center justify-center w-full px-10 max-lg:px-1">
                     {/* SERVICE OVERVIEW */}
                     <ServiceCard {...service} />
 
@@ -291,7 +293,7 @@ const ServiceDetailsModal = ({
                       {service.price === 0 ||
                       service.priceStatus === "non-priced" ? (
                         <button
-                          className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
+                          className="bg-blue-400 px-4 py-1 rounded-md text-sm text-white"
                           onClick={() => {
                             setServiceNameToPass(service?.serviceName);
                             handleServiceModal();
