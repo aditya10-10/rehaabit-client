@@ -53,7 +53,6 @@ const ProfilePicture = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    // console.log(file);
     if (file) {
       if (file.size > MAX_SIZE) {
         toast.error("File size exceeds 50 KB. Please upload a smaller image.");
@@ -80,17 +79,16 @@ const ProfilePicture = () => {
       return;
     }
     try {
-      // console.log("Uploading...");
+      console.log("Uploading...");
       setLoading(true);
       const formData = new FormData();
       formData.append("displayPicture", imageFile);
-      // console.log("formdata", formData);
       dispatch(updateDisplayPicture(token, formData)).then(() => {
         setLoading(false);
         toast.success("File uploaded successfully!");
       });
     } catch (error) {
-      // console.log("ERROR MESSAGE - ", error.message);
+      toast.error("An error occurred during upload.");
       setLoading(false);
     }
   };
@@ -102,7 +100,7 @@ const ProfilePicture = () => {
   }, [imageFile]);
 
   return (
-    <div className="  flex gap-5  max-sm:pl-11 p-6 text-base font-medium leading-6 bg-amber-50 md:pl-32 rounded-lg shadow-sm max-md:flex-wrap max-md:px-5 max-xs:w-full max-xs:justify-center">
+    <div className="flex gap-5 p-6 text-base font-medium leading-6 bg-amber-50 rounded-lg shadow-sm max-md:flex-wrap max-md:px-5 max-xs:w-full max-xs:justify-center">
       {previewSource || user?.image ? (
         <img
           src={previewSource || user?.image}
