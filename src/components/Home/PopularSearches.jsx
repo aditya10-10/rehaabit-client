@@ -12,10 +12,12 @@ const PopularSearches = () => {
   const [serviceId, setServiceId] = useState(null); // Track service ID directly
   const [serviceNameToPass, setServiceNameToPass] = useState(null);
 
-  const nonPricedServices = allServices?.filter(
+  const limitedNonPricedServices = allServices?.filter(
     (service) =>
       service?.priceStatus === "non-priced" && service?.status !== "Draft"
   );
+
+  const nonPricedServices = limitedNonPricedServices?.slice(0, 10);
 
   const scrollRef = useRef(null);
 
