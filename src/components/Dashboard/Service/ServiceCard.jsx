@@ -48,7 +48,7 @@ const ServiceCard = ({
         {priceStatus === "priced" && (
           <div className="flex items-center mb-2">
             <span className="mr-2 text-black text-xl">₹{price}</span>
-            <span className="text-gray-500">• {timeToComplete} min</span>
+            <span className="text-gray-500">• {timeToComplete}</span>
           </div>
         )}
 
