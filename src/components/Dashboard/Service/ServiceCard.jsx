@@ -28,7 +28,7 @@ const ServiceCard = ({
       <img
         src={thumbnail}
         alt="Service Thumbnail"
-        className="h-44 w-48 rounded-lg border border-gray-300 object-cover sm:mr-6 mb-4 sm:mb-0 max-sm:w-full max-sm:h-44 max-sm:mt-2"
+        className="h-44 w-48 rounded-lg border border-gray-300 object-cover sm:mr-6 mb-4 sm:mb-0 max-sm:w-full max-sm:h-full max-sm:mt-2"
       />
 
       <div className="flex flex-col">
