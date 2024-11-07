@@ -5,6 +5,7 @@ import { BsFillHandbagFill } from "react-icons/bs";
 import { BiSolidCategory } from "react-icons/bi";
 import { FaUsers, FaAddressBook, FaUsersCog } from "react-icons/fa";
 import { IoIosHelpCircleOutline, IoMdSettings } from "react-icons/io";
+import { FaBlog } from "react-icons/fa";
 import { VscSignOut } from "react-icons/vsc";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FiSearch } from "react-icons/fi";
@@ -24,6 +25,17 @@ const SidebarContext = createContext();
 const sidebarLinks = [
   { id: 0, icon: <CgProfile />, text: "My Profile", to: "my-profile" },
   { id: 1, icon: <LuLayoutDashboard />, text: "Dashboard", to: "/dashboard/admin", adminOnly: true },
+  {
+    id: 2, 
+    icon: <FaBlog />, 
+    text: "Blog", 
+    to: "blog", 
+    adminOnly: true,
+    subItems: [
+      { id: 'blog-1', text: "View Blogs", to: "blog/view-blogs" },
+      { id: 'blog-2', text: "Create Blog", to: "blog/create-blog" },
+    ]
+  },
   { id: 2, icon: <BiSolidCategory />, text: "Category", to: "category", adminOnly: true },
   { id: 3, icon: <MdCategory />, text: "Sub-Category", to: "sub-category", adminOnly: true },
   { id: 4, icon: <MdHomeRepairService />, text: "My Services", to: "my-services", adminOnly: true },
@@ -168,6 +180,7 @@ export default function Sidebar({ children }) {
                   setIsOrderClickedinPhone={setIsOrderClickedinPhone}
                   handleNavigation={handleNavigation}
                   isFirst={index === 0}
+                  subItems={link.subItems}
                 />
               ))}
               <div className="border-t flex p-3">
@@ -190,47 +203,78 @@ export default function Sidebar({ children }) {
   );
 }
 
-function SidebarItem({ icon, text, to, index, handleNavigation, isFirst,setIsOrderClickedinPhone }) {
+function SidebarItem({ icon, text, to, index, handleNavigation, isFirst, setIsOrderClickedinPhone, subItems }) {
   const { expanded } = useContext(SidebarContext);
   const location = useLocation();
-  const isActive = location.pathname === to;
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const isActive = location.pathname === to || (subItems?.some(item => location.pathname.includes(item.to)));
+
   const handleClick = (e) => {
     e.preventDefault();
     
-    if (window.innerWidth <= 768 && text === "Orders") {
-      setIsOrderClickedinPhone(true);  
+    if (subItems) {
+      setIsSubMenuOpen(!isSubMenuOpen);
     } else {
-      setIsOrderClickedinPhone(false);  
+      if (window.innerWidth <= 768 && text === "Orders") {
+        setIsOrderClickedinPhone(true);  
+      } else {
+        setIsOrderClickedinPhone(false);  
+      }
+      handleNavigation(to);
     }
-  
-    handleNavigation(to);
   };
 
   return (
-    <li
-      className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${isActive
-          ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-          : "hover:bg-indigo-50 text-gray-600"
+    <>
+      <li
+        className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
+          isActive
+            ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
+            : "hover:bg-indigo-50 text-gray-600"
         } ${isFirst && isActive ? "text-indigo-800" : ""}`}
-      onClick={handleClick}
-      style={{ fontFamily: "Roboto, sans-serif" }}
-    >
-      {icon}
-      <span
-        className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"
-          }`}
+        onClick={handleClick}
         style={{ fontFamily: "Roboto, sans-serif" }}
       >
-        {text}
-      </span>
-      {!expanded && (
-        <div
-          className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+        {icon}
+        <span
+          className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
           style={{ fontFamily: "Roboto, sans-serif" }}
         >
           {text}
-        </div>
+        </span>
+        {subItems && expanded && (
+          <span className="ml-auto">{isSubMenuOpen ? '▼' : '▶'}</span>
+        )}
+        {!expanded && (
+          <div
+            className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+            style={{ fontFamily: "Roboto, sans-serif" }}
+          >
+            {text}
+          </div>
+        )}
+      </li>
+      
+      {subItems && isSubMenuOpen && expanded && (
+        <ul className="ml-4">
+          {subItems.map((item) => (
+            <li
+              key={item.id}
+              className={`py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors ${
+                location.pathname.includes(item.to)
+                  ? "bg-gradient-to-tr from-indigo-100 to-indigo-50 text-indigo-800"
+                  : "hover:bg-indigo-50 text-gray-600"
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation(item.to);
+              }}
+            >
+              {item.text}
+            </li>
+          ))}
+        </ul>
       )}
-    </li>
+    </>
   );
 }
