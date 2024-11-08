@@ -17,10 +17,7 @@ export const createBlog = createAsyncThunk(
     "blog/createBlog",
     async (blogData, thunkAPI) => {
        try{
-        const response = await apiConnector("POST", CREATE_BLOG_API, blogData,
-        {"Content-Type": "application/json"},
-        {token: localStorage.getItem("token")}
-        );
+        const response = await apiConnector("POST", CREATE_BLOG_API, blogData);
         return response.data.data;
        }catch(error){
         return thunkAPI.rejectWithValue(error.response.data.message);
@@ -33,7 +30,7 @@ export const getBlogs = createAsyncThunk(
     async (_, thunkAPI) => {
         try{
             const response = await apiConnector("GET", GET_BLOGS_API);
-            return response.data.data;
+            return response.data.blogs;  
         }catch(error){
             return thunkAPI.rejectWithValue(error.response.data.message);
         }
@@ -44,8 +41,8 @@ export const getBlogBySlug = createAsyncThunk(
     "blog/getBlogBySlug",
     async (slug, thunkAPI) => {
         try{
-            const response = await apiConnector("GET", GET_BLOG_BY_SLUG_API, slug);
-            return response.data.data;
+            const response = await apiConnector("GET", `${GET_BLOG_BY_SLUG_API}/${slug}`);
+            return response.data.blog;
         }catch(error){
             return thunkAPI.rejectWithValue(error.response.data.message);
         }
@@ -81,7 +78,7 @@ export const publishBlog = createAsyncThunk(
     "blog/publishBlog",
     async (id, thunkAPI) => {
         try{
-            const response = await apiConnector("PUT", PUBLISH_BLOG_API, id, {"Content-Type": "application/json"}, {token: localStorage.getItem("token")});
+            const response = await apiConnector("PUT", PUBLISH_BLOG_API, {id});
             return response.data.data;
         }catch(error){
             return thunkAPI.rejectWithValue(error.response.data.message);
@@ -112,11 +109,12 @@ export const blogSlice = createSlice({
         .addCase(createBlog.fulfilled, (state, action) => {
             state.isLoading = false;
             state.blogs = [...state.blogs, action.payload];
-            toast.success(action.payload.message || "Blog created successfully");
+            toast.success(action.payload || "Blog created successfully");
         })
         .addCase(createBlog.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+            toast.error((action.payload) || "Something went wrong");
         })
 
         .addCase(getBlogs.pending, (state) => {
@@ -174,11 +172,12 @@ export const blogSlice = createSlice({
         })
         .addCase(publishBlog.fulfilled, (state, action) => {
             state.isLoading = false;
-            toast.success(action.payload.message || "Blog published successfully");
+            toast.success("Blog published successfully");
         })
         .addCase(publishBlog.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+            toast.error((action.payload)?.message || "Something went wrong");
         })
 
         .addCase(deleteBlog.pending, (state) => {
@@ -194,4 +193,6 @@ export const blogSlice = createSlice({
         })
     }
 })
+
+export default blogSlice.reducer;
 

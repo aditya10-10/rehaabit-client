@@ -25,7 +25,6 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic
-    // console.log("Form submitted:", formData);
 
     dispatch(contact({ formData }));
     setFormData({
