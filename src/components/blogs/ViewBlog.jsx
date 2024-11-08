@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getBlogBySlug } from '../../slices/blogSlice'
+import Spinner from '../../Spinner'
 
 const BlogContent = ({ content }) => {
     const contentRef = useRef(null);

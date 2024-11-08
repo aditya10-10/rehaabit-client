@@ -61,6 +61,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import ViewBlogs from "./components/blogs/ViewBlogs";
 import CreateBlog from "./components/blogs/CreateBlogs";
 import ViewBlog from "./components/blogs/ViewBlog";
+import EditBlog from "./components/blogs/EditBlog";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -229,6 +230,7 @@ export default function App() {
                 <Route path="admin" element={<AdminDashboard />} />
                 <Route path="blog/view-blogs" element={<ViewBlogs />} />
                 <Route path="blog/create-blog" element={<CreateBlog />} />
+                <Route path="blog/edit-blog/:slug" element={<EditBlog />} />
                 <Route path="category" element={<Category />} />
                 <Route path="sub-category" element={<SubCategory />} />
                 <Route path="my-profile" element={<MyProfile />} />
