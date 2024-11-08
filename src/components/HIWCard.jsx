@@ -5,11 +5,11 @@ const HIWCard = ({ _id, point, icon, description }) => {
         {/* Dashed Line */}
         <div className="absolute left-1/2 -translate-x-1/2 h-full w-px z-0 custom-dashed-line"></div>
 
-        <div className="relative z-10 bg-white mt-4">
+        <div className="relative z-10 bg-white mt-4 flex items-center justify-center rounded-full h-16 w-16 overflow-hidden">
           <img
             src={icon}
             alt="icon"
-            className="bg-gray-200 p-3 rounded-full h-16 w-16"
+            className="h-full w-full object-cover"
           />
         </div>
       </div>
