@@ -10,14 +10,12 @@ import {
 import { getAllOrders, getUserOrders } from "../../../slices/orderSlice";
 
 const MyOrders = () => {
-  
   const dispatch = useDispatch();
-  
+
   const { categories } = useSelector((state) => state.categories);
   const { subcategories } = useSelector((state) => state.subcategories);
   const { orders } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.profile);
-
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSubcategory, setSelectedSubcategory] = useState("All");
@@ -74,8 +72,8 @@ const MyOrders = () => {
           </h1>
 
           {/* <div className="max-sm:flex max-sm:w-full max-sm:justify-center max-sm:flex-col"> */}
-            {/* Search by Category */}
-            {/* <select
+          {/* Search by Category */}
+          {/* <select
               value={selectedCategory}
               onChange={handleCategoryChange}
               className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6 max-sm:ml-0 max-sm:mb-4"
@@ -88,8 +86,8 @@ const MyOrders = () => {
               ))}
             </select> */}
 
-            {/* Search by Subcategory */}
-            {/* <select
+          {/* Search by Subcategory */}
+          {/* <select
               value={selectedSubcategory}
               onChange={handleSubcategoryChange}
               className="shadow-custom-shadow border-none rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ml-6 mb-6 max-sm:ml-0 max-sm:mb-4"

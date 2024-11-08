@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const ProfileHeader = () => {
+function ProfileHeader() {
   return (
-    <header className="bg-white md:pl-32 flex max-sm:pl-12 flex-col items-start self-stretch px-5 py-9 max-sm:py-4 w-full  shadow-sm max-md:max-w-full">
-      <h1 className="text-2xl font-medium text-black">My profile</h1>
+    <header className="flex flex-col items-start w-full px-5 py-6 bg-white shadow-sm max-md:max-w-full max-sm:py-3">
+      <h1 className="text-2xl font-semibold text-black max-sm:text-xl">
+        My Profile
+      </h1>
     </header>
   );
-};
+}
 
 export default ProfileHeader;
