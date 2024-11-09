@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveFormData } from "../../../slices/partnerSlice";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-
+import { toast } from "sonner";
 const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
   const dispatch = useDispatch();
   const { currentStep, partnerFormData } = useSelector(
@@ -33,6 +33,25 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
     },
   });
 
+  useEffect(() => {
+    // Reset form data to initial state when the component mounts
+    setFormData({
+      businessName: "",
+      businessStructure: "",
+      businessAddress: {
+        street: "",
+        city: "",
+        state: "",
+        pinCode: "",
+        country: ""
+      },
+      alternativeContact: {
+        name: "",
+        phoneNumber: ""
+      }
+    });
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -60,6 +79,18 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
   };
 
   const handleSaveAndNext = () => {
+    const isEmpty = Object.values(formData).some(value => {
+      // Check nested address fields separately
+      if (typeof value === "object" && value !== null) {
+        return Object.values(value).some(nestedValue => nestedValue === "" || nestedValue === null);
+      }
+      return value === "" || value === null;
+    });
+  
+    if (isEmpty) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
     const isValid = onSave(formData);
     if (isValid) {
       dispatch(saveFormData({ step: "businessInformation", data: formData }));
@@ -96,7 +127,7 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="businessStructure"
             >
-              Business Structure*
+              Business Structure<span className="text-red-500">*</span>
             </label>
             <select
               id="businessStructure"
@@ -122,7 +153,7 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="street"
           >
-            Business Address*
+            Business Address<span className="text-red-500">*</span>
           </label>
           <textarea
             id="street"
@@ -261,6 +292,7 @@ const BusinessInformation = ({ onSave, handleNext, handleBack }) => {
       </div>
     </>
   );
+
 };
 
 export default BusinessInformation;
