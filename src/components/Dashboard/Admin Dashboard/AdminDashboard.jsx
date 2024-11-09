@@ -354,7 +354,6 @@ const styles = {
   container: {
     padding: "20px",
     height: "100vh",
-    paddingLeft:"240px"
    // Full viewport height
   },
   kpiContainer: {

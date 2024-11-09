@@ -1,5 +1,6 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+console.log("Base url", BASE_URL);
 // AUTH ENDPOINTS
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/sendOTP",
@@ -117,10 +118,10 @@ export const contactEndpoints = {
 
 // CAREERS ENDPOINTS
 export const careersEndpoints = {
-  ADD_CANDIDATE_INFORMATION_API: BASE_URL + "/addCandidateInformation",
-  GET_ALL_CAREERS_API: BASE_URL + "/all",
-  GET_CAREER_BY_ID_API: BASE_URL + "/:id",
-  DELETE_CAREER_API: BASE_URL + "/:id",
+  ADD_CANDIDATE_INFORMATION_API: BASE_URL + "/carrer/addCandidateInformation",
+  GET_ALL_CAREERS_API: BASE_URL + "/carrer/all",
+  GET_CAREER_BY_ID_API: BASE_URL + "/carrer/:id",
+  DELETE_CAREER_API: BASE_URL + "/carrer/:id",
 };
 
 // USERS ENDPOINTS
@@ -159,3 +160,15 @@ export const enquireEndpoints = {
 export const locationEndpoints = {
   GET_LOCATION_SUGGESTIONS_API: BASE_URL + "/getLocationSuggestions",
 };
+
+// BLOG ENDPOINTS
+export const blogEndpoints = {
+  CREATE_BLOG_API: BASE_URL + "/createBlog",
+  GET_BLOGS_API: BASE_URL + "/blogs",
+  GET_BLOG_BY_SLUG_API: BASE_URL + "/blog/slug/:slug",
+  GET_BLOG_BY_ID_API: BASE_URL + "/blog/id/:id",
+  UPDATE_BLOG_API: BASE_URL + "/updateBlog/:id",
+  PUBLISH_BLOG_API: BASE_URL + "/publishBlog/:id",
+  DELETE_BLOG_API: BASE_URL + "/deleteBlog/:id",
+};
+

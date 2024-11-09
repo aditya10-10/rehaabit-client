@@ -39,9 +39,9 @@ const EnquiriesTable = ({
           </tr>
         </thead>
         <tbody>
-          {enquiries.map((enquiry,index) => (
+          {enquiries?.map((enquiry, index) => (
             <EnquiryRow
-              key={enquiry._id}
+              key={enquiry?._id}
               index={index}
               enquiry={enquiry}
               handleViewDetails={handleViewDetails}

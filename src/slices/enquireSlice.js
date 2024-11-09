@@ -39,7 +39,6 @@ export const getAllEnquiries = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiConnector("GET", GET_ALL_ENQUIRIES_API);
-
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);

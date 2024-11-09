@@ -39,7 +39,7 @@ const MyService = () => {
   });
 
   return (
-    <div className="flex lg:pl-64 md:pl-64 sm:pl-20 max-sm:pl-16 flex-col items-center w-full p-10">
+    <div className="flex  flex-col items-center w-full p-10">
       <nav className="flex w-full justify-between">
         <div className="flex items-center">
           <h1 className="text-4xl font-semibold">My Services</h1>

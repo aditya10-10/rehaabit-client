@@ -3,28 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import Fuse from "fuse.js";
 
 const SearchData = ({ searchQuery, handleSearchQuery }) => {
-  console.log(searchQuery);
+  // console.log(searchQuery);
   const navigate = useNavigate();
   const { categories } = useSelector((state) => state.categories);
   const { subcategories } = useSelector((state) => state.subcategories);
   const { allServices } = useSelector((state) => state.service);
-
-  // console.log(categories)
-  // console.log(subcategories)
-  // console.log(allServices)
-
-  const subcategoryData = subcategories.map((subcategory) => ({
+  const subcategoryData = subcategories?.map((subcategory) => ({
     ...subcategory,
-    name: subcategory.subCategoryName,
-  }));
+    name: subcategory?.subCategoryName,
+  }))||[];
 
-  const allServicesData = allServices.map((service) => ({
+  const allServicesData = allServices?.map((service) => ({
     ...service,
-    name: service.serviceName,
-    description: service.serviceDescription,
-  }));
+    name: service?.serviceName,
+    description: service?.serviceDescription,
+  }))||[];
 
-  const Data = [...categories, ...allServicesData];
+  const Data = [...(categories||[]), ...(subcategoryData||[]), ...(allServicesData||[])];
 
   // console.log(Data);
 
@@ -35,17 +30,18 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
 
   const fuse = new Fuse(Data, options);
 
-  const results = fuse.search(searchQuery);
+  const results = fuse?.search(searchQuery);
   // console.log(results); 
   const handleSearchClick = (data) => {
-    const { _id, name, categoryId, subCategoryId, slugName } = data.item;
-
-    if (data.item.subCategoryName) {
+    const { _id, name, categoryId, subCategoryId, slugName } = data?.item;
+    if (data?.item?.subCategoryName) {
       // If subcategory
-      navigate({
-        // state: { scrollTo: "subcategory", subCategoryId: _id },
+      const slugName = categories?.find(category => category._id === categoryId)?.slugName;
+      navigate(`/${slugName}`,{
+        state: { scrollTo: "subcategory", subCategoryId: _id },
+        replace: true,
       });
-    } else if (data.item.serviceName) {
+    } else if (data?.item?.serviceName) {
       // If service
       navigate("/", {
         state: { scrollTo: "services", serviceId: _id },
@@ -62,8 +58,8 @@ const SearchData = ({ searchQuery, handleSearchQuery }) => {
     <>
       {searchQuery !== "" && results.length !== 0 && (
         <div className="absolute z-50 top-full left-0 w-full mt-1 bg-white rounded-md shadow-custom-shadow max-h-60 overflow-y-auto p-4">
-          {results.map((data) => {
-            const { _id, name } = data.item;
+          {results?.map((data) => {
+            const { _id, name } = data?.item;
 
             return (
               <div
