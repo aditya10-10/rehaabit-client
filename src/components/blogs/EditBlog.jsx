@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getBlogBySlug, updateBlog } from "../../slices/blogSlice";
+import EditorContainer from "./EditorContainer";
 
 const EditBlog = () => {
     const dispatch = useDispatch();
@@ -35,30 +34,13 @@ const EditBlog = () => {
         }
     }, [blog]);
 
-    // Add this modules configuration
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            [{ 'font': [] }],
-            [{ 'size': ['small', false, 'large', 'huge'] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'color': [] }, { 'background': [] }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],
-            [{ 'align': [] }],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'indent': '-1' }, { 'indent': '+1' }],
-            ['blockquote', 'code-block'],
-            ['link', 'image', 'video'],
-            ['clean']
-        ]
-    };
-
+    
     // Handle form field change
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
     // Handle editor content change
-    const handleEditorChange = (content, editor) => {
+    const handleEditorChange = (content) => {
         setContent(content);
     };
 
@@ -145,26 +127,9 @@ const EditBlog = () => {
                                     />
                                 </div>
 
-                                {/* Editor */}
-                                <div className="mt-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Content
-                                    </label>
-                                    <div className="prose max-w-none h-64">
-                                        <ReactQuill
-                                            value={content}
-                                            onChange={handleEditorChange}
-                                            modules={modules}
-                                            theme="snow"
-                                            className="h-64"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Author Input  */}
-                            <div>
-                                <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-1 mt-24">
+ {/* Author Input  */}
+ <div>
+                                <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-1">
                                     Author
                                 </label>
                                 <input
@@ -175,6 +140,17 @@ const EditBlog = () => {
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                 />
+                            </div>
+
+                                {/* Editor */}
+                                <div className="mt-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Content
+                                    </label>
+                                    <div className="prose max-w-none">
+                                        <EditorContainer content={content} handleEditorChange={handleEditorChange} />
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Submit Button */}

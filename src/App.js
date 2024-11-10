@@ -55,11 +55,10 @@ import Contact from "./components/Contact/ContactUs";
 import PageNotFound from "./pages/PageNotFound";
 import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
-import ContentEditor from "./components/blogs/ContentEditor";
 import Spinner from "./Spinner";
 import PrivateRoute from "./utils/PrivateRoute";
 import ViewBlogs from "./components/blogs/ViewBlogs";
-import CreateBlog from "./components/blogs/CreateBlogs";
+import CreateBlogs from "./components/blogs/CreateBlogs";
 import ViewBlog from "./components/blogs/ViewBlog";
 import EditBlog from "./components/blogs/EditBlog";
 
@@ -229,7 +228,7 @@ export default function App() {
               <Route path="/dashboard/*" element={<Dashboard />}>
                 <Route path="admin" element={<AdminDashboard />} />
                 <Route path="blog/view-blogs" element={<ViewBlogs />} />
-                <Route path="blog/create-blog" element={<CreateBlog />} />
+                <Route path="blog/create-blog" element={<CreateBlogs />} />
                 <Route path="blog/edit-blog/:slug" element={<EditBlog />} />
                 <Route path="category" element={<Category />} />
                 <Route path="sub-category" element={<SubCategory />} />
@@ -264,7 +263,6 @@ export default function App() {
           />
           {/* <Route path="/coming-soon" element={<ComingSoon />} /> */}
           <Route path="*" element={<PageNotFound />} />
-          <Route path="/content" element={<ContentEditor />} />
         </Routes>
       </div>
     </>
