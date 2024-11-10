@@ -80,7 +80,7 @@ export const publishBlog = createAsyncThunk(
     async (id, thunkAPI) => {
         try{
             const response = await apiConnector("PUT", PUBLISH_BLOG_API, {id});
-            return response.data.data;
+            return response.data;
         }catch(error){
             return thunkAPI.rejectWithValue(error.response.data.message);
         }
@@ -174,7 +174,7 @@ export const blogSlice = createSlice({
         })
         .addCase(publishBlog.fulfilled, (state, action) => {
             state.isLoading = false;
-            toast.success("Blog published successfully");
+            toast.success((action.payload)?.message);
         })
         .addCase(publishBlog.rejected, (state, action) => {
             state.isLoading = false;
