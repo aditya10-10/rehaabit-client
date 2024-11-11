@@ -165,6 +165,7 @@ export const locationEndpoints = {
 export const blogEndpoints = {
   CREATE_BLOG_API: BASE_URL + "/createBlog",
   GET_BLOGS_API: BASE_URL + "/blogs",
+  GET_PUBLISHED_BLOGS_API: BASE_URL + "/publishedBlogs",
   GET_BLOG_BY_SLUG_API: BASE_URL + "/blog/slug",
   GET_BLOG_BY_ID_API: BASE_URL + "/blog/id/:id",
   UPDATE_BLOG_API: BASE_URL + "/updateBlog",

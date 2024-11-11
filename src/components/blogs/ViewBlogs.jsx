@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const ViewBlogs = () => {
     const { blogs, isLoading, totalCount } = useSelector((state) => state.blog);
-    console.log(blogs);
     const { user } = useSelector((state) => state.profile);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,15 +20,19 @@ const ViewBlogs = () => {
     const [showPublishModal, setShowPublishModal] = useState(false);
     const [blogToPublish, setBlogToPublish] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [filteredBlogs, setFilteredBlogs] = useState([]);
-    console.log(filteredBlogs);
+    const [filteredBlogs, setFilteredBlogs] = useState(blogs);
     const blogsPerPage = 10;
 
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+
     useEffect(() => {
+        setIsInitialLoading(true);
         dispatch(getBlogs({ 
             page: 1, 
             limit: blogsPerPage,
-        }));
+        })).finally(() => {
+            setIsInitialLoading(false);
+        });
     }, [dispatch]);
     
     useEffect(() => {
@@ -67,7 +70,21 @@ const ViewBlogs = () => {
     const handlePublish = async (blogId) => {
         const response = await dispatch(publishBlog(blogId));
         if (response.meta.requestStatus === "fulfilled") {
-            dispatch(getBlogs());
+            const updatedBlogs = blogs.map(blog => {
+                if (blog.id === blogId) {
+                    return {
+                        ...blog,
+                        status: blog.status === "published" ? "draft" : "published"
+                    };
+                }
+                return blog;
+            });
+            setFilteredBlogs(updatedBlogs);
+            
+            dispatch(getBlogs({ 
+                page: currentPage, 
+                limit: blogsPerPage,
+            }));
             setShowPublishModal(false);
             setBlogToPublish(null);
         }
@@ -146,7 +163,7 @@ const ViewBlogs = () => {
             </div>
 
             {/* Blog List */}
-            {isLoading ? (
+            {isInitialLoading ? (
                 <div className="flex justify-center items-center h-40">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
                 </div>

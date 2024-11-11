@@ -2,24 +2,28 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { getBlogs} from '../../slices/blogSlice'
+import { getPublishedBlogs } from '../../slices/blogSlice'
 import { Link} from 'react-router-dom'
 
 const Blogs = () => {
-    const { blogs, isLoading, totalCount } = useSelector((state) => state.blog);
-    console.log(blogs);
+    const { isLoading, totalPublishedBlogs, currentPublishedPage, publishedBlogs } = useSelector((state) => state.blog);
+    const [blogs, setBlogs] = useState(publishedBlogs);
+    const totalCount = totalPublishedBlogs;
     const dispatch = useDispatch();
 
     const [expandedBlogs, setExpandedBlogs] = useState(new Set());
     const [searchTerm, setSearchTerm] = useState("");
     
     const [currentPage, setCurrentPage] = useState(1);
-    const [filteredBlogs, setFilteredBlogs] = useState([]);
+    const [filteredBlogs, setFilteredBlogs] = useState(blogs);
     const blogsPerPage = 10;
+    useEffect(() => {
+        setBlogs(publishedBlogs);
+    }, [publishedBlogs]);
 
     useEffect(() => {
-        dispatch(getBlogs({ 
-            page: 1, 
+        dispatch(getPublishedBlogs({ 
+            page: currentPage, 
             limit: blogsPerPage
         }));
     }, [dispatch]);
@@ -33,7 +37,7 @@ const Blogs = () => {
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
-        dispatch(getBlogs({ 
+        dispatch(getPublishedBlogs({ 
             page: pageNumber, 
             limit: blogsPerPage,
         }));

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getBlogBySlug } from '../../slices/blogSlice'
+import { Helmet } from "react-helmet-async";
 
 const TableOfContents = ({ content }) => {
   const [toc, setToc] = useState([]);
@@ -99,6 +100,13 @@ const ViewBlog = () => {
         </div>
       ) : (
         <div className="max-w-6xl mx-auto px-4 py-8">
+        <Helmet>
+          <title>{`${blog?.title} | Rehaabit`}</title>
+          <meta
+            name="description"
+            content={`${blog?.metaDescription}`}
+            />
+          </Helmet>
           <div className="flex gap-8">
             {/* Table of Contents Sidebar */}
             <div className="w-64 shrink-0">

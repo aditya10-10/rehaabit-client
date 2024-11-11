@@ -33,7 +33,6 @@ export default function CreateBlogs() {
       author: formData.author,
       content,
     };
-    console.log("Payload",payload);
     const response = await dispatch(createBlog(payload));
     if(response.meta.requestStatus === "fulfilled"){
       setFormData({
