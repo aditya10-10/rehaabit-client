@@ -42,7 +42,9 @@ const Categories = () => {
     (state) => state.subcategories
   );
   const { allServices } = useSelector((state) => state.service);
-  const { cartServices, isLoading: cartLoading } = useSelector((state) => state.cart);
+  const { cartServices, isLoading: cartLoading } = useSelector(
+    (state) => state.cart
+  );
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
   const categoryName = categories.find(
@@ -50,7 +52,7 @@ const Categories = () => {
   );
   useEffect(() => {
     if (!categoryName) {
-      navigate('*');
+      navigate("*");
     }
   }, [categoryName, navigate]);
 
@@ -83,19 +85,27 @@ const Categories = () => {
 
   useEffect(() => {
     const scrollToElement = () => {
-      if (scrollTo === "subcategory" && subCategoryId && categoryRefs.current[subCategoryId]) {
+      if (
+        scrollTo === "subcategory" &&
+        subCategoryId &&
+        categoryRefs.current[subCategoryId]
+      ) {
         setTimeout(() => {
           categoryRefs.current[subCategoryId]?.scrollIntoView({
             behavior: "smooth",
-            block: "start"
+            block: "start",
           });
         }, 500); // Add a delay to ensure content is loaded
       }
-      if (scrollTo === "service" && serviceId && serviceRefs.current[serviceId]) {
+      if (
+        scrollTo === "service" &&
+        serviceId &&
+        serviceRefs.current[serviceId]
+      ) {
         setTimeout(() => {
           serviceRefs.current[serviceId]?.scrollIntoView({
             behavior: "smooth",
-            block: "start"
+            block: "start",
           });
         }, 500); // Add a delay to ensure content is loaded
       }
@@ -230,7 +240,10 @@ const Categories = () => {
             <CategorySkeleton className="h-6 w-1/2 mx-auto mb-4" />
             <div className="grid grid-cols-3 p-2 gap-4 max-xl:grid-cols-2 max-lg:grid-cols-1">
               {[...Array(6)].map((_, index) => (
-                <CategorySkeleton key={index} className="h-32 w-full rounded-lg" />
+                <CategorySkeleton
+                  key={index}
+                  className="h-32 w-full rounded-lg"
+                />
               ))}
             </div>
           </div>
@@ -241,7 +254,10 @@ const Categories = () => {
               <CategorySkeleton className="h-8 w-1/3 mb-4" />
               <div className="grid grid-cols-1 gap-4">
                 {[...Array(3)].map((_, serviceIndex) => (
-                  <CategorySkeleton key={serviceIndex} className="h-40 w-full rounded-lg" />
+                  <CategorySkeleton
+                    key={serviceIndex}
+                    className="h-40 w-full rounded-lg"
+                  />
                 ))}
               </div>
             </div>
@@ -273,11 +289,8 @@ const Categories = () => {
 
       <div className="flex  px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <Helmet>
-          <title>{categoryName?.name} | Rehaabit</title>
-          <meta
-            name="description"
-            content={`Explore ${categoryName?.name} services at Rehaabit`}
-          />
+          <title>{categoryName?.metaTitle}</title>
+          <meta name="description" content={categoryName?.metaDescription} />
         </Helmet>
         <div className="w-[40%] max-md:w-full">
           <h1 className="text-3xl mb-2 font-bold underline max-sm:text-4xl">
@@ -316,148 +329,153 @@ const Categories = () => {
         </div>
 
         <div
-  className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto"
-  style={{
-    scrollbarWidth: 'none', // For Firefox
-    msOverflowStyle: 'none', // For Internet Explorer and Edge
-  }}
->
-  <style jsx>{`
-    /* For Chrome, Safari, and Opera */
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-  `}</style>
-  {subCategoriesByCategory.map((category) => {
-    const { _id, subCategoryName } = category;
+          className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto"
+          style={{
+            scrollbarWidth: "none", // For Firefox
+            msOverflowStyle: "none", // For Internet Explorer and Edge
+          }}
+        >
+          <style jsx>{`
+            /* For Chrome, Safari, and Opera */
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
+          {subCategoriesByCategory.map((category) => {
+            const { _id, subCategoryName } = category;
 
-    const services = allServices.filter(
-      (service) =>
-        service.subCategoryId === _id && service.status !== "Draft"
-    );
-
-    return services.length > 0 ? (
-      <div
-        key={_id}
-        ref={(e) => (categoryRefs.current[_id] = e)}
-        className="mb-8"
-      >
-        <h2 className="text-2xl font-bold mb-4 ml-6">
-          {subCategoryName}
-        </h2>
-
-        <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
-          {services.map((service) => {
-            const {
-              _id,
-              serviceName,
-              thumbnail,
-              serviceDescription,
-              priceStatus,
-              status,
-            } = service;
-
-            const cartService = cartServices.find(
-              (service) => service.serviceId === _id
+            const services = allServices.filter(
+              (service) =>
+                service.subCategoryId === _id && service.status !== "Draft"
             );
-            const serviceQty = cartService ? cartService.qty : 0;
 
-            return (
-              status !== "Draft" && (
-                <div
-                  key={_id}
-                  ref={(e) => (serviceRefs.current[_id] = e)}
-                  className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
-                >
-                  <div
-                    className="w-full cursor-pointer"
-                    onClick={() => {
-                      setIsServiceModalOpen(!isServiceModalOpen);
-                      setServiceIdToPass(_id);
-                    }}
-                  >
-                    <ServiceCard {...service} />
-                  </div>
+            return services.length > 0 ? (
+              <div
+                key={_id}
+                ref={(e) => (categoryRefs.current[_id] = e)}
+                className="mb-8"
+              >
+                <h2 className="text-2xl font-bold mb-4 ml-6">
+                  {subCategoryName}
+                </h2>
 
-                  <div className="flex gap-2 justify-end w-full mt-4">
-                    {priceStatus === "priced" ? (
-                      <>
-                        <button
-                          className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
-                          onClick={() => handleBuyNow(service)}
+                <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
+                  {services.map((service) => {
+                    const {
+                      _id,
+                      serviceName,
+                      thumbnail,
+                      serviceDescription,
+                      priceStatus,
+                      status,
+                    } = service;
+
+                    const cartService = cartServices.find(
+                      (service) => service.serviceId === _id
+                    );
+                    const serviceQty = cartService ? cartService.qty : 0;
+
+                    return (
+                      status !== "Draft" && (
+                        <div
+                          key={_id}
+                          ref={(e) => (serviceRefs.current[_id] = e)}
+                          className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
                         >
-                          Buy Now
-                        </button>
+                          <div
+                            className="w-full cursor-pointer"
+                            onClick={() => {
+                              setIsServiceModalOpen(!isServiceModalOpen);
+                              setServiceIdToPass(_id);
+                            }}
+                          >
+                            <ServiceCard {...service} />
+                          </div>
 
-                        <div className="flex items-center">
-                          {serviceQty > 0 ? (
-                            <>
+                          <div className="flex gap-2 justify-end w-full mt-4">
+                            {priceStatus === "priced" ? (
+                              <>
+                                <button
+                                  className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
+                                  onClick={() => handleBuyNow(service)}
+                                >
+                                  Buy Now
+                                </button>
+
+                                <div className="flex items-center">
+                                  {serviceQty > 0 ? (
+                                    <>
+                                      <button
+                                        className="border px-2 border-gray-400 rounded-full"
+                                        disabled={cartLoading}
+                                        onClick={() =>
+                                          handleDecrease(
+                                            cartService._id,
+                                            service
+                                          )
+                                        }
+                                      >
+                                        -
+                                      </button>
+
+                                      <span className="mx-2 text-gray-500">
+                                        {serviceQty}
+                                      </span>
+
+                                      <button
+                                        className="border px-2 border-gray-400 rounded-full"
+                                        disabled={cartLoading}
+                                        onClick={() =>
+                                          handleIncrease(
+                                            cartService._id,
+                                            service
+                                          )
+                                        }
+                                      >
+                                        +
+                                      </button>
+
+                                      <button
+                                        className="px-2 text-gray-600 hover:text-red-500"
+                                        disabled={cartLoading}
+                                        onClick={() =>
+                                          handleRemove(cartService._id, service)
+                                        }
+                                      >
+                                        REMOVE
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <button
+                                      className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
+                                      disabled={cartLoading}
+                                      onClick={() => handleAddToCart(service)}
+                                    >
+                                      Add to Cart
+                                    </button>
+                                  )}
+                                </div>
+                              </>
+                            ) : (
                               <button
-                                className="border px-2 border-gray-400 rounded-full"
-                                disabled={cartLoading}
+                                className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
                                 onClick={() =>
-                                  handleDecrease(cartService._id, service)
+                                  handleEnquireNowModalOpen(service)
                                 }
                               >
-                                -
+                                Enquire Now
                               </button>
-
-                              <span className="mx-2 text-gray-500">
-                                {serviceQty}
-                              </span>
-
-                              <button
-                                className="border px-2 border-gray-400 rounded-full"
-                                disabled={cartLoading}
-                                onClick={() =>
-                                  handleIncrease(cartService._id, service)
-                                }
-                              >
-                                +
-                              </button>
-
-                              <button
-                                className="px-2 text-gray-600 hover:text-red-500"
-                                disabled={cartLoading}
-                                onClick={() =>
-                                  handleRemove(cartService._id, service)
-                                }
-                              >
-                                REMOVE
-                              </button>
-                            </>
-                          ) : (
-                            <button
-                              className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
-                              disabled={cartLoading}
-                              onClick={() => handleAddToCart(service)}
-                            >
-                              Add to Cart
-                            </button>
-                          )}
+                            )}
+                          </div>
                         </div>
-                      </>
-                    ) : (
-                      <button
-                        className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
-                        onClick={() =>
-                          handleEnquireNowModalOpen(service)
-                        }
-                      >
-                        Enquire Now
-                      </button>
-                    )}
-                  </div>
+                      )
+                    );
+                  })}
                 </div>
-              )
-            );
+              </div>
+            ) : null;
           })}
         </div>
-      </div>
-    ) : null;
-  })}
-</div>
-
       </div>
       <Footer />
     </>
