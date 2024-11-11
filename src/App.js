@@ -55,9 +55,12 @@ import Contact from "./components/Contact/ContactUs";
 import PageNotFound from "./pages/PageNotFound";
 import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
-import ContentEditor from "./components/blogs/ContentEditor";
 import Spinner from "./Spinner";
 import PrivateRoute from "./utils/PrivateRoute";
+import ViewBlogs from "./components/blogs/ViewBlogs";
+import CreateBlogs from "./components/blogs/CreateBlogs";
+import ViewBlog from "./components/blogs/ViewBlog";
+import EditBlog from "./components/blogs/EditBlog";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -124,9 +127,6 @@ export default function App() {
     if (!location.pathname.includes("/checkout")) {
       dispatch(clearSingleOrder());
     }
-  }, [location, dispatch]);
-
-  useEffect(() => {
     if (window.innerWidth < 768) {
       const isOrderPage = location.pathname === "/dashboard/orders";
       dispatch(toggleSidebarVisibility(!isOrderPage));
@@ -171,7 +171,7 @@ export default function App() {
       </div>
     );
   }
-  
+
   return (
     <>
       {!location.pathname.includes("/partner") &&
@@ -194,6 +194,7 @@ export default function App() {
           <Route path="/:id" element={<Categories />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="blog/view-blog/:slug" element={<ViewBlog />} />
           <Route
             path="/terms-and-conditions"
             element={<TermsAndConditions />}
@@ -208,11 +209,14 @@ export default function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/careers" element={<Careers />} />
 
-          <Route path="/dashboard/*" element={
-            <PrivateRoute showLoginModal={handleLoginClick}>
-              <Dashboard />
-            </PrivateRoute>
-          }>
+          <Route
+            path="/dashboard/*"
+            element={
+              <PrivateRoute showLoginModal={handleLoginClick}>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          >
             <Route path="my-profile" element={<MyProfile />} />
             <Route path="edit-profile" element={<EditProfile />} />
             <Route path="orders" element={<MyOrders />} />
@@ -223,6 +227,9 @@ export default function App() {
             <>
               <Route path="/dashboard/*" element={<Dashboard />}>
                 <Route path="admin" element={<AdminDashboard />} />
+                <Route path="blog/view-blogs" element={<ViewBlogs />} />
+                <Route path="blog/create-blog" element={<CreateBlogs />} />
+                <Route path="blog/edit-blog/:slug" element={<EditBlog />} />
                 <Route path="category" element={<Category />} />
                 <Route path="sub-category" element={<SubCategory />} />
                 <Route path="my-profile" element={<MyProfile />} />
@@ -254,9 +261,8 @@ export default function App() {
             path="/partner/terms-and-conditions"
             element={<PartnerTermsAndConditions />}
           />
-          <Route path="/coming-soon" element={<ComingSoon />} />
-          <Route path="/not" element={<PageNotFound />} />
-          <Route path="/content" element={<ContentEditor />} />
+          {/* <Route path="/coming-soon" element={<ComingSoon />} /> */}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
     </>

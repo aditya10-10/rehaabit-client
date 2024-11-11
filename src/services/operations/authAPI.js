@@ -59,6 +59,19 @@ export function signUp(firstName, lastName, contactNumber, otp, navigate) {
         throw new Error(response.data.message);
       }
       toast.success("Signup Successful");
+      dispatch(setToken(response.data.token));
+      const userImage = response.data?.user?.image;
+      dispatch(setUserData({ ...response.data.user, image: userImage }));
+      dispatch(setUserData(response.data.user));
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...response.data.user, image: userImage })
+      );
+
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      // navigate("/");
+      if (response.data.token) dispatch(getUserDetails(response.data.token));
       navigate("/");
     } catch (error) {
       // console.log("SIGNUP API ERROR............", error);

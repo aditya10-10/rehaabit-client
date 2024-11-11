@@ -97,7 +97,7 @@ export const getServiceRatingAndReviews = createAsyncThunk(
       const response = await axios.get(
         `${BASE_URL}/getServiceRatingAndReviews?serviceId=${serviceId}&page=${page}`
       );
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message.data);
@@ -480,7 +480,7 @@ const serviceSlice = createSlice({
         } else {
           console.error('Received unexpected data format:', action.payload);
         }
-        console.log(state.serviceRatingAndReviews);
+        // console.log(state.serviceRatingAndReviews);
       })
       .addCase(getServiceRatingAndReviews.rejected, (state, action) => {
         state.isLoading = false;

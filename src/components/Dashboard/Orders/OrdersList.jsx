@@ -32,9 +32,10 @@ const OrdersList = ({ orders }) => {
     "Confirmed",
     "Professional Assigned",
     "On the Way",
-    "Service Completed"
+    "Service Completed",
   ];
-  const [isRateAndReviewModalOpen, setIsRateAndReviewModalOpen] = useState(false);
+  const [isRateAndReviewModalOpen, setIsRateAndReviewModalOpen] =
+    useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
@@ -46,14 +47,22 @@ const OrdersList = ({ orders }) => {
   };
 
   const handleCancelConfirm = () => {
-    const cancelText = user.accountType === 'Admin' ? 'cancelled by provider' : 'cancelled by customer';
+    const cancelText =
+      user.accountType === "Admin"
+        ? "cancelled by provider"
+        : "cancelled by customer";
     dispatch(cancelOrder({ orderId: orderToCancel }));
     setLocalOrders((prevOrders) =>
       prevOrders.map((order) => {
         if (order._id === orderToCancel) {
           return {
             ...order,
-            status: { statuses: [...order.status.statuses, { status: cancelText, updatedAt: new Date().toISOString() }] }
+            status: {
+              statuses: [
+                ...order.status.statuses,
+                { status: cancelText, updatedAt: new Date().toISOString() },
+              ],
+            },
           };
         }
         return order;
@@ -61,7 +70,6 @@ const OrdersList = ({ orders }) => {
     );
     setIsCancelModalOpen(false);
   };
-
 
   const handleDropdownClick = (id) => {
     setOpenDropdownId(openDropdownId === id ? null : id);
@@ -85,9 +93,9 @@ const OrdersList = ({ orders }) => {
               ...order.status,
               statuses: [
                 ...order.status.statuses,
-                { status: newStatus, updatedAt: new Date().toISOString() }
-              ]
-            }
+                { status: newStatus, updatedAt: new Date().toISOString() },
+              ],
+            },
           };
         }
         return order;
@@ -123,26 +131,31 @@ const OrdersList = ({ orders }) => {
   };
 
   if (isLoading || !Array.isArray(ratingAndReviews)) {
-    return <div className="flex justify-center items-center w-100% h-100% bg-white">
-    <BallTriangle
-      height={100}
-      width={100}
-      radius={5}  
-      color="#4fa94d"
-      ariaLabel="ball-triangle-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-      visible={true}
-    />
-  </div>
+    return (
+      <div className="flex justify-center items-center w-100% h-100% bg-white">
+        <BallTriangle
+          height={100}
+          width={100}
+          radius={5}
+          color="#4fa94d"
+          ariaLabel="ball-triangle-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    );
   }
 
   const getTrackingStages = (order) => {
-    const completedStages = order.status.statuses.map((status) => status.status.toLowerCase());
+    const completedStages = order.status.statuses.map((status) =>
+      status.status.toLowerCase()
+    );
     const latestStatusIndex = completedStages.length - 1; // Index of the latest status
 
     // Check for cancellation status
-    const isCancelled = completedStages.includes("cancelled by provider") ||
+    const isCancelled =
+      completedStages.includes("cancelled by provider") ||
       completedStages.includes("cancelled by customer");
 
     if (isCancelled) {
@@ -155,22 +168,27 @@ const OrdersList = ({ orders }) => {
       // Return stages up to the cancellation point, then add cancellation stages
       return {
         trackingStages: [
-          ...completedStages.slice(0, cancellationIndex).map(s => s?.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")),
+          ...completedStages.slice(0, cancellationIndex).map((s) =>
+            s
+              ?.toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")
+          ),
           "Cancelled",
           "Refund Initiated",
-          "Refund Completed"
+          "Refund Completed",
         ],
-        latestStatusIndex
+        latestStatusIndex,
       };
     }
 
     // If no cancellation status, return default stages with latest status index
     return {
       trackingStages: defaultStages,
-      latestStatusIndex
+      latestStatusIndex,
     };
   };
-
 
   return (
     <>
@@ -194,7 +212,8 @@ const OrdersList = ({ orders }) => {
         {localOrders.map((order) => {
           const { _id, services, status, createdAt, orderId } = order;
           const statuses = status.statuses;
-          const { trackingStages, latestStatusIndex } = getTrackingStages(order);
+          const { trackingStages, latestStatusIndex } =
+            getTrackingStages(order);
           return services.map((item) => {
             const userReview = ratingAndReviews.find(
               (review) => review.service === item.serviceId
@@ -202,10 +221,9 @@ const OrdersList = ({ orders }) => {
             const rating = userReview ? userReview.rating : 0;
 
             return (
-
               <div
                 key={item._id}
-                className="border font-arial rounded-lg p-4 mb-4 shadow-md  lg:pl-52"
+                className="border font-arial rounded-lg p-4 mb-4 shadow-md bg-white"
               >
                 {/* Header Section */}
                 <div className="flex justify-between items-center mb-4">
@@ -214,7 +232,9 @@ const OrdersList = ({ orders }) => {
                   </h3>
                   <div className="text-right">
                     <span className="text-gray-500">Status: </span>
-                    <StatusBadge status={statuses[statuses.length - 1].status} />
+                    <StatusBadge
+                      status={statuses[statuses.length - 1].status}
+                    />
                   </div>
                 </div>
 
@@ -236,10 +256,14 @@ const OrdersList = ({ orders }) => {
                       Scheduled for: {formattedDate(createdAt)}
                     </p>
                     <p className="text-sm md:text-sm">
-                      <span className="font-semibold text-slate-700"> Total Price: </span>
+                      <span className="font-semibold text-slate-700">
+                        {" "}
+                        Total Price:{" "}
+                      </span>
                       ₹ {item.qty * item.price}
                     </p>
-                    {statuses[statuses.length - 1].status === "service completed" && (
+                    {statuses[statuses.length - 1].status ===
+                      "service completed" && (
                       <div className="mt-2">
                         {userReview ? (
                           <div className="flex items-center gap-1">
@@ -265,7 +289,13 @@ const OrdersList = ({ orders }) => {
                 </div>
 
                 {/* Buttons Section */}
-                <div className={`mt-4 mx-10 max-sm:mx-0 max-sm:gap-4 max-md:gap-0 grid w-auto grid-cols-1 sm:grid-cols-2 ${user.accountType === "Admin" ? "gap-4" : "max-lg:gap-52 gap-96"}`}>
+                <div
+                  className={`mt-4 mx-10 max-sm:mx-0 max-sm:gap-4 max-md:gap-0 grid w-auto grid-cols-1 sm:grid-cols-2 ${
+                    user.accountType === "Admin"
+                      ? "gap-4"
+                      : "max-lg:gap-52 gap-96"
+                  }`}
+                >
                   <button
                     className="bg-blue-500 hover:bg-blue-600 text-white w-full px-1 py-2 rounded shadow-lg transition duration-300"
                     onClick={() => handleTrackOrderClick(_id)} // Updated
@@ -273,12 +303,25 @@ const OrdersList = ({ orders }) => {
                     Track Order
                   </button>
                   <button
-                    className={`${["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed", "service completed"].includes(statuses[statuses.length - 1].status)
-                      ? "bg-gray-400 text-gray-600 cursor-not-allowed" // Disabled styling
-                      : "bg-red-500 hover:bg-red-600 text-white" // Active styling
-                      } w-full px-1 py-2 rounded shadow-lg transition duration-300`}
+                    className={`${
+                      [
+                        "cancelled by customer",
+                        "cancelled by provider",
+                        "refund initiated",
+                        "refund completed",
+                        "service completed",
+                      ].includes(statuses[statuses.length - 1].status)
+                        ? "bg-gray-400 text-gray-600 cursor-not-allowed" // Disabled styling
+                        : "bg-red-500 hover:bg-red-600 text-white" // Active styling
+                    } w-full px-1 py-2 rounded shadow-lg transition duration-300`}
                     onClick={() => handleCancelOrderClick(_id)}
-                    disabled={["cancelled by customer", "cancelled by provider", "refund initiated", "refund completed", "service completed"].includes(statuses[statuses.length - 1].status)} // Disable button for specific statuses
+                    disabled={[
+                      "cancelled by customer",
+                      "cancelled by provider",
+                      "refund initiated",
+                      "refund completed",
+                      "service completed",
+                    ].includes(statuses[statuses.length - 1].status)} // Disable button for specific statuses
                   >
                     Cancel Order
                   </button>
@@ -299,17 +342,33 @@ const OrdersList = ({ orders }) => {
                           >
                             <option value="pending">Pending</option>
                             <option value="confirmed">Confirmed</option>
-                            <option value="professional assigned">Professional Assigned</option>
+                            <option value="professional assigned">
+                              Professional Assigned
+                            </option>
                             <option value="on the way">On the Way</option>
-                            <option value="service started">Service Started</option>
-                            <option value="service completed">Service Completed</option>
-                            <option value="payment pending">Payment Pending</option>
+                            <option value="service started">
+                              Service Started
+                            </option>
+                            <option value="service completed">
+                              Service Completed
+                            </option>
+                            <option value="payment pending">
+                              Payment Pending
+                            </option>
                             <option value="paid">Paid</option>
-                            <option value="cancelled by customer">Cancelled by Customer</option>
-                            <option value="cancelled by provider">Cancelled by Provider</option>
+                            <option value="cancelled by customer">
+                              Cancelled by Customer
+                            </option>
+                            <option value="cancelled by provider">
+                              Cancelled by Provider
+                            </option>
                             <option value="rescheduled">Rescheduled</option>
-                            <option value="refund initiated">Refund Initiated</option>
-                            <option value="refund completed">Refund Completed</option>
+                            <option value="refund initiated">
+                              Refund Initiated
+                            </option>
+                            <option value="refund completed">
+                              Refund Completed
+                            </option>
                           </select>
                         </div>
                       )}
@@ -323,34 +382,39 @@ const OrdersList = ({ orders }) => {
                     <div className="border-b w-full mb-8"></div>
                     {/* For larger screens */}
                     <div className="hidden sm:flex justify-between items-center relative">
-                      {trackingStages?.map(
-                        (stage, index) => (
+                      {trackingStages?.map((stage, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-col items-center justify-center"
+                          style={{ flex: 1, textAlign: "center" }}
+                        >
                           <div
-                            key={index}
-                            className="flex flex-col items-center justify-center"
-                            style={{ flex: 1, textAlign: "center" }}
-                          >
-                            <div
-                              className={`h-2 w-full ${index <= latestStatusIndex ? "bg-green-500" : "bg-gray-300"}`}
-                              style={{
-                                marginTop: "10px",
-                                ...(index === 0
-                                  ? { width: "50%", marginLeft: "50%" }
-                                  : index === trackingStages.length - 1
-                                    ? { width: "50%", marginRight: "50%" }
-                                    : {}),
-                              }}
-                            ></div>
+                            className={`h-2 w-full ${
+                              index <= latestStatusIndex
+                                ? "bg-green-500"
+                                : "bg-gray-300"
+                            }`}
+                            style={{
+                              marginTop: "10px",
+                              ...(index === 0
+                                ? { width: "50%", marginLeft: "50%" }
+                                : index === trackingStages.length - 1
+                                ? { width: "50%", marginRight: "50%" }
+                                : {}),
+                            }}
+                          ></div>
 
-                            <div
-                              className={`h-6 w-6 rounded-full ${index <= latestStatusIndex ? "bg-green-500" : "bg-gray-300"
-                                }`}
-                              style={{ position: "relative", top: "-15px" }}
-                            />
-                            <span className="text-sm mt-1">{stage}</span>
-                          </div>
-                        )
-                      )}
+                          <div
+                            className={`h-6 w-6 rounded-full ${
+                              index <= latestStatusIndex
+                                ? "bg-green-500"
+                                : "bg-gray-300"
+                            }`}
+                            style={{ position: "relative", top: "-15px" }}
+                          />
+                          <span className="text-sm mt-1">{stage}</span>
+                        </div>
+                      ))}
                     </div>
 
                     {/* For mobile view (vertical layout) */}
@@ -363,28 +427,37 @@ const OrdersList = ({ orders }) => {
                       </button>
 
                       <div className="flex flex-col items-start h-full mt-32">
-                        {trackingStages?.map(
-                          (stage, index) => (
-                            <div key={index} className="flex w-full items-start mb-0">
-                              {/* Stage name on the left */}
-                              <span className="text-sm mt-0 w-1/2">{stage}</span>
+                        {trackingStages?.map((stage, index) => (
+                          <div
+                            key={index}
+                            className="flex w-full items-start mb-0"
+                          >
+                            {/* Stage name on the left */}
+                            <span className="text-sm mt-0 w-1/2">{stage}</span>
 
-                              <div className="flex flex-col items-center w-1/2">
-                                {/* Dot for stages */}
+                            <div className="flex flex-col items-center w-1/2">
+                              {/* Dot for stages */}
+                              <div
+                                className={`h-6 w-6 rounded-full ${
+                                  index <= latestStatusIndex
+                                    ? "bg-green-500"
+                                    : "bg-gray-300"
+                                } mb-0`}
+                              />
+                              {/* Line section */}
+                              {index < 4 && (
                                 <div
-                                  className={`h-6 w-6 rounded-full ${index <= latestStatusIndex ? "bg-green-500" : "bg-gray-300"} mb-0`}
+                                  className={`h-full w-1 ${
+                                    index < latestStatusIndex
+                                      ? "bg-green-500"
+                                      : "bg-gray-300"
+                                  }`}
+                                  style={{ minHeight: "90px" }} // Ensures the line covers the entire space
                                 />
-                                {/* Line section */}
-                                {index < 4 && (
-                                  <div
-                                    className={`h-full w-1 ${index < latestStatusIndex ? "bg-green-500" : "bg-gray-300"}`}
-                                    style={{ minHeight: "90px" }} // Ensures the line covers the entire space
-                                  />
-                                )}
-                              </div>
+                              )}
                             </div>
-                          )
-                        )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
