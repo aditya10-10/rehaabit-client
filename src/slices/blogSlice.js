@@ -12,6 +12,8 @@ const initialState = {
     isLoading: false,
     isBlogLoading: false,
     error: null,
+    totalCount: 0,
+    currentPage: 1,
 };
 
 export const createBlog = createAsyncThunk(
@@ -28,11 +30,14 @@ export const createBlog = createAsyncThunk(
 
 export const getBlogs = createAsyncThunk(
     "blog/getBlogs",
-    async (_, thunkAPI) => {
-        try{
-            const response = await apiConnector("GET", GET_BLOGS_API);
-            return response.data.blogs;  
-        }catch(error){
+    async ({ page = 1, limit = 10}, thunkAPI) => {
+        try {
+            const response = await apiConnector(
+                "GET", 
+                `${GET_BLOGS_API}?page=${page}&limit=${limit}`
+            );
+            return response.data;  
+        } catch(error) {
             return thunkAPI.rejectWithValue(error.response.data.message);
         }
     }
@@ -123,7 +128,9 @@ export const blogSlice = createSlice({
         })
         .addCase(getBlogs.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.blogs = action.payload;
+            state.blogs = action.payload.blogs;
+            state.totalCount = action.payload.totalCount;
+            state.currentPage = action.payload.currentPage;
         })
         .addCase(getBlogs.rejected, (state, action) => {
             state.isLoading = false;
