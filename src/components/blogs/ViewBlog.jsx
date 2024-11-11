@@ -12,7 +12,7 @@ const TableOfContents = ({ content }) => {
     if (content) {
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content;
-      const headings = tempDiv.querySelectorAll('h1, h2, h3');
+      const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
       const tocItems = Array.from(headings).map((heading, index) => ({
         id: `heading-${index}`,
         text: heading.textContent,
@@ -49,10 +49,31 @@ const BlogContent = ({ content }) => {
   
   useEffect(() => {
     if (contentRef.current) {
-      // Add IDs to headings
-      const headings = contentRef.current.querySelectorAll('h1, h2, h3');
+      // Add IDs to headings and ensure proper heading styles
+      const headings = contentRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6');
       headings.forEach((heading, index) => {
         heading.id = `heading-${index}`;
+        
+        // Add appropriate heading styles
+        switch(heading.tagName.toLowerCase()) {
+          case 'h1':
+            heading.classList.add('text-4xl', 'font-bold', 'my-6');
+            break;
+          case 'h2':
+            heading.classList.add('text-3xl', 'font-bold', 'my-5');
+            break;
+          case 'h3':
+            heading.classList.add('text-2xl', 'font-semibold', 'my-4');
+            break;
+          default:
+            heading.classList.add('text-xl', 'font-semibold', 'my-3');
+        }
+      });
+
+      // Add styles for table headings
+      const tableHeadings = contentRef.current.querySelectorAll('table h2, table h3');
+      tableHeadings.forEach(heading => {
+        heading.classList.add('font-bold', 'text-lg', 'my-2');
       });
 
       // Existing link styling code
@@ -145,24 +166,15 @@ const ViewBlog = () => {
                     .blog-content .text-left { text-align: left; }
                     .blog-content .text-right { text-align: right; }
 
-                    .blog-content h1 {
-                      margin-top: 2.5em;
-                      margin-bottom: 1em;
-                    }
-
-                    .blog-content h2 {
-                      margin-top: 2em;
-                      margin-bottom: 0.8em;
-                    }
-
-                    .blog-content h3 {
-                      margin-top: 1.8em;
-                      margin-bottom: 0.6em;
-                    }
-
-                    .blog-content h4, .blog-content h5, .blog-content h6 {
-                      margin-top: 1.5em;
-                      margin-bottom: 0.5em;
+                    .blog-content h1, 
+                    .blog-content h2, 
+                    .blog-content h3, 
+                    .blog-content h4, 
+                    .blog-content h5, 
+                    .blog-content h6 {
+                      font-weight: bold;
+                      line-height: 1.2;
+                      color: #1a202c;
                     }
 
                     .blog-content img {

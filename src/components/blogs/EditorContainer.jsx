@@ -1,22 +1,18 @@
 import React from 'react'
-import { storage } from '../../utils/firebaseConfig';
 import { Editor } from "@tinymce/tinymce-react";
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
+import { uploadImageToCloudinary } from '../../utils/cloudinaryutil';
 
 const EditorContainer = ({content, handleEditorChange}) => {
     const handleImageUpload = async (blobInfo, progress) => {
         try {
-            const file = blobInfo.blob();
-            const imageRef = ref(storage, `blog-images/${uuidv4()}-${blobInfo.filename()}`);
-            
-            const snapshot = await uploadBytes(imageRef, file);
-            const imageUrl = await getDownloadURL(snapshot.ref);
-            
-            return imageUrl;
+            console.log('Uploading image to Cloudinary...');
+            const secureUrl = await uploadImageToCloudinary(blobInfo.blob());
+            console.log('Image uploaded successfully:', secureUrl);
+            return secureUrl;
         } catch (error) {
-            console.error('Error uploading image: ', error);
-            throw new Error('Image upload failed');
+            console.error('Error uploading image:', error);
+            throw error;
         }
     };
 
@@ -116,16 +112,31 @@ const EditorContainer = ({content, handleEditorChange}) => {
                         td[data-mce-selected], th[data-mce-selected] { 
                             background-color: #b4d7ff !important;
                         }
+                        figure.image {
+                            display: inline-block;
+                            border: 1px solid #ccc;
+                            margin: 0 2px 0 1px;
+                            background: #f8f8f8;
+                        }
+                        figure.image img {
+                            margin: 8px 8px 0 8px;
+                        }
+                        figure.image figcaption {
+                            margin: 6px 8px 6px 8px;
+                            text-align: center;
+                        }
                     `,
                     block_formats:
                         "Paragraph=p; Header 1=h1; Header 2=h2; Header 3=h3; Header 4=h4; Header 5=h5; Header 6=h6",
                     images_upload_handler: handleImageUpload,
                     image_title: true,
                     image_description: true,
-                    image_toolbar: "alignleft aligncenter alignright | rotateleft rotateright | imageoptions | crop | remove",
                     image_caption: true,
+                    automatic_uploads: true,
+                    images_upload_credentials: true,
                     image_advtab: true,
-                    imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage | imageoptions",
+                    image_dimensions: true,
+                    images_reuse_filename: false,
                     setup: (editor) => {
                         editor.on('BeforeSetContent', (e) => {
                             const bookmark = editor.selection.getBookmark(2, true);

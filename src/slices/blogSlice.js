@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 import { blogEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
+import Swal from "sweetalert2";
 
 const { CREATE_BLOG_API, GET_BLOGS_API, GET_PUBLISHED_BLOGS_API, GET_BLOG_BY_SLUG_API, GET_BLOG_BY_ID_API, UPDATE_BLOG_API, PUBLISH_BLOG_API, DELETE_BLOG_API } = blogEndpoints;
 
@@ -126,16 +127,27 @@ export const blogSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createBlog.pending, (state) => {
             state.isLoading = true;
+            Swal.showLoading();
         })
         .addCase(createBlog.fulfilled, (state, action) => {
             state.isLoading = false;
             state.blogs = [...state.blogs, action.payload];
             toast.success(typeof action.payload === 'string' ? action.payload : "Blog created successfully");
+            Swal.fire({
+                title: 'Blog Created',
+                text: 'Your blog has been created successfully',
+                icon: 'success',
+            });
         })
         .addCase(createBlog.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
             toast.error((action.payload) || "Something went wrong");
+            Swal.fire({
+                title: 'Error',
+                text: action.payload,
+                icon: 'error',
+            });
         })
 
         .addCase(getBlogs.pending, (state) => {

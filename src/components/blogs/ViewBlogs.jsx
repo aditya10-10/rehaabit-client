@@ -97,7 +97,10 @@ const ViewBlogs = () => {
     const handleDelete = async (blogId) => {
         const response = await dispatch(deleteBlog(blogId));
         if (response.meta.requestStatus === "fulfilled") {
-            dispatch(getBlogs());
+            dispatch(getBlogs({
+                page: currentPage,
+                limit: blogsPerPage,
+            }));
             setShowDeleteModal(false);
             setBlogToDelete(null);
         }
