@@ -51,8 +51,8 @@ const Footer = () => {
     },
     {
       title: "For Customers",
-      items: ["Contact Us", "Help Center"],
-      links: ["/contact-us", "/help"],
+      items: ["Contact Us", "Help Center", "Blogs"],
+      links: ["/contact-us", "/help", "/library"],
     },
     {
       title: "For Partners",
