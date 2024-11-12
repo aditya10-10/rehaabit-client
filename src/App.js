@@ -61,6 +61,7 @@ import ViewBlogs from "./components/blogs/ViewBlogs";
 import CreateBlogs from "./components/blogs/CreateBlogs";
 import ViewBlog from "./components/blogs/ViewBlog";
 import EditBlog from "./components/blogs/EditBlog";
+import Blogs from "./components/blogs/Blogs";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -194,11 +195,10 @@ export default function App() {
           <Route path="/:id" element={<Categories />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="blog/view-blog/:slug" element={<ViewBlog />} />
-          <Route
-            path="/terms-and-conditions"
-            element={<TermsAndConditions />}
-          />
+          <Route path="/blog/preview/:slug" element={<ViewBlog />} />
+          <Route path="/library" element={<Blogs />} />
+          <Route path="/library/:slug" element={<ViewBlog />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             path="/cancellation-and-refund-policy"
@@ -208,7 +208,6 @@ export default function App() {
           <Route path="/about-us" element={<AboutPage />} />
           <Route path="/help" element={<Help />} />
           <Route path="/careers" element={<Careers />} />
-
           <Route
             path="/dashboard/*"
             element={

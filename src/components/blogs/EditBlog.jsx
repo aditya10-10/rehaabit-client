@@ -55,7 +55,6 @@ const EditBlog = () => {
             content,
             id: formData.id,
         };
-        console.log(payload);
         const response = await dispatch(updateBlog(payload));
         if (response.meta.requestStatus === "fulfilled") {
             setFormData({

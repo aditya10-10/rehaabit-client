@@ -3,15 +3,21 @@ import { toast } from "sonner";
 
 import { blogEndpoints } from "../services/apis";
 import { apiConnector } from "../services/apiConnector";
+import Swal from "sweetalert2";
 
-const { CREATE_BLOG_API, GET_BLOGS_API, GET_BLOG_BY_SLUG_API, GET_BLOG_BY_ID_API, UPDATE_BLOG_API, PUBLISH_BLOG_API, DELETE_BLOG_API } = blogEndpoints;
+const { CREATE_BLOG_API, GET_BLOGS_API, GET_PUBLISHED_BLOGS_API, GET_BLOG_BY_SLUG_API, GET_BLOG_BY_ID_API, UPDATE_BLOG_API, PUBLISH_BLOG_API, DELETE_BLOG_API } = blogEndpoints;
 
 const initialState = {
     blogs: [],
     blog: {},
+    publishedBlogs: [],
+    totalPublishedBlogs: 0,
+    currentPublishedPage: 1,
     isLoading: false,
     isBlogLoading: false,
     error: null,
+    totalCount: 0,
+    currentPage: 1,
 };
 
 export const createBlog = createAsyncThunk(
@@ -28,10 +34,25 @@ export const createBlog = createAsyncThunk(
 
 export const getBlogs = createAsyncThunk(
     "blog/getBlogs",
-    async (_, thunkAPI) => {
-        try{
-            const response = await apiConnector("GET", GET_BLOGS_API);
-            return response.data.blogs;  
+    async ({ page = 1, limit = 10}, thunkAPI) => {
+        try {
+            const response = await apiConnector(
+                "GET", 
+                `${GET_BLOGS_API}?page=${page}&limit=${limit}`
+            );
+            return response.data;  
+        } catch(error) {
+            return thunkAPI.rejectWithValue(error.response.data.message);
+        }
+    }
+)
+
+export const getPublishedBlogs = createAsyncThunk(
+    "blog/getPublishedBlogs",
+    async ({ page = 1, limit = 10}, thunkAPI) => {
+        try {
+            const response = await apiConnector("GET", `${GET_PUBLISHED_BLOGS_API}?page=${page}&limit=${limit}`);
+            return response.data;
         }catch(error){
             return thunkAPI.rejectWithValue(error.response.data.message);
         }
@@ -106,16 +127,27 @@ export const blogSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createBlog.pending, (state) => {
             state.isLoading = true;
+            Swal.showLoading();
         })
         .addCase(createBlog.fulfilled, (state, action) => {
             state.isLoading = false;
             state.blogs = [...state.blogs, action.payload];
             toast.success(typeof action.payload === 'string' ? action.payload : "Blog created successfully");
+            Swal.fire({
+                title: 'Blog Created',
+                text: 'Your blog has been created successfully',
+                icon: 'success',
+            });
         })
         .addCase(createBlog.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
             toast.error((action.payload) || "Something went wrong");
+            Swal.fire({
+                title: 'Error',
+                text: action.payload,
+                icon: 'error',
+            });
         })
 
         .addCase(getBlogs.pending, (state) => {
@@ -123,9 +155,25 @@ export const blogSlice = createSlice({
         })
         .addCase(getBlogs.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.blogs = action.payload;
+            state.blogs = action.payload.blogs;
+            state.totalCount = action.payload.totalCount;
+            state.currentPage = action.payload.currentPage;
         })
         .addCase(getBlogs.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        })
+
+        .addCase(getPublishedBlogs.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(getPublishedBlogs.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.publishedBlogs = action.payload.blogs;
+            state.totalPublishedBlogs = action.payload.totalCount;
+            state.currentPublishedPage = action.payload.currentPage;
+        })
+        .addCase(getPublishedBlogs.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         })
