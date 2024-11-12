@@ -25,6 +25,39 @@ const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const scrollableDivRef = useRef(null);
+
+  useEffect(() => {
+    const handleWheelScroll = (event) => {
+      const div = scrollableDivRef.current;
+
+      if (div) {
+        const atBottom = div.scrollTop + div.clientHeight >= div.scrollHeight;
+
+        if (!atBottom) {
+          // Prevent main window scrolling until the last card
+          event.preventDefault();
+          div.scrollTop += event.deltaY * 0.3; // Adjust scroll speed with this factor
+        }
+      }
+    };
+
+    // Attach the wheel event listener to the div, not the window
+    if (scrollableDivRef.current) {
+      scrollableDivRef.current.addEventListener('wheel', handleWheelScroll, {
+        passive: false,
+      });
+    }
+
+    // Clean up event listener on component unmount
+    return () => {
+      if (scrollableDivRef.current) {
+        scrollableDivRef.current.removeEventListener('wheel', handleWheelScroll);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -289,14 +322,14 @@ const Categories = () => {
               Select a service
             </p>
 
-            <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10">
+            <div className="grid  grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10">
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
                 return (
                   <div
                     key={_id}
-                    className="flex flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
+                    className="flex  flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
                     onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
@@ -316,147 +349,120 @@ const Categories = () => {
         </div>
 
         <div
-  className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto"
-  style={{
-    scrollbarWidth: 'none', // For Firefox
-    msOverflowStyle: 'none', // For Internet Explorer and Edge
-  }}
->
-  <style jsx>{`
-    /* For Chrome, Safari, and Opera */
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-  `}</style>
-  {subCategoriesByCategory.map((category) => {
-    const { _id, subCategoryName } = category;
+      ref={scrollableDivRef}
+      className="border-none  rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full md:h-[125vh] h-[75vh] overflow-y-auto"
+      style={{
+        scrollbarWidth: 'none', // For Firefox
+        msOverflowStyle: 'none', // For Internet Explorer and Edge
+      }}
+    >
+      <style jsx>{`
+        /* For Chrome, Safari, and Opera */
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
 
-    const services = allServices.filter(
-      (service) =>
-        service.subCategoryId === _id && service.status !== "Draft"
-    );
+      {subCategoriesByCategory.map((category) => {
+        const { _id, subCategoryName } = category;
+        const services = allServices.filter(
+          (service) => service.subCategoryId === _id && service.status !== 'Draft'
+        );
 
-    return services.length > 0 ? (
-      <div
-        key={_id}
-        ref={(e) => (categoryRefs.current[_id] = e)}
-        className="mb-8"
-      >
-        <h2 className="text-2xl font-bold mb-4 ml-6">
-          {subCategoryName}
-        </h2>
+        return services.length > 0 ? (
+          <div key={_id} className="mb-8">
+            <h2 className="text-2xl font-bold mb-4 ml-6">{subCategoryName}</h2>
 
-        <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
-          {services.map((service) => {
-            const {
-              _id,
-              serviceName,
-              thumbnail,
-              serviceDescription,
-              priceStatus,
-              status,
-            } = service;
+            <div className="grid grid-cols-1 p-2 gap-4 max-lg:gap-2 w-full">
+              {services.map((service) => {
+                const { _id, priceStatus, status } = service;
+                const cartService = cartServices.find(
+                  (s) => s.serviceId === _id
+                );
+                const serviceQty = cartService ? cartService.qty : 0;
 
-            const cartService = cartServices.find(
-              (service) => service.serviceId === _id
-            );
-            const serviceQty = cartService ? cartService.qty : 0;
-
-            return (
-              status !== "Draft" && (
-                <div
-                  key={_id}
-                  ref={(e) => (serviceRefs.current[_id] = e)}
-                  className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
-                >
-                  <div
-                    className="w-full cursor-pointer"
-                    onClick={() => {
-                      setIsServiceModalOpen(!isServiceModalOpen);
-                      setServiceIdToPass(_id);
-                    }}
-                  >
-                    <ServiceCard {...service} />
-                  </div>
-
-                  <div className="flex gap-2 justify-end w-full mt-4">
-                    {priceStatus === "priced" ? (
-                      <>
-                        <button
-                          className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
-                          onClick={() => handleBuyNow(service)}
-                        >
-                          Buy Now
-                        </button>
-
-                        <div className="flex items-center">
-                          {serviceQty > 0 ? (
-                            <>
-                              <button
-                                className="border px-2 border-gray-400 rounded-full"
-                                disabled={cartLoading}
-                                onClick={() =>
-                                  handleDecrease(cartService._id, service)
-                                }
-                              >
-                                -
-                              </button>
-
-                              <span className="mx-2 text-gray-500">
-                                {serviceQty}
-                              </span>
-
-                              <button
-                                className="border px-2 border-gray-400 rounded-full"
-                                disabled={cartLoading}
-                                onClick={() =>
-                                  handleIncrease(cartService._id, service)
-                                }
-                              >
-                                +
-                              </button>
-
-                              <button
-                                className="px-2 text-gray-600 hover:text-red-500"
-                                disabled={cartLoading}
-                                onClick={() =>
-                                  handleRemove(cartService._id, service)
-                                }
-                              >
-                                REMOVE
-                              </button>
-                            </>
-                          ) : (
-                            <button
-                              className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
-                              disabled={cartLoading}
-                              onClick={() => handleAddToCart(service)}
-                            >
-                              Add to Cart
-                            </button>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      <button
-                        className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
-                        onClick={() =>
-                          handleEnquireNowModalOpen(service)
-                        }
+                return (
+                  status !== 'Draft' && (
+                    <div
+                      key={_id}
+                      className="flex items-start flex-col shadow-custom-shadow px-4 py-2 rounded-lg bg-white w-full"
+                    >
+                      <div
+                        className="w-full cursor-pointer"
+                        onClick={() => {
+                          setIsServiceModalOpen((prev) => !prev);
+                          setServiceIdToPass(_id);
+                        }}
                       >
-                        Enquire Now
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )
-            );
-          })}
-        </div>
-      </div>
-    ) : null;
-  })}
-</div>
+                        <ServiceCard {...service} />
+                      </div>
+
+                      <div className="flex gap-2 justify-end w-full mt-4">
+                        {priceStatus === 'priced' ? (
+                          <>
+                            <button
+                              className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
+                              onClick={() => handleBuyNow(service)}
+                            >
+                              Buy Now
+                            </button>
+                            <div className="flex items-center">
+                              {serviceQty > 0 ? (
+                                <>
+                                  <button
+                                    className="border px-2 border-gray-400 rounded-full"
+                                    disabled={cartLoading}
+                                    onClick={() => handleDecrease(cartService._id, service)}
+                                  >
+                                    -
+                                  </button>
+                                  <span className="mx-2 text-gray-500">
+                                    {serviceQty}
+                                  </span>
+                                  <button
+                                    className="border px-2 border-gray-400 rounded-full"
+                                    disabled={cartLoading}
+                                    onClick={() => handleIncrease(cartService._id, service)}
+                                  >
+                                    +
+                                  </button>
+                                  <button
+                                    className="px-2 text-gray-600 hover:text-red-500"
+                                    disabled={cartLoading}
+                                    onClick={() => handleRemove(cartService._id, service)}
+                                  >
+                                    REMOVE
+                                  </button>
+                                </>
+                              ) : (
+                                <button
+                                  className="bg-yellow-400 px-4 py-2 rounded-md text-sm"
+                                  disabled={cartLoading}
+                                  onClick={() => handleAddToCart(service)}
+                                >
+                                  Add to Cart
+                                </button>
+                              )}
+                            </div>
+                          </>
+                        ) : (
+                          <button
+                            className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
+                            onClick={() => handleEnquireNowModalOpen(service)}
+                          >
+                            Enquire Now
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )
+                );
+              })}
+            </div>
+          </div>
+        ) : null;
+      })}
+    </div>
 
       </div>
       <Footer />
