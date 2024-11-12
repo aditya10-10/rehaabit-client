@@ -114,6 +114,17 @@ const Navbar = ({ onLoginClick }) => {
                     <span className="ml-2">Dashboard</span>
                   </button>
                 )}
+                {
+                  user?.accountType === "Content Writer" && (
+                    <button
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+                      onClick={() => navigate("/dashboard/blog/view-blogs")}
+                    >
+                      <RiDashboardLine size={20} />
+                      <span className="ml-2">View Blogs</span>
+                    </button>
+                  )
+                }
                 <button
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
                   onClick={() => navigate("/dashboard/my-profile")}

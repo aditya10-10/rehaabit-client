@@ -221,7 +221,17 @@ export default function App() {
             <Route path="orders" element={<MyOrders />} />
             <Route path="addresses" element={<Addresses />} />
           </Route>
-
+           {
+            user?.accountType === "Content Writer" && (
+              <>
+                <Route path="/dashboard/*" element={<Dashboard />}>
+                <Route path="blog/view-blogs" element={<ViewBlogs />} />
+                <Route path="blog/create-blog" element={<CreateBlogs />} />
+                <Route path="blog/edit-blog/:slug" element={<EditBlog />} />
+                </Route>
+              </>
+            )
+           }
           {user?.accountType === "Admin" && (
             <>
               <Route path="/dashboard/*" element={<Dashboard />}>
