@@ -1,7 +1,7 @@
 const CategorySkeleton = ({ className, ...props }) => {
     return (
       <div
-        className={`animate-pulse bg-gray-200 rounded ${className}`}
+        className={`animate-pulse bg-gray-900 rounded ${className}`}
         {...props}
       />
     );

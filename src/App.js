@@ -58,6 +58,7 @@ import { toggleSidebarVisibility } from "./slices/sidebarSlice";
 import ContentEditor from "./components/blogs/ContentEditor";
 import Spinner from "./Spinner";
 import PrivateRoute from "./utils/PrivateRoute";
+import AllServices from "./components/Home/AllServices"
 
 export default function App() {
   const dispatch = useDispatch();
@@ -188,6 +189,7 @@ export default function App() {
       <div className="">
         <Routes>
           <Route path="/" element={<MainPage />} />
+        <Route path="/all-services" element={<AllServices/>} />
           <Route path="/:id" element={<Categories />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
