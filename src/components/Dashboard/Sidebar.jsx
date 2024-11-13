@@ -30,7 +30,7 @@ const sidebarLinks = [
     icon: <FaBlog />, 
     text: "Blog", 
     to: "blog", 
-    adminOnly: true,
+    contentWriterOnly: true,
     subItems: [
       { id: 'blog-1', text: "View Blogs", to: "blog/view-blogs" },
       { id: 'blog-2', text: "Create Blog", to: "blog/create-blog" },
@@ -115,9 +115,10 @@ export default function Sidebar({ children }) {
 
   const filteredSidebarLinks = sidebarLinks.filter(
     (link) =>
+      ((link.contentWriterOnly && user.accountType === "Content Writer") ||
       (!link.adminOnly || user.accountType === "Admin") &&
       !(link.text === "Addresses" && user.accountType === "Admin") &&
-      link.text.toLowerCase().includes(searchTerm.toLowerCase())
+      link.text.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
     // Logout handler

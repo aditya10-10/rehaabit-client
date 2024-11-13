@@ -1,172 +1,264 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { getPublishedBlogs } from '../../slices/blogSlice'
-import { Link} from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getPublishedBlogs } from "../../slices/blogSlice";
+import profileIcon from "../../assets/dummypic.jpg";
+import defaultblogpost1 from "../../assets/defaultblogpost1.jpeg";
+import defaultblogpost2 from "../../assets/defaultblogpost2.jpeg";
+import defaultblogpost3 from "../../assets/defaultblogpost3.jpeg";
+import defaultblogpost4 from "../../assets/defaultblogpost4.webp";
+import defaultblogpost5 from "../../assets/defaultblogpost5.jpeg";
+import { Link } from "react-router-dom";
+
+const defaultBlogImages = [
+  defaultblogpost1,
+  defaultblogpost2,
+  defaultblogpost3,
+  defaultblogpost4,
+  defaultblogpost5,
+];
+const BlogSkeleton = () => {
+    return (
+      <div className="rounded-lg shadow-md overflow-hidden animate-pulse">
+        <div className="w-full h-40 bg-gray-300"></div>
+        <div className="p-4">
+          <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+          <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+          <div className="flex items-center mt-4">
+            <div className="w-6 h-6 rounded-full bg-gray-300 mr-2"></div>
+            <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+const getRandomDefaultBlogImage = () => {
+  return defaultBlogImages[Math.floor(Math.random() * defaultBlogImages.length)];
+};
+const extractFirstImageUrl = (content) => {
+  if (!content) return null;
+  const div = document.createElement('div');
+  div.innerHTML = content;
+  const firstImg = div.querySelector('img');
+  return firstImg ? firstImg.src : null;
+};
+
+const BlogCard = ({ blog, expandedBlogs, toggleReadMore }) => {
+    const formatDate = (timestamp) => {
+        if (!timestamp) return '';
+        const date = new Date(timestamp._seconds * 1000);
+        return date.toLocaleString('en-US', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        });
+      };
+
+  const imageUrl = extractFirstImageUrl(blog?.content) || getRandomDefaultBlogImage();
+  
+  return (
+    <div className="rounded-lg shadow-md overflow-hidden">
+      <Link to={`/library/${blog?.slug}`}>
+        <img
+          src={imageUrl}
+          alt={blog?.title}
+          className="w-full h-40 object-cover"
+          onError={(e) => {
+            e.target.src = getRandomDefaultBlogImage();
+          }}
+        />
+      </Link>
+      <div className="p-4">
+        <Link
+          to={`/library/${blog?.slug}`}
+          className="text-lg font-bold text-gray-800 hover:text-blue-500 block"
+        >
+          {blog?.title}
+        </Link>
+        <p className="text-gray-600 mt-2">
+          {expandedBlogs.has(blog?.id)
+            ? blog?.metaDescription
+            : blog?.metaDescription.substring(0, 70)}
+          {blog?.metaDescription.length > 70 && (
+            <span>
+              {!expandedBlogs.has(blog?.id) && "... "}
+              <button
+                onClick={() => toggleReadMore(blog.id)}
+                className="text-blue-500 hover:underline"
+              >
+                {expandedBlogs.has(blog?.id) ? "Show Less" : "Read More"}
+              </button>
+            </span>
+          )}
+        </p>
+        <div className="flex items-center mt-4">
+          <img
+            src={profileIcon}
+            alt="Author"
+            className="w-6 h-6 rounded-full mr-2"
+          />
+          <p className="text-sm text-gray-500">
+            {blog?.author} •{" "}
+            {formatDate(blog?.createdAt)}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Blogs = () => {
-    const { isLoading, totalPublishedBlogs, currentPublishedPage, publishedBlogs } = useSelector((state) => state.blog);
-    const [blogs, setBlogs] = useState(publishedBlogs);
-    const totalCount = totalPublishedBlogs;
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { publishedBlogs, isLoading, totalPublishedBlogs } = useSelector((state) => state.blog);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [expandedBlogs, setExpandedBlogs] = useState(new Set());
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
 
-    const [expandedBlogs, setExpandedBlogs] = useState(new Set());
-    const [searchTerm, setSearchTerm] = useState("");
-    
-    const [currentPage, setCurrentPage] = useState(1);
-    const [filteredBlogs, setFilteredBlogs] = useState(blogs);
-    const blogsPerPage = 10;
-    useEffect(() => {
-        setBlogs(publishedBlogs);
-    }, [publishedBlogs]);
+  const toggleReadMore = (blogId) => {
+    setExpandedBlogs((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(blogId)) {
+        newSet.delete(blogId);
+      } else {
+        newSet.add(blogId);
+      }
+      return newSet;
+    });
+  };
 
-    useEffect(() => {
-        dispatch(getPublishedBlogs({ 
-            page: currentPage, 
-            limit: blogsPerPage
-        }));
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(getPublishedBlogs({ page: 1, limit: 13 }));
+  }, [dispatch]);
 
-    useEffect(() => {
-        setFilteredBlogs(blogs?.filter(blog => 
-            blog?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        blog?.author?.toLowerCase().includes(searchTerm.toLowerCase())
-        ));
-    }, [searchTerm, blogs]);
-
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
-        dispatch(getPublishedBlogs({ 
-            page: pageNumber, 
-            limit: blogsPerPage,
-        }));
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    const toggleReadMore = (blogId) => {
-        setExpandedBlogs(prev => {
-            const newSet = new Set(prev);
-            if (newSet.has(blogId)) {
-                newSet.delete(blogId);
-            } else {
-                newSet.add(blogId);
-            }
-            return newSet;
+  const loadMore = () => {
+    setIsLoadingMore(true);
+    const nextPage = currentPage + 1;
+    dispatch(getPublishedBlogs({ page: nextPage, limit: 8 }))
+      .then((action) => {
+        if (action.payload.blogs.length === 0) {
+          setHasMore(false);
+        }
+        setCurrentPage(nextPage);
+        setIsLoadingMore(false);
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'
         });
-    };
+      });
+  };
 
-    return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8 text-center">
-                Blogs
-            </h1>
+  const formatDate = (timestamp) => {
+    if (!timestamp) return '';
+    const date = new Date(timestamp._seconds * 1000);
+    return date.toLocaleString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+  };
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
 
-            {/* Search Section */}
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex-1 max-w-2xl">
-                    <div className="flex gap-4">
-                        <input
-                            type="text"
-                            placeholder="Search by blog title or author..."
-                            className="px-4 py-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-                </div>
-            </div>
-
-            {/* Blog List */}
-            {isLoading ? (
-                <div className="flex justify-center items-center h-40">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-                </div>
-            ) : (
-                <div className="space-y-6">
-                    {filteredBlogs
-                        ?.map((blog) => (
-                            <div 
-                                key={blog?.id} 
-                                className={`rounded-lg shadow-md p-4 relative hover:shadow-lg transition-shadow 
-                                    ${blog?.status === "published" ? "bg-green-100" : "bg-yellow-100"}`}
-                            >
-                                <div className="flex justify-between items-start mb-2">
-                                    <Link to={`/library/${blog?.slug}`} className="text-xl font-semibold text-gray-800 cursor-pointer">{blog?.title}</Link>
-                                    
-                                </div>
-                                <p className="text-gray-600 mb-4">
-                                    
-                                        {expandedBlogs.has(blog?.id) 
-                                            ? blog?.metaDescription
-                                            : blog?.metaDescription.substring(0, 70)
-                                        }
-                                        {blog?.metaDescription.length > 70 && (
-                                            <span className="inline-block">
-                                                {!expandedBlogs.has(blog?.id) && "... "}
-                                            <button
-                                                onClick={() => toggleReadMore(blog.id)}
-                                                className="text-blue-500 hover:underline"
-                                            >
-                                                {expandedBlogs.has(blog?.id) ? 'Show Less' : 'Read More'}
-                                                </button>
-                                            </span>
-                                        )}
-                                
-                                </p>
-                                <div className="flex items-center">
-                                    <p className="text-sm text-gray-500">By {blog?.author}</p>
-                                </div>
-                            </div>
-                        ))}
-                </div>
-            )}
-
-            {totalCount > blogsPerPage && (
-                <div className="flex justify-center mt-8">
-                    <div className="flex space-x-2">
-                        <button
-                            onClick={() => paginate(currentPage - 1)}
-                            disabled={currentPage === 1}
-                            className={`px-4 py-2 rounded ${
-                                currentPage === 1
-                                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                                    : 'bg-blue-500 text-white hover:bg-blue-600'
-                            }`}
-                        >
-                            Previous
-                        </button>
-                        
-                        {[...Array(Math.ceil(totalCount / blogsPerPage))].map((_, index) => (
-                            <button
-                                key={index + 1}
-                                onClick={() => paginate(index + 1)}
-                                className={`px-4 py-2 rounded ${
-                                    currentPage === index + 1
-                                        ? 'bg-blue-500 text-white'
-                                        : 'bg-gray-200 hover:bg-gray-300'
-                                }`}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
-
-                        <button
-                            onClick={() => paginate(currentPage + 1)}
-                            disabled={currentPage === Math.ceil(totalCount / blogsPerPage)}
-                            className={`px-4 py-2 rounded ${
-                                currentPage === Math.ceil(totalCount / blogsPerPage)
-                                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                                    : 'bg-blue-500 text-white hover:bg-blue-600'
-                            }`}
-                        >
-                            Next
-                        </button>
-                    </div>
-                </div>
-            )}
-        </div>
+  useEffect(() => {
+    const remainingBlogs = publishedBlogs.slice(1);
+    const filtered = remainingBlogs.filter(blog =>
+      blog?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog?.author?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    setFilteredBlogs(filtered);
+  }, [publishedBlogs, searchTerm]);
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl mb-4 text-center">Blog Page</h1>
+
+      {publishedBlogs?.[0] && (
+        <Link to={`/library/${publishedBlogs[0].slug}`} className="block">
+          <div className="relative mb-8">
+            <img
+              src={publishedBlogs[0].coverImage || extractFirstImageUrl(publishedBlogs[0].content) || getRandomDefaultBlogImage()}
+              alt={publishedBlogs[0].title}
+              className="w-full h-72 object-cover rounded-lg"
+              onError={(e) => {
+                e.target.src = getRandomDefaultBlogImage();
+              }}
+            />
+            <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex flex-col justify-end p-6 text-white rounded-lg">
+              <h1 className="text-3xl font-bold">{publishedBlogs[0].title}</h1>
+              <div className="flex items-center mt-2">
+                <img
+                  src={profileIcon}
+                  alt="Author"
+                  className="w-8 h-8 rounded-full mr-2"
+                />
+                <p className="text-sm">
+                  {publishedBlogs[0].author} • {formatDate(publishedBlogs[0].createdAt)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </Link>
+      )}
+
+      {/* Search Section */}
+      <div className="mb-8 flex justify-center">
+        <input
+          type="text"
+          placeholder="Search by blog title or author..."
+          className="px-4 py-2 border rounded-lg w-full max-w-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
+
+      {/* Blog List - Using filtered remaining blogs */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {isLoading && publishedBlogs.length === 0
+          ? Array(8).fill().map((_, index) => (
+              <BlogSkeleton key={`skeleton-${index}`} />
+            ))
+          : filteredBlogs?.map((blog, index) => (
+              <BlogCard
+                key={`blog-${blog.id}-${index}`}
+                blog={blog}
+                expandedBlogs={expandedBlogs}
+                toggleReadMore={toggleReadMore}
+              />
+            ))}
+        {isLoadingMore &&
+          Array(8).fill().map((_, index) => (
+            <BlogSkeleton key={`loading-skeleton-${index}`} />
+          ))}
+      </div>
+
+      {!isLoading && hasMore && !searchTerm && publishedBlogs.length < totalPublishedBlogs && (
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={loadMore}
+            className="px-8 py-3 bg-white text-gray-800 
+            border-2 border-gray-300 
+            rounded-lg 
+            hover:bg-gray-50 
+            hover:border-gray-400
+            hover:scale-105
+            hover:shadow-md
+            transition-all duration-200 ease-in-out
+            disabled:opacity-50
+            disabled:hover:scale-100
+            disabled:hover:shadow-none"
+            disabled={isLoadingMore}
+          >
+            {isLoadingMore ? 'Loading...' : 'Load More'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Blogs;

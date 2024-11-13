@@ -194,6 +194,7 @@ const ViewBlogs = () => {
                                             {showModal && selectedBlog?.id === blog?.id && (
                                                 <div className="modal-content absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border">
                                                     <ul className="py-1">
+                                                        {user?.accountType === "Admin" && (
                                                             <li>
                                                                 <button
                                                                     onClick={() => openPublishModal(blog)}
@@ -202,6 +203,7 @@ const ViewBlogs = () => {
                                                                     {blog?.status === "published" ? "UnPublish" : "Publish"}
                                                                 </button>
                                                             </li>
+                                                        )}
                                                     
                                                         <li>
                                                             <button
