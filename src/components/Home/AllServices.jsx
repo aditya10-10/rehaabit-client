@@ -13,6 +13,12 @@ const AllServicesPage = () => {
   const [serviceId, setServiceId] = useState(null);
   const [serviceNameToPass, setServiceNameToPass] = useState(null);
 
+  const limitedNonPricedServices = allServices?.filter(
+    (service) =>
+      service?.priceStatus === "non-priced" && service?.status !== "Draft"
+  );
+  const nonPricedServices = limitedNonPricedServices?.slice(0, 10);
+  
   const handleServiceModalOpen = (serviceId) => {
     setServiceId(serviceId);
     setIsServiceModalOpen(true);
@@ -57,13 +63,13 @@ const AllServicesPage = () => {
         serviceId={serviceId}
       />
 
-      <section className="flex   flex-col items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-10 w-full">
-        <div className="w-full  p-16 ">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-violet-700 text-center">
+      <section className="flex h-full flex-col items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-10 w-full">
+        <div className="w-full p-3">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-violet-700 text-center">
             All Services
           </h2>
 
-          <div className="mt-8 sm:mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="mt-8 sm:mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             {!allServices ? (
               <div className="flex flex-wrap justify-center gap-4">
                 {[...Array(6)].map((_, index) => (
@@ -71,32 +77,34 @@ const AllServicesPage = () => {
                 ))}
               </div>
             ) : (
-              allServices.map((service) => {
+              allServices.map((service, index) => {
                 const { _id, thumbnail, serviceName } = service;
 
                 return (
                   <div
                     key={_id}
-                    className="bg-white rounded-xl shadow-lg transition-transform duration-300 hover:scale-105"
+                    className="w-full max-w-xs sm:max-w-sm md:max-w-md flex-shrink-0 snap-center mx-auto"
                   >
                     <img
                       src={thumbnail}
                       alt={serviceName}
-                      className="w-full h-56 object-cover rounded-t-xl"
+                      className="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover rounded-t-lg"
                     />
-                    <div className="bg-blue-500 p-4 rounded-b-xl">
-                      <h3 className="text-white font-semibold text-lg text-center">
+
+                    <div className="bg-blue-500 px-4 sm:px-6 py-3 sm:py-4 rounded-b-lg">
+                      <h3 className="text-white font-semibold text-sm sm:text-base md:text-sm lg:text-base mb-2">
                         {serviceName}
                       </h3>
-                      <div className="flex justify-center mt-4 gap-4">
+
+                      <div className="flex justify-between items-center">
                         <button
-                          className="text-green-600 bg-white px-1 rounded-full transition-all duration-300 hover:bg-green-600 hover:text-white shadow-lg border border-green-600"
+                          className="text-green-600 bg-white px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm md:px-5 md:mr-2 md:py-1 md:text-xs lg:px-5 lg:py-1 lg:text-sm xl:px-4 xl:py-2 xl:text-sm rounded-full transition-all duration-300 hover:bg-green-600 hover:text-white shadow-lg border border-green-600"
                           onClick={() => handleServiceModalOpen(_id)}
                         >
                           More Details
                         </button>
                         <button
-                          className="text-purple-600 bg-white px-4 py-2 rounded-full transition-all duration-300 hover:bg-purple-600 hover:text-white shadow-lg border border-purple-600"
+                          className="text-purple-600 bg-white px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm md:px-5 md:py-1 md:text-xs lg:px-5 lg:py-1  lg:text-sm xl:px-4 xl:py-2 xl:text-sm rounded-full transition-all duration-300 hover:bg-purple-600 hover:text-white shadow-lg border border-purple-600"
                           onClick={() => handleEnquireNowModalOpen(serviceName)}
                         >
                           Enquire Now

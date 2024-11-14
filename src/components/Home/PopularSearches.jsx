@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Importing useNavigate for routing
 import EnquireNowModal from "./EnquireNowModal";
 import ServiceDetailsModal from "../ServiceDetailsModal";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const PopularSearches = () => {
   const { allServices } = useSelector((state) => state.service);
@@ -88,11 +89,13 @@ const PopularSearches = () => {
   </h2>
 
   <button
-    onClick={handleSeeMoreClick}
-    className="text-center text-white font-semibold p-2 bg-blue-600 rounded-lg mt-6 mb-4 sm:ml-4"
-  >
-    See More Services
-  </button>
+  onClick={handleSeeMoreClick}
+  className="flex items-center justify-center gap-2 text-white font-semibold p-3 bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md transition-all duration-200 ease-in-out mt-6 mb-4 sm:ml-4"
+>
+  <i className="fas fa-eye"></i> 
+  <span>See More Services</span>
+</button>
+
 </div>
 
 
