@@ -49,11 +49,14 @@ export const getBlogs = createAsyncThunk(
 
 export const getPublishedBlogs = createAsyncThunk(
     "blog/getPublishedBlogs",
-    async ({ page = 1, limit = 10}, thunkAPI) => {
+    async ({ page = 1, limit = 13 }, thunkAPI) => {
         try {
-            const response = await apiConnector("GET", `${GET_PUBLISHED_BLOGS_API}?page=${page}&limit=${limit}`);
+            const response = await apiConnector(
+                "GET", 
+                `${GET_PUBLISHED_BLOGS_API}?page=${page}&limit=${limit}`
+            );
             return response.data;
-        }catch(error){
+        } catch(error) {
             return thunkAPI.rejectWithValue(error.response.data.message);
         }
     }
@@ -64,6 +67,7 @@ export const getBlogBySlug = createAsyncThunk(
     async (slug, thunkAPI) => {
         try{
             const response = await apiConnector("GET", `${GET_BLOG_BY_SLUG_API}/${slug}`);
+            console.log(response.data.blog);
             return response.data.blog;
         }catch(error){
             return thunkAPI.rejectWithValue(error.response.data.message);
@@ -169,7 +173,11 @@ export const blogSlice = createSlice({
         })
         .addCase(getPublishedBlogs.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.publishedBlogs = action.payload.blogs;
+            if (action.payload.currentPage === 1) {
+                state.publishedBlogs = action.payload.blogs;
+            } else {
+                state.publishedBlogs = [...state.publishedBlogs, ...action.payload.blogs];
+            }
             state.totalPublishedBlogs = action.payload.totalCount;
             state.currentPublishedPage = action.payload.currentPage;
         })
