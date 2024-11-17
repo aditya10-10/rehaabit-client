@@ -1,0 +1,50 @@
+/* Add double-line borders to tables */
+.blog-content table {
+    width: 100%;
+    /* border-collapse: collapse; */
+    margin: 20px 0;
+    border: 5px double #000000; /* Darker double border */
+  }
+  
+  /* Add double-line borders to table rows and cells */
+  .blog-content th,
+  .blog-content td {
+    border: 5px double #0b0b0b; /* Darker double border */
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Add background color and styling to table header */
+  .blog-content th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  /* Add hover effect for table rows */
+  .blog-content tr:hover {
+    background-color: #f0f0f0; /* Slightly lighter hover effect */
+  }
+  
+
+
+
+
+
+
+  /* TOC Styling */
+.table-of-contents {
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 640px) {
+  .table-of-contents {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100vh;
+    width: 75%; /* Occupies 75% of screen on mobile */
+    background-color: #fff;
+    z-index: 10;
+    transform: translateX(-100%);
+  }
+}
