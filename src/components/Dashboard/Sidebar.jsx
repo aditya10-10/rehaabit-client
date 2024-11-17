@@ -113,13 +113,17 @@ export default function Sidebar({ children }) {
     }
   };
 
-  const filteredSidebarLinks = sidebarLinks.filter(
-    (link) =>
-      ((link.contentWriterOnly && user.accountType === "Content Writer") ||
-      (!link.adminOnly || user.accountType === "Admin") &&
-      !(link.text === "Addresses" && user.accountType === "Admin") &&
-      link.text.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredSidebarLinks = sidebarLinks.filter((link) => {
+    if (user.accountType === "Admin") {
+      return link.text.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+    const isContentWriterLink = link.contentWriterOnly && user.accountType === "Content Writer";
+    const isRegularUserLink = !link.adminOnly && !link.contentWriterOnly;
+    const matchesSearchTerm = link.text.toLowerCase().includes(searchTerm.toLowerCase());
+    return (isContentWriterLink || isRegularUserLink) && matchesSearchTerm;
+  });
+  
+  
 
     // Logout handler
     const handleLogout = () => {

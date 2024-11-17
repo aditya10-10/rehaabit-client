@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBlogBySlug } from '../../slices/blogSlice';
 import { Helmet } from 'react-helmet-async';
 import "./viewblog.css";
+import { getUserDetails } from '../../services/operations/profileAPI';
+import { usersEndpoints } from '../../services/apis'
 
 const TableOfContents = ({ content }) => {
   const [toc, setToc] = useState([]);
@@ -162,7 +164,48 @@ const ViewBlog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blog, isLoading } = useSelector((state) => state.blog);
+  const { user } = useSelector((state) => state.auth);
+  console.log(blog);
+  const allowedRoles = ['Admin', 'Content Writer'];
+  const [isValidating, setIsValidating] = useState(true);
+  const [isValid, setIsValid] = useState(false);
 
+  useEffect(() => {
+    const validateAndFetchBlog = async () => {
+      setIsValidating(true);
+      const isPreviewRoute = window.location.pathname.startsWith('/blog/preview/');
+      
+      if (isPreviewRoute) {
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        if (!currentUser || !allowedRoles.includes(currentUser?.accountType)) {
+          setIsValid(false);
+          setIsValidating(false);
+          navigate('*');
+          return;
+        }
+      }
+      await dispatch(getBlogBySlug(slug));
+      setIsValidating(false);
+    };
+    validateAndFetchBlog();
+  }, [slug, navigate, dispatch]);
+  useEffect(() => {
+    const isPreviewRoute = window.location.pathname.startsWith('/blog/preview/');
+    if (!isLoading && 
+        !isValidating && 
+        Object.keys(blog || {}).length > 0 && 
+        !isPreviewRoute && 
+        blog?.status !== 'published') {
+      setIsValid(false);
+      navigate('*');
+    } else if (!isLoading && Object.keys(blog || {}).length > 0) {
+      setIsValid(true);
+    }
+  }, [blog, isLoading, navigate, isValidating]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   useEffect(() => {
     dispatch(getBlogBySlug(slug));
   }, [slug, dispatch]);
