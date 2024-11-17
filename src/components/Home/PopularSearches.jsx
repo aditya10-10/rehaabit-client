@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Importing useNavigate for routing
 import EnquireNowModal from "./EnquireNowModal";
 import ServiceDetailsModal from "../ServiceDetailsModal";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const PopularSearches = () => {
   const { allServices } = useSelector((state) => state.service);
@@ -82,22 +83,19 @@ const PopularSearches = () => {
       />
 
       <section className="relative flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
-      <div className="flex items-center justify-between w-full px-4">
-  <h2 className="text-4xl font-semibold text-violet-700 text-center lg:pl-60 sm:flex-1">
-    For Contract Enquiry
-  </h2>
+        <div className="flex items-center justify-between w-full px-4">
+          <h2 className="text-4xl font-semibold text-violet-700 text-center lg:pl-60 sm:flex-1">
+            For Contract Enquiry
+          </h2>
 
-  <button
-    onClick={handleSeeMoreClick}
-    className="text-center text-white font-semibold p-2 bg-blue-600 rounded-lg mt-6 mb-4 sm:ml-4"
-  >
-    See More Services
-  </button>
-</div>
-
-
-
-       
+          <button
+            onClick={handleSeeMoreClick}
+            className="flex items-center justify-center gap-2 text-white font-semibold p-3 bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md transition-all duration-200 ease-in-out mt-6 mb-4 sm:ml-4"
+          >
+            <i className="fas fa-eye"></i>
+            <span>See More Services</span>
+          </button>
+        </div>
 
         <div className="flex items-center justify-between mt-12 max-md:mt-10 w-full relative">
           <button
@@ -114,11 +112,10 @@ const PopularSearches = () => {
           >
             {!allServices ? (
               <div className="flex gap-4">
-              {[...Array(6)].map((_, index) => (
-                <LoadingSkeleton key={`skeleton-${index}`} />
-              ))}
-            </div>
-            
+                {[...Array(6)].map((_, index) => (
+                  <LoadingSkeleton key={`skeleton-${index}`} />
+                ))}
+              </div>
             ) : (
               nonPricedServices?.map((service, index) => {
                 const { _id, thumbnail, serviceName } = service;

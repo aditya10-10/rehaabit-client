@@ -25,6 +25,42 @@ const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const scrollableDivRef = useRef(null);
+
+  useEffect(() => {
+    const handleWheelScroll = (event) => {
+      const div = scrollableDivRef.current;
+
+      if (div) {
+        const atBottom = div.scrollTop + div.clientHeight >= div.scrollHeight;
+
+        if (!atBottom) {
+          // Prevent main window scrolling until the last card
+          event.preventDefault();
+          div.scrollTop += event.deltaY * 0.3; // Adjust scroll speed with this factor
+        }
+      }
+    };
+
+    // Attach the wheel event listener to the div, not the window
+    if (scrollableDivRef.current) {
+      scrollableDivRef.current.addEventListener("wheel", handleWheelScroll, {
+        passive: false,
+      });
+    }
+
+    // Clean up event listener on component unmount
+    return () => {
+      if (scrollableDivRef.current) {
+        scrollableDivRef.current.removeEventListener(
+          "wheel",
+          handleWheelScroll
+        );
+      }
+    };
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -58,7 +94,7 @@ const Categories = () => {
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
-  const scrollableDivRef = useRef(null);
+  // const scrollableDivRef = useRef(null);
   const subCategoriesContainerRef = useRef(null);
   const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] =
     useState(false);
@@ -399,7 +435,7 @@ const Categories = () => {
                 return (
                   <div
                     key={_id}
-                    className="flex flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
+                    className="flex  flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
                     onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
@@ -419,21 +455,18 @@ const Categories = () => {
         </div>
 
         <div
-          ref={scrollableDivRef}
-          className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[100vh] overflow-y-auto hide-scrollbar"
+          className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto"
           style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            overscrollBehavior: "contain",
+            scrollbarWidth: "none", // For Firefox
+            msOverflowStyle: "none", // For Internet Explorer and Edge
           }}
         >
-          <style>
-            {`
-              .hide-scrollbar::-webkit-scrollbar {
-                display: none;
-              }
-            `}
-          </style>
+          <style jsx>{`
+            /* For Chrome, Safari, and Opera */
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
           {subCategoriesByCategory.map((category) => {
             const { _id, subCategoryName } = category;
 
