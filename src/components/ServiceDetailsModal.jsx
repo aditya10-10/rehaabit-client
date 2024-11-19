@@ -308,7 +308,7 @@ max-h-[70vh] overflow-y-auto relative"
                             className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
                             onClick={() => handleBuyNow(service)}
                           >
-                            Buy Now
+                            Book Now
                           </button>
 
                           <div className="flex items-center">
@@ -348,7 +348,7 @@ max-h-[70vh] overflow-y-auto relative"
                                 disabled={cartIsLoading}
                                 onClick={() => handleAddToCart(service)}
                               >
-                                Add to Cart
+                                Add to Services
                               </button>
                             )}
                           </div>

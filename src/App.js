@@ -165,13 +165,13 @@ export default function App() {
       setIsModalOpen(false);
     }, 300);
   };
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center w-full h-screen bg-white">
-        <Spinner />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center w-full h-screen bg-white">
+  //       <Spinner />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
