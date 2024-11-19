@@ -67,7 +67,7 @@ export const getBlogBySlug = createAsyncThunk(
     async (slug, thunkAPI) => {
         try{
             const response = await apiConnector("GET", `${GET_BLOG_BY_SLUG_API}/${slug}`);
-            console.log(response.data.blog);
+            // console.log(response.data.blog);
             return response.data.blog;
         }catch(error){
             return thunkAPI.rejectWithValue(error.response.data.message);
