@@ -79,7 +79,7 @@ const ProfilePicture = () => {
       return;
     }
     try {
-      console.log("Uploading...");
+      // console.log("Uploading...");
       setLoading(true);
       const formData = new FormData();
       formData.append("displayPicture", imageFile);

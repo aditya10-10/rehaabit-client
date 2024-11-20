@@ -11,9 +11,9 @@ export function sendMail(email, navigate) {
       const response = await apiConnector("POST", SENDMAIL_API, {
         email,
       });
-      console.log("SENDOTP API RESPONSE............", response);
+      // console.log("SENDOTP API RESPONSE............", response);
 
-      console.log(response.data.success);
+      // console.log(response.data.success);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
