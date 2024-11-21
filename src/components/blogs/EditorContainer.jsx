@@ -6,12 +6,12 @@ import { uploadImageToCloudinary } from '../../utils/cloudinaryutil';
 const EditorContainer = ({content, handleEditorChange}) => {
     const handleImageUpload = async (blobInfo, progress) => {
         try {
-            console.log('Uploading image to Cloudinary...');
+            // console.log('Uploading image to Cloudinary...');
             const secureUrl = await uploadImageToCloudinary(blobInfo.blob());
-            console.log('Image uploaded successfully:', secureUrl);
+            // console.log('Image uploaded successfully:', secureUrl);
             return secureUrl;
         } catch (error) {
-            console.error('Error uploading image:', error);
+            // console.error('Error uploading image:', error);
             throw error;
         }
     };

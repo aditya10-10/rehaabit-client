@@ -1,7 +1,5 @@
 export const uploadImageToCloudinary = async (file) => {
     try {
-        console.log('Cloud Name:', process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
-        console.log('Upload Preset:', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
 
         const formData = new FormData();
         formData.append('file', file);

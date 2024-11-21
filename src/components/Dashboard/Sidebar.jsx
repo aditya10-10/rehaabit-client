@@ -36,16 +36,34 @@ const sidebarLinks = [
       { id: 'blog-2', text: "Create Blog", to: "blog/create-blog" },
     ]
   },
-  { id: 2, icon: <BiSolidCategory />, text: "Category", to: "category", adminOnly: true },
-  { id: 3, icon: <MdCategory />, text: "Sub-Category", to: "sub-category", adminOnly: true },
-  { id: 4, icon: <MdHomeRepairService />, text: "My Services", to: "my-services", adminOnly: true },
-  { id: 5, icon: <MdMedicalServices />, text: "Add Service", to: "service/create-service", adminOnly: true },
+  {
+    id: 3,
+    icon: <MdHomeRepairService />,
+    text: "Services",
+    to: "services",
+    adminOnly: true,
+    subItems: [
+      { id: 'service-1', text: "Category", to: "category" },
+      { id: 'service-2', text: "Sub-Category", to: "sub-category" },
+      { id: 'service-3', text: "My Services", to: "my-services" },
+      { id: 'service-4', text: "Add Service", to: "service/create-service" },
+    ]
+  },
   { id: 6, icon: <BsFillHandbagFill />, text: "Orders", to: "orders" },
   { id: 7, icon: <FaUsers />, text: "Users", to: "users", adminOnly: true },
   { id: 8, icon: <FaUsersCog />, text: "Partners", to: "partners", adminOnly: true },
   { id: 9, icon: <FaAddressBook />, text: "Addresses", to: "addresses", userOnly: true },
-  { id: 10, icon: <FaAddressBook />, text: "Enquiries", to: "user-enquires", adminOnly: true },
-  { id: 11, icon: <IoIosHelpCircleOutline />, text: "Contact", to: "contacts", adminOnly: true },
+  {
+    id: 10,
+    icon: <IoIosHelpCircleOutline />,
+    text: "Support",
+    to: "support",
+    adminOnly: true,
+    subItems: [
+      { id: 'support-1', text: "Enquiries", to: "user-enquires" },
+      { id: 'support-2', text: "Contact", to: "contacts" },
+    ]
+  },
   { id: 12, icon: <IoMdSettings />, text: "Settings", to: "edit-profile" }
 ];
 
@@ -113,13 +131,17 @@ export default function Sidebar({ children }) {
     }
   };
 
-  const filteredSidebarLinks = sidebarLinks.filter(
-    (link) =>
-      ((link.contentWriterOnly && user.accountType === "Content Writer") ||
-      (!link.adminOnly || user.accountType === "Admin") &&
-      !(link.text === "Addresses" && user.accountType === "Admin") &&
-      link.text.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredSidebarLinks = sidebarLinks.filter((link) => {
+    if (user.accountType === "Admin") {
+      return link.text.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+    const isContentWriterLink = link.contentWriterOnly && user.accountType === "Content Writer";
+    const isRegularUserLink = !link.adminOnly && !link.contentWriterOnly;
+    const matchesSearchTerm = link.text.toLowerCase().includes(searchTerm.toLowerCase());
+    return (isContentWriterLink || isRegularUserLink) && matchesSearchTerm;
+  });
+  
+  
 
     // Logout handler
     const handleLogout = () => {

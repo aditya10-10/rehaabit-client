@@ -7,7 +7,10 @@ import { FaAngleRight } from "react-icons/fa";
 import { toast } from "sonner";
 const PersonalInformation = ({ onSave, handleNext }) => {
   const dispatch = useDispatch();
-  const { partnerFormData, currentStep } = useSelector((state) => state.partner);
+  const { partnerFormData, currentStep } = useSelector(
+    (state) => state.partner
+  );
+
 
   const [preview, setPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
@@ -40,15 +43,20 @@ const PersonalInformation = ({ onSave, handleNext }) => {
       dateOfBirth: partnerFormData.personalInformation?.dateOfBirth || "",
       gender: partnerFormData.personalInformation?.gender || "",
       nationality: partnerFormData.personalInformation?.nationality || "",
-      identificationType: partnerFormData.personalInformation?.identificationType || "",
-      identificationNumber: partnerFormData.personalInformation?.identificationNumber || "",
+      identificationType:
+        partnerFormData.personalInformation?.identificationType || "",
+      identificationNumber:
+        partnerFormData.personalInformation?.identificationNumber || "",
+
       photo: partnerFormData.personalInformation?.photo || null,
       email: partnerFormData.personalInformation?.email || "",
       address: {
         street: partnerFormData.personalInformation?.address?.street || "",
         city: partnerFormData.personalInformation?.address?.city || "",
         state: partnerFormData.personalInformation?.address?.state || "",
-        postalCode: partnerFormData.personalInformation?.address?.postalCode || "",
+        postalCode:
+          partnerFormData.personalInformation?.address?.postalCode || "",
+
         country: partnerFormData.personalInformation?.address?.country || "",
       },
       phoneNumber: partnerFormData.personalInformation?.phoneNumber || "",
@@ -93,14 +101,17 @@ const PersonalInformation = ({ onSave, handleNext }) => {
   };
 
   const handleSaveAndNext = () => {
-    const isEmpty = Object.values(formData).some(value => {
+    const isEmpty = Object.values(formData).some((value) => {
       // Check nested address fields separately
       if (typeof value === "object" && value !== null) {
-        return Object.values(value).some(nestedValue => nestedValue === "" || nestedValue === null);
+        return Object.values(value).some(
+          (nestedValue) => nestedValue === "" || nestedValue === null
+        );
       }
       return value === "" || value === null;
     });
-  
+
+
     if (isEmpty) {
       toast.error("Please fill in all required fields");
       return;
@@ -113,28 +124,28 @@ const PersonalInformation = ({ onSave, handleNext }) => {
   };
 
   useEffect(() => {
-  setFormData({
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    gender: "",
-    nationality: "",
-    identificationType: "",
-    identificationNumber: "",
-    photo: null,
-    email: "",
-    address: {
-      street: "",
-      city: "",
-      state: "",
-      postalCode: "",
-      country: "",
-    },
-    phoneNumber: "",
-  });
-  setPreview(null);
-  setThumbnail(null);
-}, []); 
+    setFormData({
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      gender: "",
+      nationality: "",
+      identificationType: "",
+      identificationNumber: "",
+      photo: null,
+      email: "",
+      address: {
+        street: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        country: "",
+      },
+      phoneNumber: "",
+    });
+    setPreview(null);
+    setThumbnail(null);
+  }, []);
 
 
   return (
@@ -250,7 +261,8 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="email"
             >
-              Email <span className="text-red-500">*</span>
+              Email
+
             </label>
             <input
               id="email"
@@ -260,7 +272,6 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               onChange={handleChange}
               className="w-full px-3 py-2 border border-purple-100 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-md"
               placeholder="Enter Your Email"
-              required
             />
           </div>
         </div>

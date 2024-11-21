@@ -57,6 +57,7 @@ import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboar
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
 import Spinner from "./Spinner";
 import PrivateRoute from "./utils/PrivateRoute";
+import AllServices from "./components/Home/AllServices";
 import ViewBlogs from "./components/blogs/ViewBlogs";
 import CreateBlogs from "./components/blogs/CreateBlogs";
 import ViewBlog from "./components/blogs/ViewBlog";
@@ -166,13 +167,13 @@ export default function App() {
       setIsModalOpen(false);
     }, 300);
   };
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center w-full h-screen bg-white">
-        <Spinner />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center w-full h-screen bg-white">
+  //       <Spinner />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>

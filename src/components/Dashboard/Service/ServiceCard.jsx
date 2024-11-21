@@ -36,7 +36,7 @@ const ServiceCard = ({
           {serviceName}
         </h3>
 
-        {priceStatus === "priced" && (
+        {priceStatus === "priced" && ratingAndReviews?.length > 0 && (
           <div className="flex items-center mb-2 gap-2 text-xl">
             {avgRating && <GoStarFill className="text-yellow-400 w-4 h-4" />}
             <span className="text-sm ">{avgRating}</span>

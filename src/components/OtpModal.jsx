@@ -172,15 +172,15 @@ const OtpModal = ({ isOpen, onClose }) => {
               <img
                 src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
                 alt="India Flag"
-                className="h-6 w-6 mr-2 rounded-md"
+                className="h-6 w-6 mr-2 rounded-md flex-shrink-0"
               />
-              <span className="text-xl">+91</span>
+              <span className="text-xl flex-shrink-0">+91</span>
               <input
                 type="tel"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 minLength="10"
                 maxLength="10"
-                className="flex-1 p-2 text-xl bg-white border-none rounded-md shadow-sm"
+                className="w-full min-w-0 p-2 text-xl bg-white border-none rounded-md shadow-sm"
                 placeholder="Phone Number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
