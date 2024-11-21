@@ -25,6 +25,42 @@ const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // const scrollableDivRef = useRef(null);
+
+  useEffect(() => {
+    const handleWheelScroll = (event) => {
+      const div = scrollableDivRef.current;
+
+      if (div) {
+        const atBottom = div.scrollTop + div.clientHeight >= div.scrollHeight;
+
+        if (!atBottom) {
+          // Prevent main window scrolling until the last card
+          event.preventDefault();
+          div.scrollTop += event.deltaY * 0.3; // Adjust scroll speed with this factor
+        }
+      }
+    };
+
+    // Attach the wheel event listener to the div, not the window
+    if (scrollableDivRef.current) {
+      scrollableDivRef.current.addEventListener("wheel", handleWheelScroll, {
+        passive: false,
+      });
+    }
+
+    // Clean up event listener on component unmount
+    return () => {
+      if (scrollableDivRef.current) {
+        scrollableDivRef.current.removeEventListener(
+          "wheel",
+          handleWheelScroll
+        );
+      }
+    };
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -42,7 +78,9 @@ const Categories = () => {
     (state) => state.subcategories
   );
   const { allServices } = useSelector((state) => state.service);
-  const { cartServices, isLoading: cartLoading } = useSelector((state) => state.cart);
+  const { cartServices, isLoading: cartLoading } = useSelector(
+    (state) => state.cart
+  );
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
   const categoryName = categories.find(
@@ -50,7 +88,7 @@ const Categories = () => {
   );
   useEffect(() => {
     if (!categoryName) {
-      navigate('*');
+      navigate("*");
     }
   }, [categoryName, navigate]);
 
@@ -58,7 +96,8 @@ const Categories = () => {
   const serviceRefs = useRef({});
   const scrollableDivRef = useRef(null);
   const subCategoriesContainerRef = useRef(null);
-  const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] = useState(false);
+  const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] =
+    useState(false);
   const [isScrollComplete, setIsScrollComplete] = useState(false);
 
   // Add this state to track footer visibility
@@ -94,15 +133,15 @@ const Categories = () => {
   // Add this useEffect to check footer visibility
   useEffect(() => {
     const checkFooterVisibility = () => {
-      const footer = document.querySelector('footer'); // or use footerRef.current
+      const footer = document.querySelector("footer"); // or use footerRef.current
       if (footer) {
         const rect = footer.getBoundingClientRect();
         setIsFooterVisible(rect.top < window.innerHeight);
       }
     };
 
-    window.addEventListener('scroll', checkFooterVisibility);
-    return () => window.removeEventListener('scroll', checkFooterVisibility);
+    window.addEventListener("scroll", checkFooterVisibility);
+    return () => window.removeEventListener("scroll", checkFooterVisibility);
   }, []);
 
   // Modify the wheel handler
@@ -111,7 +150,8 @@ const Categories = () => {
       const div = scrollableDivRef.current;
       if (!div) return;
 
-      const isAtBottom = Math.abs(div.scrollHeight - div.clientHeight - div.scrollTop) < 1;
+      const isAtBottom =
+        Math.abs(div.scrollHeight - div.clientHeight - div.scrollTop) < 1;
       const isAtTop = div.scrollTop === 0;
 
       // Handle reverse scrolling (going up)
@@ -137,32 +177,42 @@ const Categories = () => {
       }
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => window.removeEventListener('wheel', handleWheel);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
   }, [isFooterVisible]);
 
   useEffect(() => {
     const scrollToElement = () => {
-      if (scrollTo === "subcategory" && subCategoryId && categoryRefs.current[subCategoryId] && scrollableDivRef.current) {
+      if (
+        scrollTo === "subcategory" &&
+        subCategoryId &&
+        categoryRefs.current[subCategoryId] &&
+        scrollableDivRef.current
+      ) {
         setTimeout(() => {
           const containerTop = scrollableDivRef.current.offsetTop;
           const elementTop = categoryRefs.current[subCategoryId].offsetTop;
-          
+
           scrollableDivRef.current.scrollTo({
             top: elementTop - containerTop,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         }, 500);
       }
-      
-      if (scrollTo === "service" && serviceId && serviceRefs.current[serviceId] && scrollableDivRef.current) {
+
+      if (
+        scrollTo === "service" &&
+        serviceId &&
+        serviceRefs.current[serviceId] &&
+        scrollableDivRef.current
+      ) {
         setTimeout(() => {
           const containerTop = scrollableDivRef.current.offsetTop;
           const elementTop = serviceRefs.current[serviceId].offsetTop;
-          
+
           scrollableDivRef.current.scrollTo({
             top: elementTop - containerTop,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         }, 500);
       }
@@ -179,10 +229,10 @@ const Categories = () => {
       // Calculate the scroll position within the container
       const containerTop = scrollableDivRef.current.offsetTop;
       const elementTop = element.offsetTop;
-      
+
       scrollableDivRef.current.scrollTo({
         top: elementTop - containerTop,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
 
@@ -304,7 +354,7 @@ const Categories = () => {
 
       const container = subCategoriesContainerRef.current;
       const isScrollable = container.scrollWidth > container.clientWidth;
-      
+
       if (!isScrollable) {
         setIsSubCategoriesScrollComplete(true);
         return;
@@ -315,14 +365,18 @@ const Categories = () => {
         container.scrollLeft += e.deltaY;
 
         // Check if scroll has reached the end
-        if (Math.abs(container.scrollLeft + container.clientWidth - container.scrollWidth) < 1) {
+        if (
+          Math.abs(
+            container.scrollLeft + container.clientWidth - container.scrollWidth
+          ) < 1
+        ) {
           setIsSubCategoriesScrollComplete(true);
         }
       }
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => window.removeEventListener('wheel', handleWheel);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
   }, [isSubCategoriesScrollComplete]);
 
   if (isLoading) {
@@ -334,7 +388,10 @@ const Categories = () => {
             <CategorySkeleton className="h-6 w-1/2 mx-auto mb-4" />
             <div className="grid grid-cols-3 p-2 gap-4 max-xl:grid-cols-2 max-lg:grid-cols-1">
               {[...Array(6)].map((_, index) => (
-                <CategorySkeleton key={index} className="h-32 w-full rounded-lg" />
+                <CategorySkeleton
+                  key={index}
+                  className="h-32 w-full rounded-lg"
+                />
               ))}
             </div>
           </div>
@@ -345,7 +402,10 @@ const Categories = () => {
               <CategorySkeleton className="h-8 w-1/3 mb-4" />
               <div className="grid grid-cols-1 gap-4">
                 {[...Array(3)].map((_, serviceIndex) => (
-                  <CategorySkeleton key={serviceIndex} className="h-40 w-full rounded-lg" />
+                  <CategorySkeleton
+                    key={serviceIndex}
+                    className="h-40 w-full rounded-lg"
+                  />
                 ))}
               </div>
             </div>
@@ -393,15 +453,17 @@ const Categories = () => {
               Select a service
             </p>
 
-            <div className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10"
-                 ref={subCategoriesContainerRef}>
+            <div
+              className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10"
+              ref={subCategoriesContainerRef}
+            >
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
                 return (
                   <div
                     key={_id}
-                    className="flex flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
+                    className="flex  flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
                     onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
@@ -424,9 +486,9 @@ const Categories = () => {
           ref={scrollableDivRef}
           className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[100vh] overflow-y-auto hide-scrollbar"
           style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            overscrollBehavior: 'contain'
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            overscrollBehavior: "contain",
           }}
         >
           <style>
@@ -504,7 +566,10 @@ const Categories = () => {
                                         className="border px-2 border-gray-400 rounded-full"
                                         disabled={cartLoading}
                                         onClick={() =>
-                                          handleDecrease(cartService._id, service)
+                                          handleDecrease(
+                                            cartService._id,
+                                            service
+                                          )
                                         }
                                       >
                                         -
@@ -518,7 +583,10 @@ const Categories = () => {
                                         className="border px-2 border-gray-400 rounded-full"
                                         disabled={cartLoading}
                                         onClick={() =>
-                                          handleIncrease(cartService._id, service)
+                                          handleIncrease(
+                                            cartService._id,
+                                            service
+                                          )
                                         }
                                       >
                                         +
@@ -565,7 +633,6 @@ const Categories = () => {
             ) : null;
           })}
         </div>
-
       </div>
       <div ref={footerRef}>
         <Footer />

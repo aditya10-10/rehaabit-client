@@ -1,15 +1,18 @@
 import React, { useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Importing useNavigate for routing
 import EnquireNowModal from "./EnquireNowModal";
 import ServiceDetailsModal from "../ServiceDetailsModal";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const PopularSearches = () => {
   const { allServices } = useSelector((state) => state.service);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
-  const [serviceId, setServiceId] = useState(null); // Track service ID directly
+  const [serviceId, setServiceId] = useState(null);
   const [serviceNameToPass, setServiceNameToPass] = useState(null);
 
   const limitedNonPricedServices = allServices?.filter(
@@ -35,22 +38,18 @@ const PopularSearches = () => {
     setIsServiceModalOpen(true);
   };
 
-  // Closes the Service Modal
   const handleServiceModalClose = () => {
     setIsServiceModalOpen(false);
-    setServiceId(null); // Clear service ID when modal closes
+    setServiceId(null);
   };
 
-  // Opens the Enquire Modal
   const handleEnquireNowModalOpen = (serviceName) => {
     setServiceNameToPass(serviceName);
     setIsEnquireNowModalOpen(true);
   };
 
-  // Closes the Enquire Modal
   const handleEnquireNowModalClose = () => setIsEnquireNowModalOpen(false);
 
-  // Modify the LoadingSkeleton component
   const LoadingSkeleton = () => (
     <div className="min-w-[300px] max-w-[300px] sm:min-w-[340px] md:min-w-[355px] md:max-w-[355px] flex-shrink-0 snap-center animate-pulse">
       <div className="w-full h-56 bg-gray-200 rounded-tl-xl rounded-tr-xl" />
@@ -64,6 +63,11 @@ const PopularSearches = () => {
     </div>
   );
 
+  // Function to handle navigation to the All Services page
+  const handleSeeMoreClick = () => {
+    navigate("/all-services"); // Navigate to the All Services page
+  };
+
   return (
     <>
       <EnquireNowModal
@@ -72,7 +76,6 @@ const PopularSearches = () => {
         serviceNameToPass={serviceNameToPass}
       />
 
-      {/* Pass the correct serviceId to ServiceDetailsModal */}
       <ServiceDetailsModal
         isServiceModalOpen={isServiceModalOpen}
         handleServiceModal={handleServiceModalClose}
@@ -80,9 +83,24 @@ const PopularSearches = () => {
       />
 
       <section className="relative flex flex-col px-10 mt-40 w-full max-md:mt-10 max-md:max-w-full max-md:px-0 max-md:pl-4">
-        <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
-          For Contract Enquiry
-        </h2>
+      <div className="flex items-center justify-between w-full px-4">
+  <h2 className="text-4xl font-semibold text-violet-700 text-center lg:pl-60 sm:flex-1">
+    For Contract Enquiry
+  </h2>
+
+  <button
+  onClick={handleSeeMoreClick}
+  className="flex items-center justify-center gap-2 text-white font-semibold p-3 bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md transition-all duration-200 ease-in-out mt-6 mb-4 sm:ml-4"
+>
+  <i className="fas fa-eye"></i> 
+  <span>See More Services</span>
+</button>
+
+</div>
+
+
+
+       
 
         <div className="flex items-center justify-between mt-12 max-md:mt-10 w-full relative">
           <button
@@ -98,12 +116,12 @@ const PopularSearches = () => {
               scrollbar-hide -webkit-overflow-scrolling: touch"
           >
             {!allServices ? (
-              // Show loading skeletons in a row with proper spacing
               <div className="flex gap-4">
-                {[...Array(6)].map((_, index) => (
-                  <LoadingSkeleton key={`skeleton-${index}`} />
-                ))}
-              </div>
+              {[...Array(6)].map((_, index) => (
+                <LoadingSkeleton key={`skeleton-${index}`} />
+              ))}
+            </div>
+            
             ) : (
               nonPricedServices?.map((service, index) => {
                 const { _id, thumbnail, serviceName } = service;
@@ -127,7 +145,6 @@ const PopularSearches = () => {
                         {serviceName}
                       </h3>
 
-                      {/* Flex container for buttons */}
                       <div className="flex justify-between items-center">
                         <button
                           className="text-green-600 bg-white px-4 py-2 rounded-full transition-all duration-300 hover:bg-green-600 hover:text-white shadow-lg border border-green-600"
