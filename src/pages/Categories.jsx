@@ -28,6 +28,7 @@ const Categories = () => {
 
   // const scrollableDivRef = useRef(null);
 
+
   useEffect(() => {
     const handleWheelScroll = (event) => {
       const div = scrollableDivRef.current;
@@ -94,7 +95,7 @@ const Categories = () => {
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
-  const scrollableDivRef = useRef(null);
+  // const scrollableDivRef = useRef(null);
   const subCategoriesContainerRef = useRef(null);
   const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] =
     useState(false);
@@ -167,6 +168,7 @@ const Categories = () => {
         }
       }
       // Handle forward scrolling (going down)
+
       else {
         if (!isAtBottom) {
           e.preventDefault();
@@ -180,6 +182,7 @@ const Categories = () => {
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
   }, [isFooterVisible]);
+
 
   useEffect(() => {
     const scrollToElement = () => {
@@ -483,21 +486,20 @@ const Categories = () => {
         </div>
 
         <div
-          ref={scrollableDivRef}
-          className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[100vh] overflow-y-auto hide-scrollbar"
+          className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[75vh] overflow-y-auto"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
             overscrollBehavior: "contain",
+
           }}
         >
-          <style>
-            {`
-              .hide-scrollbar::-webkit-scrollbar {
-                display: none;
-              }
-            `}
-          </style>
+          <style jsx>{`
+            /* For Chrome, Safari, and Opera */
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
           {subCategoriesByCategory.map((category) => {
             const { _id, subCategoryName } = category;
 

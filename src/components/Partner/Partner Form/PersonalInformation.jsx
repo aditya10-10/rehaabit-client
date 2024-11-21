@@ -11,6 +11,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
     (state) => state.partner
   );
 
+
   const [preview, setPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const [formData, setFormData] = useState({
@@ -19,18 +20,15 @@ const PersonalInformation = ({ onSave, handleNext }) => {
     dateOfBirth: partnerFormData.personalInformation?.dateOfBirth || "",
     gender: partnerFormData.personalInformation?.gender || "",
     nationality: partnerFormData.personalInformation?.nationality || "",
-    identificationType:
-      partnerFormData.personalInformation?.identificationType || "",
-    identificationNumber:
-      partnerFormData.personalInformation?.identificationNumber || "",
+    identificationType: partnerFormData.personalInformation?.identificationType || "",
+    identificationNumber: partnerFormData.personalInformation?.identificationNumber || "",
     photo: partnerFormData.personalInformation?.photo || null,
     email: partnerFormData.personalInformation?.email || "",
     address: {
       street: partnerFormData.personalInformation?.address?.street || "",
       city: partnerFormData.personalInformation?.address?.city || "",
       state: partnerFormData.personalInformation?.address?.state || "",
-      postalCode:
-        partnerFormData.personalInformation?.address?.postalCode || "",
+      postalCode: partnerFormData.personalInformation?.address?.postalCode || "",
       country: partnerFormData.personalInformation?.address?.country || "",
     },
     phoneNumber: partnerFormData.personalInformation?.phoneNumber || "",
@@ -49,6 +47,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
         partnerFormData.personalInformation?.identificationType || "",
       identificationNumber:
         partnerFormData.personalInformation?.identificationNumber || "",
+
       photo: partnerFormData.personalInformation?.photo || null,
       email: partnerFormData.personalInformation?.email || "",
       address: {
@@ -57,6 +56,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
         state: partnerFormData.personalInformation?.address?.state || "",
         postalCode:
           partnerFormData.personalInformation?.address?.postalCode || "",
+
         country: partnerFormData.personalInformation?.address?.country || "",
       },
       phoneNumber: partnerFormData.personalInformation?.phoneNumber || "",
@@ -111,6 +111,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
       return value === "" || value === null;
     });
 
+
     if (isEmpty) {
       toast.error("Please fill in all required fields");
       return;
@@ -145,6 +146,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
     setPreview(null);
     setThumbnail(null);
   }, []);
+
 
   return (
     <>
@@ -260,6 +262,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               htmlFor="email"
             >
               Email
+
             </label>
             <input
               id="email"
@@ -460,7 +463,8 @@ const PersonalInformation = ({ onSave, handleNext }) => {
         )}
       </div>
     </>
-  );
+);
+
 };
 
 export default PersonalInformation;

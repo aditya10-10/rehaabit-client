@@ -18,7 +18,7 @@ const AllServicesPage = () => {
       service?.priceStatus === "non-priced" && service?.status !== "Draft"
   );
   const nonPricedServices = limitedNonPricedServices?.slice(0, 10);
-  
+
   const handleServiceModalOpen = (serviceId) => {
     setServiceId(serviceId);
     setIsServiceModalOpen(true);

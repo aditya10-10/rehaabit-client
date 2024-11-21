@@ -63,6 +63,7 @@ import CreateBlogs from "./components/blogs/CreateBlogs";
 import ViewBlog from "./components/blogs/ViewBlog";
 import EditBlog from "./components/blogs/EditBlog";
 import Blogs from "./components/blogs/Blogs";
+import AllServices from "./components/Home/AllServices";
 
 export default function App() {
   const dispatch = useDispatch();

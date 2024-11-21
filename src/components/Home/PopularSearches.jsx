@@ -99,9 +99,6 @@ const PopularSearches = () => {
 </div>
 
 
-
-       
-
         <div className="flex items-center justify-between mt-12 max-md:mt-10 w-full relative">
           <button
             className="absolute left-0 z-10 p-2 bg-white rounded-full shadow-md"
