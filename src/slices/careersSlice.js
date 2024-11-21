@@ -23,7 +23,7 @@ export const addCandidateInformation = createAsyncThunk(
   "careers/addCandidateInformation",
   async ({ formData }, thunkAPI) => {
     try {
-      console.log(formData);
+      // console.log(formData);
       const response = await apiConnector(
         "POST",
         ADD_CANDIDATE_INFORMATION_API,

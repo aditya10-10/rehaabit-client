@@ -1,116 +1,211 @@
-import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getBlogBySlug } from '../../slices/blogSlice'
-import { Helmet } from "react-helmet-async";
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBlogBySlug } from '../../slices/blogSlice';
+import { Helmet } from 'react-helmet-async';
+import profileIcon from "../../assets/dummypic.jpg";
+import "./viewblog.css";
 import { getUserDetails } from '../../services/operations/profileAPI';
 import { usersEndpoints } from '../../services/apis'
 
 const TableOfContents = ({ content }) => {
   const [toc, setToc] = useState([]);
+  const [activeId, setActiveId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (content) {
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content;
+
       const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      const tocItems = Array.from(headings).map((heading, index) => ({
-        id: `heading-${index}`,
-        text: heading.textContent,
-        level: parseInt(heading.tagName[1])
-      }));
+      const tocItems = [];
+      let numbering = [0, 0, 0, 0, 0, 0]; // Track numbering for each heading level
+
+      Array.from(headings).forEach((heading) => {
+        const level = parseInt(heading.tagName[1]) - 1; // Convert h1-h6 to 0-5 index
+
+        // Update numbering array
+        numbering[level]++;
+        // Reset all lower levels
+        for (let i = level + 1; i < numbering.length; i++) {
+          numbering[i] = 0;
+        }
+
+        // Generate hierarchical number (e.g., "1.2.3")
+        const number = numbering
+          .slice(0, level + 1)
+          .filter(num => num !== 0)
+          .map((num, index) => index === 0 ? `${num}.` : num)
+          .join('');
+
+        const id = `heading-${number}`;
+        heading.id = id;
+        tocItems.push({
+          id,
+          text: `${number} ${heading.textContent}`,
+          level: level + 1,
+        });
+      });
+
       setToc(tocItems);
+
+      // Set the first item as active by default
+      if (tocItems.length > 0) {
+        setActiveId(tocItems[0].id);
+      }
     }
   }, [content]);
 
+  const handleClick = (id) => {
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      setActiveId(id);
+    }
+    setIsOpen(false); // Close TOC on click for small screens
+  };
+
   return (
-    <div className="toc-container sticky top-4 bg-white p-4 rounded-lg shadow-sm">
-      <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
-      <nav>
-        {toc.map((item) => (
-          <a
-            key={item.id}
-            href={`#${item.id}`}
-            className={`block text-gray-600 hover:text-blue-600 mb-2 ${
-              item.level === 1 ? 'ml-0' : 
-              item.level === 2 ? 'ml-4' : 
-              'ml-8'
-            }`}
-          >
-            {item.text}
-          </a>
-        ))}
-      </nav>
+    <div>
+      {/* TOC Button for Mobile and Tablet */}
+      <button
+        className="md:hidden fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg z-[100] font-medium text-sm"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? 'Close Table of Contents' : 'Table of Contents'}
+      </button>
+
+      <div
+        className={`bg-white p-4 shadow-lg border border-gray-200 rounded-lg ${
+          isOpen
+            ? 'fixed top-0 left-0 h-screen w-full md:w-80 transform translate-x-0 z-[90]'
+            : 'fixed top-0 left-0 h-screen w-full md:w-80 transform -translate-x-full'
+        } md:relative md:transform-none md:h-auto`}
+      >
+        <h2 className="text-xl font-semibold mb-4 border-b border-gray-300 pb-2">Table of Contents</h2>
+        <nav className="text-sm max-h-[70vh] overflow-y-auto pr-2 scrollbar-hide">
+          {toc.map((item, index) => (
+            <div key={item.id} className="relative">
+              <div
+                className={`absolute left-2 top-1/2 w-0.5 h-full -translate-y-1/2 bg-blue-600 ${activeId === item.id ? 'opacity-100' : 'opacity-0'
+                  }`}
+              ></div>
+              <a
+                href={`#${item.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick(item.id);
+                }}
+                className={`block mb-1 cursor-pointer px-4 py-2 rounded-md transition-all duration-200 ${activeId === item.id || (index === 0 && activeId === null)
+                    ? 'bg-blue-50 text-blue-600 font-medium'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'
+                  }`}
+                style={{
+                  paddingLeft: `${(item.level * 12) + 16}px`,
+                }}
+              >
+                {item.text}
+              </a>
+            </div>
+          ))}
+        </nav>
+      </div>
+
+      {/* Overlay for mobile and tablet */}
+      {isOpen && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-[80] md:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
     </div>
   );
 };
 
 const BlogContent = ({ content }) => {
   const contentRef = useRef(null);
-  
+
   useEffect(() => {
     if (contentRef.current) {
-      // Add IDs to headings and ensure proper heading styles
       const headings = contentRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6');
       headings.forEach((heading, index) => {
-        heading.id = `heading-${index}`;
-        
-        // Add appropriate heading styles
-        switch(heading.tagName.toLowerCase()) {
+        heading.id = `heading-${index}.`;
+
+        // Only create line container for h1 and h2
+        if (heading.tagName.toLowerCase() === 'h1' || heading.tagName.toLowerCase() === 'h2') {
+          // Create container with flexbox and bottom alignment
+          const container = document.createElement('div');
+          container.style.display = 'flex';
+          container.style.alignItems = 'flex-end';
+          container.style.gap = '1rem';
+          container.style.width = '100%';
+          container.style.margin = '1rem 0';
+
+          // Create the horizontal line
+          const line = document.createElement('div');
+          line.style.height = '4px';
+          line.style.backgroundColor = '#E5E7EB';
+          line.style.flex = '1';
+          line.style.marginLeft = '1rem';
+          line.style.marginBottom = '0.5rem';
+
+          // Replace heading with container
+          heading.parentNode.insertBefore(container, heading);
+          container.appendChild(heading);
+          container.appendChild(line);
+        } else {
+          // Add margin for other headings
+          heading.style.margin = '1.5rem 0 1rem 0';
+        }
+
+        // Style headings
+        switch (heading.tagName.toLowerCase()) {
           case 'h1':
-            heading.classList.add('text-4xl', 'font-bold', 'my-6');
+            heading.classList.add('text-4xl', 'font-bold', 'whitespace-nowrap');
             break;
           case 'h2':
-            heading.classList.add('text-3xl', 'font-bold', 'my-5');
+            heading.classList.add('text-3xl', 'font-bold', 'whitespace-nowrap');
             break;
           case 'h3':
-            heading.classList.add('text-2xl', 'font-semibold', 'my-4');
+            heading.classList.add('text-2xl', 'font-semibold');
+            heading.style.color = '#374151'; // gray-700
             break;
-          default:
-            heading.classList.add('text-xl', 'font-semibold', 'my-3');
+          case 'h4':
+            heading.classList.add('text-xl', 'font-semibold');
+            heading.style.color = '#4B5563'; // gray-600
+            break;
+          case 'h5':
+            heading.classList.add('text-lg', 'font-medium');
+            heading.style.color = '#4B5563'; // gray-600
+            break;
+          case 'h6':
+            heading.classList.add('text-base', 'font-medium');
+            heading.style.color = '#4B5563'; // gray-600
+            break;
         }
       });
 
-      // Add styles for table headings
-      const tableHeadings = contentRef.current.querySelectorAll('table h2, table h3');
-      tableHeadings.forEach(heading => {
-        heading.classList.add('font-bold', 'text-lg', 'my-2');
+      // Add styles for images
+      const images = contentRef.current.querySelectorAll('img');
+      images.forEach((img) => {
+        img.classList.add('w-full', 'rounded-lg', 'my-8', 'object-cover');
+        // Set a reasonable max-height while maintaining aspect ratio
+        img.style.maxHeight = '500px';
       });
 
-      // Modified link styling code with cleanup
+      // Style links without underlines
       const links = contentRef.current.querySelectorAll('a');
-      const mouseEnterHandlers = new Map();
-      const mouseLeaveHandlers = new Map();
-
       links.forEach((link) => {
         link.style.color = '#1D4ED8';
-        link.style.textDecoration = 'underline';
-        
-        const handleMouseEnter = () => {
+        link.style.textDecoration = 'none';
+        link.addEventListener('mouseenter', () => {
           link.style.color = '#1E40AF';
-        };
-        const handleMouseLeave = () => {
-          link.style.color = '#1D4ED8';
-        };
-
-        // Store handlers to remove them later
-        mouseEnterHandlers.set(link, handleMouseEnter);
-        mouseLeaveHandlers.set(link, handleMouseLeave);
-
-        link.addEventListener('mouseenter', handleMouseEnter);
-        link.addEventListener('mouseleave', handleMouseLeave);
-      });
-
-      // Cleanup function
-      return () => {
-        links.forEach((link) => {
-          const mouseEnter = mouseEnterHandlers.get(link);
-          const mouseLeave = mouseLeaveHandlers.get(link);
-          if (mouseEnter) link.removeEventListener('mouseenter', mouseEnter);
-          if (mouseLeave) link.removeEventListener('mouseleave', mouseLeave);
         });
-      };
+        link.addEventListener('mouseleave', () => {
+          link.style.color = '#1D4ED8';
+        });
+      });
     }
   }, [content]);
 
@@ -129,10 +224,8 @@ const ViewBlog = () => {
   const navigate = useNavigate();
   const { blog, isLoading } = useSelector((state) => state.blog);
   const { user } = useSelector((state) => state.auth);
-  console.log(blog);
-
+  // console.log(blog);
   const allowedRoles = ['Admin', 'Content Writer'];
-
   const [isValidating, setIsValidating] = useState(true);
   const [isValid, setIsValid] = useState(false);
 
@@ -140,7 +233,7 @@ const ViewBlog = () => {
     const validateAndFetchBlog = async () => {
       setIsValidating(true);
       const isPreviewRoute = window.location.pathname.startsWith('/blog/preview/');
-      
+
       if (isPreviewRoute) {
         const currentUser = JSON.parse(localStorage.getItem("user"));
         if (!currentUser || !allowedRoles.includes(currentUser?.accountType)) {
@@ -150,31 +243,31 @@ const ViewBlog = () => {
           return;
         }
       }
-
       await dispatch(getBlogBySlug(slug));
       setIsValidating(false);
     };
-
     validateAndFetchBlog();
   }, [slug, navigate, dispatch]);
-
   useEffect(() => {
     const isPreviewRoute = window.location.pathname.startsWith('/blog/preview/');
-    if (!isLoading && 
-        !isValidating && 
-        Object.keys(blog || {}).length > 0 && 
-        !isPreviewRoute && 
-        blog?.status !== 'published') {
+    if (!isLoading &&
+      !isValidating &&
+      Object.keys(blog || {}).length > 0 &&
+      !isPreviewRoute &&
+      blog?.status !== 'published') {
       setIsValid(false);
       navigate('*');
     } else if (!isLoading && Object.keys(blog || {}).length > 0) {
       setIsValid(true);
     }
   }, [blog, isLoading, navigate, isValidating]);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    dispatch(getBlogBySlug(slug));
+  }, [slug, dispatch]);
 
   const formatDate = (timestamp) => {
     if (!timestamp) return '';
@@ -189,38 +282,44 @@ const ViewBlog = () => {
   const formatLastUpdated = (timestamp) => {
     if (!timestamp) return '';
     const date = new Date(timestamp._seconds * 1000);
-    return date.toLocaleString('en-US', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-      timeZone: 'Asia/Kolkata'
-    }) + ' IST';
+    return (
+      date.toLocaleString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+        timeZone: 'Asia/Kolkata',
+      }) + ' IST'
+    );
   };
 
   return (
     <>
-      {(isLoading || isValidating) ? (
+      {isLoading ? (
         <div className="flex h-screen items-center justify-center">
           <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
         </div>
-      ) : isValid ? (
+      ) : (
         <div className="max-w-6xl mx-auto px-4 py-8">
-        <Helmet>
-          <title>{`${blog?.title} | Rehaabit`}</title>
-          <meta
-            name="description"
-            content={`${blog?.metaDescription}`}
-            />
+          <Helmet>
+            <title>{`${blog?.title} | Rehaabit`}</title>
+            <meta name="description" content={`${blog?.metaDescription}`} />
           </Helmet>
-          <div className="flex gap-8">
-            {/* Table of Contents Sidebar */}
-            <div className="w-64 shrink-0">
+          <div className="flex flex-col md:flex-row gap-8 relative">
+            {/* Table of Contents Sidebar - Fixed position */}
+            <div className="hidden md:block md:w-80 shrink-0">
+              <div className="fixed w-80">
+                <TableOfContents content={blog?.content} />
+              </div>
+            </div>
+
+            {/* Mobile TOC */}
+            <div className="md:hidden w-full">
               <TableOfContents content={blog?.content} />
             </div>
-            
+
             {/* Main Content */}
             <div className="flex-1 max-w-3xl">
               <h1 className="text-3xl font-bold mb-4">{blog?.title}</h1>
@@ -229,79 +328,28 @@ const ViewBlog = () => {
                   Last updated: {formatLastUpdated(blog?.updatedAt)}
                 </p>
               </div>
-              <div className="flex flex-col gap-2 mb-6">
+              <div className="flex flex-col gap-4 mb-6">
+                {/* Author Section */}
                 <div className="flex items-center gap-2">
-                  <p className="text-gray-600 font-bold">Author:</p>
-                  <p className="text-gray-500">{blog?.author}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <p className="text-gray-600 font-bold">Published On:</p>
-                  <p className="text-gray-500">{formatDate(blog?.createdAt)}</p>
+                  <img
+                    src={profileIcon}
+                    alt="Author"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-xs text-gray-500">Author</p>
+                    <p className="text-sm font-medium text-gray-700">{blog?.author}</p>
+                  </div>
                 </div>
               </div>
-              <div className="prose prose-lg prose-table:mx-auto">
-                <style>
-                  {`
-                    .blog-content table {
-                      border-collapse: collapse;
-                      width: 80%;
-                      margin: 1em auto;
-                      table-layout: fixed;
-                      align-items: center;
-                    }
-                    .blog-content table td,
-                    .blog-content table th {
-                      border: 1px solid #ddd;
-                      padding: 16px;
-                      height: 50px !important;
-                      min-height: 50px !important;
-                      vertical-align: top;
-                      position: relative;
-                      overflow: visible;
-                      word-wrap: break-word;
-                    }
-                    .blog-content table tr {
-                      height: 50px !important;
-                      min-height: 50px !important;
-                    }
-                    .blog-content .text-center { text-align: center; }
-                    .blog-content .text-left { text-align: left; }
-                    .blog-content .text-right { text-align: right; }
 
-                    .blog-content h1, 
-                    .blog-content h2, 
-                    .blog-content h3, 
-                    .blog-content h4, 
-                    .blog-content h5, 
-                    .blog-content h6 {
-                      font-weight: bold;
-                      line-height: 1.2;
-                      color: #1a202c;
-                    }
-
-                    .blog-content img {
-                      margin: 2em 0;
-                      max-width: 100%;
-                      height: auto;
-                    }
-
-                    .blog-content p + img {
-                      margin-top: 2em;
-                    }
-
-                    .blog-content img + p {
-                      margin-top: 2em;
-                    }
-                  `}
-                </style>
-                <BlogContent content={blog?.content} />
-              </div>
+              <BlogContent content={blog?.content} />
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </>
   );
-}
+};
 
-export default ViewBlog
+export default ViewBlog;
