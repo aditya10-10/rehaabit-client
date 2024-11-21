@@ -6,6 +6,7 @@ import Linkedin from "../../assets/partner/linkedin.svg";
 import Twitter from "../../assets/partner/tweeter.svg";
 import AppStore from "../../assets/partner/AppStore.svg";
 import PlayStore from "../../assets/partner/playstore.svg";
+import React, { forwardRef } from 'react';
 
 const FooterColumn = ({ title, items, links }) => {
   return (
@@ -30,7 +31,7 @@ const FooterColumn = ({ title, items, links }) => {
   );
 };
 
-const Footer = () => {
+const Footer = forwardRef((props, ref) => {
   const footerData = [
     {
       title: "Company",
@@ -95,7 +96,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="flex flex-col justify-center bg-white mt-10">
+    <footer ref={ref} className="flex flex-col justify-center bg-white mt-10">
       <section className="flex overflow-hidden relative flex-col justify-center items-center px-16 py-14 w-full min-h-[250px] stroke-[74px] stroke-violet-500 max-md:px-5 max-md:min-h-[150px]">
         <img
           loading="lazy"
@@ -163,6 +164,6 @@ const Footer = () => {
       </section>
     </footer>
   );
-};
+});
 
 export default Footer;

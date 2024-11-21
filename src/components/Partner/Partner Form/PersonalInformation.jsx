@@ -201,7 +201,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="email"
             >
-              Email*
+              Email
             </label>
             <input
               id="email"
@@ -211,7 +211,6 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               onChange={handleChange}
               className="w-full px-3 py-2 border border-purple-100 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-md"
               placeholder="Enter Your Email"
-              required
             />
           </div>
         </div>

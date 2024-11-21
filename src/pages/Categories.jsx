@@ -61,6 +61,12 @@ const Categories = () => {
   const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] = useState(false);
   const [isScrollComplete, setIsScrollComplete] = useState(false);
 
+  // Add this state to track footer visibility
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+
+  // Add this ref for the footer
+  const footerRef = useRef(null);
+
   // Function to update URL without page reload
   const updateUrl = (newPath, state = {}) => {
     navigate(newPath, { replace: true, state });
@@ -85,6 +91,21 @@ const Categories = () => {
     fetchData();
   }, [dispatch, categoryId]);
 
+  // Add this useEffect to check footer visibility
+  useEffect(() => {
+    const checkFooterVisibility = () => {
+      const footer = document.querySelector('footer'); // or use footerRef.current
+      if (footer) {
+        const rect = footer.getBoundingClientRect();
+        setIsFooterVisible(rect.top < window.innerHeight);
+      }
+    };
+
+    window.addEventListener('scroll', checkFooterVisibility);
+    return () => window.removeEventListener('scroll', checkFooterVisibility);
+  }, []);
+
+  // Modify the wheel handler
   useEffect(() => {
     const handleWheel = (e) => {
       const div = scrollableDivRef.current;
@@ -93,25 +114,32 @@ const Categories = () => {
       const isAtBottom = Math.abs(div.scrollHeight - div.clientHeight - div.scrollTop) < 1;
       const isAtTop = div.scrollTop === 0;
 
-      // If not at extremes, handle scroll within the container
-      if (!isAtBottom && !isAtTop) {
-        e.preventDefault();
-        div.scrollTop += e.deltaY;
-      } 
-      // If at bottom and scrolling down, or at top and scrolling up, allow page scroll
-      else if ((isAtBottom && e.deltaY > 0) || (isAtTop && e.deltaY < 0)) {
-        setIsScrollComplete(true);
-      } 
-      // Otherwise prevent default and handle container scroll
+      // Handle reverse scrolling (going up)
+      if (e.deltaY < 0) {
+        // If footer is visible, let the page scroll first
+        if (isFooterVisible) {
+          return; // Allow natural scroll
+        }
+        // If not at top of services container, scroll it
+        else if (!isAtTop) {
+          e.preventDefault();
+          div.scrollTop += e.deltaY;
+        }
+      }
+      // Handle forward scrolling (going down)
       else {
-        e.preventDefault();
-        div.scrollTop += e.deltaY;
+        if (!isAtBottom) {
+          e.preventDefault();
+          div.scrollTop += e.deltaY;
+        } else {
+          setIsScrollComplete(true);
+        }
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
-  }, []);
+  }, [isFooterVisible]);
 
   useEffect(() => {
     const scrollToElement = () => {
@@ -466,7 +494,7 @@ const Categories = () => {
                                   className="bg-red-400 px-4 py-2 rounded-md text-sm text-white"
                                   onClick={() => handleBuyNow(service)}
                                 >
-                                  Buy Now
+                                  Book Now
                                 </button>
 
                                 <div className="flex items-center">
@@ -512,7 +540,7 @@ const Categories = () => {
                                       disabled={cartLoading}
                                       onClick={() => handleAddToCart(service)}
                                     >
-                                      Add to Cart
+                                      Add to Services
                                     </button>
                                   )}
                                 </div>
@@ -539,7 +567,9 @@ const Categories = () => {
         </div>
 
       </div>
-      <Footer />
+      <div ref={footerRef}>
+        <Footer />
+      </div>
     </>
   );
 };

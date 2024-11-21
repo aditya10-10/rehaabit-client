@@ -7,11 +7,13 @@ import profileIcon from "../../assets/dummypic.jpg";
 import "./viewblog.css";
 import { getUserDetails } from '../../services/operations/profileAPI';
 import { usersEndpoints } from '../../services/apis'
+import Footer from "../Home/Footer";
 
 const TableOfContents = ({ content }) => {
   const [toc, setToc] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const tocRef = useRef(null);
 
   useEffect(() => {
     if (content) {
@@ -23,21 +25,16 @@ const TableOfContents = ({ content }) => {
       let numbering = [0, 0, 0, 0, 0, 0]; // Track numbering for each heading level
 
       Array.from(headings).forEach((heading) => {
-        const level = parseInt(heading.tagName[1]) - 1; // Convert h1-h6 to 0-5 index
-
-        // Update numbering array
+        const level = parseInt(heading.tagName[1]) - 1;
         numbering[level]++;
-        // Reset all lower levels
         for (let i = level + 1; i < numbering.length; i++) {
           numbering[i] = 0;
         }
 
-        // Generate hierarchical number (e.g., "1.2.3")
         const number = numbering
           .slice(0, level + 1)
           .filter(num => num !== 0)
-          .map((num, index) => index === 0 ? `${num}.` : num)
-          .join('');
+          .join('.');
 
         const id = `heading-${number}`;
         heading.id = id;
@@ -83,8 +80,32 @@ const TableOfContents = ({ content }) => {
             : 'fixed top-0 left-0 h-screen w-full md:w-80 transform -translate-x-full'
         } md:relative md:transform-none md:h-auto`}
       >
-        <h2 className="text-xl font-semibold mb-4 border-b border-gray-300 pb-2">Table of Contents</h2>
-        <nav className="text-sm max-h-[70vh] overflow-y-auto pr-2 scrollbar-hide">
+      {isOpen && (
+    <button
+      onClick={() => setIsOpen(false)}
+      className="md:hidden absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700"
+      aria-label="Close table of contents"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-6 w-6" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          strokeWidth={2} 
+          d="M6 18L18 6M6 6l12 12" 
+        />
+      </svg>
+    </button>
+  )}
+        <h2 className="text-xl font-semibold mb-4 border-b border-gray-300 pb-2">
+          Table of Contents
+        </h2>
+        <nav className="text-sm overflow-y-auto pr-2 scrollbar-hide">
           {toc.map((item, index) => (
             <div key={item.id} className="relative">
               <div
@@ -112,7 +133,7 @@ const TableOfContents = ({ content }) => {
         </nav>
       </div>
 
-      {/* Overlay for mobile and tablet */}
+      {/* Overlay for mobile */}
       {isOpen && (
         <div
           className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-[80] md:hidden"
@@ -129,8 +150,21 @@ const BlogContent = ({ content }) => {
   useEffect(() => {
     if (contentRef.current) {
       const headings = contentRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      headings.forEach((heading, index) => {
-        heading.id = `heading-${index}.`;
+      let numbering = [0, 0, 0, 0, 0, 0]; // Add numbering tracking
+
+      headings.forEach((heading) => {
+        const level = parseInt(heading.tagName[1]) - 1;
+        numbering[level]++;
+        for (let i = level + 1; i < numbering.length; i++) {
+          numbering[i] = 0;
+        }
+
+        const number = numbering
+          .slice(0, level + 1)
+          .filter(num => num !== 0)
+          .join('.');
+
+        heading.id = `heading-${number}`; // Match the TOC ID format
 
         // Only create line container for h1 and h2
         if (heading.tagName.toLowerCase() === 'h1' || heading.tagName.toLowerCase() === 'h2') {
@@ -205,6 +239,23 @@ const BlogContent = ({ content }) => {
         link.addEventListener('mouseleave', () => {
           link.style.color = '#1D4ED8';
         });
+      });
+
+      // Update table styles
+      const tables = contentRef.current.querySelectorAll('table');
+      tables.forEach((table) => {
+        const wrapper = document.createElement('div');
+        wrapper.style.overflowX = 'auto';
+        wrapper.style.marginBottom = '1rem';
+        
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+        
+        // Explicitly remove width and set other styles
+        table.style.removeProperty('width');
+        table.style.minWidth = '100%';
+        table.style.borderCollapse = 'collapse';
+        table.style.width = 'auto';
       });
     }
   }, [content]);
@@ -302,50 +353,53 @@ const ViewBlog = () => {
           <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
         </div>
       ) : (
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <Helmet>
-            <title>{`${blog?.title} | Rehaabit`}</title>
-            <meta name="description" content={`${blog?.metaDescription}`} />
-          </Helmet>
-          <div className="flex flex-col md:flex-row gap-8 relative">
-            {/* Table of Contents Sidebar - Fixed position */}
-            <div className="hidden md:block md:w-80 shrink-0">
-              <div className="fixed w-80">
-                <TableOfContents content={blog?.content} />
-              </div>
-            </div>
-
-            {/* Mobile TOC */}
-            <div className="md:hidden w-full">
-              <TableOfContents content={blog?.content} />
-            </div>
-
-            {/* Main Content */}
-            <div className="flex-1 max-w-3xl">
-              <h1 className="text-3xl font-bold mb-4">{blog?.title}</h1>
-              <div className="bg-green-100 px-3 py-1 rounded-md inline-block mb-6">
-                <p className="text-green-800 text-sm">
-                  Last updated: {formatLastUpdated(blog?.updatedAt)}
-                </p>
-              </div>
-              <div className="flex flex-col gap-4 mb-6">
-                {/* Author Section */}
-                <div className="flex items-center gap-2">
-                  <img
-                    src={profileIcon}
-                    alt="Author"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  <div>
-                    <p className="text-xs text-gray-500">Author</p>
-                    <p className="text-sm font-medium text-gray-700">{blog?.author}</p>
-                  </div>
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+            <Helmet>
+              <title>{`${blog?.title} | Rehaabit`}</title>
+              <meta name="description" content={`${blog?.metaDescription}`} />
+            </Helmet>
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Table of Contents Sidebar */}
+              <div className="hidden md:block md:w-80 shrink-0">
+                <div className="sticky top-4">
+                  <TableOfContents content={blog?.content} />
                 </div>
               </div>
 
-              <BlogContent content={blog?.content} />
+              {/* Mobile TOC */}
+              <div className="md:hidden w-full">
+                <TableOfContents content={blog?.content} />
+              </div>
+
+              {/* Main Content */}
+              <div className="flex-1 max-w-3xl">
+                <h1 className="text-3xl font-bold mb-4">{blog?.title}</h1>
+                <div className="bg-green-100 px-3 py-1 rounded-md inline-block mb-6">
+                  <p className="text-green-800 text-sm">
+                    Last updated: {formatLastUpdated(blog?.updatedAt)}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-4 mb-6">
+                  {/* Author Section */}
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={profileIcon}
+                      alt="Author"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="text-xs text-gray-500">Author</p>
+                      <p className="text-sm font-medium text-gray-700">{blog?.author}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <BlogContent content={blog?.content} />
+              </div>
             </div>
           </div>
+          {!isLoading && <Footer />}
         </div>
       )}
     </>
