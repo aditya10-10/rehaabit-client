@@ -75,7 +75,7 @@ const Hero = ({ scrollToFeatures }) => {
             </div>
           </div>
         </div>
-        <div className=" sm:w-[300px] flex flex-col ml-5 w-[32%] max-md:ml-0 max-sm:w-full bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 p-4 sm:ml-7 max-sm:p-2 rounded-lg shadow-lg  flex-wrap">
+        <div className="md:mt-12 max-md:mt-4 flex flex-col ml-5 w-[32%] max-md:ml-0 max-sm:w-full bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 p-8 sm:ml-7 max-sm:p-2 rounded-lg shadow-lg  flex-wrap">
           <div className="flex flex-col items-start px-5 font-semibold  h-full mt-0">
             <h1 className="text-5xl tracking-tight text-emerald-600  max-md:text-4xl max-sm:text-lg font-bold font-roboto md:mb-3">
               <span className="bg-gradient-to-r from-emerald-500 text-xl leading-tight to-green-400 bg-clip-text text-transparent sm:text-2xl md:text-5xl ">
@@ -92,7 +92,7 @@ const Hero = ({ scrollToFeatures }) => {
 
             <Button
               color="green"
-              className="mt-5 max-sm:mt-4 max-sm:p-1 max-sm:w-[112px] whitespace-nowrap sm:ml-[-8px]"
+              className=" md:mt-24 mt-5 max-sm:mt-4 max-sm:p-1 max-sm:w-[112px] whitespace-nowrap sm:ml-[-8px]"
               onClick={scrollToFeatures}
             >
               Book a Service
