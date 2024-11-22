@@ -7,11 +7,11 @@ import {
 } from "../../../slices/partnerSlice";
 import { FaAngleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "sonner";
 const AdditionalInformation = ({ onSave, handleBack }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { currentStep, partnerFormData, isLoading } = useSelector(
     (state) => state.partner
   );
@@ -29,6 +29,18 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
     routingNumber: partnerFormData?.additionalInformation?.routingNumber || "",
   });
 
+  useEffect(() => {
+    setFormData({
+      numberOfEmployees: "",
+      yearsOfExperience: "",
+      servicesOffered: [],
+      serviceAreas: [],
+      bankName: "",
+      accountNumber: "",
+      routingNumber: "",
+    });
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -45,6 +57,17 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
   // console.log(partnerFormData.personalInformation.photo);
 
   const handleSubmit = () => {
+    const isEmpty = 
+    formData.numberOfEmployees === "" || 
+    formData.yearsOfExperience === "" || 
+    formData.servicesOffered.length === 0 || 
+    formData.serviceAreas.length === 0;
+
+  // Check if any required field is empty
+  if (isEmpty) {
+    toast.error("Please fill in all required fields");
+    return;
+  }
     const isValid = onSave(formData);
     if (isValid) {
       dispatch(saveFormData({ step: "additionalInformation", data: formData }));
@@ -57,9 +80,13 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
           },
         })
       );
-      navigate("/partner");
+      setIsSubmitted(true);
     }
   };
+  const closeModalAndNavigate = () => {
+  setIsSubmitted(false); // Close the modal
+  navigate("/partner"); // Then navigate
+};
 
   const handleDropdownChange = (e) => {
     const selectedService = e.target.value;
@@ -95,7 +122,7 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="numberOfEmployees"
             >
-              Number of Employees*
+              Number of Employees<span className="text-red-500">*</span>
             </label>
             <input
               id="numberOfEmployees"
@@ -115,7 +142,7 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="yearsOfExperience"
             >
-              Years of Experience*
+              Years of Experience<span className="text-red-500">*</span>
             </label>
             <input
               id="yearsOfExperience"
@@ -137,7 +164,7 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="servicesOffered"
             >
-              Services Offered*
+              Services Offered<span className="text-red-500">*</span>
             </label>
 
             {/* Text input for custom services */}
@@ -265,6 +292,25 @@ const AdditionalInformation = ({ onSave, handleBack }) => {
           </button>
         )}
       </div>
+
+
+
+       {/* Modal for Thank You message */}
+{isSubmitted && (
+  <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+      <h2 className="text-xl font-bold text-green-500">Thank You!</h2>
+      <p className="mt-4 text-lg">Your form has been successfully submitted.</p>
+      <button
+        onClick={closeModalAndNavigate} // Use this function to close modal and navigate
+        className="mt-6 bg-purple-500 text-white px-4 py-2 rounded-md"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
     </>
   );
 };

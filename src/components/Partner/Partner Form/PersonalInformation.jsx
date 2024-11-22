@@ -4,35 +4,31 @@ import { IoIosClose } from "react-icons/io";
 import ImageDropzone from "../../ImageDropzone";
 import { saveFormData } from "../../../slices/partnerSlice";
 import { FaAngleRight } from "react-icons/fa";
-
+import { toast } from "sonner";
 const PersonalInformation = ({ onSave, handleNext }) => {
   const dispatch = useDispatch();
-
   const { partnerFormData, currentStep } = useSelector(
     (state) => state.partner
   );
 
+
   const [preview, setPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
-
   const [formData, setFormData] = useState({
     firstName: partnerFormData.personalInformation?.firstName || "",
     lastName: partnerFormData.personalInformation?.lastName || "",
     dateOfBirth: partnerFormData.personalInformation?.dateOfBirth || "",
     gender: partnerFormData.personalInformation?.gender || "",
     nationality: partnerFormData.personalInformation?.nationality || "",
-    identificationType:
-      partnerFormData.personalInformation?.identificationType || "",
-    identificationNumber:
-      partnerFormData.personalInformation?.identificationNumber || "",
+    identificationType: partnerFormData.personalInformation?.identificationType || "",
+    identificationNumber: partnerFormData.personalInformation?.identificationNumber || "",
     photo: partnerFormData.personalInformation?.photo || null,
     email: partnerFormData.personalInformation?.email || "",
     address: {
       street: partnerFormData.personalInformation?.address?.street || "",
       city: partnerFormData.personalInformation?.address?.city || "",
       state: partnerFormData.personalInformation?.address?.state || "",
-      postalCode:
-        partnerFormData.personalInformation?.address?.postalCode || "",
+      postalCode: partnerFormData.personalInformation?.address?.postalCode || "",
       country: partnerFormData.personalInformation?.address?.country || "",
     },
     phoneNumber: partnerFormData.personalInformation?.phoneNumber || "",
@@ -41,8 +37,32 @@ const PersonalInformation = ({ onSave, handleNext }) => {
   formData.photo = thumbnail;
 
   useEffect(() => {
+    setFormData({
+      firstName: partnerFormData.personalInformation?.firstName || "",
+      lastName: partnerFormData.personalInformation?.lastName || "",
+      dateOfBirth: partnerFormData.personalInformation?.dateOfBirth || "",
+      gender: partnerFormData.personalInformation?.gender || "",
+      nationality: partnerFormData.personalInformation?.nationality || "",
+      identificationType:
+        partnerFormData.personalInformation?.identificationType || "",
+      identificationNumber:
+        partnerFormData.personalInformation?.identificationNumber || "",
+
+      photo: partnerFormData.personalInformation?.photo || null,
+      email: partnerFormData.personalInformation?.email || "",
+      address: {
+        street: partnerFormData.personalInformation?.address?.street || "",
+        city: partnerFormData.personalInformation?.address?.city || "",
+        state: partnerFormData.personalInformation?.address?.state || "",
+        postalCode:
+          partnerFormData.personalInformation?.address?.postalCode || "",
+
+        country: partnerFormData.personalInformation?.address?.country || "",
+      },
+      phoneNumber: partnerFormData.personalInformation?.phoneNumber || "",
+    });
     setPreview(partnerFormData.personalInformation?.photo || null);
-  }, [partnerFormData.personalInformation?.photo]);
+  }, [partnerFormData]);
 
   useEffect(() => {
     if (thumbnail) {
@@ -81,12 +101,52 @@ const PersonalInformation = ({ onSave, handleNext }) => {
   };
 
   const handleSaveAndNext = () => {
+    const isEmpty = Object.values(formData).some((value) => {
+      // Check nested address fields separately
+      if (typeof value === "object" && value !== null) {
+        return Object.values(value).some(
+          (nestedValue) => nestedValue === "" || nestedValue === null
+        );
+      }
+      return value === "" || value === null;
+    });
+
+
+    if (isEmpty) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
     const isValid = onSave(formData);
     if (isValid) {
       dispatch(saveFormData({ step: "personalInformation", data: formData }));
       handleNext();
     }
   };
+
+  useEffect(() => {
+    setFormData({
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      gender: "",
+      nationality: "",
+      identificationType: "",
+      identificationNumber: "",
+      photo: null,
+      email: "",
+      address: {
+        street: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        country: "",
+      },
+      phoneNumber: "",
+    });
+    setPreview(null);
+    setThumbnail(null);
+  }, []);
+
 
   return (
     <>
@@ -98,7 +158,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="firstName"
             >
-              First Name*
+              First Name <span className="text-red-500">*</span>
             </label>
             <input
               id="firstName"
@@ -117,7 +177,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="lastName"
             >
-              Last Name*
+              Last Name <span className="text-red-500">*</span>
             </label>
             <input
               id="lastName"
@@ -139,7 +199,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="gender"
             >
-              Gender*
+              Gender <span className="text-red-500">*</span>
             </label>
             <select
               id="gender"
@@ -160,7 +220,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="dateOfBirth"
             >
-              Date of Birth*
+              Date of Birth <span className="text-red-500">*</span>
             </label>
             <input
               id="dateOfBirth"
@@ -182,7 +242,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="nationality"
             >
-              Nationality*
+              Nationality <span className="text-red-500">*</span>
             </label>
             <input
               id="nationality"
@@ -202,6 +262,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               htmlFor="email"
             >
               Email
+
             </label>
             <input
               id="email"
@@ -222,7 +283,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="identificationType"
             >
-              Identification Type*
+              Identification Type <span className="text-red-500">*</span>
             </label>
             <select
               id="identificationType"
@@ -247,7 +308,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="identificationNumber"
             >
-              Identification Number*
+              Identification Number <span className="text-red-500">*</span>
             </label>
             <input
               id="identificationNumber"
@@ -267,7 +328,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
           className="block text-gray-700 text-sm font-bold mb-2"
           htmlFor="thumbnail"
         >
-          Upload Image*
+          Upload Image <span className="text-red-500">*</span>
         </label>
 
         {preview ? (
@@ -299,7 +360,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="street"
             >
-              Address*
+              Address <span className="text-red-500">*</span>
             </label>
             <textarea
               id="street"
@@ -373,7 +434,7 @@ const PersonalInformation = ({ onSave, handleNext }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="phoneNumber"
             >
-              Phone Number*
+              Phone Number <span className="text-red-500">*</span>
             </label>
             <input
               id="phoneNumber"
@@ -389,12 +450,6 @@ const PersonalInformation = ({ onSave, handleNext }) => {
             />
           </div>
         </div>
-
-        {/* <div className="flex mt-6">
-        <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">
-          {serviceId ? "Update" : "Add"}
-        </button>
-      </div> */}
       </form>
 
       <div className="flex w-1/2 max-2xl:w-3/4 max-lg:w-11/12 justify-end px-6 max-sm:mb-10">
@@ -408,7 +463,8 @@ const PersonalInformation = ({ onSave, handleNext }) => {
         )}
       </div>
     </>
-  );
+);
+
 };
 
 export default PersonalInformation;

@@ -57,11 +57,13 @@ import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboar
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
 import Spinner from "./Spinner";
 import PrivateRoute from "./utils/PrivateRoute";
+import AllServices from "./components/Home/AllServices";
 import ViewBlogs from "./components/blogs/ViewBlogs";
 import CreateBlogs from "./components/blogs/CreateBlogs";
 import ViewBlog from "./components/blogs/ViewBlog";
 import EditBlog from "./components/blogs/EditBlog";
 import Blogs from "./components/blogs/Blogs";
+import AllServices from "./components/Home/AllServices";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -192,13 +194,17 @@ export default function App() {
       <div className="">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/all-services" element={<AllServices />} />
           <Route path="/:id" element={<Categories />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/blog/preview/:slug" element={<ViewBlog />} />
           <Route path="/library" element={<Blogs />} />
           <Route path="/library/:slug" element={<ViewBlog />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route
+            path="/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             path="/cancellation-and-refund-policy"
@@ -221,17 +227,15 @@ export default function App() {
             <Route path="orders" element={<MyOrders />} />
             <Route path="addresses" element={<Addresses />} />
           </Route>
-           {
-            user?.accountType === "Content Writer" && (
-              <>
-                <Route path="/dashboard/*" element={<Dashboard />}>
+          {user?.accountType === "Content Writer" && (
+            <>
+              <Route path="/dashboard/*" element={<Dashboard />}>
                 <Route path="blog/view-blogs" element={<ViewBlogs />} />
                 <Route path="blog/create-blog" element={<CreateBlogs />} />
                 <Route path="blog/edit-blog/:slug" element={<EditBlog />} />
-                </Route>
-              </>
-            )
-           }
+              </Route>
+            </>
+          )}
           {user?.accountType === "Admin" && (
             <>
               <Route path="/dashboard/*" element={<Dashboard />}>
