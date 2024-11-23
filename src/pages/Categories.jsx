@@ -450,25 +450,37 @@ const Categories = () => {
             </p>
 
             <div
-              className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10"
+              className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10 max-md:gap-x-4 max-md:pb-4 max-md:-mx-4 max-md:px-4"
               ref={subCategoriesContainerRef}
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch'
+              }}
             >
+              <style>
+                {`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}
+              </style>
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
                 return (
                   <div
                     key={_id}
-                    className="flex  flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
+                    className="flex flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:min-w-[80px] max-md:w-[80px]"
                     onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
                     <img
                       src={icon}
                       alt={subCategoryName}
-                      className="h-20 w-20 rounded-full mb-2"
+                      className="h-20 w-20 rounded-full mb-2 max-md:h-14 max-md:w-14"
                     />
-                    <h2 className="text-sm font-medium">
+                    <h2 className="text-sm font-medium max-md:text-xs">
                       <span>{subCategoryName}</span>
                     </h2>
                   </div>
