@@ -26,7 +26,13 @@ const Categories = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // const scrollableDivRef = useRef(null);
+  const scrollableDivRef = useRef(null);
+  const subCategoriesContainerRef = useRef(null);
+  const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] = useState(false);
+  const [isScrollComplete, setIsScrollComplete] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const footerRef = useRef(null);
+
 
   useEffect(() => {
     const handleWheelScroll = (event) => {
@@ -94,17 +100,7 @@ const Categories = () => {
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
-  const scrollableDivRef = useRef(null);
-  const subCategoriesContainerRef = useRef(null);
-  const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] =
-    useState(false);
-  const [isScrollComplete, setIsScrollComplete] = useState(false);
 
-  // Add this state to track footer visibility
-  const [isFooterVisible, setIsFooterVisible] = useState(false);
-
-  // Add this ref for the footer
-  const footerRef = useRef(null);
 
   // Function to update URL without page reload
   const updateUrl = (newPath, state = {}) => {
@@ -133,15 +129,15 @@ const Categories = () => {
   // Add this useEffect to check footer visibility
   useEffect(() => {
     const checkFooterVisibility = () => {
-      const footer = document.querySelector("footer"); // or use footerRef.current
+      const footer = document.querySelector('footer');
       if (footer) {
         const rect = footer.getBoundingClientRect();
         setIsFooterVisible(rect.top < window.innerHeight);
       }
     };
 
-    window.addEventListener("scroll", checkFooterVisibility);
-    return () => window.removeEventListener("scroll", checkFooterVisibility);
+    window.addEventListener('scroll', checkFooterVisibility);
+    return () => window.removeEventListener('scroll', checkFooterVisibility);
   }, []);
 
   // Modify the wheel handler
@@ -454,25 +450,37 @@ const Categories = () => {
             </p>
 
             <div
-              className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10"
+              className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10 max-md:gap-x-4 max-md:pb-4 max-md:-mx-4 max-md:px-4"
               ref={subCategoriesContainerRef}
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch'
+              }}
             >
+              <style>
+                {`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}
+              </style>
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
                 return (
                   <div
                     key={_id}
-                    className="flex  flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:w-[150px]"
+                    className="flex flex-col items-center justify-center text-center hover:shadow-lg p-2 rounded-lg bg-white cursor-pointer flex-shrink-0 max-md:min-w-[80px] max-md:w-[80px]"
                     onClick={() => handleCategoryClick(_id, subCategoryName)}
                     ref={(e) => (categoryRefs.current[_id] = e)}
                   >
                     <img
                       src={icon}
                       alt={subCategoryName}
-                      className="h-20 w-20 rounded-full mb-2"
+                      className="h-20 w-20 rounded-full mb-2 max-md:h-14 max-md:w-14"
                     />
-                    <h2 className="text-sm font-medium">
+                    <h2 className="text-sm font-medium max-md:text-xs">
                       <span>{subCategoryName}</span>
                     </h2>
                   </div>
@@ -486,10 +494,10 @@ const Categories = () => {
           ref={scrollableDivRef}
           className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[100vh] overflow-y-auto hide-scrollbar"
           style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            overscrollBehavior: "contain",
-          }}
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            overscrollBehavior: 'contain'
+
         >
           <style>
             {`

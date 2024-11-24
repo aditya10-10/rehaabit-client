@@ -89,12 +89,11 @@ const PopularSearches = () => {
   </h2>
 
   <button
-  onClick={handleSeeMoreClick}
-  className="flex items-center justify-center gap-2 text-white font-semibold p-3 bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md transition-all duration-200 ease-in-out mt-6 mb-4 sm:ml-4"
->
-  <i className="fas fa-eye"></i> 
-  <span>See More Services</span>
-</button>
+    onClick={handleSeeMoreClick}
+    className="flex items-center justify-center gap-2 text-blue-500 hover:text-blue-600 transition-all duration-200 ease-in-out"
+  >
+    <span className="text-4xl font-bold">&raquo;</span>
+  </button>
 
 </div>
 

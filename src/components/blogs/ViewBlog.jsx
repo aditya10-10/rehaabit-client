@@ -76,9 +76,9 @@ const TableOfContents = ({ content }) => {
       <div
         className={`bg-white p-4 shadow-lg border border-gray-200 rounded-lg ${
           isOpen
-            ? 'fixed top-0 left-0 h-screen w-full md:w-80 transform translate-x-0 z-[90]'
-            : 'fixed top-0 left-0 h-screen w-full md:w-80 transform -translate-x-full'
-        } md:relative md:transform-none md:h-auto`}
+            ? 'fixed top-0 left-0 h-[600px] w-full md:w-80 transform translate-x-0 z-[90]'
+            : 'fixed top-0 left-0 h-[600px] w-full md:w-80 transform -translate-x-full'
+        } md:relative md:transform-none`}
       >
       {isOpen && (
     <button
@@ -105,7 +105,7 @@ const TableOfContents = ({ content }) => {
         <h2 className="text-xl font-semibold mb-4 border-b border-gray-300 pb-2">
           Table of Contents
         </h2>
-        <nav className="text-sm overflow-y-auto pr-2 scrollbar-hide">
+        <nav className="text-sm overflow-y-auto h-[calc(100%-80px)] pr-2 scrollbar-hide">
           {toc.map((item, index) => (
             <div key={item.id} className="relative">
               <div
@@ -168,13 +168,17 @@ const BlogContent = ({ content }) => {
 
         // Only create line container for h1 and h2
         if (heading.tagName.toLowerCase() === 'h1' || heading.tagName.toLowerCase() === 'h2') {
-          // Create container with flexbox and bottom alignment
           const container = document.createElement('div');
           container.style.display = 'flex';
           container.style.alignItems = 'flex-end';
           container.style.gap = '1rem';
           container.style.width = '100%';
           container.style.margin = '1rem 0';
+          
+          // Remove whitespace-nowrap and add word-break
+          heading.style.wordBreak = 'break-word';
+          heading.style.overflowWrap = 'break-word';
+          heading.style.maxWidth = '100%';
 
           // Create the horizontal line
           const line = document.createElement('div');
@@ -189,17 +193,19 @@ const BlogContent = ({ content }) => {
           container.appendChild(heading);
           container.appendChild(line);
         } else {
-          // Add margin for other headings
           heading.style.margin = '1.5rem 0 1rem 0';
+          heading.style.wordBreak = 'break-word';
+          heading.style.overflowWrap = 'break-word';
+          heading.style.maxWidth = '100%';
         }
 
-        // Style headings
+        // Style headings - remove whitespace-nowrap from h1 and h2
         switch (heading.tagName.toLowerCase()) {
           case 'h1':
-            heading.classList.add('text-4xl', 'font-bold', 'whitespace-nowrap');
+            heading.classList.add('text-4xl', 'font-bold');
             break;
           case 'h2':
-            heading.classList.add('text-3xl', 'font-bold', 'whitespace-nowrap');
+            heading.classList.add('text-3xl', 'font-bold');
             break;
           case 'h3':
             heading.classList.add('text-2xl', 'font-semibold');
