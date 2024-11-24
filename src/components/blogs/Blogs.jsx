@@ -1,61 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPublishedBlogs } from "../../slices/blogSlice";
-import profileIcon from "../../assets/dummypic.jpg";
-import defaultblogpost1 from "../../assets/defaultblogpost1.jpeg";
-import defaultblogpost2 from "../../assets/defaultblogpost2.jpeg";
-import defaultblogpost3 from "../../assets/defaultblogpost3.jpeg";
-import defaultblogpost4 from "../../assets/defaultblogpost4.webp";
-import defaultblogpost5 from "../../assets/defaultblogpost5.jpeg";
 import { Link } from "react-router-dom";
 
 const defaultBlogImages = [
-  defaultblogpost1,
-  defaultblogpost2,
-  defaultblogpost3,
-  defaultblogpost4,
-  defaultblogpost5,
+  "https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/defaultblogpost4_mnqknt.webp",
+  "https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/defaultblogpost5_whewoa.jpg",
+  "https://res.cloudinary.com/duizbchmz/image/upload/v1732435965/defaultblogpost2_n9srvb.jpg",
+  "https://res.cloudinary.com/duizbchmz/image/upload/v1732435965/defaultblogpost3_v5f1z2.jpg",
+  "https://res.cloudinary.com/duizbchmz/image/upload/v1732435965/defaultblogpost1_xwuqs0.jpg",
 ];
 const BlogSkeleton = () => {
-    return (
-      <div className="rounded-lg shadow-md overflow-hidden animate-pulse">
-        <div className="w-full h-40 bg-gray-300"></div>
-        <div className="p-4">
-          <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
-          <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-          <div className="h-4 bg-gray-300 rounded w-2/3"></div>
-          <div className="flex items-center mt-4">
-            <div className="w-6 h-6 rounded-full bg-gray-300 mr-2"></div>
-            <div className="h-4 bg-gray-300 rounded w-1/3"></div>
-          </div>
+  return (
+    <div className="rounded-lg shadow-md overflow-hidden animate-pulse">
+      <div className="w-full h-40 bg-gray-300"></div>
+      <div className="p-4">
+        <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+        <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+        <div className="flex items-center mt-4">
+          <div className="w-6 h-6 rounded-full bg-gray-300 mr-2"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/3"></div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 const getRandomDefaultBlogImage = () => {
-  return defaultBlogImages[Math.floor(Math.random() * defaultBlogImages.length)];
+  return defaultBlogImages[
+    Math.floor(Math.random() * defaultBlogImages.length)
+  ];
 };
 const extractFirstImageUrl = (content) => {
   if (!content) return null;
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.innerHTML = content;
-  const firstImg = div.querySelector('img');
+  const firstImg = div.querySelector("img");
   return firstImg ? firstImg.src : null;
 };
 
 const BlogCard = ({ blog, expandedBlogs, toggleReadMore }) => {
-    const formatDate = (timestamp) => {
-        if (!timestamp) return '';
-        const date = new Date(timestamp._seconds * 1000);
-        return date.toLocaleString('en-US', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
-        });
-      };
+  const formatDate = (timestamp) => {
+    if (!timestamp) return "";
+    const date = new Date(timestamp._seconds * 1000);
+    return date.toLocaleString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
 
-  const imageUrl = extractFirstImageUrl(blog?.content) || getRandomDefaultBlogImage();
-  
+  const imageUrl =
+    extractFirstImageUrl(blog?.content) || getRandomDefaultBlogImage();
+
   return (
     <div className="rounded-lg shadow-md overflow-hidden">
       <Link to={`/library/${blog?.slug}`}>
@@ -93,13 +90,12 @@ const BlogCard = ({ blog, expandedBlogs, toggleReadMore }) => {
         </p>
         <div className="flex items-center mt-4">
           <img
-            src={profileIcon}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435965/dummypic_sm1zok.jpg"
             alt="Author"
             className="w-6 h-6 rounded-full mr-2"
           />
           <p className="text-sm text-gray-500">
-            {blog?.author} •{" "}
-            {formatDate(blog?.createdAt)}
+            {blog?.author} • {formatDate(blog?.createdAt)}
           </p>
         </div>
       </div>
@@ -109,7 +105,9 @@ const BlogCard = ({ blog, expandedBlogs, toggleReadMore }) => {
 
 const Blogs = () => {
   const dispatch = useDispatch();
-  const { publishedBlogs, isLoading, totalPublishedBlogs } = useSelector((state) => state.blog);
+  const { publishedBlogs, isLoading, totalPublishedBlogs } = useSelector(
+    (state) => state.blog
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -136,27 +134,26 @@ const Blogs = () => {
   const loadMore = () => {
     setIsLoadingMore(true);
     const nextPage = currentPage + 1;
-    dispatch(getPublishedBlogs({ page: nextPage, limit: 8 }))
-      .then((action) => {
-        if (action.payload.blogs.length === 0) {
-          setHasMore(false);
-        }
-        setCurrentPage(nextPage);
-        setIsLoadingMore(false);
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth'
-        });
+    dispatch(getPublishedBlogs({ page: nextPage, limit: 8 })).then((action) => {
+      if (action.payload.blogs.length === 0) {
+        setHasMore(false);
+      }
+      setCurrentPage(nextPage);
+      setIsLoadingMore(false);
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
       });
+    });
   };
 
   const formatDate = (timestamp) => {
-    if (!timestamp) return '';
+    if (!timestamp) return "";
     const date = new Date(timestamp._seconds * 1000);
-    return date.toLocaleString('en-US', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
+    return date.toLocaleString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     });
   };
   const handleSearch = (e) => {
@@ -166,9 +163,10 @@ const Blogs = () => {
 
   useEffect(() => {
     const remainingBlogs = publishedBlogs.slice(1);
-    const filtered = remainingBlogs.filter(blog =>
-      blog?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blog?.author?.toLowerCase().includes(searchTerm.toLowerCase())
+    const filtered = remainingBlogs.filter(
+      (blog) =>
+        blog?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        blog?.author?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredBlogs(filtered);
   }, [publishedBlogs, searchTerm]);
@@ -181,7 +179,11 @@ const Blogs = () => {
         <Link to={`/library/${publishedBlogs[0].slug}`} className="block">
           <div className="relative mb-8">
             <img
-              src={publishedBlogs[0].coverImage || extractFirstImageUrl(publishedBlogs[0].content) || getRandomDefaultBlogImage()}
+              src={
+                publishedBlogs[0].coverImage ||
+                extractFirstImageUrl(publishedBlogs[0].content) ||
+                getRandomDefaultBlogImage()
+              }
               alt={publishedBlogs[0].title}
               className="w-full h-72 object-cover rounded-lg"
               onError={(e) => {
@@ -192,12 +194,13 @@ const Blogs = () => {
               <h1 className="text-3xl font-bold">{publishedBlogs[0].title}</h1>
               <div className="flex items-center mt-2">
                 <img
-                  src={profileIcon}
+                  src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435965/dummypic_sm1zok.jpg"
                   alt="Author"
                   className="w-8 h-8 rounded-full mr-2"
                 />
                 <p className="text-sm">
-                  {publishedBlogs[0].author} • {formatDate(publishedBlogs[0].createdAt)}
+                  {publishedBlogs[0].author} •{" "}
+                  {formatDate(publishedBlogs[0].createdAt)}
                 </p>
               </div>
             </div>
@@ -219,9 +222,9 @@ const Blogs = () => {
       {/* Blog List - Using filtered remaining blogs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {isLoading && publishedBlogs.length === 0
-          ? Array(8).fill().map((_, index) => (
-              <BlogSkeleton key={`skeleton-${index}`} />
-            ))
+          ? Array(8)
+              .fill()
+              .map((_, index) => <BlogSkeleton key={`skeleton-${index}`} />)
           : filteredBlogs?.map((blog, index) => (
               <BlogCard
                 key={`blog-${blog.id}-${index}`}
@@ -231,16 +234,21 @@ const Blogs = () => {
               />
             ))}
         {isLoadingMore &&
-          Array(8).fill().map((_, index) => (
-            <BlogSkeleton key={`loading-skeleton-${index}`} />
-          ))}
+          Array(8)
+            .fill()
+            .map((_, index) => (
+              <BlogSkeleton key={`loading-skeleton-${index}`} />
+            ))}
       </div>
 
-      {!isLoading && hasMore && !searchTerm && publishedBlogs.length < totalPublishedBlogs && (
-        <div className="flex justify-center mt-8">
-          <button
-            onClick={loadMore}
-            className="px-8 py-3 bg-white text-gray-800 
+      {!isLoading &&
+        hasMore &&
+        !searchTerm &&
+        publishedBlogs.length < totalPublishedBlogs && (
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={loadMore}
+              className="px-8 py-3 bg-white text-gray-800 
             border-2 border-gray-300 
             rounded-lg 
             hover:bg-gray-50 
@@ -251,12 +259,12 @@ const Blogs = () => {
             disabled:opacity-50
             disabled:hover:scale-100
             disabled:hover:shadow-none"
-            disabled={isLoadingMore}
-          >
-            {isLoadingMore ? 'Loading...' : 'Load More'}
-          </button>
-        </div>
-      )}
+              disabled={isLoadingMore}
+            >
+              {isLoadingMore ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        )}
     </div>
   );
 };

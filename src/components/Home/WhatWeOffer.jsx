@@ -1,11 +1,4 @@
 import React from "react";
-import ElectricBoard from "../../assets/homepage/EletricBoard.webp";
-import Plumber from "../../assets/homepage/Plumber.webp";
-import Cleaning from "../../assets/homepage/cleaning1.webp";
-import Carpentry from "../../assets/homepage/Carpentar.webp";
-import Painter from "../../assets/homepage/painter.webp";
-import HVAC from "../../assets/homepage/HVACServices.webp";
-import Security from "../../assets/homepage/Sercirty.webp";
 
 const WhatWeOffer = () => {
   return (
@@ -18,7 +11,7 @@ const WhatWeOffer = () => {
           <div className="bg-white rounded-lg shadow-lg p-4">
             <img
               className="w-full h-48 object-cover rounded-t-lg"
-              src={ElectricBoard}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437086/EletricBoard_neqt1j.webp"
               alt="Electrician using a screwdriver to fix an electrical socket"
             />
             <h3 className="text-xl font-semibold mt-4">Electrical Services</h3>
@@ -33,7 +26,7 @@ const WhatWeOffer = () => {
           <div className="bg-white rounded-lg shadow-lg p-4">
             <img
               className="w-full h-48 object-cover rounded-t-lg"
-              src={Plumber}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437089/Plumber_khr2nd.webp"
               alt="Plumber fixing a pipe under a kitchen sink with tools"
             />
             <h3 className="text-xl font-semibold mt-4">Plumbing Services</h3>
@@ -48,7 +41,7 @@ const WhatWeOffer = () => {
           <div className="bg-white rounded-lg shadow-lg p-4">
             <img
               className="w-full h-48 object-cover rounded-t-lg"
-              src={Cleaning}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437086/cleaning1_yjhfeu.webp"
               alt="Professional cleaners working on a living room, scrubbing the floor and furniture"
             />
             <h3 className="text-xl font-semibold mt-4">Cleaning Services</h3>
@@ -75,7 +68,7 @@ const WhatWeOffer = () => {
           <div className="bg-white rounded-lg shadow-lg p-4">
             <img
               className="w-full h-48 object-cover rounded-t-lg"
-              src={Carpentry}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437085/Carpentar_u64upu.webp"
               alt="Carpenter working on custom woodwork using a measuring tool"
             />
             <h3 className="text-xl font-semibold mt-4">Carpentry Services</h3>
@@ -90,7 +83,7 @@ const WhatWeOffer = () => {
           <div className="bg-white rounded-lg shadow-lg p-4">
             <img
               className="w-full h-48 object-cover rounded-t-lg"
-              src={HVAC}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437087/HVACServices_til8ll.webp"
               alt="HVAC technician installing an air conditioner unit"
             />
             <h3 className="text-xl font-semibold mt-4">HVAC Services</h3>
@@ -106,7 +99,7 @@ const WhatWeOffer = () => {
           <div className="bg-white rounded-lg shadow-lg p-4">
             <img
               className="w-full h-48 object-cover rounded-t-lg"
-              src={Painter}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437088/painter_dmftdx.webp"
               alt="Painter applying a fresh coat of paint to a home’s interior wall with a roller"
             />
             <h3 className="text-xl font-semibold mt-4">Painting Services</h3>
@@ -121,7 +114,7 @@ const WhatWeOffer = () => {
           <div className="bg-white rounded-lg shadow-lg p-4">
             <img
               className="w-full h-48 object-cover rounded-t-lg"
-              src={Security}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437090/Sercirty_fyvxli.webp"
               alt="Security technician installing a CCTV camera on a wall"
             />
             <h3 className="text-xl font-semibold mt-4">

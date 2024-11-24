@@ -1,4 +1,3 @@
-import Logo from "../../assets/LOGO.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
@@ -11,7 +10,7 @@ const Navbar = () => {
       {/* Logo Section */}
       <img
         loading="lazy"
-        src={Logo}
+        src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/LOGO_df3ek6.svg"
         alt="Rehaabit logo"
         className="h-16 max-lg:h-14 max-md:h-12 max-sm:h-10 cursor-pointer"
         onClick={() => navigate("/")} // Navigate to homepage on logo click

@@ -1,5 +1,4 @@
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
-import Quote from "../../assets/partner/quote.svg";
 import React, { useState, useRef, useEffect } from "react";
 
 const OurExperiences = () => {
@@ -113,8 +112,16 @@ const OurExperiences = () => {
                 </div>
 
                 <div className="flex">
-                  <img src={Quote} alt="Quote" className="h-4 w-4" />
-                  <img src={Quote} alt="Quote" className="h-4 w-4" />
+                  <img
+                    src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437121/quote_wtwnve.svg"
+                    alt="Quote"
+                    className="h-4 w-4"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437121/quote_wtwnve.svg"
+                    alt="Quote"
+                    className="h-4 w-4"
+                  />
                 </div>
               </div>
             </div>

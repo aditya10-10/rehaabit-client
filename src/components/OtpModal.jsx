@@ -4,7 +4,6 @@ import { IoIosClose } from "react-icons/io";
 import { login, sendOtp, signUp } from "../services/operations/authAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Logo from "../assets/LOGO.svg";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
 import { clearAuthError } from "../slices/authSlice";
@@ -98,7 +97,12 @@ const OtpModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <main className="relative flex flex-col justify-center items-center px-4 py-4 bg-white rounded-xl shadow-sm max-w-[369px] transform transition-transform duration-300 scale-100">
-        <img loading="lazy" src={Logo} className="h-24" alt="Company logo" />
+        <img
+          loading="lazy"
+          src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/LOGO_df3ek6.svg"
+          className="h-24"
+          alt="Company logo"
+        />
         <button
           onClick={onClose}
           className="absolute top-4 right-4 bg-red-500 text-white rounded-full"

@@ -15,7 +15,7 @@ function ProfileCard() {
           <img
             loading="lazy"
             src={user?.image}
-            alt="ProfilePicture"
+            alt="Profile Picture"
             className="aspect-square w-[78px] max-sm:w-[60px] rounded-full object-cover"
           />
         ) : (

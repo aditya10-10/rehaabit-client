@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import Logo from "../../assets/LOGO.svg";
 import { logout } from "../../services/operations/authAPI";
 import { CgProfile } from "react-icons/cg";
 import { RiDashboardLine } from "react-icons/ri";
@@ -70,7 +69,7 @@ const Navbar = ({ onLoginClick }) => {
       <header className="sticky top-0 left-0 z-40 bg-white flex justify-between items-center px-16 w-full max-md:px-5 max-md:flex-wrap max-md:max-w-full gap-2 max-sm:gap-0 max-sm:pb-4">
         <img
           loading="lazy"
-          src={Logo}
+          src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/LOGO_df3ek6.svg"
           alt="Company logo"
           className="h-20 max-md:h-16 cursor-pointer"
           onClick={() => navigate("/")}
@@ -118,8 +117,7 @@ const Navbar = ({ onLoginClick }) => {
               {/* DROPDOWN */}
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20">
-                {
-                  user?.accountType === "Content Writer" && (
+                  {user?.accountType === "Content Writer" && (
                     <button
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
                       onClick={() => navigate("/dashboard/blog/view-blogs")}
@@ -127,8 +125,7 @@ const Navbar = ({ onLoginClick }) => {
                       <RiDashboardLine size={20} />
                       <span className="ml-2">View Blogs</span>
                     </button>
-                    )
-                  }
+                  )}
                   {user.accountType === "Admin" && (
                     <button
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"

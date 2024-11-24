@@ -1,10 +1,4 @@
 import React from "react";
-import AcRepair from "../../assets/homepage/ACrepair.webp";
-import Electrian from "../../assets/homepage/electrian.webp";
-import Factory from "../../assets/homepage/factory.webp";
-import Painting from "../../assets/homepage/painting.webp";
-import Carpentry from "../../assets/homepage/carpentry.webp";
-import Cleaning from "../../assets/homepage/cleaning.webp";
 import { Button } from "@material-tailwind/react";
 
 const Hero = ({ scrollToFeatures }) => {
@@ -20,7 +14,7 @@ const Hero = ({ scrollToFeatures }) => {
                     <div className="flex flex-col">
                       <img
                         loading="lazy"
-                        src={AcRepair}
+                        src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437084/ACrepair_kijcy1.webp"
                         alt="Technician servicing an air conditioner unit on a wall"
                         className="grow"
                       />
@@ -28,7 +22,7 @@ const Hero = ({ scrollToFeatures }) => {
                     <div className="flex flex-col ml-5">
                       <img
                         loading="lazy"
-                        src={Factory}
+                        src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437087/factory_uljsag.webp"
                         alt="Smiling engineer in a hard hat and blue uniform with arms crossed"
                         className="grow"
                       />
@@ -40,7 +34,7 @@ const Hero = ({ scrollToFeatures }) => {
                     <div className="flex flex-col">
                       <img
                         loading="lazy"
-                        src={Painting}
+                        src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437089/painting_ji3vbr.webp"
                         alt="Painter applying white paint to a wall with a roller"
                         className="grow"
                       />
@@ -48,7 +42,7 @@ const Hero = ({ scrollToFeatures }) => {
                     <div className="flex flex-col ml-5">
                       <img
                         loading="lazy"
-                        src={Electrian}
+                        src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437086/electrian_zhhaki.webp"
                         alt="Electrician adjusting wires in an electrical panel"
                         className="grow"
                       />
@@ -60,13 +54,13 @@ const Hero = ({ scrollToFeatures }) => {
                 <div className="flex flex-col grow">
                   <img
                     loading="lazy"
-                    src={Carpentry}
+                    src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437085/carpentry_feopvf.webp"
                     alt="Carpenter working on a wooden board in a workshop"
                     className="grow"
                   />
                   <img
                     loading="lazy"
-                    src={Cleaning}
+                    src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437086/cleaning_e3hzup.webp"
                     alt="Cleaner mopping a wooden floor in a living room"
                     className="grow mt-4"
                   />
