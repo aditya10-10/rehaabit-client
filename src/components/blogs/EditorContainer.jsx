@@ -1,84 +1,85 @@
-import React from 'react'
+import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { v4 as uuidv4 } from 'uuid';
-import { uploadImageToCloudinary } from '../../utils/cloudinaryutil';
+import { v4 as uuidv4 } from "uuid";
+import { uploadImageToCloudinary } from "../../utils/cloudinaryutil";
 
-const EditorContainer = ({content, handleEditorChange}) => {
-    const handleImageUpload = async (blobInfo, progress) => {
-        try {
-            // console.log('Uploading image to Cloudinary...');
-            const secureUrl = await uploadImageToCloudinary(blobInfo.blob());
-            // console.log('Image uploaded successfully:', secureUrl);
-            return secureUrl;
-        } catch (error) {
-            // console.error('Error uploading image:', error);
-            throw error;
-        }
-    };
+const EditorContainer = ({ content, handleEditorChange }) => {
+  const handleImageUpload = async (blobInfo, progress) => {
+    try {
+      // console.log('Uploading image to Cloudinary...');
+      const secureUrl = await uploadImageToCloudinary(blobInfo.blob());
+      // console.log('Image uploaded successfully:', secureUrl);
+      return secureUrl;
+    } catch (error) {
+      // console.error('Error uploading image:', error);
+      throw error;
+    }
+  };
 
-    return (
-        <div>
-            <Editor
-                apiKey={process.env.REACT_APP_TINYCLOUD_API_KEY}
-                initialValue={content}
-                value={content}
-                onEditorChange={(newContent, editor) => {
-                    handleEditorChange(newContent);
-                }}
-                init={{
-                    plugins: [
-                        "anchor",
-                        "autolink",
-                        "charmap",
-                        "codesample",
-                        "emoticons",
-                        "image",
-                        "link",
-                        "lists",
-                        "media",
-                        "searchreplace",
-                        "table",
-                        "visualblocks",
-                        "wordcount",
-                        "preview",
-                        "fullscreen",
-                        "code",
-                        "imagetools",
-                    ],
-                    toolbar:
-                        "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | " +
-                        "bullist numlist outdent indent | link image | " +
-                        "table tabledelete | tableprops tablerowprops tablecellprops | " +
-                        "tableinsertrowbefore tableinsertrowafter tabledeleterow | " +
-                        "tableinsertcolbefore tableinsertcolafter tabledeletecol | " +
-                        "tablecellvalign tablecellborderwidth tablecellborderstyle",
-                    table_toolbar: "tabledelete | tableprops tablerowprops tablecellprops | " +
-                        "tableinsertrowbefore tableinsertrowafter tabledeleterow | " +
-                        "tableinsertcolbefore tableinsertcolafter tabledeletecol",
-                    table_appearance_options: true,
-                    table_grid: true,
-                    table_resize_bars: true,
-                    table_default_attributes: {
-                        border: '1'
-                    },
-                    table_default_styles: {
-                        width: '80%',
-                        'border-collapse': 'collapse',
-                        'min-height': '20px',
-                        'align-items': 'center'
-                    },
-                    table_sizing_mode: 'fixed',
-                    table_responsive_width: true,
-                    table_cell_class_list: [
-                        {title: 'None', value: ''},
-                        {title: 'Center', value: 'text-center'},
-                        {title: 'Left', value: 'text-left'},
-                        {title: 'Right', value: 'text-right'}
-                    ],
-                    menubar: "file edit view insert format tools table help",
-                    height: 500,
-                    branding: false,
-                    content_style: `
+  return (
+    <div>
+      <Editor
+        apiKey={process.env.REACT_APP_TINYCLOUD_API_KEY}
+        initialValue={content}
+        value={content}
+        onEditorChange={(newContent, editor) => {
+          handleEditorChange(newContent);
+        }}
+        init={{
+          plugins: [
+            "anchor",
+            "autolink",
+            "charmap",
+            "codesample",
+            "emoticons",
+            "image",
+            "link",
+            "lists",
+            "media",
+            "searchreplace",
+            "table",
+            "visualblocks",
+            "wordcount",
+            "preview",
+            "fullscreen",
+            "code",
+            "imagetools",
+          ],
+          toolbar:
+            "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | " +
+            "bullist numlist outdent indent | link image | " +
+            "table tabledelete | tableprops tablerowprops tablecellprops | " +
+            "tableinsertrowbefore tableinsertrowafter tabledeleterow | " +
+            "tableinsertcolbefore tableinsertcolafter tabledeletecol | " +
+            "tablecellvalign tablecellborderwidth tablecellborderstyle",
+          table_toolbar:
+            "tabledelete | tableprops tablerowprops tablecellprops | " +
+            "tableinsertrowbefore tableinsertrowafter tabledeleterow | " +
+            "tableinsertcolbefore tableinsertcolafter tabledeletecol",
+          table_appearance_options: true,
+          table_grid: true,
+          table_resize_bars: true,
+          table_default_attributes: {
+            border: "1",
+          },
+          table_default_styles: {
+            width: "80%",
+            "border-collapse": "collapse",
+            "min-height": "20px",
+            "align-items": "center",
+          },
+          table_sizing_mode: "fixed",
+          table_responsive_width: true,
+          table_cell_class_list: [
+            { title: "None", value: "" },
+            { title: "Center", value: "text-center" },
+            { title: "Left", value: "text-left" },
+            { title: "Right", value: "text-right" },
+          ],
+          menubar: "file edit view insert format tools table help",
+          height: 500,
+          branding: false,
+          content_style: `
                         body { font-family:Helvetica,Arial,sans-serif; font-size:14px; }
                         img { max-width: 100%; height: auto; }
                         img.aligncenter { display: block; margin: 0 auto; }
@@ -126,41 +127,41 @@ const EditorContainer = ({content, handleEditorChange}) => {
                             text-align: center;
                         }
                     `,
-                    block_formats:
-                        "Paragraph=p; Header 1=h1; Header 2=h2; Header 3=h3; Header 4=h4; Header 5=h5; Header 6=h6",
-                    images_upload_handler: handleImageUpload,
-                    image_title: true,
-                    image_description: true,
-                    image_caption: true,
-                    automatic_uploads: true,
-                    images_upload_credentials: true,
-                    image_advtab: true,
-                    image_dimensions: true,
-                    images_reuse_filename: false,
-                    setup: (editor) => {
-                        editor.on('BeforeSetContent', (e) => {
-                            const bookmark = editor.selection.getBookmark(2, true);
-                            editor.bookmark = bookmark;
-                        });
+          block_formats:
+            "Paragraph=p; Header 1=h1; Header 2=h2; Header 3=h3; Header 4=h4; Header 5=h5; Header 6=h6",
+          images_upload_handler: handleImageUpload,
+          image_title: true,
+          image_description: true,
+          image_caption: true,
+          automatic_uploads: true,
+          images_upload_credentials: true,
+          image_advtab: true,
+          image_dimensions: true,
+          images_reuse_filename: false,
+          setup: (editor) => {
+            editor.on("BeforeSetContent", (e) => {
+              const bookmark = editor.selection.getBookmark(2, true);
+              editor.bookmark = bookmark;
+            });
 
-                        editor.on('SetContent', (e) => {
-                            if (editor.bookmark) {
-                                editor.selection.moveToBookmark(editor.bookmark);
-                                editor.bookmark = null;
-                            }
-                        });
+            editor.on("SetContent", (e) => {
+              if (editor.bookmark) {
+                editor.selection.moveToBookmark(editor.bookmark);
+                editor.bookmark = null;
+              }
+            });
 
-                        editor.on('NodeChange', (e) => {
-                            editor.save();
-                        });
-                    },
-                    paste_data_images: true,
-                    forced_root_block: 'p',
-                    verify_html: false,
-                }}
-            />
-        </div>
-    );
-}
+            editor.on("NodeChange", (e) => {
+              editor.save();
+            });
+          },
+          paste_data_images: true,
+          forced_root_block: "p",
+          verify_html: false,
+        }}
+      />
+    </div>
+  );
+};
 
-export default EditorContainer
+export default EditorContainer;

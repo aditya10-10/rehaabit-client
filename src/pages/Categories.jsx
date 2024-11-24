@@ -28,11 +28,11 @@ const Categories = () => {
 
   const scrollableDivRef = useRef(null);
   const subCategoriesContainerRef = useRef(null);
-  const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] = useState(false);
+  const [isSubCategoriesScrollComplete, setIsSubCategoriesScrollComplete] =
+    useState(false);
   const [isScrollComplete, setIsScrollComplete] = useState(false);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
   const footerRef = useRef(null);
-
 
   useEffect(() => {
     const handleWheelScroll = (event) => {
@@ -101,7 +101,6 @@ const Categories = () => {
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
 
-
   // Function to update URL without page reload
   const updateUrl = (newPath, state = {}) => {
     navigate(newPath, { replace: true, state });
@@ -129,15 +128,15 @@ const Categories = () => {
   // Add this useEffect to check footer visibility
   useEffect(() => {
     const checkFooterVisibility = () => {
-      const footer = document.querySelector('footer');
+      const footer = document.querySelector("footer");
       if (footer) {
         const rect = footer.getBoundingClientRect();
         setIsFooterVisible(rect.top < window.innerHeight);
       }
     };
 
-    window.addEventListener('scroll', checkFooterVisibility);
-    return () => window.removeEventListener('scroll', checkFooterVisibility);
+    window.addEventListener("scroll", checkFooterVisibility);
+    return () => window.removeEventListener("scroll", checkFooterVisibility);
   }, []);
 
   // Modify the wheel handler
@@ -453,9 +452,9 @@ const Categories = () => {
               className="grid grid-cols-3 p-2 gap-y-4 max-md:flex max-md:flex-nowrap max-md:overflow-x-auto w-full max-xl:grid-cols-2 max-lg:grid-cols-1 gap-x-10 max-md:gap-x-4 max-md:pb-4 max-md:-mx-4 max-md:px-4"
               ref={subCategoriesContainerRef}
               style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitOverflowScrolling: 'touch'
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                WebkitOverflowScrolling: "touch",
               }}
             >
               <style>
@@ -494,10 +493,10 @@ const Categories = () => {
           ref={scrollableDivRef}
           className="border-none rounded-lg p-4 w-[60%] max-lg:w-[90%] max-md:w-full h-[100vh] overflow-y-auto hide-scrollbar"
           style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            overscrollBehavior: 'contain'
-
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            overscrollBehavior: "contain",
+          }}
         >
           <style>
             {`
