@@ -33,6 +33,7 @@ const Categories = () => {
   const [isFooterVisible, setIsFooterVisible] = useState(false);
   const footerRef = useRef(null);
 
+
   useEffect(() => {
     const handleWheelScroll = (event) => {
       const div = scrollableDivRef.current;
@@ -100,6 +101,7 @@ const Categories = () => {
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
 
+
   // Function to update URL without page reload
   const updateUrl = (newPath, state = {}) => {
     navigate(newPath, { replace: true, state });
@@ -161,7 +163,6 @@ const Categories = () => {
         }
       }
       // Handle forward scrolling (going down)
-
       else {
         if (!isAtBottom) {
           e.preventDefault();
@@ -175,7 +176,6 @@ const Categories = () => {
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
   }, [isFooterVisible]);
-
 
   useEffect(() => {
     const scrollToElement = () => {
@@ -497,7 +497,7 @@ const Categories = () => {
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
             overscrollBehavior: 'contain'
-          }}
+
         >
           <style>
             {`
