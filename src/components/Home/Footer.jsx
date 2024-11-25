@@ -1,11 +1,5 @@
 import { Link } from "react-router-dom";
-import LogoDark from "../../assets/bglogodarkfont.svg";
-import Facebook from "../../assets/partner/facebook.svg";
-import Instagram from "../../assets/partner/instagram.svg";
-import Linkedin from "../../assets/partner/linkedin.svg";
-import Twitter from "../../assets/partner/tweeter.svg";
-import AppStore from "../../assets/partner/AppStore.svg";
-import PlayStore from "../../assets/partner/playstore.svg";
+import React, { forwardRef } from "react";
 
 const FooterColumn = ({ title, items, links }) => {
   return (
@@ -30,7 +24,7 @@ const FooterColumn = ({ title, items, links }) => {
   );
 };
 
-const Footer = () => {
+const Footer = forwardRef((props, ref) => {
   const footerData = [
     {
       title: "Company",
@@ -51,8 +45,8 @@ const Footer = () => {
     },
     {
       title: "For Customers",
-      items: ["Contact Us", "Help Center"],
-      links: ["/contact-us", "/help"],
+      items: ["Contact Us", "Help Center", "Blogs"],
+      links: ["/contact-us", "/help", "/library"],
     },
     {
       title: "For Partners",
@@ -61,41 +55,41 @@ const Footer = () => {
     },
     {
       title: "Download App", // App section
-      items: [AppStore, PlayStore],
+      items: [
+        "https://res.cloudinary.com/duizbchmz/image/upload/v1732437118/AppStore_xxgeip.svg",
+        "https://res.cloudinary.com/duizbchmz/image/upload/v1732437121/playstore_or1dki.svg",
+      ],
       links: [],
     },
-    // {
-    //   title: "Contact Us",
-    //   items: ["Call us", "+918928041978", "Email us", "support@rehaabit.com"],
-    //   links: [],
-    // },
+    // {   title: "Contact Us",   items: ["Call us", "+918928041978", "Email us",
+    // "support@rehaabit.com"],   links: [], },
   ];
 
   const socialMediaLinks = [
     {
       id: 1,
-      icon: Facebook,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437118/facebook_wss55h.svg",
       to: "https://www.facebook.com/rehaabit/",
     },
     {
       id: 2,
-      icon: Twitter,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437124/tweeter_y5mhsc.svg",
       to: "https://x.com/rehaabit",
     },
     {
       id: 3,
-      icon: Instagram,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437119/instagram_vng4ct.svg",
       to: "https://www.instagram.com/rehaabit/",
     },
     {
       id: 4,
-      icon: Linkedin,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437119/linkedin_eykelw.svg",
       to: "https://www.linkedin.com/company/rehaabit/",
     },
   ];
 
   return (
-    <footer className="flex flex-col justify-center bg-white mt-10">
+    <footer ref={ref} className="flex flex-col justify-center bg-white mt-10">
       <section className="flex overflow-hidden relative flex-col justify-center items-center px-16 py-14 w-full min-h-[250px] stroke-[74px] stroke-violet-500 max-md:px-5 max-md:min-h-[150px]">
         <img
           loading="lazy"
@@ -110,7 +104,7 @@ const Footer = () => {
               <div className="flex relative flex-col grow pb-5 text-emerald-800">
                 <div className="flex gap-2 items-center justify-start max-md:justify-center">
                   <img
-                    src={LogoDark}
+                    src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435968/bglogodarkfont_mvfn64.svg"
                     alt="Rehaabit Logo for light background"
                     className="aspect-auto object-cover max-md:w-2/3"
                   />
@@ -163,6 +157,6 @@ const Footer = () => {
       </section>
     </footer>
   );
-};
+});
 
 export default Footer;

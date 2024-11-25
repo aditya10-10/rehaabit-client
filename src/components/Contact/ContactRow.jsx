@@ -61,7 +61,7 @@ const ContactRow = ({
       toast.error("Case ID is required");
       return;
     }
-    // console.log("payload",payload);
+    
     try {
       await dispatch(updateContactStatusAndAssignment(payload)).unwrap();
     } catch (error) {

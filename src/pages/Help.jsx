@@ -1,4 +1,3 @@
-import LOGO from "../assets/LOGO.svg";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,7 +54,11 @@ const Help = () => {
             content="Home cleaning services, plumbing services, electrical repair services, HVAC maintenance, pest control services, appliance repair, carpentry services, landscaping and lawn care, painting and decorating, roof repair services, home renovation, handyman services, home security installation, window cleaning services, gutter cleaning services, carpet cleaning, interior design services, solar panel installation, smart home setup, flooring installation services."
           />
         </Helmet>
-        <img src={LOGO} alt="Rehaabit" className="w-48" />
+        <img
+          src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/LOGO_df3ek6.svg"
+          alt="Rehaabit"
+          className="w-48"
+        />
         <h1 className="text-4xl text-blue-700	max-md:text-4xl max-sm:text-2xl">
           How can we help you?
         </h1>

@@ -1,7 +1,5 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import careers from "../../assets/carrers/carrers.webp";
-import HeroImage from "../../assets/partner/Hero.webp";
 
 const JoinRehaabitFamily = ({ JoinRehaabitFamilyText, type }) => {
   const navigate = useNavigate();
@@ -42,7 +40,11 @@ const JoinRehaabitFamily = ({ JoinRehaabitFamilyText, type }) => {
 
           <div className="relative z-10">
             <img
-              src={pathname === "/partner" ? HeroImage : careers}
+              src={
+                pathname === "/partner"
+                  ? "https://res.cloudinary.com/duizbchmz/image/upload/v1732437115/Hero_hmfc4p.webp"
+                  : "https://res.cloudinary.com/duizbchmz/image/upload/v1732437061/carrers_lwiu1l.webp"
+              }
               alt={type === "partner" ? "Partner" : "Careers"}
               className="relative z-10 w-[113rem] -top-20 max-xl:w-[80rem] max-lg:w-[60rem] max-md:w-[40rem] max-sm:w-[30rem] max-xs:w-[90%]"
             />

@@ -1,6 +1,4 @@
 import { MdArrowOutward } from "react-icons/md";
-import png1 from "../../assets/partner/Screenshot 2024-10-24 202625.png";
-
 const OurPartnerBenefits = ({ OurBenefitsText }) => {
   return (
     <>
@@ -51,7 +49,7 @@ const OurPartnerBenefits = ({ OurBenefitsText }) => {
           {/* Image and Partner Stats */}
           <div className="relative flex justify-center items-center">
             <img
-              src={png1}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437117/Screenshot_2024-10-24_202625_hd4kz4.png"
               alt="Diverse group of people joining hands in a circle, symbolizing unity and teamwork"
               className="w-full max-w-[464px] h-auto object-contain"
             />

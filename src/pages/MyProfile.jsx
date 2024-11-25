@@ -9,10 +9,7 @@ function MyProfile() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div
-      className="flex  items-center justify-center w-full mt-10 max-sm:mt-4 max-xs:mt-6"
-      style={{ fontFamily: "Roboto, sans-serif" }}
-    >
+    <div className="flex  items-center justify-center w-full mt-10 max-sm:mt-4 max-xs:mt-6">
       <Helmet>
         <title>Profile - Rehaabit</title>
         <meta
@@ -25,7 +22,7 @@ function MyProfile() {
         />
       </Helmet>
 
-      <main className="flex flex-col bg-white items-center pb-20 max-sm:pb-4  shadow-custom-shadow max-xs:shadow-none p-10 max-sm:p-4 max-sm:ml-11 rounded-lg w-[60%] max-xl:w-[80%] max-md:w-[90%] max-xs:w-full">
+      <main className="flex flex-col bg-white items-center pb-20 max-sm:pb-4  shadow-custom-shadow max-xs:shadow-none p-10 max-sm:p-4 max-sm:ml-0 rounded-lg w-[60%] max-xl:w-[80%] max-md:w-[90%] max-xs:w-full">
         <ProfileHeader />
         <ProfileCard />
         <PersonalDetails />

@@ -1,7 +1,3 @@
-import svg1 from "../../assets/partner/svg-637557500_4658.svg";
-import svg2 from "../../assets/partner/svg-1996763786_1517.svg";
-import svg3 from "../../assets/partner/svg1742727197_3467.svg";
-
 const WhyChooseRehaabit = ({ WhyChooseText }) => {
   return (
     <div className="flex flex-col items-center justify-center px-6 lg:px-20 py-12 lg:py-20">
@@ -19,7 +15,7 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10 w-full lg:w-[80%]">
         <div className="border border-purple-100 p-6 rounded-3xl text-center">
           <img
-            src={svg1}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437122/svg-637557500_4658_ta9oey.svg"
             alt="SVG 1"
             className="mx-auto h-24 w-24 object-contain"
           />
@@ -35,7 +31,7 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
 
         <div className="border border-purple-100 p-6 rounded-3xl text-center">
           <img
-            src={svg2}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437123/svg-1996763786_1517_ufzqug.svg"
             alt="SVG 2"
             className="mx-auto h-24 w-24 object-contain"
           />
@@ -51,7 +47,7 @@ const WhyChooseRehaabit = ({ WhyChooseText }) => {
 
         <div className="border border-purple-100 p-6 rounded-3xl text-center">
           <img
-            src={svg3}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437123/svg1742727197_3467_cevzhr.png"
             alt="SVG 3"
             className="mx-auto h-24 w-24 object-contain"
           />

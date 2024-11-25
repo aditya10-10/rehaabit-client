@@ -1,6 +1,6 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-console.log("Base url", BASE_URL);
+// console.log("Base url", BASE_URL);
 // AUTH ENDPOINTS
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/sendOTP",
@@ -165,10 +165,11 @@ export const locationEndpoints = {
 export const blogEndpoints = {
   CREATE_BLOG_API: BASE_URL + "/createBlog",
   GET_BLOGS_API: BASE_URL + "/blogs",
-  GET_BLOG_BY_SLUG_API: BASE_URL + "/blog/slug/:slug",
+  GET_PUBLISHED_BLOGS_API: BASE_URL + "/publishedBlogs",
+  GET_BLOG_BY_SLUG_API: BASE_URL + "/blog/slug",
   GET_BLOG_BY_ID_API: BASE_URL + "/blog/id/:id",
-  UPDATE_BLOG_API: BASE_URL + "/updateBlog/:id",
-  PUBLISH_BLOG_API: BASE_URL + "/publishBlog/:id",
-  DELETE_BLOG_API: BASE_URL + "/deleteBlog/:id",
+  UPDATE_BLOG_API: BASE_URL + "/updateBlog",
+  PUBLISH_BLOG_API: BASE_URL + "/publishBlog",
+  DELETE_BLOG_API: BASE_URL + "/deleteBlog",
 };
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Error from "../assets/404.webp";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Home/Footer";
 import { Helmet } from "react-helmet-async";
@@ -38,7 +37,7 @@ const PageNotFound = () => {
           <div className="mt-8">
             <img
               className="mx-auto w-72 md:w-96"
-              src={Error}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/404_oif125.webp"
               alt="Page not found image"
             />
           </div>

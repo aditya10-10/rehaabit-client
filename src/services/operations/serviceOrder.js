@@ -2,8 +2,6 @@ import { toast } from "sonner";
 
 import { paymentEndpoints } from "../apis";
 import { apiConnector } from "../apiConnector";
-import rzpLogo from "../../assets/images/LOGO_1.png";
-
 const { SERVICE_PAYMENT_API, VERIFY_PAYMENT_API } = paymentEndpoints;
 
 function loadScript(src) {
@@ -64,7 +62,8 @@ export async function placeOrder(
       order_id: orderResponse.data.paymentDetails.id,
       name: "Rehaabit",
       description: "Thank You for Purchasing the Service",
-      image: rzpLogo,
+      image:
+        "https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/LOGO_df3ek6.svg",
       prefill: {
         name: `${user.additionalDetails.firstName} ${user.additionalDetails.lastName}`,
         contact: user.contactNumber, // Replace with dynamic user details

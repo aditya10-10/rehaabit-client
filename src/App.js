@@ -55,9 +55,14 @@ import Contact from "./components/Contact/ContactUs";
 import PageNotFound from "./pages/PageNotFound";
 import AdminDashboard from "./components/Dashboard/Admin Dashboard/AdminDashboard";
 import { toggleSidebarVisibility } from "./slices/sidebarSlice";
-import ContentEditor from "./components/blogs/ContentEditor";
 import Spinner from "./Spinner";
 import PrivateRoute from "./utils/PrivateRoute";
+import AllServices from "./components/Home/AllServices";
+import ViewBlogs from "./components/blogs/ViewBlogs";
+import CreateBlogs from "./components/blogs/CreateBlogs";
+import ViewBlog from "./components/blogs/ViewBlog";
+import EditBlog from "./components/blogs/EditBlog";
+import Blogs from "./components/blogs/Blogs";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -161,13 +166,13 @@ export default function App() {
       setIsModalOpen(false);
     }, 300);
   };
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center w-full h-screen bg-white">
-        <Spinner />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center w-full h-screen bg-white">
+  //       <Spinner />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -188,9 +193,13 @@ export default function App() {
       <div className="">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/all-services" element={<AllServices />} />
           <Route path="/:id" element={<Categories />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/blog/preview/:slug" element={<ViewBlog />} />
+          <Route path="/library" element={<Blogs />} />
+          <Route path="/library/:slug" element={<ViewBlog />} />
           <Route
             path="/terms-and-conditions"
             element={<TermsAndConditions />}
@@ -204,7 +213,6 @@ export default function App() {
           <Route path="/about-us" element={<AboutPage />} />
           <Route path="/help" element={<Help />} />
           <Route path="/careers" element={<Careers />} />
-
           <Route
             path="/dashboard/*"
             element={
@@ -218,11 +226,22 @@ export default function App() {
             <Route path="orders" element={<MyOrders />} />
             <Route path="addresses" element={<Addresses />} />
           </Route>
-
+          {user?.accountType === "Content Writer" && (
+            <>
+              <Route path="/dashboard/*" element={<Dashboard />}>
+                <Route path="blog/view-blogs" element={<ViewBlogs />} />
+                <Route path="blog/create-blog" element={<CreateBlogs />} />
+                <Route path="blog/edit-blog/:slug" element={<EditBlog />} />
+              </Route>
+            </>
+          )}
           {user?.accountType === "Admin" && (
             <>
               <Route path="/dashboard/*" element={<Dashboard />}>
                 <Route path="admin" element={<AdminDashboard />} />
+                <Route path="blog/view-blogs" element={<ViewBlogs />} />
+                <Route path="blog/create-blog" element={<CreateBlogs />} />
+                <Route path="blog/edit-blog/:slug" element={<EditBlog />} />
                 <Route path="category" element={<Category />} />
                 <Route path="sub-category" element={<SubCategory />} />
                 <Route path="my-profile" element={<MyProfile />} />
@@ -256,7 +275,6 @@ export default function App() {
           />
           {/* <Route path="/coming-soon" element={<ComingSoon />} /> */}
           <Route path="*" element={<PageNotFound />} />
-          <Route path="/content" element={<ContentEditor />} />
         </Routes>
       </div>
     </>

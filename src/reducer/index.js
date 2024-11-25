@@ -18,6 +18,7 @@ import ratingAndreviewsReducer from "../slices/ratingAndReviewsSlice";
 import enquireReducer from "../slices/enquireSlice";
 import sidebarReducer from "../slices/sidebarSlice";
 import locationReducer from "../slices/locationSlice";
+import blogReducer from "../slices/blogSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   enquire: enquireReducer,
   sidebar: sidebarReducer,
   location: locationReducer,
+  blog: blogReducer,
 });
 
 export default rootReducer;
