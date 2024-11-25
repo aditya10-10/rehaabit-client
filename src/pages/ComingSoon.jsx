@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import rocket from "../assets/rocket_launch_flatline.webp";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Home/Footer";
 import { Helmet } from "react-helmet-async";
@@ -31,7 +30,7 @@ const ComingSoon = () => {
           {/* Rocket Image */}
           <div className="w-32 h-32 lg:w-48 lg:h-48 mb-6">
             <img
-              src={rocket}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435967/rocket_launch_flatline_kdgnui.webp"
               alt="Lunching Soon"
               className="w-full h-full object-contain"
             />

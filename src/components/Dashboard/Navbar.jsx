@@ -1,6 +1,4 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import Logo from "../../assets/LOGO.svg";
-import Profile from "../../assets/images/profile.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { CgProfile } from "react-icons/cg";
 
@@ -14,7 +12,7 @@ const Navbar = () => {
     <nav className="flex justify-between items-center w-full p-4 h-[100px] shadow-custom-shadow bg-white">
       <div className="flex items-baseline">
         <img
-          src={Logo}
+          src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435966/LOGO_df3ek6.svg"
           alt="Rehaabit"
           className="h-24 cursor-pointer"
           onClick={() => navigate("/")}

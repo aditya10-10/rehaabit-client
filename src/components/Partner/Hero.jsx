@@ -1,6 +1,3 @@
-import Navbar from "./Navbar";
-import carrers from "../../assets/carrers/carrers.webp";
-import HeroImage from "../../assets/partner/Hero.webp";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Hero = ({ HeroSectionText }) => {
@@ -71,7 +68,11 @@ const Hero = ({ HeroSectionText }) => {
       >
         <img
           className="w-full h-auto object-contain"
-          src={pathname === "/partner" ? HeroImage : carrers}
+          src={
+            pathname === "/partner"
+              ? "https://res.cloudinary.com/duizbchmz/image/upload/v1732437115/Hero_hmfc4p.webp"
+              : "https://res.cloudinary.com/duizbchmz/image/upload/v1732437061/carrers_lwiu1l.webp"
+          }
           alt="Smiling professional woman with long brown hair and glasses, holding a pen and dressed in a white shirt, representing professionalism and confidence"
         />
       </div>

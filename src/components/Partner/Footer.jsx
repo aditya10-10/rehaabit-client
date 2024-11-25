@@ -1,11 +1,4 @@
 import { Link } from "react-router-dom";
-import LogoDark from "../../assets/partner/transparentlogofordark.svg";
-import Facebook from "../../assets/partner/facebook.svg";
-import Instagram from "../../assets/partner/instagram.svg";
-import Linkedin from "../../assets/partner/linkedin.svg";
-import Twitter from "../../assets/partner/tweeter.svg";
-import AppStore from "../../assets/partner/AppStore.svg";
-import PlayStore from "../../assets/partner/playstore.svg";
 import JoinRehaabitFamily from "./JoinRehaabitFamily";
 
 const FooterColumn = ({ title, items, links }) => {
@@ -50,7 +43,10 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
     },
     {
       title: "Download App",
-      items: [AppStore, PlayStore],
+      items: [
+        "https://res.cloudinary.com/duizbchmz/image/upload/v1732437118/AppStore_xxgeip.svg",
+        "https://res.cloudinary.com/duizbchmz/image/upload/v1732437121/playstore_or1dki.svg",
+      ],
       links: ["/coming-soon", "/coming-soon"],
     },
     {
@@ -63,22 +59,22 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
   const socialMediaLinks = [
     {
       id: 1,
-      icon: Facebook,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437118/facebook_wss55h.svg",
       to: "https://www.facebook.com/rehaabit/",
     },
     {
       id: 2,
-      icon: Twitter,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437124/tweeter_y5mhsc.svg",
       to: "https://x.com/rehaabit",
     },
     {
       id: 3,
-      icon: Instagram,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437119/instagram_vng4ct.svg",
       to: "https://www.instagram.com/rehaabit/",
     },
     {
       id: 4,
-      icon: Linkedin,
+      icon: "https://res.cloudinary.com/duizbchmz/image/upload/v1732437119/linkedin_eykelw.svg",
       to: "https://www.linkedin.com/company/rehaabit/",
     },
   ];
@@ -92,7 +88,7 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
           {/* Logo and Social Links */}
           <div className="flex flex-col items-center md:items-start md:w-4/12 space-y-6">
             <img
-              src={LogoDark}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437117/transparentlogofordark_hiep3f.svg"
               alt="Rehaabit"
               className="aspect-auto object-cover max-w-[200px]"
             />

@@ -5,6 +5,7 @@ import { BsFillHandbagFill } from "react-icons/bs";
 import { BiSolidCategory } from "react-icons/bi";
 import { FaUsers, FaAddressBook, FaUsersCog } from "react-icons/fa";
 import { IoIosHelpCircleOutline, IoMdSettings } from "react-icons/io";
+import { FaBlog } from "react-icons/fa";
 import { VscSignOut } from "react-icons/vsc";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FiSearch } from "react-icons/fi";
@@ -24,16 +25,45 @@ const SidebarContext = createContext();
 const sidebarLinks = [
   { id: 0, icon: <CgProfile />, text: "My Profile", to: "my-profile" },
   { id: 1, icon: <LuLayoutDashboard />, text: "Dashboard", to: "/dashboard/admin", adminOnly: true },
-  { id: 2, icon: <BiSolidCategory />, text: "Category", to: "category", adminOnly: true },
-  { id: 3, icon: <MdCategory />, text: "Sub-Category", to: "sub-category", adminOnly: true },
-  { id: 4, icon: <MdHomeRepairService />, text: "My Services", to: "my-services", adminOnly: true },
-  { id: 5, icon: <MdMedicalServices />, text: "Add Service", to: "service/create-service", adminOnly: true },
+  {
+    id: 2, 
+    icon: <FaBlog />, 
+    text: "Blog", 
+    to: "blog", 
+    contentWriterOnly: true,
+    subItems: [
+      { id: 'blog-1', text: "View Blogs", to: "blog/view-blogs" },
+      { id: 'blog-2', text: "Create Blog", to: "blog/create-blog" },
+    ]
+  },
+  {
+    id: 3,
+    icon: <MdHomeRepairService />,
+    text: "Services",
+    to: "services",
+    adminOnly: true,
+    subItems: [
+      { id: 'service-1', text: "Category", to: "category" },
+      { id: 'service-2', text: "Sub-Category", to: "sub-category" },
+      { id: 'service-3', text: "My Services", to: "my-services" },
+      { id: 'service-4', text: "Add Service", to: "service/create-service" },
+    ]
+  },
   { id: 6, icon: <BsFillHandbagFill />, text: "Orders", to: "orders" },
   { id: 7, icon: <FaUsers />, text: "Users", to: "users", adminOnly: true },
   { id: 8, icon: <FaUsersCog />, text: "Partners", to: "partners", adminOnly: true },
   { id: 9, icon: <FaAddressBook />, text: "Addresses", to: "addresses", userOnly: true },
-  { id: 10, icon: <FaAddressBook />, text: "Enquiries", to: "user-enquires", adminOnly: true },
-  { id: 11, icon: <IoIosHelpCircleOutline />, text: "Contact", to: "contacts", adminOnly: true },
+  {
+    id: 10,
+    icon: <IoIosHelpCircleOutline />,
+    text: "Support",
+    to: "support",
+    adminOnly: true,
+    subItems: [
+      { id: 'support-1', text: "Enquiries", to: "user-enquires" },
+      { id: 'support-2', text: "Contact", to: "contacts" },
+    ]
+  },
   { id: 12, icon: <IoMdSettings />, text: "Settings", to: "edit-profile" }
 ];
 
@@ -101,12 +131,17 @@ export default function Sidebar({ children }) {
     }
   };
 
-  const filteredSidebarLinks = sidebarLinks.filter(
-    (link) =>
-      (!link.adminOnly || user.accountType === "Admin") &&
-      !(link.text === "Addresses" && user.accountType === "Admin") &&
-      link.text.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredSidebarLinks = sidebarLinks.filter((link) => {
+    if (user.accountType === "Admin") {
+      return link.text.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+    const isContentWriterLink = link.contentWriterOnly && user.accountType === "Content Writer";
+    const isRegularUserLink = !link.adminOnly && !link.contentWriterOnly;
+    const matchesSearchTerm = link.text.toLowerCase().includes(searchTerm.toLowerCase());
+    return (isContentWriterLink || isRegularUserLink) && matchesSearchTerm;
+  });
+  
+  
 
     // Logout handler
     const handleLogout = () => {
@@ -168,6 +203,7 @@ export default function Sidebar({ children }) {
                   setIsOrderClickedinPhone={setIsOrderClickedinPhone}
                   handleNavigation={handleNavigation}
                   isFirst={index === 0}
+                  subItems={link.subItems}
                 />
               ))}
               <div className="border-t flex p-3">
@@ -190,47 +226,78 @@ export default function Sidebar({ children }) {
   );
 }
 
-function SidebarItem({ icon, text, to, index, handleNavigation, isFirst,setIsOrderClickedinPhone }) {
+function SidebarItem({ icon, text, to, index, handleNavigation, isFirst, setIsOrderClickedinPhone, subItems }) {
   const { expanded } = useContext(SidebarContext);
   const location = useLocation();
-  const isActive = location.pathname === to;
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const isActive = location.pathname === to || (subItems?.some(item => location.pathname.includes(item.to)));
+
   const handleClick = (e) => {
     e.preventDefault();
     
-    if (window.innerWidth <= 768 && text === "Orders") {
-      setIsOrderClickedinPhone(true);  
+    if (subItems) {
+      setIsSubMenuOpen(!isSubMenuOpen);
     } else {
-      setIsOrderClickedinPhone(false);  
+      if (window.innerWidth <= 768 && text === "Orders") {
+        setIsOrderClickedinPhone(true);  
+      } else {
+        setIsOrderClickedinPhone(false);  
+      }
+      handleNavigation(to);
     }
-  
-    handleNavigation(to);
   };
 
   return (
-    <li
-      className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${isActive
-          ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-          : "hover:bg-indigo-50 text-gray-600"
+    <>
+      <li
+        className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
+          isActive
+            ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
+            : "hover:bg-indigo-50 text-gray-600"
         } ${isFirst && isActive ? "text-indigo-800" : ""}`}
-      onClick={handleClick}
-      style={{ fontFamily: "Roboto, sans-serif" }}
-    >
-      {icon}
-      <span
-        className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"
-          }`}
+        onClick={handleClick}
         style={{ fontFamily: "Roboto, sans-serif" }}
       >
-        {text}
-      </span>
-      {!expanded && (
-        <div
-          className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+        {icon}
+        <span
+          className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
           style={{ fontFamily: "Roboto, sans-serif" }}
         >
           {text}
-        </div>
+        </span>
+        {subItems && expanded && (
+          <span className="ml-auto">{isSubMenuOpen ? '▼' : '▶'}</span>
+        )}
+        {!expanded && (
+          <div
+            className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+            style={{ fontFamily: "Roboto, sans-serif" }}
+          >
+            {text}
+          </div>
+        )}
+      </li>
+      
+      {subItems && isSubMenuOpen && expanded && (
+        <ul className="ml-4">
+          {subItems.map((item) => (
+            <li
+              key={item.id}
+              className={`py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors ${
+                location.pathname.includes(item.to)
+                  ? "bg-gradient-to-tr from-indigo-100 to-indigo-50 text-indigo-800"
+                  : "hover:bg-indigo-50 text-gray-600"
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation(item.to);
+              }}
+            >
+              {item.text}
+            </li>
+          ))}
+        </ul>
       )}
-    </li>
+    </>
   );
 }

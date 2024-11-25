@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Banner from "../../assets/homepage/banner.webp";
 import EnquireNowModal from "./EnquireNowModal";
 
 const HomepageBanner = () => {
@@ -13,7 +12,7 @@ const HomepageBanner = () => {
     <>
       <div className="homepage-banner mt-10">
         <img
-          src={Banner}
+          src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437085/banner_cpb4n4.webp"
           alt="Enquire Now Banner to take enquiries from customers"
           className="w-full cursor-pointer"
           onClick={handleBannerClick}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import serviceImage from "../../assets/images/Services.webp";
 import ServiceDetailsModal from "../ServiceDetailsModal";
 import { GoStar, GoStarFill } from "react-icons/go";
 
@@ -68,7 +67,10 @@ const ServiceCardSkeleton = () => {
           <div className="h-4 bg-gray-200 rounded w-1/4"></div>
           <div className="flex gap-1">
             {[...Array(5)].map((_, index) => (
-              <div key={index} className="w-4 h-4 bg-gray-200 rounded-full"></div>
+              <div
+                key={index}
+                className="w-4 h-4 bg-gray-200 rounded-full"
+              ></div>
             ))}
           </div>
         </div>
@@ -101,7 +103,6 @@ const Services = () => {
         setIsServiceModalOpen(true);
       }
     }
-    
   }, [location]);
 
   const handleServiceModal = () => {
@@ -113,7 +114,8 @@ const Services = () => {
   };
 
   const pricedServices = allServices?.filter(
-    (service) => service?.priceStatus === "priced" && service?.status !== "Draft"
+    (service) =>
+      service?.priceStatus === "priced" && service?.status !== "Draft"
   );
 
   return (
@@ -132,7 +134,7 @@ const Services = () => {
           <div className="flex flex-col w-6/12 max-md:hidden">
             <img
               loading="lazy"
-              src={serviceImage}
+              src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437098/Services_womlpp.webp"
               alt="All Types of Home Service in Mumbai"
               className="mt-3 w-full aspect-[0.65]"
             />
@@ -142,24 +144,22 @@ const Services = () => {
               <h2 className="text-4xl font-semibold text-center text-violet-700 max-md:max-w-full">
                 Services{" "}
               </h2>
-              {!allServices ? (
-                [...Array(5)].map((_, index) => (
-                  <ServiceCardSkeleton key={index} />
-                ))
-              ) : (
-                pricedServices?.slice(0, 5)?.map((service) => (
-                  <div
-                    key={service?._id}
-                    className="w-full cursor-pointer"
-                    onClick={() => {
-                      setIsServiceModalOpen(!isServiceModalOpen);
-                      setServiceId(service?._id);
-                    }}
-                  >
-                    <ServiceCard {...service} />
-                  </div>
-                ))
-              )}
+              {!allServices
+                ? [...Array(5)].map((_, index) => (
+                    <ServiceCardSkeleton key={index} />
+                  ))
+                : pricedServices?.slice(0, 5)?.map((service) => (
+                    <div
+                      key={service?._id}
+                      className="w-full cursor-pointer"
+                      onClick={() => {
+                        setIsServiceModalOpen(!isServiceModalOpen);
+                        setServiceId(service?._id);
+                      }}
+                    >
+                      <ServiceCard {...service} />
+                    </div>
+                  ))}
             </div>
           </div>
         </div>

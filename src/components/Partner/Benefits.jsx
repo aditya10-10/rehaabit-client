@@ -1,7 +1,3 @@
-import png1 from "../../assets/partner/6x6WjgFVmDgU0TTEAt1Z39AOE.webp";
-import png2 from "../../assets/partner/7RK4uNLdlULQ5W0ozQvljqeaw.webp";
-import png3 from "../../assets/partner/sNkB7IB6mi9wAYmmOmDEpVRQ.webp";
-import png4 from "../../assets/partner/gGRPNWntCuxJyX5rQbpX5dERMTM.webp";
 import { MdArrowOutward } from "react-icons/md";
 
 const Benefits = ({ BenefitsText }) => {
@@ -26,7 +22,7 @@ const Benefits = ({ BenefitsText }) => {
         {/* {div1} */}
         <div className="lg:mt-0 mt-8 w-auto ml-5">
           <img
-            src={png1}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437113/6x6WjgFVmDgU0TTEAt1Z39AOE_vwn0z5.webp"
             alt="Smiling woman with glasses working on a laptop with colleagues, representing expert guidance and support"
           />
           <div className="flex items-center w-full gap-20 py-4">
@@ -42,7 +38,7 @@ const Benefits = ({ BenefitsText }) => {
         {/* {div2} */}
         <div className="lg:mt-64 mt-8 ml-5">
           <img
-            src={png2}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437114/7RK4uNLdlULQ5W0ozQvljqeaw_njvrfc.webp"
             alt="Sticky note with 'Flexible Schedule' written on it, illustrating flexible work options"
           />
           <div className="flex items-center w-full gap-20 py-4">
@@ -58,7 +54,7 @@ const Benefits = ({ BenefitsText }) => {
         {/* {div3} */}
         <div className="lg:mt-44 mt-8 ml-5">
           <img
-            src={png3}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437116/sNkB7IB6mi9wAYmmOmDEpVRQ_kvyovl.webp"
             alt="Diagram with 'Skill' in the center surrounded by terms like experience, training, and knowledge, highlighting skill enhancement opportunities"
           />
           <div className="flex items-center w-full gap-20  py-4">
@@ -74,7 +70,7 @@ const Benefits = ({ BenefitsText }) => {
         {/* {div4} */}
         <div className="lg:mt-10 mt-8 ml-5">
           <img
-            src={png4}
+            src="https://res.cloudinary.com/duizbchmz/image/upload/v1732437115/gGRPNWntCuxJyX5rQbpX5dERMTM_bta72q.webp"
             alt="Close-up of hands stacked on top of each other, symbolizing steady career growth and team support."
           />
           <div className="flex items-center w-full gap-20 py-4">
