@@ -1,3 +1,35 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /dashboard/
+Disallow: /dashboard/my-profile
+Disallow: /dashboard/edit-profile
+Disallow: /dashboard/orders
+Disallow: /dashboard/addresses
+Disallow: /dashboard/admin
+Disallow: /dashboard/category
+Disallow: /dashboard/sub-category
+Disallow: /dashboard/my-services
+Disallow: /dashboard/service/
+Disallow: /dashboard/partners
+Disallow: /dashboard/users
+Disallow: /dashboard/user-enquires
+Disallow: /dashboard/contacts
+Disallow: /partner-form/
+Disallow: /partner/privacy-policy
+Disallow: /partner/terms-and-conditions
+
+Allow: /
+Allow: /all-services
+Allow: /cart
+Allow: /checkout
+Allow: /library
+Allow: /library/*
+Allow: /blog/preview/*
+Allow: /terms-and-conditions
+Allow: /privacy-policy
+Allow: /cancellation-and-refund-policy
+Allow: /contact-us
+Allow: /about-us
+Allow: /help
+Allow: /careers
+
+Sitemap: https://www.rehaabit.com/sitemap.xml
