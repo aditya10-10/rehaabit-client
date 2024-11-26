@@ -372,7 +372,7 @@ const ViewBlog = () => {
         <div className="min-h-screen flex flex-col">
           <div className="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
             <Helmet>
-              <title>{`${blog?.title}`}</title>
+              <title>{`${blog?.title} | Rehaabit`}</title>
               <meta name="description" content={`${blog?.metaDescription}`} />
             </Helmet>
             <div className="flex flex-col md:flex-row gap-8">
@@ -400,7 +400,7 @@ const ViewBlog = () => {
                   {/* Author Section */}
                   <div className="flex items-center gap-2">
                     <img
-                      src="https://res.cloudinary.com/duizbchmz/image/upload/v1732602197/Screenshot_2024-11-26_at_11.52.02_AM_q8jmdj.png"
+                      src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435965/dummypic_sm1zok.jpghttps://res.cloudinary.com/duizbchmz/image/upload/v1732435965/dummypic_sm1zok.jpg"
                       alt="Author"
                       className="w-8 h-8 rounded-full object-cover"
                     />
