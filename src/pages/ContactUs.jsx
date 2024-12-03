@@ -52,7 +52,7 @@ const ContactUs = () => {
             <div className="flex flex-col gap-10 max-xs:gap-5 w-2/3 max-2xl:w-3/4 max-xl:w-11/12 max-xs:w-full max-xs:items-center max-xs:justify-center max-xs:text-center">
               <div className="flex max-xs:flex-col items-center gap-5 max-xs:gap-2 text-white">
                 <BiSolidPhoneCall size={20} />
-                <span>+91 90265-89058</span>
+                <span>+91 88282-37311</span>
               </div>
 
               <div className="flex max-xs:flex-col items-center gap-5 max-xs:gap-2 text-white">

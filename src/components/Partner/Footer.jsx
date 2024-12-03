@@ -51,7 +51,7 @@ const Footer = ({ JoinRehaabitFamilyText }) => {
     },
     {
       title: "Contact Us",
-      items: ["Call us", "+918928041978", "Email us", "support@rehaabit.com"],
+      items: ["Call us", "+9188282-37311", "Email us", "support@rehaabit.com"],
       links: [],
     },
   ];

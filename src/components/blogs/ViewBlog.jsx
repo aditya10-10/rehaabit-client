@@ -400,7 +400,7 @@ const ViewBlog = () => {
                   {/* Author Section */}
                   <div className="flex items-center gap-2">
                     <img
-                      src="https://res.cloudinary.com/duizbchmz/image/upload/v1732435965/dummypic_sm1zok.jpghttps://res.cloudinary.com/duizbchmz/image/upload/v1732435965/dummypic_sm1zok.jpg"
+                      src="https://res.cloudinary.com/duizbchmz/image/upload/v1732602197/Screenshot_2024-11-26_at_11.52.02_AM_q8jmdj.png"
                       alt="Author"
                       className="w-8 h-8 rounded-full object-cover"
                     />
