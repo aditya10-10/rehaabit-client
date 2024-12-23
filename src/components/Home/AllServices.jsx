@@ -17,7 +17,7 @@ const AllServicesPage = () => {
     (service) =>
       service?.priceStatus === "non-priced" && service?.status !== "Draft"
   );
-  const nonPricedServices = limitedNonPricedServices?.slice(0, 10);
+  // const nonPricedServices = limitedNonPricedServices?.slice(0, 10);
 
   const handleServiceModalOpen = (serviceId) => {
     setServiceId(serviceId);
@@ -70,14 +70,14 @@ const AllServicesPage = () => {
           </h2>
 
           <div className="mt-8 sm:mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-            {!allServices ? (
+            {!limitedNonPricedServices ? (
               <div className="flex flex-wrap justify-center gap-4">
                 {[...Array(6)].map((_, index) => (
                   <LoadingSkeleton key={`skeleton-${index}`} />
                 ))}
               </div>
             ) : (
-              allServices.map((service, index) => {
+              limitedNonPricedServices.map((service, index) => {
                 const { _id, thumbnail, serviceName } = service;
 
                 return (

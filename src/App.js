@@ -194,7 +194,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/all-services" element={<AllServices />} />
-          <Route path="/:id" element={<Categories />} />
+          <Route path="/:slug" element={<Categories />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/blog/preview/:slug" element={<ViewBlog />} />

@@ -10,6 +10,7 @@ const {
   UPDATE_SUB_CATEGORY_ICON_API,
   DELETE_SUB_CATEGORY_API,
   GET_SUB_CATEGORIES_BY_CATEGORY_API,
+  GET_SUB_CATEGORIES_BY_SLUG_API,
 } = endpoints;
 
 const initialState = {
@@ -33,7 +34,17 @@ export const showAllSubCategories = createAsyncThunk(
 
 export const addSubCategory = createAsyncThunk(
   "subcategories/addSubCategory",
-  async ({ categoryId, subCategoryName, icon, setProgress, metaTitle, metaDescription }, thunkAPI) => {
+  async (
+    {
+      categoryId,
+      subCategoryName,
+      icon,
+      setProgress,
+      metaTitle,
+      metaDescription,
+    },
+    thunkAPI
+  ) => {
     try {
       const response = await apiConnector(
         "POST",
@@ -123,6 +134,24 @@ export const getSubCategoriesByCategory = createAsyncThunk(
           categoryId,
         }
       );
+      // console.log(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message.data);
+    }
+  }
+);
+
+export const getSubCategoriesBySlug = createAsyncThunk(
+  "subcategories/getSubCategoriesBySlug",
+  async (slug, thunkAPI) => {
+    // console.log(categoryId)
+    try {
+      const response = await apiConnector(
+        "GET",
+        `${GET_SUB_CATEGORIES_BY_SLUG_API}/${slug}`
+      );
+
       // console.log(response.data.data);
       return response.data.data;
     } catch (error) {
@@ -256,6 +285,26 @@ const subCategorySlice = createSlice({
         // if(Swal.isLoading()) Swal.hideLoading();
       })
       .addCase(getSubCategoriesByCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action;
+        // Swal.fire({
+        //   title: "Error in Fetching Sub Categories",
+        //   icon: "error",
+        // });
+      })
+      .addCase(getSubCategoriesBySlug.pending, (state) => {
+        state.isLoading = true;
+        // Swal.showLoading();
+      })
+      .addCase(getSubCategoriesBySlug.fulfilled, (state, action) => {
+        // console.log(action);
+
+        state.subCategoriesByCategory = action.payload;
+
+        state.isLoading = false;
+        // if(Swal.isLoading()) Swal.hideLoading();
+      })
+      .addCase(getSubCategoriesBySlug.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action;
         // Swal.fire({

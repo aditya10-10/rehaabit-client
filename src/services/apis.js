@@ -16,6 +16,7 @@ export const endpoints = {
   ADD_SUB_CATEGORY_API: BASE_URL + "/addSubCategory",
   UPDATE_SUB_CATEGORY_ICON_API: BASE_URL + "/updateSubCategoryIcon",
   GET_SUB_CATEGORIES_BY_CATEGORY_API: BASE_URL + "/getSubCategoriesByCategory",
+  GET_SUB_CATEGORIES_BY_SLUG_API: BASE_URL + "/getSubCategoriesBySlug/slug",
   DELETE_SUB_CATEGORY_API: BASE_URL + "/deleteSubCategory",
 };
 
@@ -172,4 +173,3 @@ export const blogEndpoints = {
   PUBLISH_BLOG_API: BASE_URL + "/publishBlog",
   DELETE_BLOG_API: BASE_URL + "/deleteBlog",
 };
-
