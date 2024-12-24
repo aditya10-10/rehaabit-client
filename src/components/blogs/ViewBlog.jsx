@@ -7,6 +7,7 @@ import "./viewblog.css";
 import { getUserDetails } from "../../services/operations/profileAPI";
 import { usersEndpoints } from "../../services/apis";
 import Footer from "../Home/Footer";
+import PageNotFound from "../../pages/PageNotFound";
 
 const TableOfContents = ({ content }) => {
   const [toc, setToc] = useState([]);
@@ -307,11 +308,18 @@ const ViewBlog = () => {
           return;
         }
       }
-      await dispatch(getBlogBySlug(slug));
-      setIsValidating(false);
+      try {
+        await dispatch(getBlogBySlug(slug)); // Fetch blog by slug
+      } catch (error) {
+        setIsValid(false); // Set validation to false if error occurs
+        console.error("Error fetching blog:", error);
+      } finally {
+        setIsValidating(false);
+      }
     };
     validateAndFetchBlog();
   }, [slug, navigate, dispatch]);
+
   useEffect(() => {
     const isPreviewRoute =
       window.location.pathname.startsWith("/blog/preview/");
@@ -361,6 +369,10 @@ const ViewBlog = () => {
       }) + " IST"
     );
   };
+
+  if (!isValid) {
+    return <PageNotFound />; // Show PageNotFound if not valid
+  }
 
   return (
     <>

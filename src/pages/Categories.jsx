@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { getSubCategoriesByCategory } from "../slices/subCategorySlice";
+import { getSubCategoriesBySlug } from "../slices/subCategorySlice";
 import { ConfirmationModal } from "../components";
 import Footer from "../components/Home/Footer";
 
@@ -20,11 +20,13 @@ import EnquireNowModal from "../components/Home/EnquireNowModal";
 import { ServiceCard } from "../components/Dashboard/Service";
 import ServiceDetailsModal from "../components/ServiceDetailsModal";
 import { CategorySkeleton } from "../utils/Skeleton/CategorySkeleton";
+import PageNotFound from "./PageNotFound";
 
 const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { slug } = useParams();
 
   const scrollableDivRef = useRef(null);
   const subCategoriesContainerRef = useRef(null);
@@ -79,10 +81,13 @@ const Categories = () => {
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isNotFound, setIsNotFound] = useState(false); // Track if the slug is found or not
 
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
+  // console.log(subCategoriesByCategory);
+
   const { allServices } = useSelector((state) => state.service);
   const { cartServices, isLoading: cartLoading } = useSelector(
     (state) => state.cart
@@ -90,13 +95,13 @@ const Categories = () => {
   const { user } = useSelector((state) => state.profile);
   const { categories } = useSelector((state) => state.categories);
   const categoryName = categories.find(
-    (category) => category.slugName === categoryId
+    (category) => category.slugName === slug
   );
-  useEffect(() => {
-    if (!categoryName) {
-      navigate("*");
-    }
-  }, [categoryName, navigate]);
+  // useEffect(() => {
+  //   if (!categoryName) {
+  //     navigate("*");
+  //   }
+  // }, [categoryName, navigate]);
 
   const categoryRefs = useRef({});
   const serviceRefs = useRef({});
@@ -119,11 +124,23 @@ const Categories = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      await dispatch(getSubCategoriesByCategory({ categoryId }));
-      setIsLoading(false);
+      try {
+        const result = await dispatch(getSubCategoriesBySlug(slug));
+
+        if (!result || result.error) {
+          // Assuming the result has an error property
+          setIsNotFound(true);
+        }
+      } catch (error) {
+        setIsNotFound(true); // Set to true if error occurs
+        console.error("Error fetching subcategories:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
+
     fetchData();
-  }, [dispatch, categoryId]);
+  }, [slug, dispatch]);
 
   // Add this useEffect to check footer visibility
   useEffect(() => {
@@ -232,8 +249,8 @@ const Categories = () => {
     }
 
     // Update URL when clicking on a subcategory
-    const newUrl = `/${categoryId}?subCategory=${subCategoryName}`;
-    updateUrl(newUrl);
+    // const newUrl = `/${categoryId}?subCategory=${subCategoryName}`;
+    // updateUrl(newUrl);
   };
 
   const handleAddToCart = (service) => {
@@ -313,8 +330,8 @@ const Categories = () => {
     setIsServiceModalOpen(true);
 
     // Update URL when opening service modal
-    const newUrl = `/${categoryId}?service=${serviceName}`;
-    updateUrl(newUrl);
+    // const newUrl = `/${categoryId}?service=${serviceName}`;
+    // updateUrl(newUrl);
   };
 
   // Function to close the Service Details Modal
@@ -322,7 +339,7 @@ const Categories = () => {
     setIsServiceModalOpen(false);
 
     // Revert URL when closing service modal
-    updateUrl(`/${categoryId}`);
+    // updateUrl(`/${categoryId}`);
   };
 
   // Function to open the Enquire Now Modal
@@ -331,8 +348,8 @@ const Categories = () => {
     setIsEnquireNowModalOpen(true);
 
     // Update URL when opening Enquire Now modal
-    const newUrl = `/${categoryId}?service=${service.serviceName}`;
-    updateUrl(newUrl);
+    // const newUrl = `/${categoryId}?service=${service.serviceName}`;
+    // updateUrl(newUrl);
   };
 
   // Function to close the Enquire Now Modal
@@ -373,6 +390,11 @@ const Categories = () => {
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
   }, [isSubCategoriesScrollComplete]);
+
+  // Conditional rendering based on isNotFound state
+  if (isNotFound) {
+    return <PageNotFound />; // Show the PageNotFound component
+  }
 
   if (isLoading) {
     return (
@@ -432,7 +454,7 @@ const Categories = () => {
 
       <div className="flex  px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
         <Helmet>
-          <title>{categoryName?.name}</title>
+          <title>{categoryName?.metaTitle}</title>
           <meta name="description" content={categoryName?.metaDescription} />
         </Helmet>
         <div className="w-[40%] max-md:w-full">
@@ -454,13 +476,6 @@ const Categories = () => {
                 WebkitOverflowScrolling: "touch",
               }}
             >
-              <style>
-                {`
-                  div::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}
-              </style>
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
@@ -638,9 +653,9 @@ const Categories = () => {
           })}
         </div>
       </div>
-      <div ref={footerRef}>
+      {/* <div ref={footerRef}>
         <Footer />
-      </div>
+      </div> */}
     </>
   );
 };

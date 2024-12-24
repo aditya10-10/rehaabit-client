@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useCallback } from "react";
 
 const FeatureItem = ({ icon, name, description }) => (
@@ -26,17 +26,22 @@ const SkeletonItem = () => (
 
 const Features = () => {
   const { categories } = useSelector((state) => state.categories);
+  const { slug } = useParams(); // Extract the slug from the URL
 
-  const createSlug = useCallback((value) => {
-    if (value && typeof value === "string")
-      return value
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
+  const navigate = useNavigate();
 
-    return "";
-  }, []);
+  // Validate the slug against categories
+  useEffect(() => {
+    if (slug) {
+      console.log("Validating slug...", slug, "Categories:", categories);
+      const isValidSlug = categories.some(
+        (category) => category.slugName === slug
+      );
+      if (!isValidSlug) {
+        navigate("/not-found", { replace: true }); // Redirect to a 404 page
+      }
+    }
+  }, [slug, categories, navigate]);
 
   return (
     <div className="relative flex items-center justify-center px-20 max-md:px-10 max-sm:px-4">
@@ -50,17 +55,13 @@ const Features = () => {
           Our Services
         </h2>
         <div className="grid grid-cols-4 max-sm:grid-cols-3 gap-5 mt-6 max-w-full w-[676px]">
-          {categories ? (
-            categories.map((feature) => (
-              <Link key={feature?._id} to={`${createSlug(feature?.name)}`}>
-                <FeatureItem {...feature} />
-              </Link>
-            ))
-          ) : (
-            [...Array(12)].map((_, index) => (
-              <SkeletonItem key={index} />
-            ))
-          )}
+          {categories
+            ? categories.map((feature) => (
+                <Link key={feature?._id} to={`${feature?.slugName}`}>
+                  <FeatureItem {...feature} />
+                </Link>
+              ))
+            : [...Array(12)].map((_, index) => <SkeletonItem key={index} />)}
         </div>
       </section>
     </div>

@@ -355,59 +355,59 @@ max-h-[70vh] overflow-y-auto relative"
                         </>
                       )}
                     </div>
-                    
+
                     {service?.includes?.length > 0 && (
-  <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
-    <h1 className="text-2xl max-xs:text-xl text-purple-600">
-      Service Includes
-    </h1>
+                      <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
+                        <h1 className="text-2xl max-xs:text-xl text-purple-600">
+                          Service Includes
+                        </h1>
 
-    <div className="flex flex-col">
-      {service?._id &&
-        service?.includes.map((include) => {
-          const { _id, content } = include;
+                        <div className="flex flex-col">
+                          {service?._id &&
+                            service?.includes.map((include) => {
+                              const { _id, content } = include;
 
-          return (
-            <span
-              key={_id}
-              className="flex items-start space-x-2"
-            >
-              <FaCheck className="text-green-500 text-lg mt-1 self-start" /> {/* Adjusted alignment */}
-              <span className="flex-1">{content}</span>
-            </span>
-          );
-        })}
-    </div>
-  </div>
-)}
+                              return (
+                                <span
+                                  key={_id}
+                                  className="flex items-start space-x-2"
+                                >
+                                  <FaCheck className="text-green-500 text-lg mt-1 self-start" />{" "}
+                                  {/* Adjusted alignment */}
+                                  <span className="flex-1">{content}</span>
+                                </span>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    )}
 
-{/* SERVICE EXCLUDES */}
-{service?.excludes?.length > 0 && (
-  <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
-    <h1 className="text-2xl max-xs:text-xl text-purple-600">
-      Service does not include
-    </h1>
+                    {/* SERVICE EXCLUDES */}
+                    {service?.excludes?.length > 0 && (
+                      <div className="shadow-custom-shadow rounded-xl p-6 max-xs:p-4 w-full mb-4">
+                        <h1 className="text-2xl max-xs:text-xl text-purple-600">
+                          Service does not include
+                        </h1>
 
-    <div className="flex flex-col">
-      {service?._id &&
-        service?.excludes.map((exclude) => {
-          const { _id, content } = exclude;
+                        <div className="flex flex-col">
+                          {service?._id &&
+                            service?.excludes.map((exclude) => {
+                              const { _id, content } = exclude;
 
-          return (
-            <span
-              key={_id}
-              className="flex items-start space-x-2"
-            >
-              <FaTimes className="text-red-500 text-lg mt-1 self-start" /> {/* Adjusted alignment */}
-              <span className="flex-1">{content}</span>
-            </span>
-          );
-        })}
-    </div>
-  </div>
-)}
-
-
+                              return (
+                                <span
+                                  key={_id}
+                                  className="flex items-start space-x-2"
+                                >
+                                  <FaTimes className="text-red-500 text-lg mt-1 self-start" />{" "}
+                                  {/* Adjusted alignment */}
+                                  <span className="flex-1">{content}</span>
+                                </span>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    )}
 
                     {/* HOW IT WORK? */}
                     {service?.howDoesItWorks?.length > 0 && (

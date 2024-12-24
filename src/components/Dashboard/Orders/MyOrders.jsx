@@ -44,6 +44,8 @@ const MyOrders = () => {
     }
   }, [dispatch, user]);
 
+  console.log(orders);
+
   const filteredOrders = orders.filter((order) => {
     const categoryMatch =
       selectedCategory === "All" ||
@@ -102,7 +104,7 @@ const MyOrders = () => {
           </div> */}
 
           {/* Search by Contact Number */}
-          {user.accountType === "Admin" && (
+          {/* {user.accountType === "Admin" && (
             <div className="ml-6 mb-6">
               <input
                 type="text"
@@ -112,7 +114,7 @@ const MyOrders = () => {
                 className="shadow-custom-shadow border rounded-[5px] py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-          )}
+          )} */}
         </div>
       </nav>
 

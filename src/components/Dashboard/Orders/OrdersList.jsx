@@ -12,6 +12,8 @@ import { IoMdClose } from "react-icons/io";
 import EditOrderModal from "./EditOrderModal";
 import CancelOrderModal from "./CancelOrderModal";
 import { BallTriangle } from "react-loader-spinner";
+import { FiMapPin } from "react-icons/fi";
+import AddressModal from "./AddressModal";
 
 const OrdersList = ({ orders }) => {
   const dispatch = useDispatch();
@@ -27,6 +29,15 @@ const OrdersList = ({ orders }) => {
     (state) => state.ratingAndReviews
   );
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleLocationClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   const defaultStages = [
     "Pending",
     "Confirmed",
@@ -45,6 +56,8 @@ const OrdersList = ({ orders }) => {
     setOrderToCancel(orderId);
     setIsCancelModalOpen(true); // Open the confirmation modal
   };
+
+  console.log(orders);
 
   const handleCancelConfirm = () => {
     const cancelText =
@@ -210,7 +223,15 @@ const OrdersList = ({ orders }) => {
       />
       <div className="w-full">
         {localOrders.map((order) => {
-          const { _id, services, status, createdAt, orderId } = order;
+          const {
+            _id,
+            services,
+            status,
+            createdAt,
+            orderId,
+            user: orderUser,
+            address,
+          } = order;
           const statuses = status.statuses;
           const { trackingStages, latestStatusIndex } =
             getTrackingStages(order);
@@ -230,12 +251,32 @@ const OrdersList = ({ orders }) => {
                   <h3 className="font-semibold text-lg md:text-xl">
                     Order #{orderId}
                   </h3>
+                  {user?.accountType === "Admin" && (
+                    <div className="text-right">
+                      <h3 className="font-semibold text-lg md:text-xl">
+                        {orderUser?.contactNumber || "N/A"}
+                      </h3>
+                    </div>
+                  )}
+                  <div className="flex items-center space-x-2 text-gray-600">
+                    <FiMapPin
+                      className="w-6 h-6 cursor-pointer hover:text-blue-500"
+                      onClick={handleLocationClick}
+                    />
+                    <span>Address</span>
+                  </div>
                   <div className="text-right">
                     <span className="text-gray-500">Status: </span>
                     <StatusBadge
                       status={statuses[statuses.length - 1].status}
                     />
                   </div>
+                  {showModal && (
+                    <AddressModal
+                      address={address}
+                      onClose={handleCloseModal}
+                    />
+                  )}
                 </div>
 
                 {/* Light line divider */}
