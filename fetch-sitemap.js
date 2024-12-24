@@ -30,11 +30,18 @@ const fetchAndSaveSitemap = async () => {
   }
 };
 
-// Initial fetch and save
-fetchAndSaveSitemap();
+// Initial fetch and save in background
+fetchAndSaveSitemap()
+  .then(() => {
+    // Continue without waiting for the task to finish
+    console.log("Sitemap fetch complete, continuing...");
+  })
+  .catch((error) => {
+    console.error("Error with the sitemap fetch:", error.message);
+  });
 
 // Schedule to fetch and save the sitemap every hour
-cron.schedule("0 * * * *", () => {
-  console.log("Fetching and updating the sitemap...");
-  fetchAndSaveSitemap();
-});
+// cron.schedule("0 * * * *", () => {
+//   console.log("Fetching and updating the sitemap...");
+//   fetchAndSaveSitemap();
+// });
