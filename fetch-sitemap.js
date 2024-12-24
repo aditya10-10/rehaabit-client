@@ -14,7 +14,7 @@ if (!BASE_URL) {
 }
 
 const sitemapUrl = `${BASE_URL}/sitemap.xml`;
-console.log("Fetching sitemap from:", sitemapUrl);
+// console.log("Fetching sitemap from:", sitemapUrl);
 
 // Define path for saving the sitemap
 const sitemapFilePath = path.resolve(__dirname, "public", "sitemap.xml");
@@ -24,7 +24,7 @@ const fetchAndSaveSitemap = async () => {
   try {
     const response = await axios.get(sitemapUrl);
     fs.writeFileSync(sitemapFilePath, response.data);
-    console.log("Sitemap fetched and saved to the public directory!");
+    // console.log("Sitemap fetched and saved to the public directory!");
   } catch (error) {
     console.error("Error fetching the sitemap:", error.message);
   }
@@ -34,7 +34,7 @@ const fetchAndSaveSitemap = async () => {
 fetchAndSaveSitemap()
   .then(() => {
     // Continue without waiting for the task to finish
-    console.log("Sitemap fetch complete, continuing...");
+    // console.log("Sitemap fetch complete, continuing...");
   })
   .catch((error) => {
     console.error("Error with the sitemap fetch:", error.message);
