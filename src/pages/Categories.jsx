@@ -86,7 +86,7 @@ const Categories = () => {
   const { subCategoriesByCategory } = useSelector(
     (state) => state.subcategories
   );
-  console.log(subCategoriesByCategory);
+  // console.log(subCategoriesByCategory);
 
   const { allServices } = useSelector((state) => state.service);
   const { cartServices, isLoading: cartLoading } = useSelector(
@@ -249,8 +249,8 @@ const Categories = () => {
     }
 
     // Update URL when clicking on a subcategory
-    const newUrl = `/${categoryId}?subCategory=${subCategoryName}`;
-    updateUrl(newUrl);
+    // const newUrl = `/${categoryId}?subCategory=${subCategoryName}`;
+    // updateUrl(newUrl);
   };
 
   const handleAddToCart = (service) => {
@@ -330,8 +330,8 @@ const Categories = () => {
     setIsServiceModalOpen(true);
 
     // Update URL when opening service modal
-    const newUrl = `/${categoryId}?service=${serviceName}`;
-    updateUrl(newUrl);
+    // const newUrl = `/${categoryId}?service=${serviceName}`;
+    // updateUrl(newUrl);
   };
 
   // Function to close the Service Details Modal
@@ -339,7 +339,7 @@ const Categories = () => {
     setIsServiceModalOpen(false);
 
     // Revert URL when closing service modal
-    updateUrl(`/${categoryId}`);
+    // updateUrl(`/${categoryId}`);
   };
 
   // Function to open the Enquire Now Modal
@@ -348,8 +348,8 @@ const Categories = () => {
     setIsEnquireNowModalOpen(true);
 
     // Update URL when opening Enquire Now modal
-    const newUrl = `/${categoryId}?service=${service.serviceName}`;
-    updateUrl(newUrl);
+    // const newUrl = `/${categoryId}?service=${service.serviceName}`;
+    // updateUrl(newUrl);
   };
 
   // Function to close the Enquire Now Modal
@@ -476,13 +476,6 @@ const Categories = () => {
                 WebkitOverflowScrolling: "touch",
               }}
             >
-              <style>
-                {`
-                  div::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}
-              </style>
               {subCategoriesByCategory.map((category) => {
                 const { _id, subCategoryName, icon } = category;
 
@@ -660,9 +653,9 @@ const Categories = () => {
           })}
         </div>
       </div>
-      <div ref={footerRef}>
+      {/* <div ref={footerRef}>
         <Footer />
-      </div>
+      </div> */}
     </>
   );
 };
