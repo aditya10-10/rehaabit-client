@@ -80,6 +80,8 @@ const Categories = () => {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [serviceIdToPass, setServiceIdToPass] = useState(null);
   const [isEnquireNowModalOpen, setIsEnquireNowModalOpen] = useState(false);
+  const [serviceNameToPass, setServiceNameToPass] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false); // Track if the slug is found or not
 
@@ -343,22 +345,13 @@ const Categories = () => {
   };
 
   // Function to open the Enquire Now Modal
-  const handleEnquireNowModalOpen = (service) => {
-    setServiceIdToPass(service._id);
+  const handleEnquireNowModalOpen = (serviceName) => {
+    setServiceNameToPass(serviceName);
+    // console.log(serviceName);
     setIsEnquireNowModalOpen(true);
-
-    // Update URL when opening Enquire Now modal
-    // const newUrl = `/${categoryId}?service=${service.serviceName}`;
-    // updateUrl(newUrl);
   };
 
-  // Function to close the Enquire Now Modal
-  const handleEnquireNowModalClose = () => {
-    setIsEnquireNowModalOpen(false);
-
-    // Revert URL when closing Enquire Now modal
-    updateUrl(`/${categoryId}`);
-  };
+  const handleEnquireNowModalClose = () => setIsEnquireNowModalOpen(false);
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -449,7 +442,7 @@ const Categories = () => {
       <EnquireNowModal
         isEnquireNowModalOpen={isEnquireNowModalOpen}
         handleEnquireNowModal={handleEnquireNowModalClose}
-        serviceIdToPass={serviceIdToPass}
+        serviceNameToPass={serviceNameToPass}
       />
 
       <div className="flex  px-20 max-md:flex-col gap-5 max-lg:px-10 max-sm:px-4">
@@ -636,7 +629,7 @@ const Categories = () => {
                               <button
                                 className="bg-blue-400 px-4 py-2 rounded-md text-sm text-white"
                                 onClick={() =>
-                                  handleEnquireNowModalOpen(service)
+                                  handleEnquireNowModalOpen(service.serviceName)
                                 }
                               >
                                 Enquire Now
