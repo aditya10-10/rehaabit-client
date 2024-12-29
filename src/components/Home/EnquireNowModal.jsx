@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { enquire } from "../../slices/enquireSlice";
@@ -27,20 +27,25 @@ const EnquireNowModal = ({
       lastName,
       email,
       contactNumber,
-      serviceName: serviceNameToPass,
+      serviceName: serviceNameToPass || "Our Services",
       query,
     };
+
+    // useEffect(() => {
+    //   console.log({ firstName, lastName, email, contactNumber, query });
+    // }, [firstName, lastName, email, contactNumber, query]);
+
+    // console.log(data);
 
     dispatch(enquire({ formData: data }))
       .unwrap()
       .then(() => {
         setIsSubmitted(true);
-        setTimeout(() => {
-          setIsSubmitted(false);
-        }, 3000);
+        setTimeout(() => setIsSubmitted(false), 3000);
       })
-      .catch(() => {
-        // Handle error if submission fails
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+        alert("Failed to submit your enquiry. Please try again later.");
       });
 
     setFirstName("");
@@ -49,6 +54,16 @@ const EnquireNowModal = ({
     setContactNumber("");
     setQuery("");
     handleEnquireNowModal();
+  };
+
+  const handleEnquireNowModalClose = () => {
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setContactNumber("");
+    setQuery("");
+    setIsSubmitted(false); // Clear submission status
+    handleEnquireNowModal(); // Close the modal
   };
 
   return (
@@ -68,7 +83,7 @@ const EnquireNowModal = ({
           >
             {/* Close Button */}
             <button
-              onClick={handleEnquireNowModal}
+              onClick={handleEnquireNowModalClose}
               className="absolute top-4 right-4 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-transform"
             >
               <IoIosClose size={28} />
