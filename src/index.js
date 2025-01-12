@@ -13,6 +13,15 @@ import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import TagManager from "react-gtm-module";
+
+// Initialize Google Tag Manager
+const tagManagerArgs = {
+  gtmId: "GTM-PQWL327M",
+};
+TagManager.initialize(tagManagerArgs);
+
+// Configure testing library
 
 const queryClient = new QueryClient({
   defaultOptions: {
