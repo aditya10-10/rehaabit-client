@@ -31,10 +31,11 @@ const TableOfContents = ({ content }) => {
           numbering[i] = 0;
         }
 
-        const number = numbering
-          .slice(0, level + 1)
-          .filter((num) => num !== 0)
-          .join(".");
+        const number =
+          numbering
+            .slice(0, level + 1)
+            .filter((num) => num !== 0)
+            .join(".") + ".";
 
         const id = `heading-${number}`;
         heading.id = id;
@@ -168,13 +169,9 @@ const BlogContent = ({ content }) => {
           .filter((num) => num !== 0)
           .join(".");
 
-        heading.id = `heading-${number}`; // Match the TOC ID format
+        heading.id = `heading-${number}`;
 
-        // Only create line container for h1 and h2
-        if (
-          heading.tagName.toLowerCase() === "h1" ||
-          heading.tagName.toLowerCase() === "h2"
-        ) {
+        if (["h1", "h2"].includes(heading.tagName.toLowerCase())) {
           const container = document.createElement("div");
           container.style.display = "flex";
           container.style.alignItems = "flex-end";
@@ -182,12 +179,10 @@ const BlogContent = ({ content }) => {
           container.style.width = "100%";
           container.style.margin = "1rem 0";
 
-          // Remove whitespace-nowrap and add word-break
           heading.style.wordBreak = "break-word";
           heading.style.overflowWrap = "break-word";
           heading.style.maxWidth = "100%";
 
-          // Create the horizontal line
           const line = document.createElement("div");
           line.style.height = "4px";
           line.style.backgroundColor = "#E5E7EB";
@@ -195,7 +190,6 @@ const BlogContent = ({ content }) => {
           line.style.marginLeft = "1rem";
           line.style.marginBottom = "0.5rem";
 
-          // Replace heading with container
           heading.parentNode.insertBefore(container, heading);
           container.appendChild(heading);
           container.appendChild(line);
@@ -206,7 +200,6 @@ const BlogContent = ({ content }) => {
           heading.style.maxWidth = "100%";
         }
 
-        // Style headings - remove whitespace-nowrap from h1 and h2
         switch (heading.tagName.toLowerCase()) {
           case "h1":
             heading.classList.add("text-4xl", "font-bold");
@@ -216,29 +209,68 @@ const BlogContent = ({ content }) => {
             break;
           case "h3":
             heading.classList.add("text-2xl", "font-semibold");
-            heading.style.color = "#374151"; // gray-700
+            heading.style.color = "#374151";
             break;
           case "h4":
             heading.classList.add("text-xl", "font-semibold");
-            heading.style.color = "#4B5563"; // gray-600
+            heading.style.color = "#4B5563";
             break;
           case "h5":
             heading.classList.add("text-lg", "font-medium");
-            heading.style.color = "#4B5563"; // gray-600
+            heading.style.color = "#4B5563";
             break;
           case "h6":
             heading.classList.add("text-base", "font-medium");
-            heading.style.color = "#4B5563"; // gray-600
+            heading.style.color = "#4B5563";
+            break;
+          default:
             break;
         }
+      });
+
+      // Add spacing between paragraphs
+      const paragraphs = contentRef.current.querySelectorAll("p");
+      paragraphs.forEach((p) => {
+        p.style.marginBottom = "1rem"; // Add spacing between paragraphs
+        p.style.lineHeight = "1.6"; // Improve readability
+      });
+
+      // Fix bullet points (unordered list)
+      const uls = contentRef.current.querySelectorAll("ul");
+      uls.forEach((ul) => {
+        ul.style.paddingLeft = "1.5rem";
+        ul.style.marginBottom = "1rem";
+        ul.style.listStyleType = "disc"; // Ensure bullet points are visible
+        ul.style.display = "block"; // Fix for hidden bullet points
+      });
+
+      // Fix ordered lists (numbered lists)
+      const ols = contentRef.current.querySelectorAll("ol");
+      ols.forEach((ol) => {
+        ol.style.paddingLeft = "1.5rem";
+        ol.style.marginBottom = "1rem";
+        ol.style.listStyleType = "decimal"; // Ensure numbered lists appear correctly
+        ol.style.display = "block"; // Fix for hidden numbered lists
+      });
+
+      // Fix list items (both ul and ol)
+      const lis = contentRef.current.querySelectorAll("li");
+      lis.forEach((li) => {
+        li.style.marginBottom = "0.5rem"; // Add spacing between list items
+        li.style.display = "list-item"; // Ensure list items render properly
       });
 
       // Add styles for images
       const images = contentRef.current.querySelectorAll("img");
       images.forEach((img) => {
         img.classList.add("w-full", "rounded-lg", "my-8", "object-cover");
-        // Set a reasonable max-height while maintaining aspect ratio
         img.style.maxHeight = "500px";
+      });
+
+      // Style bold text
+      const boldElements = contentRef.current.querySelectorAll("b, strong");
+      boldElements.forEach((bold) => {
+        bold.style.fontWeight = "bold"; // Ensure bold styling
       });
 
       // Style links without underlines
@@ -264,7 +296,6 @@ const BlogContent = ({ content }) => {
         table.parentNode.insertBefore(wrapper, table);
         wrapper.appendChild(table);
 
-        // Explicitly remove width and set other styles
         table.style.removeProperty("width");
         table.style.minWidth = "100%";
         table.style.borderCollapse = "collapse";

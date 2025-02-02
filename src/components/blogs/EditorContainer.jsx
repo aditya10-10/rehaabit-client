@@ -27,6 +27,8 @@ const EditorContainer = ({ content, handleEditorChange }) => {
         }}
         init={{
           plugins: [
+            "advlist", // NEW - Enables advanced list options
+            "lists", // Bullet points and numbering
             "anchor",
             "autolink",
             "charmap",
