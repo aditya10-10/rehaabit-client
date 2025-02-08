@@ -388,17 +388,12 @@ const ViewBlog = () => {
   const formatLastUpdated = (timestamp) => {
     if (!timestamp) return "";
     const date = new Date(timestamp._seconds * 1000);
-    return (
-      date.toLocaleString("en-US", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-        timeZone: "Asia/Kolkata",
-      }) + " IST"
-    );
+    return date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "Asia/Kolkata",
+    });
   };
 
   if (!isValid) {
@@ -434,8 +429,8 @@ const ViewBlog = () => {
               {/* Main Content */}
               <div className="flex-1 max-w-3xl">
                 <h1 className="text-3xl font-bold mb-4">{blog?.title}</h1>
-                <div className="bg-green-100 px-3 py-1 rounded-md inline-block mb-6">
-                  <p className="text-green-800 text-sm">
+                <div className="bg-blue-100 px-3 py-1 rounded-md inline-block mb-6">
+                  <p className="text-blue-800 text-sm">
                     Last updated: {formatLastUpdated(blog?.updatedAt)}
                   </p>
                 </div>
