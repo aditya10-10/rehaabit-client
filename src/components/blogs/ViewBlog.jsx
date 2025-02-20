@@ -388,11 +388,11 @@ const ViewBlog = () => {
   const formatLastUpdated = (timestamp) => {
     if (!timestamp) return "";
     const date = new Date(timestamp._seconds * 1000);
+
     return date.toLocaleDateString("en-US", {
       day: "numeric",
       month: "short",
       year: "numeric",
-      timeZone: "Asia/Kolkata",
     });
   };
 
